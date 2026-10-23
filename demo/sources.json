@@ -1,0 +1,4 @@
+{"note": "Facts quoted in the scene that come from documents rather than from a JSON in this folder. Each carries its source and grade.",
+ "facts": {"e1_first_try": {"text": "27.3% to 56.7%", "source": "DOC.md section 2, E1 (gemini-3.8-flash, two retrieved examples)", "grade": "C"},
+           "e1_after_loop": {"text": "about 100%", "source": "DOC.md section 2, E1 (after report-guided repair)", "grade": "C"},
+           "provenance_kept": {"text": "6 of 6", "source": "DOC.md section 2 (x3dprov survived Blender import/export in 6 of 6 scenes)", "grade": "C"}}}

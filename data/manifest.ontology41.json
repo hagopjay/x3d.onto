@@ -1,0 +1,35 @@
+{
+ "built_utc": "2026-10-21T04:20:41Z",
+ "input": "data/X3dOntology4.1.ttl",
+ "input_sha256": "8307e9045104cc58c469edd4fecb1b075b894417610b36a55b2e9bf6bc23e19a",
+ "input_bytes": 1170960,
+ "rdflib": "7.6.0",
+ "output": "ontology41.json",
+ "output_sha256": "7255c4e459e54ee245146be4c8f17e5eefd35c411b36f665895b934eff91f51f",
+ "output_bytes": 1070005,
+ "stats": {
+  "triples": 18121,
+  "classes": 364,
+  "object_props": 337,
+  "datatype_props": 727,
+  "props_in_model": 1058,
+  "uom_concrete": 267,
+  "datatypes": 107,
+  "child_family": 125,
+  "multi_parent": 55,
+  "max_depth": 5,
+  "roots": [
+   "X3DNode",
+   "X3DBoundedObject",
+   "X3DStatement",
+   "X3DUrlObject",
+   "X3DMetadataObject",
+   "X3DFogObject",
+   "X3DProgrammableShaderObject",
+   "X3DArrayField",
+   "X3DField",
+   "X3DPickableObject",
+   "X3DUrlOutputObject"
+  ]
+ }
+}

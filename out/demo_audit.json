@@ -1,0 +1,42 @@
+{
+ "strings": 56,
+ "numbers": [
+  "1.8",
+  "1.9",
+  "100",
+  "166",
+  "24",
+  "25",
+  "27.3",
+  "364",
+  "37",
+  "4.1",
+  "40",
+  "56.7",
+  "6",
+  "60",
+  "77",
+  "82",
+  "95"
+ ],
+ "unexplained": [],
+ "allowed": {
+  "364": "data/explorer.json stats.classes",
+  "4.1": "ontology version (manifest.ontology41.json, X3dOntology4.1.ttl)",
+  "166": "out/constellation_run.json bytes / 1000 (KB)",
+  "1.8": "out/constellation_run.json validate_x3d_ms",
+  "1.9": "out/constellation_run.json nano_call_ms.p50",
+  "27.3": "demo/sources.json e1_first_try: DOC.md section 2, E1 (gemini-3.8-flash, two retrieved examples) (C)",
+  "56.7": "demo/sources.json e1_first_try: DOC.md section 2, E1 (gemini-3.8-flash, two retrieved examples) (C)",
+  "100": "demo/sources.json e1_after_loop: DOC.md section 2, E1 (after report-guided repair) (C)",
+  "6": "demo/sources.json provenance_kept: DOC.md section 2 (x3dprov survived Blender import/export in 6 of 6 scenes) (C)",
+  "77": "x3d-gemini-3.8-flash.jsonl A0 validity",
+  "60": "x3d-gemini-3.8-flash.jsonl A0 rows",
+  "95": "urdf-gemini-3.8-flash.jsonl A0 validity",
+  "40": "gltf-gemini-3.8-flash.jsonl A0 validity",
+  "82": "gltf-gemini-3.8-flash.jsonl A2-final validity",
+  "37": "data/components.json rows",
+  "24": "out/xdomain_urdf.json faults",
+  "25": "out/xdomain_gltf.json faults"
+ }
+}

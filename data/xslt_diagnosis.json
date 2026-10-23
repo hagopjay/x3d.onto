@@ -1,0 +1,113 @@
+{
+ "properties": 125,
+ "shared_domain_properties": 48,
+ "single_domain": 77,
+ "max_domains": 331,
+ "top": [
+  {
+   "prop": "hasChildren",
+   "domains": 49,
+   "iri_ranges": 7,
+   "union_ranges": 17,
+   "union_members": 30,
+   "ranges_total": 37
+  },
+  {
+   "prop": "hasMetadata",
+   "domains": 331,
+   "iri_ranges": 1,
+   "union_ranges": 0,
+   "union_members": 0,
+   "ranges_total": 1
+  },
+  {
+   "prop": "hasIS",
+   "domains": 331,
+   "iri_ranges": 1,
+   "union_ranges": 0,
+   "union_members": 0,
+   "ranges_total": 1
+  },
+  {
+   "prop": "hasTexCoord",
+   "domains": 17,
+   "iri_ranges": 1,
+   "union_ranges": 3,
+   "union_members": 5,
+   "ranges_total": 6
+  },
+  {
+   "prop": "hasCoord",
+   "domains": 16,
+   "iri_ranges": 1,
+   "union_ranges": 1,
+   "union_members": 2,
+   "ranges_total": 3
+  },
+  {
+   "prop": "hasAddChildren",
+   "domains": 7,
+   "iri_ranges": 2,
+   "union_ranges": 2,
+   "union_members": 4,
+   "ranges_total": 6
+  },
+  {
+   "prop": "hasRemoveChildren",
+   "domains": 7,
+   "iri_ranges": 2,
+   "union_ranges": 2,
+   "union_members": 4,
+   "ranges_total": 6
+  },
+  {
+   "prop": "hasGeometry",
+   "domains": 6,
+   "iri_ranges": 3,
+   "union_ranges": 0,
+   "union_members": 0,
+   "ranges_total": 3
+  },
+  {
+   "prop": "hasTexture",
+   "domains": 6,
+   "iri_ranges": 3,
+   "union_ranges": 0,
+   "union_members": 0,
+   "ranges_total": 3
+  },
+  {
+   "prop": "hasColor",
+   "domains": 16,
+   "iri_ranges": 1,
+   "union_ranges": 0,
+   "union_members": 0,
+   "ranges_total": 1
+  },
+  {
+   "prop": "hasPickTarget",
+   "domains": 5,
+   "iri_ranges": 0,
+   "union_ranges": 1,
+   "union_members": 3,
+   "ranges_total": 3
+  },
+  {
+   "prop": "hasNormal",
+   "domains": 15,
+   "iri_ranges": 1,
+   "union_ranges": 0,
+   "union_members": 0,
+   "ranges_total": 1
+  }
+ ],
+ "xslt": {
+  "file": "data/xslt/X3duomToX3dOntology.xslt",
+  "lines": 1220,
+  "bytes": 67046,
+  "sha1": "f443c05f480795a5b3d71a01d0839bf20d105f80",
+  "range_from": "@acceptableNodeTypes (lines 787-807 abstract branch, 970-990 concrete branch)",
+  "per_parent_inverse": "fieldXHasParent[Parent] (lines 1114-1139); parent name omitted when field is 'children' (line 1119)",
+  "domain_comment": "lines 755-756: no owl:unionOf for rdfs:domain, 'simple unadorned list' instead"
+ }
+}

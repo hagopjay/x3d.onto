@@ -1,0 +1,78 @@
+{
+ "assumptions": {
+  "chars_per_token": {
+   "urdf": 3.4,
+   "gltf": 2.5
+  },
+  "thinking_tokens": {
+   "flash": 1500,
+   "pro": 3000
+  },
+  "price_per_M": {
+   "flash": [
+    0.75,
+    3.75
+   ],
+   "pro": [
+    2.5,
+    15.0
+   ]
+  },
+  "loop_survival": 0.5,
+  "verbosity_factor": 1.5,
+  "report_tokens": 350,
+  "per_link_chars": 508,
+  "gltf_doc_chars": {
+   "A": 700,
+   "B": 1189,
+   "C": 2880
+  }
+ },
+ "scenarios": {
+  "pilot-flash": {
+   "calls_mid": 20,
+   "usd": {
+    "low 30%": 0.17,
+    "mid 55%": 0.21,
+    "high 80%": 0.26
+   },
+   "upper": 0.45
+  },
+  "pilot-pro": {
+   "calls_mid": 20,
+   "usd": {
+    "low 30%": 0.99,
+    "mid 55%": 1.28,
+    "high 80%": 1.58
+   },
+   "upper": 2.66
+  },
+  "lean-flash": {
+   "calls_mid": 314,
+   "usd": {
+    "low 30%": 2.62,
+    "mid 55%": 3.38,
+    "high 80%": 4.14
+   },
+   "upper": 6.92
+  },
+  "lean-pro": {
+   "calls_mid": 314,
+   "usd": {
+    "low 30%": 15.87,
+    "mid 55%": 20.47,
+    "high 80%": 25.05
+   },
+   "upper": 41.82
+  },
+  "full-flash": {
+   "calls_mid": 472,
+   "usd": {
+    "low 30%": 3.93,
+    "mid 55%": 5.06,
+    "high 80%": 6.2
+   },
+   "upper": 10.38
+  }
+ }
+}

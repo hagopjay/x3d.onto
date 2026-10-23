@@ -1,0 +1,201 @@
+{
+ "unexplained": [],
+ "facts": {
+  "classes": [
+   "364",
+   "data/explorer.json stats.classes"
+  ],
+  "new": [
+   "9",
+   "data/explorer.json delta.new"
+  ],
+  "onto": [
+   "4.1",
+   "X3dOntology4.1.ttl"
+  ],
+  "shape_parents": [
+   "68",
+   "data/explorer.json Shape.lp"
+  ],
+  "shape_pred": [
+   "59",
+   "xcheck.table.Shape"
+  ],
+  "shape_acc": [
+   "22",
+   "xcheck.table.Shape"
+  ],
+  "shape_rej": [
+   "30",
+   "xcheck.table.Shape"
+  ],
+  "shape_inc": [
+   "7",
+   "xcheck.table.Shape"
+  ],
+  "pairs": [
+   "11,085",
+   "xcheck.all.pairs"
+  ],
+  "pairs_acc": [
+   "5,206",
+   "xcheck.all.A"
+  ],
+  "pairs_rej": [
+   "4,570",
+   "xcheck.all.R"
+  ],
+  "pairs_inc": [
+   "1,309",
+   "xcheck.all.I"
+  ],
+  "kb": [
+   "166",
+   "out/constellation_run.json bytes"
+  ],
+  "val_s": [
+   "1.8",
+   "out/constellation_run.json validate_x3d_ms"
+  ],
+  "call_ms": [
+   "1.9",
+   "out/constellation_run.json nano_call_ms.p50"
+  ],
+  "e1_first_try_0": [
+   "27.3",
+   "demo/sources.json e1_first_try (C)"
+  ],
+  "e1_first_try_1": [
+   "56.7",
+   "demo/sources.json e1_first_try (C)"
+  ],
+  "e1_after_loop_0": [
+   "100",
+   "demo/sources.json e1_after_loop (C)"
+  ],
+  "provenance_kept_0": [
+   "6",
+   "demo/sources.json provenance_kept (C)"
+  ],
+  "provenance_kept_1": [
+   "6",
+   "demo/sources.json provenance_kept (C)"
+  ],
+  "ncomp": [
+   "37",
+   "data/components.json"
+  ],
+  "comp_best": [
+   "Sound",
+   "components.json"
+  ],
+  "comp_best_pct": [
+   "73.3",
+   "components.json"
+  ],
+  "comp_worst": [
+   "Layering",
+   "components.json"
+  ],
+  "comp_worst_pct": [
+   "10.9",
+   "components.json"
+  ],
+  "phys_pct": [
+   "25.3",
+   "components.json RigidBodyPhysics"
+  ],
+  "u_faults": [
+   "24",
+   "out/xdomain_urdf.json"
+  ],
+  "u_mut": [
+   "135",
+   "out/xdomain_urdf.json totals.n"
+  ],
+  "u_L0": [
+   "6",
+   "out/xdomain_urdf.json totals.L0"
+  ],
+  "u_L1": [
+   "36",
+   "out/xdomain_urdf.json totals.L1"
+  ],
+  "u_L2": [
+   "81",
+   "out/xdomain_urdf.json totals.L2"
+  ],
+  "u_warn": [
+   "6",
+   "out/xdomain_urdf.json totals.warn"
+  ],
+  "u_contact": [
+   "6",
+   "out/xdomain_urdf.json totals.contact"
+  ],
+  "g_faults": [
+   "25",
+   "out/xdomain_gltf.json"
+  ],
+  "g_mut": [
+   "123",
+   "out/xdomain_gltf.json totals.n"
+  ],
+  "g_err": [
+   "106",
+   "out/xdomain_gltf.json khronos_error_total"
+  ],
+  "g_err_pct": [
+   "86.2",
+   "derived"
+  ],
+  "g_warn": [
+   "17",
+   "out/xdomain_gltf.json"
+  ],
+  "g_base": [
+   "18",
+   "out/xdomain_gltf.json baseline_total"
+  ],
+  "uom_agree": [
+   "93.0",
+   "data/explorer.json uom.agreement"
+  ],
+  "ev_x3d_a0": [
+   "77",
+   "runs/x3d"
+  ],
+  "ev_x3d_a2": [
+   "100",
+   "runs/x3d"
+  ],
+  "ev_x3d_n": [
+   "60",
+   "runs/x3d"
+  ],
+  "ev_urdf_a0": [
+   "95",
+   "runs/urdf"
+  ],
+  "ev_urdf_a2": [
+   "100",
+   "runs/urdf"
+  ],
+  "ev_urdf_n": [
+   "60",
+   "runs/urdf"
+  ],
+  "ev_gltf_a0": [
+   "40",
+   "runs/gltf"
+  ],
+  "ev_gltf_a2": [
+   "82",
+   "runs/gltf"
+  ],
+  "ev_gltf_n": [
+   "60",
+   "runs/gltf"
+  ]
+ }
+}

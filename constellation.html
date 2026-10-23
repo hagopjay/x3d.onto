@@ -1,0 +1,7 @@
+<!doctype html><html><head><meta charset="utf-8"><title>X3D Ontology constellation (X_ITE)</title>
+<script src="https://cdn.jsdelivr.net/npm/x_ite@16.5.0/dist/x_ite.min.js"></script>
+<style>html,body{margin:0;height:100%;background:#080a10;color:#cfd8ea;font:12px ui-sans-serif,sans-serif}x3d-canvas{width:100%;height:100%;display:block}
+#bar{position:fixed;left:10px;top:10px;background:#0d121ccc;border:1px solid #232c3d;border-radius:8px;padding:6px 10px;z-index:2}#bar a{color:#5ad1ff}</style></head><body>
+<div id="bar"><b>X3D Ontology constellation</b> · authored through x3d_mcp · drag to orbit · <a href="explorer.html">2D explorer</a> · views: <a href="#" onclick="vp('Overview')">overview</a> <a href="#" onclick="vp('Inside')">inside</a> <a href="#" onclick="vp('Top')">top</a></div>
+<x3d-canvas src="scenes/ontology-constellation.x3d"></x3d-canvas>
+<script>function vp(n){const b=X3D.getBrowser?X3D.getBrowser():document.querySelector('x3d-canvas').browser;const v=b.currentScene.getNamedNode(n);v.set_bind=true;}</script></body></html>

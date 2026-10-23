@@ -1,0 +1,85 @@
+{
+ "urdf": {
+  "errors_before": 2,
+  "warnings_before": 1,
+  "rules_before": [
+   "U-08",
+   "U-09"
+  ],
+  "applied": [
+   "swapped lower and upper",
+   "velocity sign",
+   "normalised axis"
+  ],
+  "errors_after": 0,
+  "warnings_after": 0,
+  "chain_ok": "ok",
+  "after_edit": "stale",
+  "after_forged_step": "broken-chain",
+  "after_deleted_step": "broken-chain",
+  "chain_len": 3
+ },
+ "gltf": {
+  "upstream_policy": {
+   "errors": 1,
+   "warnings": 0
+  },
+  "strict_policy": {
+   "errors": 2
+  },
+  "codes_before": [
+   "UNDEFINED_PROPERTY",
+   "UNSUPPORTED_EXTENSION"
+  ],
+  "applied": [
+   "added 2.0",
+   "byteLength from data"
+  ],
+  "errors_after_strict": 1,
+  "remaining": [
+   "UNSUPPORTED_EXTENSION"
+  ],
+  "oracle": "Khronos glTF-Validator 2.0.0-dev.3.10"
+ },
+ "tools": [
+  "xdomain_describe",
+  "urdf_validate",
+  "urdf_repair",
+  "gltf_validate",
+  "gltf_repair",
+  "record_step",
+  "verify_chain"
+ ],
+ "latency_ms": {
+  "urdf_validate": {
+   "n": 2,
+   "median": 7.6,
+   "max": 7.6
+  },
+  "record_step": {
+   "n": 3,
+   "median": 2.1,
+   "max": 2.6
+  },
+  "urdf_repair": {
+   "n": 1,
+   "median": 3.7,
+   "max": 3.7
+  },
+  "verify_chain": {
+   "n": 4,
+   "median": 1.9,
+   "max": 2.2
+  },
+  "gltf_validate": {
+   "n": 3,
+   "median": 93.2,
+   "max": 96.3
+  },
+  "gltf_repair": {
+   "n": 1,
+   "median": 5.0,
+   "max": 5.0
+  }
+ }
+}

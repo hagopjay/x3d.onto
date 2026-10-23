@@ -1,0 +1,13 @@
+node_modules/
+__pycache__/
+*.pyc
+.DS_Store
+*.bak
+*.bak2
+*.bak3
+*.bak4
+# live evaluation runs are written continuously by background processes; archive them separately
+xdomain/eval-plan/runs/
+xdomain/eval-plan/*.bak*
+demo/make_demo.py.bak*
+demo/build_tour.py.bak*

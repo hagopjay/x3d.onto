@@ -1,0 +1,13 @@
+{
+ "axioms": 310,
+ "sketch_triples": 2088,
+ "unresolved_terms": [],
+ "unresolved_count": 0,
+ "query_ms": 500,
+ "query_rows": 6089,
+ "concrete_pairs": 4907,
+ "universe_pairs": 4907,
+ "identical_to_universe": true,
+ "only_in_query": 0,
+ "only_in_universe": 0
+}

@@ -1,0 +1,30 @@
+{
+ "file": "/Users/handshake/Projects/x3d/shroud-artifacts/ontology/scenes/ontology-constellation.x3d",
+ "bytes": 165953,
+ "sha256": "708ee7f4fde0dc75e64d4d7f435473368f15ef8e260a816d497f67a7851e67d8",
+ "x3d_mcp_commit": "fa0b389",
+ "tool_calls": 4784,
+ "calls_by_tool": {
+  "create_node": 1788,
+  "def_node": 494,
+  "add_child": 2137,
+  "use_node": 364,
+  "get_scene": 1
+ },
+ "build_seconds": 10.01,
+ "nano_call_ms": {
+  "p50": 1.93,
+  "p95": 2.73,
+  "max": 77.4
+ },
+ "validate_x3d": {
+  "valid": true,
+  "errors": [],
+  "schema_version": "4.1"
+ },
+ "validate_x3d_ms": 1792,
+ "validate_semantic": {
+  "raw": "# Semantic Check Report\n\nFound 0 error(s), 0 warning(s), 378 info(s).\n\n## Info\n\n- **[unused-def]** DEF='C_AcousticProperties' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).\n- **[unused-def]** DEF='C_Analyser' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).\n- **[unused-def]** DEF='C_Anchor' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).\n- **[unused-def]** DEF='C_Appearance' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).\n- **[unused-def]** DEF='C_Arc2D' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).\n- **[unused-def]** DEF='C_ArcClose2D' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).\n- **[unused-def]** DEF='C_AudioClip' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).\n- **[unused-def]** DEF='C_AudioDestination' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).\n- **[unused-def]** DEF='C_Background' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).\n- **[unused-def]** DEF='C_BallJoint' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).\n- **[unused-def]** DEF='C_Billboard' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).\n- **[unused-def]** DEF='C_BiquadFilter' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).\n- **[unused-def]** DEF='C_BlendedVolumeStyle' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).\n- **[unused-def]** DEF='C_BooleanFilter' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).\n- **[unused-def]** DEF='C_BooleanSequencer' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).\n- **[unused-def]** DEF='C_BooleanToggle' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).\n- **[unused-def]** DEF='C_BooleanTrigger' (Transform) is defined b"
+ },
+ "validate_semantic_ms": 45
+}

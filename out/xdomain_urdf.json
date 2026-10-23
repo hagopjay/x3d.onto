@@ -1,0 +1,1548 @@
+{
+ "corpus": [
+  "arm2",
+  "arm3_gripper",
+  "mobile",
+  "humanoid",
+  "chain6",
+  "quad"
+ ],
+ "clean_errors": {
+  "arm2": [],
+  "arm3_gripper": [],
+  "mobile": [],
+  "humanoid": [],
+  "chain6": [],
+  "quad": []
+ },
+ "clean_warnings": {
+  "arm2": [],
+  "arm3_gripper": [],
+  "mobile": [],
+  "humanoid": [],
+  "chain6": [],
+  "quad": []
+ },
+ "faults": {
+  "F01": {
+   "level": "L0",
+   "desc": "closing tag removed",
+   "n": 6,
+   "L0": 6
+  },
+  "F02": {
+   "level": "L1",
+   "desc": "root renamed",
+   "n": 6,
+   "L1": 6
+  },
+  "F03": {
+   "level": "L1",
+   "desc": "robot name removed",
+   "n": 6,
+   "L1": 6
+  },
+  "F04": {
+   "level": "L1",
+   "desc": "invalid joint type",
+   "n": 6,
+   "L1": 6
+  },
+  "F05": {
+   "level": "L1",
+   "desc": "joint without child",
+   "n": 6,
+   "L1": 6
+  },
+  "F06": {
+   "level": "L1",
+   "desc": "origin xyz with two numbers",
+   "n": 6,
+   "L1": 6
+  },
+  "F07": {
+   "level": "L1",
+   "desc": "duplicate link name",
+   "n": 6,
+   "L1": 6
+  },
+  "F08": {
+   "level": "L2",
+   "desc": "joint parent undefined",
+   "n": 6,
+   "L2": 6
+  },
+  "F09": {
+   "level": "L2",
+   "desc": "link has two parent joints",
+   "n": 6,
+   "L2": 6
+  },
+  "F10": {
+   "level": "L2",
+   "desc": "link detached (joint removed)",
+   "n": 6,
+   "L2": 6
+  },
+  "F11": {
+   "level": "L2",
+   "desc": "cycle: leaf becomes parent of the root",
+   "n": 6,
+   "L2": 6
+  },
+  "F12": {
+   "level": "L2",
+   "desc": "revolute joint without limit",
+   "n": 5,
+   "L2": 5,
+   "n/a": 1
+  },
+  "F13": {
+   "level": "L2",
+   "desc": "limit lower above upper",
+   "n": 5,
+   "L2": 5,
+   "repair_fixed": 5,
+   "n/a": 1
+  },
+  "F14": {
+   "level": "L2",
+   "desc": "axis is the zero vector",
+   "n": 6,
+   "L2": 6
+  },
+  "F15": {
+   "level": "L2",
+   "desc": "mass zero on a dynamic link",
+   "n": 6,
+   "L2": 6
+  },
+  "F16": {
+   "level": "L2",
+   "desc": "negative mass",
+   "n": 6,
+   "L2": 6
+  },
+  "F17": {
+   "level": "L2",
+   "desc": "inertia not positive definite",
+   "n": 6,
+   "L2": 6
+  },
+  "F18": {
+   "level": "L2",
+   "desc": "inertia breaks the triangle inequality",
+   "n": 6,
+   "L2": 6
+  },
+  "F19": {
+   "level": "L2",
+   "desc": "negative cylinder radius",
+   "n": 6,
+   "L2": 6
+  },
+  "F20": {
+   "level": "L2",
+   "desc": "colour out of range",
+   "n": 1,
+   "L2": 1,
+   "repair_fixed": 1,
+   "n/a": 5
+  },
+  "F21": {
+   "level": "L2",
+   "desc": "mimic joint undefined",
+   "n": 5,
+   "L2": 5,
+   "n/a": 1
+  },
+  "F22": {
+   "level": "L2",
+   "desc": "negative velocity limit",
+   "n": 5,
+   "L2": 5,
+   "repair_fixed": 5,
+   "n/a": 1
+  },
+  "F23": {
+   "level": "W",
+   "desc": "axis not unit length (warning only)",
+   "n": 6,
+   "warn": 6,
+   "repair_fixed": 6
+  },
+  "F24": {
+   "level": "C",
+   "desc": "child attached 1 m away from the parent (valid but floating)",
+   "n": 6,
+   "contact": 6
+  }
+ },
+ "rows": [
+  {
+   "fault": "F01",
+   "robot": "arm2",
+   "verdict": "L0",
+   "rules": [
+    "U-00"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F01",
+   "robot": "arm3_gripper",
+   "verdict": "L0",
+   "rules": [
+    "U-00"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F01",
+   "robot": "mobile",
+   "verdict": "L0",
+   "rules": [
+    "U-00"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F01",
+   "robot": "humanoid",
+   "verdict": "L0",
+   "rules": [
+    "U-00"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F01",
+   "robot": "chain6",
+   "verdict": "L0",
+   "rules": [
+    "U-00"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F01",
+   "robot": "quad",
+   "verdict": "L0",
+   "rules": [
+    "U-00"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F02",
+   "robot": "arm2",
+   "verdict": "L1",
+   "rules": [
+    "U-01"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F02",
+   "robot": "arm3_gripper",
+   "verdict": "L1",
+   "rules": [
+    "U-01"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F02",
+   "robot": "mobile",
+   "verdict": "L1",
+   "rules": [
+    "U-01"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F02",
+   "robot": "humanoid",
+   "verdict": "L1",
+   "rules": [
+    "U-01"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F02",
+   "robot": "chain6",
+   "verdict": "L1",
+   "rules": [
+    "U-01"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F02",
+   "robot": "quad",
+   "verdict": "L1",
+   "rules": [
+    "U-01"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F03",
+   "robot": "arm2",
+   "verdict": "L1",
+   "rules": [
+    "U-01"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F03",
+   "robot": "arm3_gripper",
+   "verdict": "L1",
+   "rules": [
+    "U-01"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F03",
+   "robot": "mobile",
+   "verdict": "L1",
+   "rules": [
+    "U-01"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F03",
+   "robot": "humanoid",
+   "verdict": "L1",
+   "rules": [
+    "U-01"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F03",
+   "robot": "chain6",
+   "verdict": "L1",
+   "rules": [
+    "U-01"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F03",
+   "robot": "quad",
+   "verdict": "L1",
+   "rules": [
+    "U-01"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F04",
+   "robot": "arm2",
+   "verdict": "L1",
+   "rules": [
+    "U-03"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F04",
+   "robot": "arm3_gripper",
+   "verdict": "L1",
+   "rules": [
+    "U-03"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F04",
+   "robot": "mobile",
+   "verdict": "L1",
+   "rules": [
+    "U-03"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F04",
+   "robot": "humanoid",
+   "verdict": "L1",
+   "rules": [
+    "U-03"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F04",
+   "robot": "chain6",
+   "verdict": "L1",
+   "rules": [
+    "U-03"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F04",
+   "robot": "quad",
+   "verdict": "L1",
+   "rules": [
+    "U-03"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F05",
+   "robot": "arm2",
+   "verdict": "L1",
+   "rules": [
+    "U-04",
+    "U-11"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F05",
+   "robot": "arm3_gripper",
+   "verdict": "L1",
+   "rules": [
+    "U-04",
+    "U-11"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F05",
+   "robot": "mobile",
+   "verdict": "L1",
+   "rules": [
+    "U-04",
+    "U-11"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F05",
+   "robot": "humanoid",
+   "verdict": "L1",
+   "rules": [
+    "U-04",
+    "U-11"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F05",
+   "robot": "chain6",
+   "verdict": "L1",
+   "rules": [
+    "U-04",
+    "U-11"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F05",
+   "robot": "quad",
+   "verdict": "L1",
+   "rules": [
+    "U-04",
+    "U-11"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F06",
+   "robot": "arm2",
+   "verdict": "L1",
+   "rules": [
+    "U-05"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F06",
+   "robot": "arm3_gripper",
+   "verdict": "L1",
+   "rules": [
+    "U-05"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F06",
+   "robot": "mobile",
+   "verdict": "L1",
+   "rules": [
+    "U-05"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F06",
+   "robot": "humanoid",
+   "verdict": "L1",
+   "rules": [
+    "U-05"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F06",
+   "robot": "chain6",
+   "verdict": "L1",
+   "rules": [
+    "U-05"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F06",
+   "robot": "quad",
+   "verdict": "L1",
+   "rules": [
+    "U-05"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F07",
+   "robot": "arm2",
+   "verdict": "L1",
+   "rules": [
+    "U-02",
+    "U-06"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F07",
+   "robot": "arm3_gripper",
+   "verdict": "L1",
+   "rules": [
+    "U-02",
+    "U-06"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F07",
+   "robot": "mobile",
+   "verdict": "L1",
+   "rules": [
+    "U-02",
+    "U-06"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F07",
+   "robot": "humanoid",
+   "verdict": "L1",
+   "rules": [
+    "U-02",
+    "U-06"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F07",
+   "robot": "chain6",
+   "verdict": "L1",
+   "rules": [
+    "U-02",
+    "U-06"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F07",
+   "robot": "quad",
+   "verdict": "L1",
+   "rules": [
+    "U-02",
+    "U-06"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F08",
+   "robot": "arm2",
+   "verdict": "L2",
+   "rules": [
+    "U-06",
+    "U-11"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F08",
+   "robot": "arm3_gripper",
+   "verdict": "L2",
+   "rules": [
+    "U-06",
+    "U-11"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F08",
+   "robot": "mobile",
+   "verdict": "L2",
+   "rules": [
+    "U-06",
+    "U-11"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F08",
+   "robot": "humanoid",
+   "verdict": "L2",
+   "rules": [
+    "U-06",
+    "U-11"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F08",
+   "robot": "chain6",
+   "verdict": "L2",
+   "rules": [
+    "U-06",
+    "U-11"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F08",
+   "robot": "quad",
+   "verdict": "L2",
+   "rules": [
+    "U-06",
+    "U-11"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F09",
+   "robot": "arm2",
+   "verdict": "L2",
+   "rules": [
+    "U-07",
+    "U-11"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F09",
+   "robot": "arm3_gripper",
+   "verdict": "L2",
+   "rules": [
+    "U-07",
+    "U-11"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F09",
+   "robot": "mobile",
+   "verdict": "L2",
+   "rules": [
+    "U-07",
+    "U-11"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F09",
+   "robot": "humanoid",
+   "verdict": "L2",
+   "rules": [
+    "U-07",
+    "U-11"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F09",
+   "robot": "chain6",
+   "verdict": "L2",
+   "rules": [
+    "U-07",
+    "U-11"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F09",
+   "robot": "quad",
+   "verdict": "L2",
+   "rules": [
+    "U-07",
+    "U-11"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F10",
+   "robot": "arm2",
+   "verdict": "L2",
+   "rules": [
+    "U-11"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F10",
+   "robot": "arm3_gripper",
+   "verdict": "L2",
+   "rules": [
+    "U-11"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F10",
+   "robot": "mobile",
+   "verdict": "L2",
+   "rules": [
+    "U-11"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F10",
+   "robot": "humanoid",
+   "verdict": "L2",
+   "rules": [
+    "U-11"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F10",
+   "robot": "chain6",
+   "verdict": "L2",
+   "rules": [
+    "U-11"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F10",
+   "robot": "quad",
+   "verdict": "L2",
+   "rules": [
+    "U-11"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F11",
+   "robot": "arm2",
+   "verdict": "L2",
+   "rules": [
+    "U-11"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F11",
+   "robot": "arm3_gripper",
+   "verdict": "L2",
+   "rules": [
+    "U-11"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F11",
+   "robot": "mobile",
+   "verdict": "L2",
+   "rules": [
+    "U-11"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F11",
+   "robot": "humanoid",
+   "verdict": "L2",
+   "rules": [
+    "U-11"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F11",
+   "robot": "chain6",
+   "verdict": "L2",
+   "rules": [
+    "U-11"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F11",
+   "robot": "quad",
+   "verdict": "L2",
+   "rules": [
+    "U-11"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F12",
+   "robot": "arm2",
+   "verdict": "L2",
+   "rules": [
+    "U-09"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F12",
+   "robot": "arm3_gripper",
+   "verdict": "L2",
+   "rules": [
+    "U-09"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F12",
+   "robot": "humanoid",
+   "verdict": "L2",
+   "rules": [
+    "U-09"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F12",
+   "robot": "chain6",
+   "verdict": "L2",
+   "rules": [
+    "U-09"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F12",
+   "robot": "quad",
+   "verdict": "L2",
+   "rules": [
+    "U-09"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F13",
+   "robot": "arm2",
+   "verdict": "L2",
+   "rules": [
+    "U-09"
+   ],
+   "repair": "fixed"
+  },
+  {
+   "fault": "F13",
+   "robot": "arm3_gripper",
+   "verdict": "L2",
+   "rules": [
+    "U-09"
+   ],
+   "repair": "fixed"
+  },
+  {
+   "fault": "F13",
+   "robot": "humanoid",
+   "verdict": "L2",
+   "rules": [
+    "U-09"
+   ],
+   "repair": "fixed"
+  },
+  {
+   "fault": "F13",
+   "robot": "chain6",
+   "verdict": "L2",
+   "rules": [
+    "U-09"
+   ],
+   "repair": "fixed"
+  },
+  {
+   "fault": "F13",
+   "robot": "quad",
+   "verdict": "L2",
+   "rules": [
+    "U-09"
+   ],
+   "repair": "fixed"
+  },
+  {
+   "fault": "F14",
+   "robot": "arm2",
+   "verdict": "L2",
+   "rules": [
+    "U-08"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F14",
+   "robot": "arm3_gripper",
+   "verdict": "L2",
+   "rules": [
+    "U-08"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F14",
+   "robot": "mobile",
+   "verdict": "L2",
+   "rules": [
+    "U-08"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F14",
+   "robot": "humanoid",
+   "verdict": "L2",
+   "rules": [
+    "U-08"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F14",
+   "robot": "chain6",
+   "verdict": "L2",
+   "rules": [
+    "U-08"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F14",
+   "robot": "quad",
+   "verdict": "L2",
+   "rules": [
+    "U-08"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F15",
+   "robot": "arm2",
+   "verdict": "L2",
+   "rules": [
+    "U-12"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F15",
+   "robot": "arm3_gripper",
+   "verdict": "L2",
+   "rules": [
+    "U-12"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F15",
+   "robot": "mobile",
+   "verdict": "L2",
+   "rules": [
+    "U-12"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F15",
+   "robot": "humanoid",
+   "verdict": "L2",
+   "rules": [
+    "U-12"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F15",
+   "robot": "chain6",
+   "verdict": "L2",
+   "rules": [
+    "U-12"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F15",
+   "robot": "quad",
+   "verdict": "L2",
+   "rules": [
+    "U-12"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F16",
+   "robot": "arm2",
+   "verdict": "L2",
+   "rules": [
+    "U-12"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F16",
+   "robot": "arm3_gripper",
+   "verdict": "L2",
+   "rules": [
+    "U-12"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F16",
+   "robot": "mobile",
+   "verdict": "L2",
+   "rules": [
+    "U-12"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F16",
+   "robot": "humanoid",
+   "verdict": "L2",
+   "rules": [
+    "U-12"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F16",
+   "robot": "chain6",
+   "verdict": "L2",
+   "rules": [
+    "U-12"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F16",
+   "robot": "quad",
+   "verdict": "L2",
+   "rules": [
+    "U-12"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F17",
+   "robot": "arm2",
+   "verdict": "L2",
+   "rules": [
+    "U-13"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F17",
+   "robot": "arm3_gripper",
+   "verdict": "L2",
+   "rules": [
+    "U-13"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F17",
+   "robot": "mobile",
+   "verdict": "L2",
+   "rules": [
+    "U-13"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F17",
+   "robot": "humanoid",
+   "verdict": "L2",
+   "rules": [
+    "U-13"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F17",
+   "robot": "chain6",
+   "verdict": "L2",
+   "rules": [
+    "U-13"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F17",
+   "robot": "quad",
+   "verdict": "L2",
+   "rules": [
+    "U-13"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F18",
+   "robot": "arm2",
+   "verdict": "L2",
+   "rules": [
+    "U-13"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F18",
+   "robot": "arm3_gripper",
+   "verdict": "L2",
+   "rules": [
+    "U-13"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F18",
+   "robot": "mobile",
+   "verdict": "L2",
+   "rules": [
+    "U-13"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F18",
+   "robot": "humanoid",
+   "verdict": "L2",
+   "rules": [
+    "U-13"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F18",
+   "robot": "chain6",
+   "verdict": "L2",
+   "rules": [
+    "U-13"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F18",
+   "robot": "quad",
+   "verdict": "L2",
+   "rules": [
+    "U-13"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F19",
+   "robot": "arm2",
+   "verdict": "L2",
+   "rules": [
+    "U-14"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F19",
+   "robot": "arm3_gripper",
+   "verdict": "L2",
+   "rules": [
+    "U-14"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F19",
+   "robot": "mobile",
+   "verdict": "L2",
+   "rules": [
+    "U-14"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F19",
+   "robot": "humanoid",
+   "verdict": "L2",
+   "rules": [
+    "U-14"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F19",
+   "robot": "chain6",
+   "verdict": "L2",
+   "rules": [
+    "U-14"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F19",
+   "robot": "quad",
+   "verdict": "L2",
+   "rules": [
+    "U-14"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F20",
+   "robot": "arm2",
+   "verdict": "L2",
+   "rules": [
+    "U-15"
+   ],
+   "repair": "fixed"
+  },
+  {
+   "fault": "F21",
+   "robot": "arm2",
+   "verdict": "L2",
+   "rules": [
+    "U-10"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F21",
+   "robot": "arm3_gripper",
+   "verdict": "L2",
+   "rules": [
+    "U-10"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F21",
+   "robot": "humanoid",
+   "verdict": "L2",
+   "rules": [
+    "U-10"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F21",
+   "robot": "chain6",
+   "verdict": "L2",
+   "rules": [
+    "U-10"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F21",
+   "robot": "quad",
+   "verdict": "L2",
+   "rules": [
+    "U-10"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F22",
+   "robot": "arm2",
+   "verdict": "L2",
+   "rules": [
+    "U-09"
+   ],
+   "repair": "fixed"
+  },
+  {
+   "fault": "F22",
+   "robot": "arm3_gripper",
+   "verdict": "L2",
+   "rules": [
+    "U-09"
+   ],
+   "repair": "fixed"
+  },
+  {
+   "fault": "F22",
+   "robot": "humanoid",
+   "verdict": "L2",
+   "rules": [
+    "U-09"
+   ],
+   "repair": "fixed"
+  },
+  {
+   "fault": "F22",
+   "robot": "chain6",
+   "verdict": "L2",
+   "rules": [
+    "U-09"
+   ],
+   "repair": "fixed"
+  },
+  {
+   "fault": "F22",
+   "robot": "quad",
+   "verdict": "L2",
+   "rules": [
+    "U-09"
+   ],
+   "repair": "fixed"
+  },
+  {
+   "fault": "F23",
+   "robot": "arm2",
+   "verdict": "warn",
+   "rules": [
+    "U-08"
+   ],
+   "repair": "fixed"
+  },
+  {
+   "fault": "F23",
+   "robot": "arm3_gripper",
+   "verdict": "warn",
+   "rules": [
+    "U-08"
+   ],
+   "repair": "fixed"
+  },
+  {
+   "fault": "F23",
+   "robot": "mobile",
+   "verdict": "warn",
+   "rules": [
+    "U-08"
+   ],
+   "repair": "fixed"
+  },
+  {
+   "fault": "F23",
+   "robot": "humanoid",
+   "verdict": "warn",
+   "rules": [
+    "U-08"
+   ],
+   "repair": "fixed"
+  },
+  {
+   "fault": "F23",
+   "robot": "chain6",
+   "verdict": "warn",
+   "rules": [
+    "U-08"
+   ],
+   "repair": "fixed"
+  },
+  {
+   "fault": "F23",
+   "robot": "quad",
+   "verdict": "warn",
+   "rules": [
+    "U-08"
+   ],
+   "repair": "fixed"
+  },
+  {
+   "fault": "F24",
+   "robot": "arm2",
+   "verdict": "contact",
+   "rules": [
+    "U-16"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F24",
+   "robot": "arm3_gripper",
+   "verdict": "contact",
+   "rules": [
+    "U-16"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F24",
+   "robot": "mobile",
+   "verdict": "contact",
+   "rules": [
+    "U-16"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F24",
+   "robot": "humanoid",
+   "verdict": "contact",
+   "rules": [
+    "U-16"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F24",
+   "robot": "chain6",
+   "verdict": "contact",
+   "rules": [
+    "U-16"
+   ],
+   "repair": null
+  },
+  {
+   "fault": "F24",
+   "robot": "quad",
+   "verdict": "contact",
+   "rules": [
+    "U-16"
+   ],
+   "repair": null
+  }
+ ],
+ "totals": {
+  "n": 135,
+  "L0": 6,
+  "L1": 36,
+  "L2": 81,
+  "repair_fixed": 17,
+  "warn": 6,
+  "contact": 6
+ },
+ "repair_noop_on_clean": {
+  "arm2": true,
+  "arm3_gripper": true,
+  "mobile": true,
+  "humanoid": true,
+  "chain6": true,
+  "quad": true
+ },
+ "latency_ms": {
+  "mean": 0.7,
+  "max": 7.63,
+  "n": 135
+ },
+ "rules": [
+  {
+   "id": "U-00",
+   "rung": 0,
+   "what": "XML well-formed",
+   "x3d": ""
+  },
+  {
+   "id": "U-01",
+   "rung": 2,
+   "what": "root <robot name>",
+   "x3d": ""
+  },
+  {
+   "id": "U-02",
+   "rung": 2,
+   "what": "unique, present names",
+   "x3d": ""
+  },
+  {
+   "id": "U-03",
+   "rung": 2,
+   "what": "joint type enum",
+   "x3d": ""
+  },
+  {
+   "id": "U-04",
+   "rung": 2,
+   "what": "joint parent/child present",
+   "x3d": ""
+  },
+  {
+   "id": "U-05",
+   "rung": 1,
+   "what": "numeric attributes parse",
+   "x3d": ""
+  },
+  {
+   "id": "U-06",
+   "rung": 3,
+   "what": "joint links defined",
+   "x3d": "joint refers to a non-RigidBody"
+  },
+  {
+   "id": "U-07",
+   "rung": 3,
+   "what": "one parent per link (tree)",
+   "x3d": "body in two collections"
+  },
+  {
+   "id": "U-08",
+   "rung": 3,
+   "what": "axis non-zero, unit",
+   "x3d": ""
+  },
+  {
+   "id": "U-09",
+   "rung": 3,
+   "what": "limits present, ordered, positive velocity",
+   "x3d": "min>max limits (deferred)"
+  },
+  {
+   "id": "U-10",
+   "rung": 3,
+   "what": "mimic target exists",
+   "x3d": ""
+  },
+  {
+   "id": "U-11",
+   "rung": 3,
+   "what": "exactly one root, all reachable",
+   "x3d": "body outside any collection"
+  },
+  {
+   "id": "U-12",
+   "rung": 4,
+   "what": "mass positive (dynamic links)",
+   "x3d": "X-09 physics-mass"
+  },
+  {
+   "id": "U-13",
+   "rung": 4,
+   "what": "inertia positive definite, triangle inequality",
+   "x3d": "inertia rules (deferred)"
+  },
+  {
+   "id": "U-14",
+   "rung": 3,
+   "what": "geometry dimensions positive",
+   "x3d": ""
+  },
+  {
+   "id": "U-15",
+   "rung": 3,
+   "what": "colour in [0,1]",
+   "x3d": ""
+  },
+  {
+   "id": "U-16",
+   "rung": 6,
+   "what": "joint attached on the parent geometry (contact)",
+   "x3d": "parts-and-contact: floating part"
+  }
+ ]
+}

@@ -1,0 +1,1542 @@
+{
+ "clean": {
+  "triangle": {
+   "errors": 0,
+   "warnings": 0,
+   "infos": 0,
+   "hints": 0
+  },
+  "cube": {
+   "errors": 0,
+   "warnings": 0,
+   "infos": 0,
+   "hints": 0
+  },
+  "hierarchy": {
+   "errors": 0,
+   "warnings": 0,
+   "infos": 0,
+   "hints": 0
+  },
+  "pbr": {
+   "errors": 0,
+   "warnings": 0,
+   "infos": 0,
+   "hints": 0
+  },
+  "textured": {
+   "errors": 0,
+   "warnings": 0,
+   "infos": 0,
+   "hints": 0
+  },
+  "animated": {
+   "errors": 0,
+   "warnings": 0,
+   "infos": 0,
+   "hints": 0
+  }
+ },
+ "validator": "2.0.0-dev.3.10",
+ "faults": {
+  "G01": {
+   "level": "L1",
+   "desc": "asset.version removed",
+   "n": 6,
+   "baseline": 6,
+   "khronos_error_total": 6,
+   "baseline_total": 6
+  },
+  "G02": {
+   "level": "L1",
+   "desc": "asset.version 3.0",
+   "n": 6,
+   "baseline": 6,
+   "khronos_error_total": 6,
+   "baseline_total": 6
+  },
+  "G03": {
+   "level": "L2",
+   "desc": "accessor.bufferView out of range",
+   "n": 6,
+   "khronos-error": 6,
+   "khronos_error_total": 6,
+   "baseline_total": 0
+  },
+  "G04": {
+   "level": "L2",
+   "desc": "accessor.count larger than its bufferView",
+   "n": 6,
+   "khronos-error": 6,
+   "khronos_error_total": 6,
+   "baseline_total": 0
+  },
+  "G05": {
+   "level": "L2",
+   "desc": "bufferView runs past the buffer",
+   "n": 6,
+   "khronos-error": 6,
+   "khronos_error_total": 6,
+   "baseline_total": 0
+  },
+  "G06": {
+   "level": "L2",
+   "desc": "buffer.byteLength does not match embedded data",
+   "n": 6,
+   "khronos-error": 6,
+   "khronos_error_total": 6,
+   "baseline_total": 0
+  },
+  "G07": {
+   "level": "L2",
+   "desc": "scene refers to a missing node",
+   "n": 6,
+   "khronos-error": 6,
+   "khronos_error_total": 6,
+   "baseline_total": 0
+  },
+  "G08": {
+   "level": "L2",
+   "desc": "node cycle",
+   "n/a": 5,
+   "n": 1,
+   "khronos-error": 1,
+   "khronos_error_total": 1,
+   "baseline_total": 0
+  },
+  "G09": {
+   "level": "L2",
+   "desc": "node.mesh out of range",
+   "n": 6,
+   "khronos-error": 6,
+   "khronos_error_total": 6,
+   "baseline_total": 0
+  },
+  "G10": {
+   "level": "L2",
+   "desc": "primitive.material out of range",
+   "n": 6,
+   "khronos-error": 6,
+   "khronos_error_total": 6,
+   "baseline_total": 0
+  },
+  "G11": {
+   "level": "D",
+   "desc": "index value beyond the vertex count (data)",
+   "n": 5,
+   "khronos-error": 5,
+   "khronos_error_total": 5,
+   "baseline_total": 0,
+   "n/a": 1
+  },
+  "G12": {
+   "level": "D",
+   "desc": "POSITION min/max wrong (data)",
+   "n": 6,
+   "khronos-error": 6,
+   "khronos_error_total": 6,
+   "baseline_total": 0
+  },
+  "G13": {
+   "level": "L2",
+   "desc": "non-unit rotation quaternion",
+   "n/a": 5,
+   "n": 1,
+   "khronos-error": 1,
+   "khronos_error_total": 1,
+   "baseline_total": 0
+  },
+  "G14": {
+   "level": "L2",
+   "desc": "matrix together with translation",
+   "n": 6,
+   "khronos-error": 6,
+   "khronos_error_total": 6,
+   "baseline_total": 0
+  },
+  "G15": {
+   "level": "D",
+   "desc": "animation input not increasing (data)",
+   "n/a": 5,
+   "n": 1,
+   "khronos-error": 1,
+   "khronos_error_total": 1,
+   "baseline_total": 0
+  },
+  "G16": {
+   "level": "L2",
+   "desc": "animation channel node out of range",
+   "n/a": 5,
+   "n": 1,
+   "khronos-error": 1,
+   "khronos_error_total": 1,
+   "baseline_total": 0
+  },
+  "G17": {
+   "level": "L2",
+   "desc": "texture.source out of range",
+   "n/a": 5,
+   "n": 1,
+   "khronos-error": 1,
+   "khronos_error_total": 1,
+   "baseline_total": 0
+  },
+  "G18": {
+   "level": "L2",
+   "desc": "required extension not supported",
+   "n": 6,
+   "khronos-warning": 6,
+   "khronos_error_total": 0,
+   "baseline_total": 0
+  },
+  "G19": {
+   "level": "L2",
+   "desc": "vertex bufferView byteStride not a multiple of 4",
+   "n": 6,
+   "khronos-error": 6,
+   "khronos_error_total": 6,
+   "baseline_total": 0
+  },
+  "G20": {
+   "level": "L1",
+   "desc": "accessor.componentType invalid",
+   "n": 6,
+   "khronos-error": 6,
+   "khronos_error_total": 6,
+   "baseline_total": 0
+  },
+  "G21": {
+   "level": "W",
+   "desc": "unused accessor added (warning/info expected)",
+   "n": 6,
+   "khronos-warning": 6,
+   "khronos_error_total": 0,
+   "baseline_total": 0
+  },
+  "G22": {
+   "level": "L1",
+   "desc": "primitive.mode invalid",
+   "n": 6,
+   "khronos-error": 6,
+   "khronos_error_total": 6,
+   "baseline_total": 0
+  },
+  "G23": {
+   "level": "L2",
+   "desc": "primitive without POSITION",
+   "n/a": 1,
+   "n": 5,
+   "khronos-warning": 5,
+   "khronos_error_total": 0,
+   "baseline_total": 0
+  },
+  "G24": {
+   "level": "L2",
+   "desc": "scene index out of range",
+   "n": 6,
+   "khronos-error": 6,
+   "khronos_error_total": 6,
+   "baseline_total": 0
+  },
+  "G25": {
+   "level": "L0",
+   "desc": "JSON broken (text level)",
+   "n": 6,
+   "L0": 6,
+   "khronos_error_total": 6,
+   "baseline_total": 6
+  }
+ },
+ "rows": [
+  {
+   "fault": "G01",
+   "base": "triangle",
+   "verdict": "baseline",
+   "codes": [
+    "UNDEFINED_PROPERTY"
+   ],
+   "first": "Property 'version' must be defined."
+  },
+  {
+   "fault": "G01",
+   "base": "cube",
+   "verdict": "baseline",
+   "codes": [
+    "UNDEFINED_PROPERTY"
+   ],
+   "first": "Property 'version' must be defined."
+  },
+  {
+   "fault": "G01",
+   "base": "hierarchy",
+   "verdict": "baseline",
+   "codes": [
+    "UNDEFINED_PROPERTY"
+   ],
+   "first": "Property 'version' must be defined."
+  },
+  {
+   "fault": "G01",
+   "base": "pbr",
+   "verdict": "baseline",
+   "codes": [
+    "UNDEFINED_PROPERTY"
+   ],
+   "first": "Property 'version' must be defined."
+  },
+  {
+   "fault": "G01",
+   "base": "textured",
+   "verdict": "baseline",
+   "codes": [
+    "UNDEFINED_PROPERTY"
+   ],
+   "first": "Property 'version' must be defined."
+  },
+  {
+   "fault": "G01",
+   "base": "animated",
+   "verdict": "baseline",
+   "codes": [
+    "UNDEFINED_PROPERTY"
+   ],
+   "first": "Property 'version' must be defined."
+  },
+  {
+   "fault": "G02",
+   "base": "triangle",
+   "verdict": "baseline",
+   "codes": [
+    "UNKNOWN_ASSET_MAJOR_VERSION"
+   ],
+   "first": "Unknown glTF major asset version: 3."
+  },
+  {
+   "fault": "G02",
+   "base": "cube",
+   "verdict": "baseline",
+   "codes": [
+    "UNKNOWN_ASSET_MAJOR_VERSION"
+   ],
+   "first": "Unknown glTF major asset version: 3."
+  },
+  {
+   "fault": "G02",
+   "base": "hierarchy",
+   "verdict": "baseline",
+   "codes": [
+    "UNKNOWN_ASSET_MAJOR_VERSION"
+   ],
+   "first": "Unknown glTF major asset version: 3."
+  },
+  {
+   "fault": "G02",
+   "base": "pbr",
+   "verdict": "baseline",
+   "codes": [
+    "UNKNOWN_ASSET_MAJOR_VERSION"
+   ],
+   "first": "Unknown glTF major asset version: 3."
+  },
+  {
+   "fault": "G02",
+   "base": "textured",
+   "verdict": "baseline",
+   "codes": [
+    "UNKNOWN_ASSET_MAJOR_VERSION"
+   ],
+   "first": "Unknown glTF major asset version: 3."
+  },
+  {
+   "fault": "G02",
+   "base": "animated",
+   "verdict": "baseline",
+   "codes": [
+    "UNKNOWN_ASSET_MAJOR_VERSION"
+   ],
+   "first": "Unknown glTF major asset version: 3."
+  },
+  {
+   "fault": "G03",
+   "base": "triangle",
+   "verdict": "khronos-error",
+   "codes": [
+    "UNRESOLVED_REFERENCE",
+    "UNUSED_OBJECT"
+   ],
+   "first": "Unresolved reference: 5."
+  },
+  {
+   "fault": "G03",
+   "base": "cube",
+   "verdict": "khronos-error",
+   "codes": [
+    "UNRESOLVED_REFERENCE",
+    "UNUSED_OBJECT"
+   ],
+   "first": "Unresolved reference: 6."
+  },
+  {
+   "fault": "G03",
+   "base": "hierarchy",
+   "verdict": "khronos-error",
+   "codes": [
+    "UNRESOLVED_REFERENCE",
+    "UNUSED_OBJECT"
+   ],
+   "first": "Unresolved reference: 6."
+  },
+  {
+   "fault": "G03",
+   "base": "pbr",
+   "verdict": "khronos-error",
+   "codes": [
+    "UNRESOLVED_REFERENCE",
+    "UNUSED_OBJECT"
+   ],
+   "first": "Unresolved reference: 6."
+  },
+  {
+   "fault": "G03",
+   "base": "textured",
+   "verdict": "khronos-error",
+   "codes": [
+    "UNRESOLVED_REFERENCE",
+    "UNUSED_OBJECT"
+   ],
+   "first": "Unresolved reference: 7."
+  },
+  {
+   "fault": "G03",
+   "base": "animated",
+   "verdict": "khronos-error",
+   "codes": [
+    "UNRESOLVED_REFERENCE",
+    "UNUSED_OBJECT"
+   ],
+   "first": "Unresolved reference: 8."
+  },
+  {
+   "fault": "G04",
+   "base": "triangle",
+   "verdict": "khronos-error",
+   "codes": [
+    "ACCESSOR_TOO_LONG"
+   ],
+   "first": "Accessor (offset: 0, length: 1800) does not fit referenced bufferView [0] length 36."
+  },
+  {
+   "fault": "G04",
+   "base": "cube",
+   "verdict": "khronos-error",
+   "codes": [
+    "ACCESSOR_TOO_LONG",
+    "MESH_PRIMITIVE_UNEQUAL_ACCESSOR_COUNT"
+   ],
+   "first": "Accessor (offset: 0, length: 14400) does not fit referenced bufferView [0] length 288."
+  },
+  {
+   "fault": "G04",
+   "base": "hierarchy",
+   "verdict": "khronos-error",
+   "codes": [
+    "ACCESSOR_TOO_LONG",
+    "MESH_PRIMITIVE_UNEQUAL_ACCESSOR_COUNT"
+   ],
+   "first": "Accessor (offset: 0, length: 14400) does not fit referenced bufferView [0] length 288."
+  },
+  {
+   "fault": "G04",
+   "base": "pbr",
+   "verdict": "khronos-error",
+   "codes": [
+    "ACCESSOR_TOO_LONG",
+    "MESH_PRIMITIVE_UNEQUAL_ACCESSOR_COUNT"
+   ],
+   "first": "Accessor (offset: 0, length: 14400) does not fit referenced bufferView [0] length 288."
+  },
+  {
+   "fault": "G04",
+   "base": "textured",
+   "verdict": "khronos-error",
+   "codes": [
+    "ACCESSOR_TOO_LONG",
+    "MESH_PRIMITIVE_UNEQUAL_ACCESSOR_COUNT"
+   ],
+   "first": "Accessor (offset: 0, length: 14400) does not fit referenced bufferView [0] length 288."
+  },
+  {
+   "fault": "G04",
+   "base": "animated",
+   "verdict": "khronos-error",
+   "codes": [
+    "ACCESSOR_TOO_LONG",
+    "ANIMATION_SAMPLER_OUTPUT_ACCESSOR_INVALID_COUNT"
+   ],
+   "first": "Accessor (offset: 0, length: 800) does not fit referenced bufferView [0] length 16."
+  },
+  {
+   "fault": "G05",
+   "base": "triangle",
+   "verdict": "khronos-error",
+   "codes": [
+    "BUFFER_VIEW_TOO_LONG"
+   ],
+   "first": "BufferView does not fit buffer (0) byteLength (44)."
+  },
+  {
+   "fault": "G05",
+   "base": "cube",
+   "verdict": "khronos-error",
+   "codes": [
+    "BUFFER_VIEW_TOO_LONG"
+   ],
+   "first": "BufferView does not fit buffer (0) byteLength (648)."
+  },
+  {
+   "fault": "G05",
+   "base": "hierarchy",
+   "verdict": "khronos-error",
+   "codes": [
+    "BUFFER_VIEW_TOO_LONG"
+   ],
+   "first": "BufferView does not fit buffer (0) byteLength (648)."
+  },
+  {
+   "fault": "G05",
+   "base": "pbr",
+   "verdict": "khronos-error",
+   "codes": [
+    "BUFFER_VIEW_TOO_LONG"
+   ],
+   "first": "BufferView does not fit buffer (0) byteLength (648)."
+  },
+  {
+   "fault": "G05",
+   "base": "textured",
+   "verdict": "khronos-error",
+   "codes": [
+    "BUFFER_VIEW_TOO_LONG"
+   ],
+   "first": "BufferView does not fit buffer (0) byteLength (840)."
+  },
+  {
+   "fault": "G05",
+   "base": "animated",
+   "verdict": "khronos-error",
+   "codes": [
+    "BUFFER_VIEW_TOO_LONG"
+   ],
+   "first": "BufferView does not fit buffer (0) byteLength (712)."
+  },
+  {
+   "fault": "G06",
+   "base": "triangle",
+   "verdict": "khronos-error",
+   "codes": [
+    "BUFFER_BYTE_LENGTH_MISMATCH"
+   ],
+   "first": "Actual data byte length (44) is less than the declared buffer byte length (52)."
+  },
+  {
+   "fault": "G06",
+   "base": "cube",
+   "verdict": "khronos-error",
+   "codes": [
+    "BUFFER_BYTE_LENGTH_MISMATCH"
+   ],
+   "first": "Actual data byte length (648) is less than the declared buffer byte length (656)."
+  },
+  {
+   "fault": "G06",
+   "base": "hierarchy",
+   "verdict": "khronos-error",
+   "codes": [
+    "BUFFER_BYTE_LENGTH_MISMATCH"
+   ],
+   "first": "Actual data byte length (648) is less than the declared buffer byte length (656)."
+  },
+  {
+   "fault": "G06",
+   "base": "pbr",
+   "verdict": "khronos-error",
+   "codes": [
+    "BUFFER_BYTE_LENGTH_MISMATCH"
+   ],
+   "first": "Actual data byte length (648) is less than the declared buffer byte length (656)."
+  },
+  {
+   "fault": "G06",
+   "base": "textured",
+   "verdict": "khronos-error",
+   "codes": [
+    "BUFFER_BYTE_LENGTH_MISMATCH"
+   ],
+   "first": "Actual data byte length (840) is less than the declared buffer byte length (848)."
+  },
+  {
+   "fault": "G06",
+   "base": "animated",
+   "verdict": "khronos-error",
+   "codes": [
+    "BUFFER_BYTE_LENGTH_MISMATCH"
+   ],
+   "first": "Actual data byte length (712) is less than the declared buffer byte length (720)."
+  },
+  {
+   "fault": "G07",
+   "base": "triangle",
+   "verdict": "khronos-error",
+   "codes": [
+    "UNRESOLVED_REFERENCE"
+   ],
+   "first": "Unresolved reference: 99."
+  },
+  {
+   "fault": "G07",
+   "base": "cube",
+   "verdict": "khronos-error",
+   "codes": [
+    "UNRESOLVED_REFERENCE"
+   ],
+   "first": "Unresolved reference: 99."
+  },
+  {
+   "fault": "G07",
+   "base": "hierarchy",
+   "verdict": "khronos-error",
+   "codes": [
+    "UNRESOLVED_REFERENCE"
+   ],
+   "first": "Unresolved reference: 99."
+  },
+  {
+   "fault": "G07",
+   "base": "pbr",
+   "verdict": "khronos-error",
+   "codes": [
+    "UNRESOLVED_REFERENCE"
+   ],
+   "first": "Unresolved reference: 99."
+  },
+  {
+   "fault": "G07",
+   "base": "textured",
+   "verdict": "khronos-error",
+   "codes": [
+    "UNRESOLVED_REFERENCE"
+   ],
+   "first": "Unresolved reference: 99."
+  },
+  {
+   "fault": "G07",
+   "base": "animated",
+   "verdict": "khronos-error",
+   "codes": [
+    "UNRESOLVED_REFERENCE"
+   ],
+   "first": "Unresolved reference: 99."
+  },
+  {
+   "fault": "G08",
+   "base": "hierarchy",
+   "verdict": "khronos-error",
+   "codes": [
+    "DUPLICATE_ELEMENTS",
+    "NODE_LOOP",
+    "NODE_PARENT_OVERRIDE",
+    "SCENE_NON_ROOT_NODE"
+   ],
+   "first": "Duplicate element."
+  },
+  {
+   "fault": "G09",
+   "base": "triangle",
+   "verdict": "khronos-error",
+   "codes": [
+    "NODE_EMPTY",
+    "UNRESOLVED_REFERENCE",
+    "UNUSED_OBJECT"
+   ],
+   "first": "Unresolved reference: 42."
+  },
+  {
+   "fault": "G09",
+   "base": "cube",
+   "verdict": "khronos-error",
+   "codes": [
+    "NODE_EMPTY",
+    "UNRESOLVED_REFERENCE",
+    "UNUSED_OBJECT"
+   ],
+   "first": "Unresolved reference: 42."
+  },
+  {
+   "fault": "G09",
+   "base": "hierarchy",
+   "verdict": "khronos-error",
+   "codes": [
+    "NODE_EMPTY",
+    "UNRESOLVED_REFERENCE"
+   ],
+   "first": "Unresolved reference: 42."
+  },
+  {
+   "fault": "G09",
+   "base": "pbr",
+   "verdict": "khronos-error",
+   "codes": [
+    "NODE_EMPTY",
+    "UNRESOLVED_REFERENCE",
+    "UNUSED_OBJECT"
+   ],
+   "first": "Unresolved reference: 42."
+  },
+  {
+   "fault": "G09",
+   "base": "textured",
+   "verdict": "khronos-error",
+   "codes": [
+    "NODE_EMPTY",
+    "UNRESOLVED_REFERENCE",
+    "UNUSED_OBJECT"
+   ],
+   "first": "Unresolved reference: 42."
+  },
+  {
+   "fault": "G09",
+   "base": "animated",
+   "verdict": "khronos-error",
+   "codes": [
+    "NODE_EMPTY",
+    "UNRESOLVED_REFERENCE",
+    "UNUSED_OBJECT"
+   ],
+   "first": "Unresolved reference: 42."
+  },
+  {
+   "fault": "G10",
+   "base": "triangle",
+   "verdict": "khronos-error",
+   "codes": [
+    "UNRESOLVED_REFERENCE"
+   ],
+   "first": "Unresolved reference: 7."
+  },
+  {
+   "fault": "G10",
+   "base": "cube",
+   "verdict": "khronos-error",
+   "codes": [
+    "UNRESOLVED_REFERENCE"
+   ],
+   "first": "Unresolved reference: 7."
+  },
+  {
+   "fault": "G10",
+   "base": "hierarchy",
+   "verdict": "khronos-error",
+   "codes": [
+    "UNRESOLVED_REFERENCE"
+   ],
+   "first": "Unresolved reference: 7."
+  },
+  {
+   "fault": "G10",
+   "base": "pbr",
+   "verdict": "khronos-error",
+   "codes": [
+    "UNRESOLVED_REFERENCE",
+    "UNUSED_OBJECT"
+   ],
+   "first": "Unresolved reference: 7."
+  },
+  {
+   "fault": "G10",
+   "base": "textured",
+   "verdict": "khronos-error",
+   "codes": [
+    "UNRESOLVED_REFERENCE",
+    "UNUSED_OBJECT"
+   ],
+   "first": "Unresolved reference: 7."
+  },
+  {
+   "fault": "G10",
+   "base": "animated",
+   "verdict": "khronos-error",
+   "codes": [
+    "UNRESOLVED_REFERENCE"
+   ],
+   "first": "Unresolved reference: 7."
+  },
+  {
+   "fault": "G11",
+   "base": "triangle",
+   "verdict": "khronos-error",
+   "codes": [
+    "ACCESSOR_INDEX_OOB"
+   ],
+   "first": "Indices accessor element at index 0 has value 60000 that is greater than the maximum vertex index available (2"
+  },
+  {
+   "fault": "G11",
+   "base": "cube",
+   "verdict": "khronos-error",
+   "codes": [
+    "ACCESSOR_INDEX_OOB"
+   ],
+   "first": "Indices accessor element at index 0 has value 60000 that is greater than the maximum vertex index available (2"
+  },
+  {
+   "fault": "G11",
+   "base": "hierarchy",
+   "verdict": "khronos-error",
+   "codes": [
+    "ACCESSOR_INDEX_OOB"
+   ],
+   "first": "Indices accessor element at index 0 has value 60000 that is greater than the maximum vertex index available (2"
+  },
+  {
+   "fault": "G11",
+   "base": "pbr",
+   "verdict": "khronos-error",
+   "codes": [
+    "ACCESSOR_INDEX_OOB"
+   ],
+   "first": "Indices accessor element at index 0 has value 60000 that is greater than the maximum vertex index available (2"
+  },
+  {
+   "fault": "G11",
+   "base": "textured",
+   "verdict": "khronos-error",
+   "codes": [
+    "ACCESSOR_INDEX_OOB"
+   ],
+   "first": "Indices accessor element at index 0 has value 60000 that is greater than the maximum vertex index available (2"
+  },
+  {
+   "fault": "G12",
+   "base": "triangle",
+   "verdict": "khronos-error",
+   "codes": [
+    "ACCESSOR_MAX_MISMATCH"
+   ],
+   "first": "Declared maximum value for this component (6) does not match actual maximum (1)."
+  },
+  {
+   "fault": "G12",
+   "base": "cube",
+   "verdict": "khronos-error",
+   "codes": [
+    "ACCESSOR_MAX_MISMATCH"
+   ],
+   "first": "Declared maximum value for this component (5.5) does not match actual maximum (0.5)."
+  },
+  {
+   "fault": "G12",
+   "base": "hierarchy",
+   "verdict": "khronos-error",
+   "codes": [
+    "ACCESSOR_MAX_MISMATCH"
+   ],
+   "first": "Declared maximum value for this component (5.5) does not match actual maximum (0.5)."
+  },
+  {
+   "fault": "G12",
+   "base": "pbr",
+   "verdict": "khronos-error",
+   "codes": [
+    "ACCESSOR_MAX_MISMATCH"
+   ],
+   "first": "Declared maximum value for this component (5.5) does not match actual maximum (0.5)."
+  },
+  {
+   "fault": "G12",
+   "base": "textured",
+   "verdict": "khronos-error",
+   "codes": [
+    "ACCESSOR_MAX_MISMATCH"
+   ],
+   "first": "Declared maximum value for this component (5.5) does not match actual maximum (0.5)."
+  },
+  {
+   "fault": "G12",
+   "base": "animated",
+   "verdict": "khronos-error",
+   "codes": [
+    "ACCESSOR_MAX_MISMATCH"
+   ],
+   "first": "Declared maximum value for this component (5.5) does not match actual maximum (0.5)."
+  },
+  {
+   "fault": "G13",
+   "base": "hierarchy",
+   "verdict": "khronos-error",
+   "codes": [
+    "VALUE_NOT_IN_RANGE"
+   ],
+   "first": "Value 2 is out of range."
+  },
+  {
+   "fault": "G14",
+   "base": "triangle",
+   "verdict": "khronos-error",
+   "codes": [
+    "NODE_MATRIX_DEFAULT",
+    "NODE_MATRIX_TRS"
+   ],
+   "first": "A node can have either a matrix or any combination of translation/rotation/scale (TRS) properties."
+  },
+  {
+   "fault": "G14",
+   "base": "cube",
+   "verdict": "khronos-error",
+   "codes": [
+    "NODE_MATRIX_DEFAULT",
+    "NODE_MATRIX_TRS"
+   ],
+   "first": "A node can have either a matrix or any combination of translation/rotation/scale (TRS) properties."
+  },
+  {
+   "fault": "G14",
+   "base": "hierarchy",
+   "verdict": "khronos-error",
+   "codes": [
+    "NODE_MATRIX_DEFAULT",
+    "NODE_MATRIX_TRS"
+   ],
+   "first": "A node can have either a matrix or any combination of translation/rotation/scale (TRS) properties."
+  },
+  {
+   "fault": "G14",
+   "base": "pbr",
+   "verdict": "khronos-error",
+   "codes": [
+    "NODE_MATRIX_DEFAULT",
+    "NODE_MATRIX_TRS"
+   ],
+   "first": "A node can have either a matrix or any combination of translation/rotation/scale (TRS) properties."
+  },
+  {
+   "fault": "G14",
+   "base": "textured",
+   "verdict": "khronos-error",
+   "codes": [
+    "NODE_MATRIX_DEFAULT",
+    "NODE_MATRIX_TRS"
+   ],
+   "first": "A node can have either a matrix or any combination of translation/rotation/scale (TRS) properties."
+  },
+  {
+   "fault": "G14",
+   "base": "animated",
+   "verdict": "khronos-error",
+   "codes": [
+    "ANIMATION_CHANNEL_TARGET_NODE_MATRIX",
+    "NODE_MATRIX_DEFAULT",
+    "NODE_MATRIX_TRS"
+   ],
+   "first": "A node can have either a matrix or any combination of translation/rotation/scale (TRS) properties."
+  },
+  {
+   "fault": "G15",
+   "base": "animated",
+   "verdict": "khronos-error",
+   "codes": [
+    "ACCESSOR_ANIMATION_INPUT_NON_INCREASING"
+   ],
+   "first": "Animation input accessor element at index 2 is less than or equal to previous: 0.10000000149011612 <= 0.5."
+  },
+  {
+   "fault": "G16",
+   "base": "animated",
+   "verdict": "khronos-error",
+   "codes": [
+    "UNRESOLVED_REFERENCE"
+   ],
+   "first": "Unresolved reference: 50."
+  },
+  {
+   "fault": "G17",
+   "base": "textured",
+   "verdict": "khronos-error",
+   "codes": [
+    "UNRESOLVED_REFERENCE",
+    "UNUSED_OBJECT"
+   ],
+   "first": "Unresolved reference: 9."
+  },
+  {
+   "fault": "G18",
+   "base": "triangle",
+   "verdict": "khronos-warning",
+   "codes": [
+    "UNSUPPORTED_EXTENSION"
+   ],
+   "first": "Cannot validate an extension as it is not supported by the validator: 'KHR_fake_extension'."
+  },
+  {
+   "fault": "G18",
+   "base": "cube",
+   "verdict": "khronos-warning",
+   "codes": [
+    "UNSUPPORTED_EXTENSION"
+   ],
+   "first": "Cannot validate an extension as it is not supported by the validator: 'KHR_fake_extension'."
+  },
+  {
+   "fault": "G18",
+   "base": "hierarchy",
+   "verdict": "khronos-warning",
+   "codes": [
+    "UNSUPPORTED_EXTENSION"
+   ],
+   "first": "Cannot validate an extension as it is not supported by the validator: 'KHR_fake_extension'."
+  },
+  {
+   "fault": "G18",
+   "base": "pbr",
+   "verdict": "khronos-warning",
+   "codes": [
+    "UNSUPPORTED_EXTENSION"
+   ],
+   "first": "Cannot validate an extension as it is not supported by the validator: 'KHR_fake_extension'."
+  },
+  {
+   "fault": "G18",
+   "base": "textured",
+   "verdict": "khronos-warning",
+   "codes": [
+    "UNSUPPORTED_EXTENSION"
+   ],
+   "first": "Cannot validate an extension as it is not supported by the validator: 'KHR_fake_extension'."
+  },
+  {
+   "fault": "G18",
+   "base": "animated",
+   "verdict": "khronos-warning",
+   "codes": [
+    "UNSUPPORTED_EXTENSION"
+   ],
+   "first": "Cannot validate an extension as it is not supported by the validator: 'KHR_fake_extension'."
+  },
+  {
+   "fault": "G19",
+   "base": "triangle",
+   "verdict": "khronos-error",
+   "codes": [
+    "ACCESSOR_SMALL_BYTESTRIDE",
+    "VALUE_MULTIPLE_OF"
+   ],
+   "first": "Value 10 is not a multiple of 4."
+  },
+  {
+   "fault": "G19",
+   "base": "cube",
+   "verdict": "khronos-error",
+   "codes": [
+    "ACCESSOR_SMALL_BYTESTRIDE",
+    "VALUE_MULTIPLE_OF"
+   ],
+   "first": "Value 10 is not a multiple of 4."
+  },
+  {
+   "fault": "G19",
+   "base": "hierarchy",
+   "verdict": "khronos-error",
+   "codes": [
+    "ACCESSOR_SMALL_BYTESTRIDE",
+    "VALUE_MULTIPLE_OF"
+   ],
+   "first": "Value 10 is not a multiple of 4."
+  },
+  {
+   "fault": "G19",
+   "base": "pbr",
+   "verdict": "khronos-error",
+   "codes": [
+    "ACCESSOR_SMALL_BYTESTRIDE",
+    "VALUE_MULTIPLE_OF"
+   ],
+   "first": "Value 10 is not a multiple of 4."
+  },
+  {
+   "fault": "G19",
+   "base": "textured",
+   "verdict": "khronos-error",
+   "codes": [
+    "ACCESSOR_SMALL_BYTESTRIDE",
+    "VALUE_MULTIPLE_OF"
+   ],
+   "first": "Value 10 is not a multiple of 4."
+  },
+  {
+   "fault": "G19",
+   "base": "animated",
+   "verdict": "khronos-error",
+   "codes": [
+    "ACCESSOR_TOO_LONG",
+    "ANIMATION_SAMPLER_ACCESSOR_WITH_BYTESTRIDE",
+    "VALUE_MULTIPLE_OF"
+   ],
+   "first": "Value 10 is not a multiple of 4."
+  },
+  {
+   "fault": "G20",
+   "base": "triangle",
+   "verdict": "khronos-error",
+   "codes": [
+    "MESH_PRIMITIVE_ATTRIBUTES_ACCESSOR_INVALID_FORMAT",
+    "MESH_PRIMITIVE_POSITION_ACCESSOR_WITHOUT_BOUNDS",
+    "VALUE_NOT_IN_LIST"
+   ],
+   "first": "Invalid value 9999. Valid values are (5120, 5121, 5122, 5123, 5125, 5126)."
+  },
+  {
+   "fault": "G20",
+   "base": "cube",
+   "verdict": "khronos-error",
+   "codes": [
+    "MESH_PRIMITIVE_ATTRIBUTES_ACCESSOR_INVALID_FORMAT",
+    "MESH_PRIMITIVE_POSITION_ACCESSOR_WITHOUT_BOUNDS",
+    "VALUE_NOT_IN_LIST"
+   ],
+   "first": "Invalid value 9999. Valid values are (5120, 5121, 5122, 5123, 5125, 5126)."
+  },
+  {
+   "fault": "G20",
+   "base": "hierarchy",
+   "verdict": "khronos-error",
+   "codes": [
+    "MESH_PRIMITIVE_ATTRIBUTES_ACCESSOR_INVALID_FORMAT",
+    "MESH_PRIMITIVE_POSITION_ACCESSOR_WITHOUT_BOUNDS",
+    "VALUE_NOT_IN_LIST"
+   ],
+   "first": "Invalid value 9999. Valid values are (5120, 5121, 5122, 5123, 5125, 5126)."
+  },
+  {
+   "fault": "G20",
+   "base": "pbr",
+   "verdict": "khronos-error",
+   "codes": [
+    "MESH_PRIMITIVE_ATTRIBUTES_ACCESSOR_INVALID_FORMAT",
+    "MESH_PRIMITIVE_POSITION_ACCESSOR_WITHOUT_BOUNDS",
+    "VALUE_NOT_IN_LIST"
+   ],
+   "first": "Invalid value 9999. Valid values are (5120, 5121, 5122, 5123, 5125, 5126)."
+  },
+  {
+   "fault": "G20",
+   "base": "textured",
+   "verdict": "khronos-error",
+   "codes": [
+    "MESH_PRIMITIVE_ATTRIBUTES_ACCESSOR_INVALID_FORMAT",
+    "MESH_PRIMITIVE_POSITION_ACCESSOR_WITHOUT_BOUNDS",
+    "VALUE_NOT_IN_LIST"
+   ],
+   "first": "Invalid value 9999. Valid values are (5120, 5121, 5122, 5123, 5125, 5126)."
+  },
+  {
+   "fault": "G20",
+   "base": "animated",
+   "verdict": "khronos-error",
+   "codes": [
+    "ANIMATION_SAMPLER_INPUT_ACCESSOR_INVALID_FORMAT",
+    "ANIMATION_SAMPLER_INPUT_ACCESSOR_WITHOUT_BOUNDS",
+    "VALUE_NOT_IN_LIST"
+   ],
+   "first": "Invalid value 9999. Valid values are (5120, 5121, 5122, 5123, 5125, 5126)."
+  },
+  {
+   "fault": "G21",
+   "base": "triangle",
+   "verdict": "khronos-warning",
+   "codes": [
+    "UNUSED_OBJECT"
+   ],
+   "first": "This object may be unused."
+  },
+  {
+   "fault": "G21",
+   "base": "cube",
+   "verdict": "khronos-warning",
+   "codes": [
+    "UNUSED_OBJECT"
+   ],
+   "first": "This object may be unused."
+  },
+  {
+   "fault": "G21",
+   "base": "hierarchy",
+   "verdict": "khronos-warning",
+   "codes": [
+    "UNUSED_OBJECT"
+   ],
+   "first": "This object may be unused."
+  },
+  {
+   "fault": "G21",
+   "base": "pbr",
+   "verdict": "khronos-warning",
+   "codes": [
+    "UNUSED_OBJECT"
+   ],
+   "first": "This object may be unused."
+  },
+  {
+   "fault": "G21",
+   "base": "textured",
+   "verdict": "khronos-warning",
+   "codes": [
+    "UNUSED_OBJECT"
+   ],
+   "first": "This object may be unused."
+  },
+  {
+   "fault": "G21",
+   "base": "animated",
+   "verdict": "khronos-warning",
+   "codes": [
+    "UNUSED_OBJECT"
+   ],
+   "first": "This object may be unused."
+  },
+  {
+   "fault": "G22",
+   "base": "triangle",
+   "verdict": "khronos-error",
+   "codes": [
+    "VALUE_NOT_IN_RANGE"
+   ],
+   "first": "Value 99 is out of range."
+  },
+  {
+   "fault": "G22",
+   "base": "cube",
+   "verdict": "khronos-error",
+   "codes": [
+    "VALUE_NOT_IN_RANGE"
+   ],
+   "first": "Value 99 is out of range."
+  },
+  {
+   "fault": "G22",
+   "base": "hierarchy",
+   "verdict": "khronos-error",
+   "codes": [
+    "VALUE_NOT_IN_RANGE"
+   ],
+   "first": "Value 99 is out of range."
+  },
+  {
+   "fault": "G22",
+   "base": "pbr",
+   "verdict": "khronos-error",
+   "codes": [
+    "VALUE_NOT_IN_RANGE"
+   ],
+   "first": "Value 99 is out of range."
+  },
+  {
+   "fault": "G22",
+   "base": "textured",
+   "verdict": "khronos-error",
+   "codes": [
+    "VALUE_NOT_IN_RANGE"
+   ],
+   "first": "Value 99 is out of range."
+  },
+  {
+   "fault": "G22",
+   "base": "animated",
+   "verdict": "khronos-error",
+   "codes": [
+    "VALUE_NOT_IN_RANGE"
+   ],
+   "first": "Value 99 is out of range."
+  },
+  {
+   "fault": "G23",
+   "base": "cube",
+   "verdict": "khronos-warning",
+   "codes": [
+    "MESH_PRIMITIVE_NO_POSITION",
+    "UNUSED_OBJECT"
+   ],
+   "first": "No POSITION attribute found."
+  },
+  {
+   "fault": "G23",
+   "base": "hierarchy",
+   "verdict": "khronos-warning",
+   "codes": [
+    "MESH_PRIMITIVE_NO_POSITION",
+    "UNUSED_OBJECT"
+   ],
+   "first": "No POSITION attribute found."
+  },
+  {
+   "fault": "G23",
+   "base": "pbr",
+   "verdict": "khronos-warning",
+   "codes": [
+    "MESH_PRIMITIVE_NO_POSITION",
+    "UNUSED_OBJECT"
+   ],
+   "first": "No POSITION attribute found."
+  },
+  {
+   "fault": "G23",
+   "base": "textured",
+   "verdict": "khronos-warning",
+   "codes": [
+    "MESH_PRIMITIVE_NO_POSITION",
+    "UNUSED_OBJECT"
+   ],
+   "first": "No POSITION attribute found."
+  },
+  {
+   "fault": "G23",
+   "base": "animated",
+   "verdict": "khronos-warning",
+   "codes": [
+    "MESH_PRIMITIVE_NO_POSITION",
+    "UNUSED_OBJECT"
+   ],
+   "first": "No POSITION attribute found."
+  },
+  {
+   "fault": "G24",
+   "base": "triangle",
+   "verdict": "khronos-error",
+   "codes": [
+    "UNRESOLVED_REFERENCE"
+   ],
+   "first": "Unresolved reference: 5."
+  },
+  {
+   "fault": "G24",
+   "base": "cube",
+   "verdict": "khronos-error",
+   "codes": [
+    "UNRESOLVED_REFERENCE"
+   ],
+   "first": "Unresolved reference: 5."
+  },
+  {
+   "fault": "G24",
+   "base": "hierarchy",
+   "verdict": "khronos-error",
+   "codes": [
+    "UNRESOLVED_REFERENCE"
+   ],
+   "first": "Unresolved reference: 5."
+  },
+  {
+   "fault": "G24",
+   "base": "pbr",
+   "verdict": "khronos-error",
+   "codes": [
+    "UNRESOLVED_REFERENCE"
+   ],
+   "first": "Unresolved reference: 5."
+  },
+  {
+   "fault": "G24",
+   "base": "textured",
+   "verdict": "khronos-error",
+   "codes": [
+    "UNRESOLVED_REFERENCE"
+   ],
+   "first": "Unresolved reference: 5."
+  },
+  {
+   "fault": "G24",
+   "base": "animated",
+   "verdict": "khronos-error",
+   "codes": [
+    "UNRESOLVED_REFERENCE"
+   ],
+   "first": "Unresolved reference: 5."
+  },
+  {
+   "fault": "G25",
+   "base": "triangle",
+   "verdict": "L0",
+   "codes": [
+    "INVALID_JSON"
+   ],
+   "first": "Invalid JSON data. Parser output: FormatException: SyntaxError: Expected ',' or '}' after property value in JS"
+  },
+  {
+   "fault": "G25",
+   "base": "cube",
+   "verdict": "L0",
+   "codes": [
+    "INVALID_JSON"
+   ],
+   "first": "Invalid JSON data. Parser output: FormatException: SyntaxError: Expected ',' or '}' after property value in JS"
+  },
+  {
+   "fault": "G25",
+   "base": "hierarchy",
+   "verdict": "L0",
+   "codes": [
+    "INVALID_JSON"
+   ],
+   "first": "Invalid JSON data. Parser output: FormatException: SyntaxError: Expected ',' or '}' after property value in JS"
+  },
+  {
+   "fault": "G25",
+   "base": "pbr",
+   "verdict": "L0",
+   "codes": [
+    "INVALID_JSON"
+   ],
+   "first": "Invalid JSON data. Parser output: FormatException: SyntaxError: Expected ',' or '}' after property value in JS"
+  },
+  {
+   "fault": "G25",
+   "base": "textured",
+   "verdict": "L0",
+   "codes": [
+    "INVALID_JSON"
+   ],
+   "first": "Invalid JSON data. Parser output: FormatException: SyntaxError: Expected ',' or '}' after property value in JS"
+  },
+  {
+   "fault": "G25",
+   "base": "animated",
+   "verdict": "L0",
+   "codes": [
+    "INVALID_JSON"
+   ],
+   "first": "Invalid JSON data. Parser output: FormatException: SyntaxError: Expected ',' or '}' after property value in JS"
+  }
+ ],
+ "codes": {
+  "G01": {
+   "UNDEFINED_PROPERTY": 6
+  },
+  "G02": {
+   "UNKNOWN_ASSET_MAJOR_VERSION": 6
+  },
+  "G03": {
+   "UNRESOLVED_REFERENCE": 6,
+   "UNUSED_OBJECT": 6
+  },
+  "G04": {
+   "ACCESSOR_TOO_LONG": 6,
+   "MESH_PRIMITIVE_UNEQUAL_ACCESSOR_COUNT": 5,
+   "ANIMATION_SAMPLER_OUTPUT_ACCESSOR_INVALID_COUNT": 1
+  },
+  "G05": {
+   "BUFFER_VIEW_TOO_LONG": 6
+  },
+  "G06": {
+   "BUFFER_BYTE_LENGTH_MISMATCH": 6
+  },
+  "G07": {
+   "UNRESOLVED_REFERENCE": 6
+  },
+  "G08": {
+   "DUPLICATE_ELEMENTS": 1,
+   "NODE_PARENT_OVERRIDE": 1,
+   "SCENE_NON_ROOT_NODE": 1,
+   "NODE_LOOP": 2
+  },
+  "G09": {
+   "UNRESOLVED_REFERENCE": 6,
+   "NODE_EMPTY": 6,
+   "UNUSED_OBJECT": 5
+  },
+  "G10": {
+   "UNRESOLVED_REFERENCE": 6,
+   "UNUSED_OBJECT": 3
+  },
+  "G11": {
+   "ACCESSOR_INDEX_OOB": 5
+  },
+  "G12": {
+   "ACCESSOR_MAX_MISMATCH": 18
+  },
+  "G13": {
+   "VALUE_NOT_IN_RANGE": 2
+  },
+  "G14": {
+   "NODE_MATRIX_TRS": 6,
+   "NODE_MATRIX_DEFAULT": 6,
+   "ANIMATION_CHANNEL_TARGET_NODE_MATRIX": 1
+  },
+  "G15": {
+   "ACCESSOR_ANIMATION_INPUT_NON_INCREASING": 1
+  },
+  "G16": {
+   "UNRESOLVED_REFERENCE": 1
+  },
+  "G17": {
+   "UNRESOLVED_REFERENCE": 1,
+   "UNUSED_OBJECT": 1
+  },
+  "G18": {
+   "UNSUPPORTED_EXTENSION": 6
+  },
+  "G19": {
+   "VALUE_MULTIPLE_OF": 6,
+   "ACCESSOR_SMALL_BYTESTRIDE": 5,
+   "ACCESSOR_TOO_LONG": 1,
+   "ANIMATION_SAMPLER_ACCESSOR_WITH_BYTESTRIDE": 1
+  },
+  "G20": {
+   "VALUE_NOT_IN_LIST": 6,
+   "MESH_PRIMITIVE_POSITION_ACCESSOR_WITHOUT_BOUNDS": 5,
+   "MESH_PRIMITIVE_ATTRIBUTES_ACCESSOR_INVALID_FORMAT": 5,
+   "ANIMATION_SAMPLER_INPUT_ACCESSOR_INVALID_FORMAT": 1,
+   "ANIMATION_SAMPLER_INPUT_ACCESSOR_WITHOUT_BOUNDS": 1
+  },
+  "G21": {
+   "UNUSED_OBJECT": 6
+  },
+  "G22": {
+   "VALUE_NOT_IN_RANGE": 6
+  },
+  "G23": {
+   "MESH_PRIMITIVE_NO_POSITION": 5,
+   "UNUSED_OBJECT": 5
+  },
+  "G24": {
+   "UNRESOLVED_REFERENCE": 6
+  },
+  "G25": {
+   "INVALID_JSON": 6
+  }
+ },
+ "repair": {
+  "attempted": 19,
+  "outcome": {
+   "fixed": 19
+  },
+  "applied_rules": [
+   "ACCESSOR_MAX_MISMATCH",
+   "BUFFER_BYTE_LENGTH_MISMATCH",
+   "UNDEFINED_PROPERTY",
+   "VALUE_NOT_IN_RANGE"
+  ],
+  "noop_on_clean": true
+ },
+ "totals": {
+  "n": 123,
+  "baseline": 12,
+  "khronos_error_total": 106,
+  "baseline_total": 18,
+  "khronos-error": 88,
+  "khronos-warning": 17,
+  "L0": 6
+ },
+ "latency_ms": {
+  "mean": 1.85,
+  "max": 15.96,
+  "n": 123
+ }
+}

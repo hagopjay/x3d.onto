@@ -1,0 +1,10 @@
+PREFIX : <https://www.web3d.org/specifications/X3dOntology4.1#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+# which classes may a given class sit under, per the per-parent restrictions (child ranges expanded through rdfs:subClassOf*)
+SELECT DISTINCT ?parent ?prop ?child WHERE {
+  ?parent rdfs:subClassOf [ a owl:Restriction ; owl:onProperty ?prop ; owl:allValuesFrom ?r ] .
+  ?r (owl:unionOf/rdf:rest*/rdf:first)? ?range .
+  ?child rdfs:subClassOf* ?range .
+}

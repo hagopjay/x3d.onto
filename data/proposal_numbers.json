@@ -1,0 +1,38 @@
+{
+ "containment_pairs": 7604,
+ "event_port_pairs": 1897,
+ "universal_field_pairs": 1584,
+ "universal_field_verdicts": {
+  "I": 336,
+  "A": 1248
+ },
+ "verdicts": {
+  "A": 3548,
+  "R": 3504,
+  "I": 552
+ },
+ "accepted_share": 0.5031,
+ "event_port_verdicts": {
+  "R": 1066,
+  "I": 421,
+  "A": 410
+ },
+ "uom_confusion": {
+  "allow_accept": 3512,
+  "allow_reject": 441,
+  "deny_accept": 36,
+  "deny_reject": 3062
+ },
+ "uom_agreement": 0.9324,
+ "uom_allow_precision": 0.8884,
+ "uom_universe": 4907,
+ "uom_universe_in_ontology": 4455,
+ "uom_universe_missing_from_ontology": 452,
+ "missing_verdicts": {
+  "I": 17,
+  "A": 113,
+  "R": 322
+ },
+ "ontology_pairs_outside_uom_universe": 3149,
+ "xsd_accepted_and_uom_allowed_total": 3625
+}
