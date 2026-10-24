@@ -1,0 +1,117 @@
+{
+ "file": "/Users/handshake/Projects/x3d/shroud-artifacts/ontology/v2/scenes/solar-town.x3d",
+ "bytes": 9389473,
+ "sha256": "ac59a611af88647d1802a8f4f390b34c139139a8c358097484608548545dcfac",
+ "x3d_mcp_commit": "fa0b389",
+ "tool_calls": 12162,
+ "calls": {
+  "create_node": 4108,
+  "def_node": 929,
+  "add_child": 5299,
+  "use_node": 1410,
+  "add_route": 391,
+  "set_field": 24,
+  "get_scene": 1
+ },
+ "build_seconds": 27.3,
+ "call_ms": {
+  "p50": 1.78,
+  "p95": 2.36,
+  "max": 3114.0
+ },
+ "town": {
+  "plaster": {
+   "verts": 150,
+   "faces": 90
+  },
+  "paint": {
+   "verts": 9780,
+   "faces": 5001
+  },
+  "roof_tile": {
+   "verts": 264,
+   "faces": 216
+  },
+  "roof_slate": {
+   "verts": 115,
+   "faces": 94
+  },
+  "wood": {
+   "verts": 1962,
+   "faces": 1545
+  },
+  "stone": {
+   "verts": 1118,
+   "faces": 847
+  },
+  "metal": {
+   "verts": 2654,
+   "faces": 1671
+  },
+  "glass": {
+   "verts": 592,
+   "faces": 145
+  },
+  "glass_lit": {
+   "verts": 568,
+   "faces": 136
+  },
+  "cloth": {
+   "verts": 109,
+   "faces": 56
+  },
+  "lampglass": {
+   "verts": 176,
+   "faces": 132
+  },
+  "forge": {
+   "verts": 8,
+   "faces": 2
+  },
+  "goods": {
+   "verts": 1785,
+   "faces": 2943
+  },
+  "bush": {
+   "verts": 3612,
+   "faces": 6880
+  },
+  "cobble": {
+   "verts": 221,
+   "faces": 210
+  },
+  "dirt": {
+   "verts": 1396,
+   "faces": 1029
+  },
+  "wheat": {
+   "verts": 8,
+   "faces": 2
+  },
+  "furrow": {
+   "verts": 12,
+   "faces": 3
+  },
+  "water": {
+   "verts": 48,
+   "faces": 1
+  },
+  "terrain_core": {
+   "verts": 8257,
+   "faces": 8256
+  },
+  "terrain_out": {
+   "verts": 10560,
+   "faces": 10368
+  },
+  "terrain_far": {
+   "verts": 9024,
+   "faces": 8832
+  },
+  "trees": {
+   "near": 70,
+   "mid": 420
+  }
+ },
+ "people": 12
+}

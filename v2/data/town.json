@@ -1,0 +1,823 @@
+{
+ "lat": 46.8,
+ "lon": 8.2,
+ "houses": [
+  {
+   "id": "H01",
+   "name": "Baker's house",
+   "x": -42,
+   "z": -14,
+   "w": 9,
+   "d": 8,
+   "h": 4.4,
+   "rot": 0,
+   "wall": "ochre",
+   "roof": "tile",
+   "role": "bakery with a front shop"
+  },
+  {
+   "id": "H02",
+   "name": "Weaver's cottage",
+   "x": -78,
+   "z": -14,
+   "w": 8,
+   "d": 7,
+   "h": 4.0,
+   "rot": 0,
+   "wall": "cream",
+   "roof": "tile",
+   "role": "weaver"
+  },
+  {
+   "id": "H03",
+   "name": "Miller's house",
+   "x": -116,
+   "z": -15,
+   "w": 10,
+   "d": 8,
+   "h": 4.6,
+   "rot": 0,
+   "wall": "cream",
+   "roof": "slate",
+   "role": "miller"
+  },
+  {
+   "id": "H04",
+   "name": "Cooper's house",
+   "x": 34,
+   "z": -14,
+   "w": 9,
+   "d": 8,
+   "h": 4.2,
+   "rot": 0,
+   "wall": "terracotta",
+   "roof": "tile",
+   "role": "cooper"
+  },
+  {
+   "id": "H05",
+   "name": "Schoolhouse",
+   "x": 72,
+   "z": -15,
+   "w": 11,
+   "d": 8,
+   "h": 4.8,
+   "rot": 0,
+   "wall": "cream",
+   "roof": "slate",
+   "role": "village school"
+  },
+  {
+   "id": "H06",
+   "name": "Doctor's house",
+   "x": 112,
+   "z": -14,
+   "w": 9,
+   "d": 8,
+   "h": 4.4,
+   "rot": 0,
+   "wall": "blue",
+   "roof": "tile",
+   "role": "physician"
+  },
+  {
+   "id": "H07",
+   "name": "Fisher's cottage",
+   "x": -70,
+   "z": 16,
+   "w": 8,
+   "d": 7,
+   "h": 4.0,
+   "rot": 3.14159,
+   "wall": "terracotta",
+   "roof": "tile",
+   "role": "fisher"
+  },
+  {
+   "id": "H08",
+   "name": "Tailor's house",
+   "x": -110,
+   "z": 15,
+   "w": 9,
+   "d": 8,
+   "h": 4.4,
+   "rot": 3.14159,
+   "wall": "cream",
+   "roof": "tile",
+   "role": "tailor"
+  },
+  {
+   "id": "H09",
+   "name": "Mayor's house",
+   "x": 12,
+   "z": 17,
+   "w": 12,
+   "d": 9,
+   "h": 5.2,
+   "rot": 3.14159,
+   "wall": "ochre",
+   "roof": "slate",
+   "role": "mayor and village hall"
+  },
+  {
+   "id": "H10",
+   "name": "Carter's house",
+   "x": 80,
+   "z": 16,
+   "w": 9,
+   "d": 8,
+   "h": 4.2,
+   "rot": 3.14159,
+   "wall": "cream",
+   "roof": "tile",
+   "role": "carter"
+  },
+  {
+   "id": "H11",
+   "name": "Potter's house",
+   "x": 120,
+   "z": 16,
+   "w": 8,
+   "d": 7,
+   "h": 4.0,
+   "rot": 3.14159,
+   "wall": "terracotta",
+   "roof": "tile",
+   "role": "potter"
+  },
+  {
+   "id": "H12",
+   "name": "North farmhouse",
+   "x": 16,
+   "z": -78,
+   "w": 11,
+   "d": 9,
+   "h": 4.8,
+   "rot": -1.5708,
+   "wall": "cream",
+   "roof": "tile",
+   "role": "farm family"
+  },
+  {
+   "id": "H13",
+   "name": "South farmhouse",
+   "x": -18,
+   "z": 84,
+   "w": 11,
+   "d": 9,
+   "h": 4.8,
+   "rot": 1.5708,
+   "wall": "ochre",
+   "roof": "tile",
+   "role": "farm family"
+  },
+  {
+   "id": "H14",
+   "name": "Gatekeeper's lodge",
+   "x": 176,
+   "z": -12,
+   "w": 7,
+   "d": 6,
+   "h": 3.8,
+   "rot": 0,
+   "wall": "blue",
+   "roof": "slate",
+   "role": "gatekeeper"
+  },
+  {
+   "id": "B01",
+   "name": "The Compass Rose (inn)",
+   "x": -36,
+   "z": 36,
+   "w": 15,
+   "d": 10,
+   "h": 5.4,
+   "rot": 3.14159,
+   "wall": "ochre",
+   "roof": "tile",
+   "role": "inn with stable"
+  },
+  {
+   "id": "B02",
+   "name": "St. Aurel's church",
+   "x": -30,
+   "z": -52,
+   "w": 10,
+   "d": 20,
+   "h": 7.0,
+   "rot": 0,
+   "wall": "stone",
+   "roof": "slate",
+   "role": "church with a tower"
+  },
+  {
+   "id": "B03",
+   "name": "The smithy",
+   "x": 46,
+   "z": 30,
+   "w": 9,
+   "d": 8,
+   "h": 3.6,
+   "rot": 3.14159,
+   "wall": "wood",
+   "roof": "tile",
+   "role": "open-front forge"
+  }
+ ],
+ "people": [
+  {
+   "id": "P01",
+   "name": "Mara",
+   "role": "baker on her rounds",
+   "arch": "walker",
+   "shirt": "brick",
+   "pants": "navy",
+   "scale": 1.0,
+   "note": "walks a closed loop of about 190 m past the fountain",
+   "path": [
+    [
+     -40,
+     -3.4
+    ],
+    [
+     -12,
+     -3.4
+    ],
+    [
+     -6,
+     -6.8
+    ],
+    [
+     6,
+     -6.8
+    ],
+    [
+     12,
+     -3.4
+    ],
+    [
+     28,
+     -3.4
+    ],
+    [
+     30.4,
+     0
+    ],
+    [
+     28,
+     3.4
+    ],
+    [
+     12,
+     3.4
+    ],
+    [
+     6,
+     6.8
+    ],
+    [
+     -6,
+     6.8
+    ],
+    [
+     -12,
+     3.4
+    ],
+    [
+     -40,
+     3.4
+    ],
+    [
+     -43,
+     0
+    ]
+   ],
+   "speed": 1.25
+  },
+  {
+   "id": "P02",
+   "name": "Tomas",
+   "role": "carter on the main street",
+   "arch": "walker",
+   "shirt": "ochre",
+   "pants": "brown",
+   "scale": 1.04,
+   "note": "walks the east half of the main street, about 270 m per lap",
+   "path": [
+    [
+     160,
+     -1.0
+    ],
+    [
+     30,
+     -1.0
+    ],
+    [
+     24,
+     0
+    ],
+    [
+     30,
+     1.0
+    ],
+    [
+     160,
+     1.0
+    ],
+    [
+     163,
+     0
+    ]
+   ],
+   "speed": 1.35
+  },
+  {
+   "id": "P03",
+   "name": "Ilse",
+   "role": "child running errands",
+   "arch": "walker",
+   "shirt": "yellow",
+   "pants": "teal",
+   "scale": 0.7,
+   "note": "runs errands along the cross street",
+   "path": [
+    [
+     2.0,
+     -40
+    ],
+    [
+     2.0,
+     -13
+    ],
+    [
+     4.6,
+     -4.4
+    ],
+    [
+     6.0,
+     0
+    ],
+    [
+     4.6,
+     4.4
+    ],
+    [
+     2.0,
+     13
+    ],
+    [
+     2.0,
+     40
+    ],
+    [
+     -2.0,
+     40
+    ],
+    [
+     -2.0,
+     13
+    ],
+    [
+     -4.6,
+     4.4
+    ],
+    [
+     -6.0,
+     0
+    ],
+    [
+     -4.6,
+     -4.4
+    ],
+    [
+     -2.0,
+     -13
+    ],
+    [
+     -2.0,
+     -40
+    ]
+   ],
+   "speed": 1.15
+  },
+  {
+   "id": "P04",
+   "name": "Doctor Veit",
+   "role": "physician on a house call",
+   "arch": "walker",
+   "shirt": "grey",
+   "pants": "charcoal",
+   "scale": 1.02,
+   "note": "walks between his house and the plaza",
+   "path": [
+    [
+     112,
+     -7.8
+    ],
+    [
+     108,
+     -2.6
+    ],
+    [
+     60,
+     -2.6
+    ],
+    [
+     54,
+     0
+    ],
+    [
+     60,
+     2.6
+    ],
+    [
+     108,
+     2.6
+    ],
+    [
+     114,
+     0
+    ]
+   ],
+   "speed": 1.3
+  },
+  {
+   "id": "P05",
+   "name": "Nell",
+   "role": "vegetable seller",
+   "arch": "talker",
+   "shirt": "blue",
+   "pants": "brown",
+   "scale": 1.0,
+   "note": "talks across the counter of her stall",
+   "pos": [
+    -16.0,
+    9.3
+   ],
+   "face": "P06"
+  },
+  {
+   "id": "P06",
+   "name": "Anselm",
+   "role": "customer at the vegetable stall",
+   "arch": "talker",
+   "shirt": "green",
+   "pants": "tan",
+   "scale": 1.04,
+   "note": "talks with the seller",
+   "pos": [
+    -15.4,
+    6.0
+   ],
+   "face": "P05"
+  },
+  {
+   "id": "P07",
+   "name": "Greta",
+   "role": "cloth merchant",
+   "arch": "greeter",
+   "shirt": "purple",
+   "pants": "charcoal",
+   "scale": 0.96,
+   "note": "waves at passers-by",
+   "pos": [
+    17.0,
+    9.3
+   ],
+   "face": 3.14159
+  },
+  {
+   "id": "P08",
+   "name": "Old Bram",
+   "role": "blacksmith",
+   "arch": "smith",
+   "shirt": "leather",
+   "pants": "dark",
+   "scale": 1.06,
+   "note": "hammers on the anvil, one strike every 1.4 s",
+   "pos": [
+    46.0,
+    27.8
+   ],
+   "face": 3.14159
+  },
+  {
+   "id": "P09",
+   "name": "Hanne",
+   "role": "villager by the fountain",
+   "arch": "talker",
+   "shirt": "orange",
+   "pants": "navy",
+   "scale": 0.98,
+   "note": "chats at the fountain",
+   "pos": [
+    5.6,
+    -2.0
+   ],
+   "face": "P10"
+  },
+  {
+   "id": "P10",
+   "name": "Piet",
+   "role": "villager by the fountain",
+   "arch": "listener",
+   "shirt": "teal",
+   "pants": "brown",
+   "scale": 1.04,
+   "note": "listens",
+   "pos": [
+    7.0,
+    0.0
+   ],
+   "face": "P09"
+  },
+  {
+   "id": "P11",
+   "name": "Father Anselm",
+   "role": "priest on the church lane",
+   "arch": "walker",
+   "shirt": "black",
+   "pants": "black",
+   "scale": 1.0,
+   "note": "paces the church lane slowly",
+   "path": [
+    [
+     -30.7,
+     -24.5
+    ],
+    [
+     -30.7,
+     -40.0
+    ],
+    [
+     -29.3,
+     -40.0
+    ],
+    [
+     -29.3,
+     -24.5
+    ]
+   ],
+   "speed": 0.9
+  },
+  {
+   "id": "P12",
+   "name": "Jonas",
+   "role": "gatekeeper",
+   "arch": "listener",
+   "shirt": "olive",
+   "pants": "brown",
+   "scale": 1.0,
+   "note": "watches the east gate",
+   "pos": [
+    178.5,
+    -6.2
+   ],
+   "face": 0.0
+  }
+ ],
+ "stalls": [
+  {
+   "id": "S01",
+   "name": "Bread stall",
+   "x": 14,
+   "z": -9,
+   "rot": 0.0
+  },
+  {
+   "id": "S02",
+   "name": "Vegetable stall",
+   "x": -16,
+   "z": 8,
+   "rot": 3.141592653589793
+  },
+  {
+   "id": "S03",
+   "name": "Cloth stall",
+   "x": 17,
+   "z": 8,
+   "rot": 3.141592653589793
+  }
+ ],
+ "plaza_r": 21.0,
+ "fountain": [
+  0.0,
+  0.0,
+  3.2
+ ],
+ "lamps": [
+  [
+   -9,
+   -9
+  ],
+  [
+   9,
+   -9
+  ],
+  [
+   -9,
+   9
+  ],
+  [
+   9,
+   9
+  ],
+  [
+   -62,
+   4.6
+  ],
+  [
+   -100,
+   4.6
+  ],
+  [
+   -140,
+   4.6
+  ],
+  [
+   62,
+   -4.6
+  ],
+  [
+   100,
+   -4.6
+  ],
+  [
+   140,
+   -4.6
+  ],
+  [
+   62,
+   4.6
+  ],
+  [
+   -62,
+   -4.6
+  ],
+  [
+   4.6,
+   -44
+  ],
+  [
+   4.6,
+   44
+  ],
+  [
+   -4.6,
+   -84
+  ],
+  [
+   -4.6,
+   88
+  ],
+  [
+   -33.4,
+   18
+  ],
+  [
+   -27.4,
+   -31
+  ],
+  [
+   49.4,
+   14
+  ],
+  [
+   -22,
+   -4.6
+  ],
+  [
+   24,
+   4.6
+  ],
+  [
+   180,
+   4.6
+  ]
+ ],
+ "roads": [
+  {
+   "pts": [
+    [
+     -235,
+     0
+    ],
+    [
+     -24,
+     0
+    ],
+    [
+     24,
+     0
+    ],
+    [
+     235,
+     0
+    ]
+   ],
+   "w": 7.0,
+   "kind": "dirt"
+  },
+  {
+   "pts": [
+    [
+     0,
+     -205
+    ],
+    [
+     0,
+     -22
+    ],
+    [
+     0,
+     22
+    ],
+    [
+     0,
+     205
+    ]
+   ],
+   "w": 6.0,
+   "kind": "dirt"
+  },
+  {
+   "pts": [
+    [
+     -30,
+     -22
+    ],
+    [
+     -30,
+     -42
+    ]
+   ],
+   "w": 3.2,
+   "kind": "cobble"
+  },
+  {
+   "pts": [
+    [
+     46,
+     4
+    ],
+    [
+     46,
+     25
+    ]
+   ],
+   "w": 3.0,
+   "kind": "dirt"
+  },
+  {
+   "pts": [
+    [
+     -36,
+     4
+    ],
+    [
+     -36,
+     30
+    ]
+   ],
+   "w": 3.0,
+   "kind": "dirt"
+  },
+  {
+   "pts": [
+    [
+     16,
+     -69
+    ],
+    [
+     16,
+     -40
+    ],
+    [
+     0,
+     -22
+    ]
+   ],
+   "w": 2.6,
+   "kind": "dirt"
+  },
+  {
+   "pts": [
+    [
+     -18,
+     74
+    ],
+    [
+     -18,
+     50
+    ],
+    [
+     0,
+     22
+    ]
+   ],
+   "w": 2.6,
+   "kind": "dirt"
+  }
+ ],
+ "flat_r": 270.0
+}

@@ -11,3 +11,12 @@ xdomain/eval-plan/runs/
 xdomain/eval-plan/*.bak*
 demo/make_demo.py.bak*
 demo/build_tour.py.bak*
+v2/tex/*.png
+v2/probe/
+v2/__pycache__/
+
+v2/tex/
+v2/scenes/
+v2/probe/
+v2/__pycache__/
+v2/mcp_try*.py

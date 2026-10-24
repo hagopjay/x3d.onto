@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Ontology constellation 2 · Sun, Earth, Moon and a village</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="ui.css?v=4">
+<script src="https://cdn.jsdelivr.net/npm/x_ite@16.5.0/dist/x_ite.min.js"></script>
+</head><body>
+<x3d-canvas id="cv" src="scenes/solar-town.x3d" contextMenu="false" notification="false" splashScreen="false" timings="false"></x3d-canvas>
+<canvas id="ov"></canvas>
+
+<div id="load"><div id="loadbox"><div class="ttl">Ontology constellation 2</div><div id="lstat">starting…</div><div class="sub">A toy vision of x3d · mcp · agents · ontologies. The scene has about 12,000 nodes and loads in 10 to 40 s on a busy machine.</div></div></div>
+<div id="err"></div>
+
+<div id="brand"><div class="b1">ONTOLOGY CONSTELLATION <b>2</b></div><div class="b2" id="where">—</div><div class="b3" id="dist"></div></div>
+<div id="clock" class="panel">
+  <div class="r1"><span id="utc">—</span></div>
+  <div class="r2"><span id="lst">—</span><span id="sunel"></span></div>
+  <div class="r3"><button data-rate="0" title="pause (space)">❚❚</button><button data-rate="1" title="real time">1×</button><button data-rate="60">1 min/s</button><button data-rate="600">10 min/s</button><button data-rate="3600">1 h/s</button><button data-rate="86400">1 d/s</button><button data-rate="2592000">30 d/s</button></div>
+  <div class="r4"><button data-tod="now">now</button><button data-tod="dawn">dawn</button><button data-tod="noon">noon</button><button data-tod="golden">golden hour</button><button data-tod="dusk">dusk</button><button data-tod="night">night</button><button data-tod="eclipse" title="stage a total solar eclipse over the village">eclipse</button></div>
+</div>
+
+<div id="nav" class="panel">
+  <button data-go="constellation"><i>1</i>Constellation</button><button data-go="sun"><i>2</i>Sun</button><button data-go="earth"><i>3</i>Earth</button><button data-go="moon"><i>4</i>Moon</button><button data-go="orbit"><i>5</i>Village from orbit</button><button data-go="village"><i>6</i>Village</button><button data-go="plaza"><i>7</i>Plaza</button><button data-go="person"><i>8</i>A villager</button>
+  <button data-act="film">▶ Film</button><button data-act="tour">Tour</button><button data-act="const" title="C">Constellation: <span id="cm">auto</span></button><button data-act="labels" title="L">Labels</button><button data-act="help">?</button>
+</div>
+<div id="cine"><div id="cc"><div id="ch"></div><div id="cs"></div></div><div id="pbar"><i id="pb"></i></div></div>
+<div id="card" class="panel"></div>
+<div id="info" class="panel"></div>
+<div id="tip"></div>
+<canvas id="mini" width="300" height="300"></canvas>
+<div id="help" class="panel"><h2>Ontology constellation 2</h2>
+<p>A toy vision, assembled through x3d_mcp: the X3D Ontology 4.1 classes, three domain rings and the agent loop orbit the Sun, Earth and Moon (true sizes and distances). Zoom all the way down to a village with H-Anim villagers. The village, its people and the planet and Moon maps are invented or procedural.</p>
+<table><tr><td>drag</td><td>orbit the focus</td></tr><tr><td>right-drag · shift-drag · WASD</td><td>pan along the ground (village) or orbit (space)</td></tr><tr><td>wheel · pinch · R / Z</td><td>zoom (logarithmic) from 10^12 m down to half a metre; pointing at an object while zooming in dives into it</td></tr><tr><td>click</td><td>pin an object: details, grade and source on the right</td></tr><tr><td>double-click</td><td>fly to the object</td></tr><tr><td>1 … 8</td><td>Constellation · Sun · Earth · Moon · Village from orbit · Village · Plaza · next villager</td></tr><tr><td>space · [ ]</td><td>pause time · slower / faster</td></tr><tr><td>F · T</td><td>film (about 2.5 min) · curator tour with stops</td></tr><tr><td>C · L · M · H · Esc</td><td>constellation auto/on/off · labels · sound · this help · close</td></tr></table>
+<p><b>Grades.</b> <span class="g gC">C</span> confirmed from files in this repo · <span class="g gL">L</span> likely: standard values quoted from memory, or models · <span class="g gS">S</span> suspected · <span class="g gI">I</span> illustrative: invented for this demo. Orbits use low-precision mean elements and are not for prediction.</p></div>
+<div id="legend" class="panel"></div>
+<div id="foot"><span>drag orbit · right-drag or WASD pan · wheel zoom · double-click fly to · click pin · <b>H</b> help · <b>F</b> film · <b>T</b> tour · <b>M</b> sound</span></div>
+<div id="sndbtn" title="sound (M)">♪</div>
+
+<script src="astro.js?v=4"></script><script src="engine.js?v=4"></script><script src="overlay.js?v=4"></script><script src="ui.js?v=4"></script><script src="tour.js?v=4"></script>
+</body></html>
