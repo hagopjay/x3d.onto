@@ -1,7 +1,7 @@
 {
  "file": "/Users/handshake/Projects/x3d/shroud-artifacts/ontology/v2/scenes/solar-town.x3d",
- "bytes": 12928512,
- "sha256": "3feb0afa2a82698ded6fba901d54446b74d1a8dc1659eb467d42139e3a7b39c3",
+ "bytes": 12928532,
+ "sha256": "33856d7c1eb330c3163571cfc28d42408d0b390356b9a3cec4a2785be1f2f982",
  "x3d_mcp_commit": "fa0b389",
  "tool_calls": 12557,
  "calls": {
@@ -13,11 +13,11 @@
   "set_field": 24,
   "get_scene": 1
  },
- "build_seconds": 72.7,
+ "build_seconds": 1018.2,
  "call_ms": {
-  "p50": 3.33,
-  "p95": 9.64,
-  "max": 11425.3
+  "p50": 6.17,
+  "p95": 414.59,
+  "max": 16321.1
  },
  "town": {
   "plaster": {
@@ -114,13 +114,13 @@
   }
  },
  "people": 12,
- "validate_x3d_ms": 4061,
+ "validate_x3d_ms": 9015,
  "validate_x3d": {
   "valid": true,
   "errors": [],
   "schema_version": "4.1"
  },
- "validate_semantic_ms": 881,
+ "validate_semantic_ms": 1550,
  "validate_semantic": {
   "raw": "# Semantic Check Report\n\nFound 0 error(s), 92 warning(s), 286 info(s).\n\n## Warnings\n\n- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.\n- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.\n- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.\n- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.\n- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.\n- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.\n- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.\n- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.\n- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.\n- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.\n- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.\n- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.\n- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.\n- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.\n- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.\n- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.\n- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.\n- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.\n- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.\n- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.\n- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.\n- **[shape-no-geometry]** Shape has no geometry child. Add a ge"
  }
