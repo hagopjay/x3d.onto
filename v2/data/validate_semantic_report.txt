@@ -1,0 +1,387 @@
+# Semantic Check Report
+
+Found 0 error(s), 92 warning(s), 286 info(s).
+
+## Warnings
+
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+- **[shape-no-geometry]** Shape has no geometry child. Add a geometry node like Box, Sphere, or IndexedFaceSet.
+
+## Info
+
+- **[unused-def]** DEF='Ap_Earth' (Appearance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='Ap_Moon' (Appearance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_URDF_0' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_URDF_1' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_URDF_10' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_URDF_11' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_URDF_12' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_URDF_13' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_URDF_14' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_URDF_15' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_URDF_16' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_URDF_17' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_URDF_18' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_URDF_19' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_URDF_2' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_URDF_20' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_URDF_21' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_URDF_22' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_URDF_23' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_URDF_3' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_URDF_4' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_URDF_5' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_URDF_6' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_URDF_7' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_URDF_8' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_URDF_9' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_X3D_0' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_X3D_1' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_X3D_10' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_X3D_11' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_X3D_12' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_X3D_13' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_X3D_14' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_X3D_15' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_X3D_16' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_X3D_17' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_X3D_18' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_X3D_19' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_X3D_2' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_X3D_20' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_X3D_21' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_X3D_22' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_X3D_23' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_X3D_24' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_X3D_25' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_X3D_26' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_X3D_27' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_X3D_28' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_X3D_29' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_X3D_3' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_X3D_30' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_X3D_31' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_X3D_32' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_X3D_33' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_X3D_34' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_X3D_35' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_X3D_36' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_X3D_4' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_X3D_5' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_X3D_6' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_X3D_7' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_X3D_8' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_X3D_9' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_glTF_0' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_glTF_1' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_glTF_10' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_glTF_11' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_glTF_12' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_glTF_13' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_glTF_14' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_glTF_15' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_glTF_16' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_glTF_17' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_glTF_18' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_glTF_19' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_glTF_2' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_glTF_20' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_glTF_21' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_glTF_22' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_glTF_23' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_glTF_24' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_glTF_3' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_glTF_4' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_glTF_5' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_glTF_6' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_glTF_7' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_glTF_8' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BeadM_glTF_9' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BgDay' (Background) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='BgSpace' (Background) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='Cam' (Viewpoint) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='CamTown' (Viewpoint) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='Classes' (Group) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='CloudDeck' (Shape) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='CloudDeckT' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='CloudTT' (TextureTransform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='CloudsT' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='ConstFill' (DirectionalLight) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='EarthAxis' (Shape) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='EarthBody' (Shape) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='EarthOrbitLine' (Shape) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='EarthOrbitT' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='EarthSpin' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='EclipticGrid' (Shape) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='Fam_HAnimPose' (Appearance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='Fam_X3DTangentNode' (Appearance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='Fam_X3DUrlOutputObject' (Appearance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='Fill0' (DirectionalLight) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='Fill1' (DirectionalLight) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='Fill2' (DirectionalLight) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='FogTown' (Fog) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='ForgeL' (PointLight) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='GS_apron' (Shape) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='GS_bag' (Shape) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='GS_beard' (Shape) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='GS_braid' (Shape) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='GS_calf_l' (Shape) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='GS_calf_r' (Shape) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='GS_collar' (Shape) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='GS_eyes' (Shape) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='GS_farm_l' (Shape) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='GS_farm_r' (Shape) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='GS_foot_l' (Shape) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='GS_foot_r' (Shape) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='GS_hair' (Shape) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='GS_hammer' (Shape) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='GS_hand_l' (Shape) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='GS_hand_r' (Shape) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='GS_hat_cap' (Shape) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='GS_hat_top' (Shape) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='GS_head' (Shape) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='GS_neck' (Shape) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='GS_pelvis' (Shape) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='GS_scarf' (Shape) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='GS_thigh_l' (Shape) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='GS_thigh_r' (Shape) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='GS_tongs' (Shape) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='GS_torso' (Shape) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='GS_uparm_l' (Shape) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='GS_uparm_r' (Shape) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='G_bush' (IndexedFaceSet) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='G_cloth' (IndexedFaceSet) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='G_cobble' (IndexedFaceSet) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='G_dirt' (IndexedFaceSet) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='G_forge' (IndexedFaceSet) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='G_furrow' (IndexedFaceSet) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='G_glass' (IndexedFaceSet) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='G_glass_lit' (IndexedFaceSet) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='G_goods' (IndexedFaceSet) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='G_lampglass' (IndexedFaceSet) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='G_metal' (IndexedFaceSet) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='G_paint' (IndexedFaceSet) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='G_plaster' (IndexedFaceSet) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='G_roof_slate' (IndexedFaceSet) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='G_roof_tile' (IndexedFaceSet) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='G_stone' (IndexedFaceSet) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='G_water' (IndexedFaceSet) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='G_wheat' (IndexedFaceSet) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='G_wood' (IndexedFaceSet) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='Graticule' (Shape) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='H_P01' (HAnimHumanoid) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='H_P02' (HAnimHumanoid) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='H_P03' (HAnimHumanoid) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='H_P04' (HAnimHumanoid) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='H_P05' (HAnimHumanoid) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='H_P06' (HAnimHumanoid) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='H_P07' (HAnimHumanoid) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='H_P08' (HAnimHumanoid) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='H_P09' (HAnimHumanoid) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='H_P10' (HAnimHumanoid) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='H_P11' (HAnimHumanoid) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='H_P12' (HAnimHumanoid) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='Hierarchy' (Shape) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='HumanLibrary' (Switch) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='KeyLight' (DirectionalLight) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='LampA' (PointLight) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='LampB' (PointLight) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='Layers' (LayerSet) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='LoopLine' (Shape) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='LoopRing' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='LoopTilt' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='Mat_Clouds' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='Mat_Sun' (UnlitMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='Mat_TownMarker' (Material) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='Mat_forge' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='Mat_glass_lit' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='Mat_lampglass' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='Mat_water' (PhysicalMaterial) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='Materials' (Switch) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='MoonBody' (Shape) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='MoonOrbitLine' (Shape) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='MoonOrbitPlane' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='MoonOrbitT' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='MoonSpin' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='Nav' (NavigationInfo) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='NavTown' (NavigationInfo) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='OutFill0' (DirectionalLight) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='OutFill1' (DirectionalLight) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='OutFill2' (DirectionalLight) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='OutKeyLight' (DirectionalLight) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='OutSkyLight' (DirectionalLight) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='Outskirts' (Group) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='Pillars' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='RingLine_URDF' (Shape) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='RingLine_X3D' (Shape) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='RingLine_glTF' (Shape) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='S_bush' (Shape) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='S_cloth' (Shape) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='S_cobble' (Shape) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='S_dirt' (Shape) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='S_forge' (Shape) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='S_furrow' (Shape) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='S_glass' (Shape) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='S_glass_lit' (Shape) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='S_goods' (Shape) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='S_lampglass' (Shape) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='S_metal' (Shape) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='S_paint' (Shape) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='S_plaster' (Shape) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='S_roof_slate' (Shape) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='S_roof_tile' (Shape) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='S_stone' (Shape) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='S_terrain_core' (Shape) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='S_terrain_far' (Shape) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='S_terrain_out' (Shape) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='S_water' (Shape) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='S_wheat' (Shape) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='S_wood' (Shape) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='ShapeAbstract' (Shape) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='ShapeAccepts' (Shape) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='ShapeInconclusive' (Shape) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='ShapeRejects' (Shape) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='ShellWires' (Shape) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='SkyLight' (DirectionalLight) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='St_0' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='St_1' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='St_3' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='St_4' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='St_5' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='SunBody' (Shape) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='SunDir' (DirectionalLight) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='SunT' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='T_P05' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='T_P06' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='T_P07' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='T_P08' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='T_P09' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='T_P10' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='T_P12' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='Tilt_URDF' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='Tilt_X3D' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='Tilt_glTF' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='Town' (Group) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='TownCore' (Group) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='TownLayer' (Layer) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='TownMarkerT' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='TreeLibrary' (Switch) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[unused-def]** DEF='World' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).
+- **[shape-no-appearance]** Shape (DEF='GS_pelvis') has no Appearance. The shape will render with a default white material.
+- **[shape-no-appearance]** Shape (DEF='GS_torso') has no Appearance. The shape will render with a default white material.
+- **[shape-no-appearance]** Shape (DEF='GS_neck') has no Appearance. The shape will render with a default white material.
+- **[shape-no-appearance]** Shape (DEF='GS_head') has no Appearance. The shape will render with a default white material.
+- **[shape-no-appearance]** Shape (DEF='GS_eyes') has no Appearance. The shape will render with a default white material.
+- **[shape-no-appearance]** Shape (DEF='GS_hair') has no Appearance. The shape will render with a default white material.
+- **[shape-no-appearance]** Shape (DEF='GS_beard') has no Appearance. The shape will render with a default white material.
+- **[shape-no-appearance]** Shape (DEF='GS_hat_top') has no Appearance. The shape will render with a default white material.
+- **[shape-no-appearance]** Shape (DEF='GS_hat_cap') has no Appearance. The shape will render with a default white material.
+- **[shape-no-appearance]** Shape (DEF='GS_scarf') has no Appearance. The shape will render with a default white material.
+- **[shape-no-appearance]** Shape (DEF='GS_braid') has no Appearance. The shape will render with a default white material.
+- **[shape-no-appearance]** Shape (DEF='GS_apron') has no Appearance. The shape will render with a default white material.
+- **[shape-no-appearance]** Shape (DEF='GS_collar') has no Appearance. The shape will render with a default white material.
+- **[shape-no-appearance]** Shape (DEF='GS_bag') has no Appearance. The shape will render with a default white material.
+- **[shape-no-appearance]** Shape (DEF='GS_uparm_l') has no Appearance. The shape will render with a default white material.
+- **[shape-no-appearance]** Shape (DEF='GS_farm_l') has no Appearance. The shape will render with a default white material.
+- **[shape-no-appearance]** Shape (DEF='GS_hand_l') has no Appearance. The shape will render with a default white material.
+- **[shape-no-appearance]** Shape (DEF='GS_thigh_l') has no Appearance. The shape will render with a default white material.
+- **[shape-no-appearance]** Shape (DEF='GS_calf_l') has no Appearance. The shape will render with a default white material.
+- **[shape-no-appearance]** Shape (DEF='GS_foot_l') has no Appearance. The shape will render with a default white material.
+- **[shape-no-appearance]** Shape (DEF='GS_uparm_r') has no Appearance. The shape will render with a default white material.
+- **[shape-no-appearance]** Shape (DEF='GS_farm_r') has no Appearance. The shape will render with a default white material.
+- **[shape-no-appearance]** Shape (DEF='GS_hand_r') has no Appearance. The shape will render with a default white material.
+- **[shape-no-appearance]** Shape (DEF='GS_thigh_r') has no Appearance. The shape will render with a default white material.
+- **[shape-no-appearance]** Shape (DEF='GS_calf_r') has no Appearance. The shape will render with a default white material.
+- **[shape-no-appearance]** Shape (DEF='GS_foot_r') has no Appearance. The shape will render with a default white material.
+- **[shape-no-appearance]** Shape (DEF='GS_hammer') has no Appearance. The shape will render with a default white material.
+- **[shape-no-appearance]** Shape (DEF='GS_tongs') has no Appearance. The shape will render with a default white material.

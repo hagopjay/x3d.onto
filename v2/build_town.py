@@ -55,7 +55,13 @@ def tree_sites(rng, n, rmin, rmax, avoid_far=True):
 
 async def build_town(b: B):
     rng = random.Random(7); info = {}
-    town = await b.mk("Group", name="Town"); core = await b.mk("Group", parent=town, name="TownCore"); out = await b.mk("Group", parent=town, name="Outskirts")
+    # the village lives in its own Layer so that fog (aerial perspective) affects only the village, never the Sun, Moon or constellation
+    ls = await b.mk("LayerSet", {"activeLayer": 1, "order": [0, 1]}, name="Layers"); ly = await b.mk("Layer", parent=ls, cf="layers", name="TownLayer")
+    await b.mk("NavigationInfo", {"type": ["NONE"], "headlight": False, "avatarSize": [0.2, 1.7, 0.4], "visibilityLimit": 1e14, "speed": 1}, parent=ly, name="NavTown")
+    await b.mk("Viewpoint", {"position": [0, 1.7, 30], "orientation": [0, 1, 0, 0], "fieldOfView": 0.9}, parent=ly, name="CamTown")
+    await b.mk("Fog", {"color": [0.7, 0.8, 0.9], "fogType": "EXPONENTIAL", "visibilityRange": 9000}, parent=ly, name="FogTown")
+    town = await b.mk("Group", parent=ly, name="Town"); lib = await b.mk("Switch", {"whichChoice": -1}, parent=town, name="TreeLibrary")   # DEFs must precede their USEs in document order
+    core = await b.mk("Group", parent=town, name="TownCore"); out = await b.mk("Group", parent=town, name="Outskirts")
     # ---- lights (JS drives direction / colour / intensity from the Sun and Moon positions)
     for grp, pre in ((core, ""), (out, "Out")):
         await b.mk("DirectionalLight", {"direction": [-0.5, -0.6, -0.6], "intensity": 4.0, "color": [1, 0.92, 0.8], "shadows": grp is core, "shadowIntensity": 0.8}, parent=grp, name=pre + "KeyLight")
@@ -82,7 +88,7 @@ async def build_town(b: B):
     far_t = G.terrain_rings(1650.0, 28000.0, 192, 90.0, 1.07, G.H, far_tint, flat_until=1700.0, tile=5.0); e = far_t.export(uv=False)
     sh = await b.mk("Shape", parent=out, name="S_terrain_far"); await b.pbr(sh, rough=0.95, aniso=2); await b.ifs(sh, e, crease=1.0, solid=True); info["terrain_far"] = dict(verts=e["verts"], faces=e["faces"])
     # ---- trees: eight DEF'd variants in an unrendered library, instanced with Transform + USE
-    lib = await b.mk("Switch", {"whichChoice": -1}, parent=town, name="TreeLibrary"); V = G.tree_variants(); first = {}
+    V = G.tree_variants(); first = {}
     for i, m in enumerate(V):
         sh = await b.mk("Shape", parent=lib, name=f"Tree{i}"); await b.pbr(sh, rough=0.9, aniso=1); await b.ifs(sh, m.export(uv=False), crease=0.25 if i < 6 else 0.5 if i == 6 else 0.3, solid=True)
     def pick(r):

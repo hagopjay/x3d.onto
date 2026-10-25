@@ -21,21 +21,32 @@ def slerp(a, b, t, lift, R=8.0):
     if om < 1e-6: return a
     s = [(math.sin((1 - t) * om) * x + math.sin(t * om) * y) / math.sin(om) for x, y in zip(ua, ub)]; r = R * (1 + lift * math.sin(math.pi * t)); return [r * x for x in s]
 def circle(rad, n=128, y=0.0): return [[rad * math.cos(2 * math.pi * i / n), y, rad * math.sin(2 * math.pi * i / n)] for i in range(n)]
+async def sph_ifs(b, shape, radius, nlon, nlat):
+    """a textured sphere as a scaled IndexedFaceSet (valid X3D 4.1; X3D's Sphere has no tessellation control in the schema)"""
+    from meshkit import uv_sphere
+    e = uv_sphere(nlon, nlat)
+    e["point"] = [[round(x * radius, 1) for x in p] for p in e["point"]]
+    await b.ifs(shape, e, crease=3.2, solid=True)
 def e3(v): return [float(f"{x:.6g}") for x in v]                    # compact numbers for huge coordinates
+
+async def build_materials(b: B):
+    mats = await b.mk("Switch", {"whichChoice": -1}, name="Materials")
+    for f in fams:
+        sh = await b.mk("Shape", parent=mats); ap = await b.mk("Appearance", parent=sh, name="Fam_" + f)
+        c = rgb(f); await b.mk("PhysicalMaterial", {"baseColor": c, "emissiveColor": [x * 0.5 for x in c], "roughness": 0.45, "metallic": 0.0}, parent=ap); await b.mk("Sphere", {"radius": 1.0}, parent=sh)
+    sh = await b.mk("Shape", parent=mats); ap = await b.mk("Appearance", parent=sh, name="New41"); await b.mk("PhysicalMaterial", {"baseColor": [0.2, 1, 0.5], "emissiveColor": [0.3, 1, 0.55], "roughness": 0.4, "metallic": 0.0}, parent=ap); await b.mk("Sphere", {"radius": 1.0}, parent=sh)
 
 async def build_env(b: B):
     await b.mk("NavigationInfo", {"type": ["NONE"], "headlight": False, "avatarSize": [0.2, 1.7, 0.4], "visibilityLimit": 1e14, "speed": 1}, name="Nav")
     await b.mk("Background", {"skyColor": [[0, 0, 0]], "frontUrl": ["../tex/stars_front.png"], "backUrl": ["../tex/stars_back.png"], "leftUrl": ["../tex/stars_left.png"], "rightUrl": ["../tex/stars_right.png"], "topUrl": ["../tex/stars_top.png"], "bottomUrl": ["../tex/stars_bottom.png"]}, name="BgSpace")
     await b.mk("Background", {"skyColor": [[0.12, 0.28, 0.62], [0.55, 0.74, 0.95]], "skyAngle": [1.5], "groundColor": [[0.28, 0.3, 0.26], [0.45, 0.5, 0.45]], "groundAngle": [1.4]}, name="BgDay")
-    await b.mk("Fog", {"color": [0.7, 0.8, 0.9], "fogType": "EXPONENTIAL", "visibilityRange": 0}, name="FogNone")
-    await b.mk("Fog", {"color": [0.7, 0.8, 0.9], "fogType": "EXPONENTIAL", "visibilityRange": 9000}, name="FogTown")
     await b.mk("Viewpoint", {"position": [0, 1.7, 30], "orientation": [0, 1, 0, 0], "fieldOfView": 0.9}, name="Cam")
 
 async def build_world(b: B):
     w = await b.mk("Transform", name="World")
     await b.mk("DirectionalLight", {"direction": [0, 0, 1], "intensity": 4.2, "color": [1, 0.97, 0.92]}, parent=w, name="SunDir")
     sunT = await b.mk("Transform", parent=w, name="SunT"); sh = await b.mk("Shape", parent=sunT, name="SunBody"); ap = await b.mk("Appearance", parent=sh)
-    um = await b.mk("UnlitMaterial", {"emissiveColor": [1, 0.9, 0.7]}, parent=ap, name="Mat_Sun"); it = await b.mk("ImageTexture", {"url": ["../tex/sun.png"]}, parent=um, cf="emissiveTexture"); await b.mk("Sphere", {"radius": RS}, parent=sh)
+    um = await b.mk("UnlitMaterial", {"emissiveColor": [1, 0.9, 0.7]}, parent=ap, name="Mat_Sun"); it = await b.mk("ImageTexture", {"url": ["../tex/sun.png"]}, parent=um, cf="emissiveTexture"); await sph_ifs(b, sh, RS, 72, 36)
     # ecliptic grid: circles every 0.5 AU and 12 spokes
     pts = []; idx = []
     for k in range(1, 6):
@@ -50,8 +61,8 @@ async def build_world(b: B):
     await b.lines(w, [e3(p) for p in pts], list(range(361)) + [-1], (0.25, 0.5, 0.95), name="EarthOrbitLine")
     eo = await b.mk("Transform", parent=w, name="EarthOrbitT")
     es = await b.mk("Transform", parent=eo, name="EarthSpin"); sh = await b.mk("Shape", parent=es, name="EarthBody")
-    await b.pbr(sh, base="earth_day.jpg", mr="earth_mr.png", emis_tex="earth_lights.png", emissive=(1.0, 0.8, 0.5), rough=1.0, metal=1.0, aniso=4, name="Ap_Earth"); await b.mk("Sphere", {"radius": RE}, parent=sh)
-    ct = await b.mk("Transform", parent=es, name="CloudsT"); sh = await b.mk("Shape", parent=ct); await b.pbr(sh, base="earth_clouds.png", rough=1.0, metal=0.0, aniso=2); await b.mk("Sphere", {"radius": RE * 1.0045}, parent=sh)
+    await b.pbr(sh, base="earth_day.jpg", mr="earth_mr.png", emis_tex="earth_lights.png", emissive=(1.0, 0.8, 0.5), rough=1.0, metal=1.0, aniso=4, name="Ap_Earth"); await sph_ifs(b, sh, RE, 200, 100)
+    ct = await b.mk("Transform", parent=es, name="CloudsT"); sh = await b.mk("Shape", parent=ct); await b.pbr(sh, base="earth_clouds.png", rough=1.0, metal=0.0, aniso=2, transparency=0.02); await sph_ifs(b, sh, RE * 1.0045, 128, 64)
     # graticule + axis in the body frame
     pts = []; idx = []
     for lat in (-60, -30, 0, 30, 60):
@@ -64,7 +75,7 @@ async def build_world(b: B):
     await b.emissive_shape(mk_, (1, 0.45, 0.15), "Sphere", {"radius": 4.0e4}, name="Mat_TownMarker")
     # Moon
     mo = await b.mk("Transform", parent=eo, name="MoonOrbitT"); ms = await b.mk("Transform", parent=mo, name="MoonSpin"); sh = await b.mk("Shape", parent=ms, name="MoonBody")
-    await b.pbr(sh, base="moon.jpg", rough=0.96, metal=0.0, aniso=4, name="Ap_Moon"); await b.mk("Sphere", {"radius": RM}, parent=sh)
+    await b.pbr(sh, base="moon.jpg", rough=0.96, metal=0.0, aniso=4, name="Ap_Moon"); await sph_ifs(b, sh, RM, 128, 64)
     mp = await b.mk("Transform", parent=eo, name="MoonOrbitPlane"); await b.lines(mp, [e3(p) for p in circle(3.844e8, 192)], list(range(192)) + [0, -1], (0.55, 0.6, 0.7), name="MoonOrbitLine", tr=0.25)
     return w
 
@@ -72,11 +83,6 @@ async def build_constellation(b: B, world: str):
     """364 ontology classes on a shell, three domain rings, the flywheel loop, evidence monoliths: the v1 modules at a much larger scale"""
     cs = await b.mk("Transform", parent=world, name="ConstSpin")
     await b.mk("DirectionalLight", {"direction": [-0.35, -0.5, -0.8], "intensity": 1.1, "color": [0.8, 0.88, 1.0]}, parent=cs, name="ConstFill")
-    mats = await b.mk("Switch", {"whichChoice": -1}, name="Materials")
-    for f in fams:
-        sh = await b.mk("Shape", parent=mats); ap = await b.mk("Appearance", parent=sh, name="Fam_" + f)
-        c = rgb(f); await b.mk("PhysicalMaterial", {"baseColor": c, "emissiveColor": [x * 0.5 for x in c], "roughness": 0.45, "metallic": 0.0}, parent=ap); await b.mk("Sphere", {"radius": 1.0}, parent=sh)
-    sh = await b.mk("Shape", parent=mats); ap = await b.mk("Appearance", parent=sh, name="New41"); await b.mk("PhysicalMaterial", {"baseColor": [0.2, 1, 0.5], "emissiveColor": [0.3, 1, 0.55], "roughness": 0.4, "metallic": 0.0}, parent=ap); await b.mk("Sphere", {"radius": 1.0}, parent=sh)
     glass = await b.emissive_shape(cs, (0.04, 0.09, 0.22), "Sphere", {"radius": RC * 1.03}, tr=0.94)
     # lat/lon wires
     R = RC * 1.04; wires = []; n = 96; widx = []

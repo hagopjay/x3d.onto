@@ -36,16 +36,16 @@ function buildRegistry() {
   const H = UI.town.houses;
   for (const h of H) {
     const cx = h.x, cz = h.z, hx = h.w / 2, hz = h.d / 2, c = Math.cos(h.rot), s = Math.sin(h.rot);
-    const e = add({ id: h.id, cat: 'building', name: h.name, label: h.name, sub: () => h.role, tw: () => [cx, h.h / 2, cz], r: Math.hypot(hx, hz) * 0.8, lab: true, pri: 2, minPx: 12, fd: Math.max(h.w, h.d, h.h) * 2.6, special: 'building', col: h.id === 'B02' ? '#d7dce8' : '#ffe0b8', obb: { c: [cx, h.h * 0.55, cz], h: [hx, h.h * 0.6, hz], rot: h.rot },
+    const e = add({ id: h.id, cat: 'building', name: h.name, label: h.name, sub: () => h.role, tw: () => [cx, h.h / 2, cz], r: Math.hypot(hx, hz) * 0.8, lab: true, pri: 2, minPx: 12, fd: Math.max(h.w, h.d, h.h) * 2.6, maxD: 260, special: 'building', col: h.id === 'B02' ? '#d7dce8' : '#ffe0b8', obb: { c: [cx, h.h * 0.55, cz], h: [hx, h.h * 0.6, hz], rot: h.rot },
       info: S => ({ t: h.name, sub: h.role, g: 'I', l: [`footprint ${h.w} × ${h.d} m, wall height ${h.h} m (${h.h >= 4.35 ? 'two storeys' : 'one storey and an attic'}), ${h.roof} roof, ${h.wall} walls`, `position ${cx.toFixed(0)} m east, ${(-cz).toFixed(0)} m north of the fountain`, `windows glow after dusk (lamp factor now ${(smooth(4, -3, S.sunElev / D2R) * 100).toFixed(0)} %)`, h.id === 'B02' ? 'tower 15.5 m plus a 7.5 m slate spire; four clock faces' : h.id === 'B03' ? 'the forge flickers; Old Bram strikes the anvil every 1.4 s' : h.id === 'B01' ? 'hanging sign, two tables outside, two chimneys' : ''].filter(Boolean), src: 'invented for this demo (v2/town_layout.py, v2/town_geo.py); one merged IndexedFaceSet per material' }) });
     const corner = (a, b, y) => { const lx = a * hx, lz = b * hz; return [cx + c * lx + s * lz, y, cz - s * lx + c * lz]; };
     e.box = view => { const q = [[-1, -1], [1, -1], [1, 1], [-1, 1]], lo = q.map(([a, b]) => view.projectTown(corner(a, b, 0.2))), hi = q.map(([a, b]) => view.projectTown(corner(a, b, h.h + 1.4))); if (lo.concat(hi).some(v => !v)) return null; return [lo[0], lo[1], hi[1], hi[2], lo[2], lo[3], hi[3], hi[0], lo[0]]; };
   }
-  for (const s of UI.town.stalls) add({ id: s.id, cat: 'prop', name: s.name, label: s.name, tw: () => [s.x, 1.3, s.z], r: 1.8, lab: true, pri: 1, minPx: 14, fd: 9, special: 'prop', col: '#ffd9a6', info: () => ({ t: s.name, sub: 'market stall on the plaza', g: 'I', l: ['2.6 × 1.8 m with a striped cloth canopy; counter and goods are geometry', s.id === 'S01' ? 'bread: nine small ellipsoids' : s.id === 'S02' ? 'vegetables: fourteen spheres in five colours' : 'cloth: folded bolts in five colours'], src: 'invented (v2/town_geo.py)' }) });
-  add({ id: 'fountain', cat: 'prop', name: 'Fountain', label: 'Fountain', tw: () => [0, 1.6, 0], r: 3.6, lab: true, pri: 2, minPx: 14, fd: 16, special: 'prop', col: '#bfe4ff', info: () => ({ t: 'Plaza fountain', sub: 'centre of the village', g: 'I', l: ['stone basin radius 3.2 m, two bowls and a column 4 m high', 'the water is a textured disc with a PBR material (roughness 0.06): it shows the sun as a glint'], src: 'invented (v2/town_geo.py)' }) });
+  for (const s of UI.town.stalls) add({ id: s.id, cat: 'prop', name: s.name, label: s.name, tw: () => [s.x, 1.3, s.z], obb: { c: [s.x, 1.3, s.z], h: [1.5, 1.4, 1.0], rot: s.rot }, r: 1.8, lab: true, pri: 1, minPx: 14, fd: 9, maxD: 60, special: 'prop', col: '#ffd9a6', info: () => ({ t: s.name, sub: 'market stall on the plaza', g: 'I', l: ['2.6 × 1.8 m with a striped cloth canopy; counter and goods are geometry', s.id === 'S01' ? 'bread: nine small ellipsoids' : s.id === 'S02' ? 'vegetables: fourteen spheres in five colours' : 'cloth: folded bolts in five colours'], src: 'invented (v2/town_geo.py)' }) });
+  add({ id: 'fountain', cat: 'prop', name: 'Fountain', label: 'Fountain', tw: () => [0, 1.6, 0], obb: { c: [0, 1.4, 0], h: [3.5, 1.5, 3.5], rot: 0 }, r: 3.6, lab: true, pri: 2, minPx: 14, fd: 16, maxD: 90, special: 'prop', col: '#bfe4ff', info: () => ({ t: 'Plaza fountain', sub: 'centre of the village', g: 'I', l: ['stone basin radius 3.2 m, two bowls and a column 4 m high', 'the water is a textured disc with a PBR material (roughness 0.06): it shows the sun as a glint'], src: 'invented (v2/town_geo.py)' }) });
   for (const pp of UI.people) {
     const T_ = 'T_' + pp.id, sc = pp.scale;
-    const e = add({ id: pp.id, cat: 'person', name: pp.name, label: pp.name, sub: () => pp.role, subAlways: () => (E.pose && E.pose.w < 12) ? pp.role : null, tw: () => { const v = townVec(T_); return [v[0], v[1] + 0.92 * sc, v[2]]; }, r: 0.62 * sc, lab: true, pri: 6, minPx: 6, fd: 5.5 * sc + 1.5, fh: 1.35 * sc, special: 'person', col: '#fff4c7',
+    const e = add({ id: pp.id, cat: 'person', name: pp.name, label: pp.name, sub: () => pp.role, subAlways: () => (E.pose && E.pose.w < 12) ? pp.role : null, tw: () => { const v = townVec(T_); return [v[0], v[1] + 0.92 * sc, v[2]]; }, r: 0.62 * sc, lab: true, pri: 6, minPx: 6, fd: 5.5 * sc + 1.5, fh: 1.35 * sc, maxD: 55, special: 'person', col: '#fff4c7',
       info: S => { const v = townVec(T_), rr = nd(T_).rotation, yaw = rr.y >= 0 ? rr.angle : -rr.angle; const L = [pp.role + (pp.note ? ': ' + pp.note : ''), `wears a ${pp.shirt} top and ${pp.pants} trousers; height ${(1.75 * sc).toFixed(2)} m (humanoid scale ${sc})`, pp.path_m ? `path ${pp.path_m} m at ${pp.speed} m/s, lap ${pp.lap} s; gait cycle ${pp.gait_s} s (hip swing ±24°, stride ${(2 * 2 * 0.92 * sc * Math.sin(24 * D2R)).toFixed(2)} m)` : `idle loop ${pp.period} s: ${pp.arch === 'smith' ? 'hammer strike every 1.4 s' : pp.arch === 'greeter' ? 'waves for about 3.5 s' : pp.arch === 'talker' ? 'speaks with the right arm and nods' : 'listens with small head movements'}`, 'body: 16 H-Anim joints (humanoid_root … l/r_talocrural) and 15 segments; keyframed in X3D with OrientationInterpolators, no scripts'];
         return { t: pp.name, sub: pp.role, g: 'I', l: L, live: `now ${v[0].toFixed(1)} m east, ${(-v[2]).toFixed(1)} m north of the fountain · heading ${((((yaw / D2R) % 360) + 360) % 360).toFixed(0)}°`, src: 'invented character (v2/town_layout.py); skeleton and animation built by v2/humans.py through x3d_mcp' }; } });
   }
@@ -74,10 +74,11 @@ function refreshReg() {
 }
 function rayOBB(o, d, b) { const c = Math.cos(b.rot), s = Math.sin(b.rot), r = V.sub(o, b.c); const lo = [c * r[0] - s * r[2], r[1], s * r[0] + c * r[2]], ld = [c * d[0] - s * d[2], d[1], s * d[0] + c * d[2]]; let t0 = 0, t1 = 1e18; for (let i = 0; i < 3; i++) { if (Math.abs(ld[i]) < 1e-9) { if (Math.abs(lo[i]) > b.h[i]) return -1; } else { let a = (-b.h[i] - lo[i]) / ld[i], z = (b.h[i] - lo[i]) / ld[i]; if (a > z) [a, z] = [z, a]; t0 = Math.max(t0, a); t1 = Math.min(t1, z); if (t0 > t1) return -1; } } return t0; }
 function pickAt(mx, my) {
-  if (!E.camT) return null; const view = OV.view || E.viewMatrix(), ray = view.ray(mx, my); let best = null, bs = Infinity;
-  for (const e of E.reg) { if (!e.on) continue; const oc = V.sub(e.tc, ray.o), t = V.dot(oc, ray.d); if (t <= 0) continue; const dist = Math.sqrt(V.dot(oc, oc));
-    if (e.obb) { const tt = rayOBB(ray.o, ray.d, e.obb); if (tt >= 0) { const sc = tt + e.r * 0.2; if (sc < bs) { bs = sc; best = e; } continue; } }
-    const tol = (e.cat === 'person' ? 16 : e.cat === 'body' || e.cat === 'town' ? 6 : 10) / view.sy * dist, rr = Math.max(e.r, tol), d2 = V.dot(oc, oc) - t * t; if (d2 > rr * rr) continue; const entry = t - Math.sqrt(Math.max(0, rr * rr - d2)), sc = entry + 0.5 * rr; if (sc < bs) { bs = sc; best = e; } }
+  if (!E.camT) return null; const view = OV.view || E.viewMatrix(), ray = view.ray(mx, my); let best = null, bs = Infinity, br = 9;
+  for (const e of E.reg) { if (!e.on) continue; const oc = V.sub(e.tc, ray.o), t = V.dot(oc, ray.d); if (t <= 0) continue; const dist = Math.sqrt(V.dot(oc, oc)), rank = e.cat === 'person' ? 0 : 1; if (rank > br) continue; let sc = -1;
+    if (e.obb) { const tt = rayOBB(ray.o, ray.d, e.obb); if (tt >= 0) sc = tt + e.r * 0.2; }
+    if (sc < 0 && !e.obb || sc < 0 && e.cat === 'person') { const tol = (e.cat === 'person' ? 14 : e.cat === 'body' || e.cat === 'town' ? 6 : 10) / view.sy * dist, rr = Math.max(e.r, tol), d2 = V.dot(oc, oc) - t * t; if (d2 <= rr * rr) sc = t - Math.sqrt(Math.max(0, rr * rr - d2)) + 0.5 * rr; }
+    if (sc >= 0 && (rank < br || sc < bs)) { bs = sc; br = rank; best = e; } }
   return best;
 }
 // ------------------------------------------------------------------ navigation presets
@@ -91,8 +92,9 @@ function placeCam(name) {
     case 'moon': return sunSideCam('moon', 5.2e6);
     case 'orbit': return Object.assign({ f: 'town', d: 2.4e6, az: 2.9, el: 0.95 }, base);
     case 'village': return Object.assign({ f: 'town', d: 620, az: 2.45, el: 0.5 }, base);
-    case 'plaza': return Object.assign({ f: 'town', d: 24, az: 2.9, el: 0.17 }, base);
+    case 'plaza': return Object.assign({ f: 'town', d: 21, az: -2.28, el: 0.1 }, base, { pan: [3, -4] });
     case 'street': return Object.assign({ f: 'town', d: 7, az: 1.7, el: 0.1 }, base, { pan: [-34, 2.2] });
+    case 'nightsky': return Object.assign({ f: 'town', d: 0.05, az: 2.3, el: 1.05, look: true }, base, { pan: [-3, 6] });
   }
 }
 function go(name, opt) {
@@ -114,6 +116,17 @@ function scanSun(kind) {
   if (kind === 'noon') return tmax; if (kind === 'night') return base + (localHours(E.t) > 1.5 ? 86400 : 0) + 1.5 * 3600; return res;
 }
 function timePreset(k) { if (k === 'now') { E.t = nowS(); E.rate = 1; E.paused = false; return; } if (k === 'eclipse') return window.stageEclipse ? window.stageEclipse() : UI.toast('eclipse staging not available yet'); const t = scanSun(k); if (t) E.t = t; E.paused = true; E.rate = 1; }
+// ------------------------------------------------------------------ staged total solar eclipse over the village
+window.stageEclipse = function () {
+  if (!ECLIPSE.on) { UI.toast('searching the next two years for the best new moon…'); const i = findEclipse(); if (!i) return UI.toast('no suitable new moon found'); }
+  const S0 = solar(ECLIPSE.t0); E.t = ECLIPSE.t0 - 42 * 60; E.rate = 150; E.paused = false; E.eclAuto = true; E.constMode = 'off'; $('cm').textContent = 'off'; const c = placeCam('nightsky'); c.az = Math.atan2(S0.sunT[0], -S0.sunT[2]) - 0.5; c.el = Math.asin(S0.sunT[1]) - 0.15; c.pan = [-2, 8]; E.flyTo(c, { dur: 5, fov: 0.95 });
+  const i = ECLIPSE.info; UI.toast(`staged eclipse: raw closest approach ${i.rawSepDeg.toFixed(2)}°, Moon nudged ${i.nudgeKm.toFixed(0)} km (${i.nudgeDeg.toFixed(2)}°) for ±5 h`);
+};
+function eclipseAuto(dt) {
+  if (!E.eclAuto || E.flight && E.flight.dur > 1e11) return; const S = E.S; if (!ECLIPSE.on) { E.eclAuto = false; return; } const ob = S.obsc || 0;
+  if (E.cam.look && !E.flight) { const azT = Math.atan2(S.sunT[0], -S.sunT[2]), elT = Math.asin(clamp(S.sunT[1], -1, 1)), k = 1 - Math.exp(-dt * 2.2); let da = azT - E.cam.az; da = Math.atan2(Math.sin(da), Math.cos(da)); const off = E.eclAim === 'sun' ? 0 : 0; E.cam.az += da * k; E.cam.el += (elT - E.cam.el) * k; const fovT = mix(0.95, 0.2, smooth(0.0, 0.55, ob)); E.fov += (fovT - E.fov) * (1 - Math.exp(-dt * 1.5)); }
+  E.rate = ob > 0.985 ? 12 : ob > 0.5 ? 55 : ob > 0.02 ? 150 : (E.t < ECLIPSE.t0 ? 220 : 300); if (E.t > ECLIPSE.t0 + 75 * 60) { E.eclAuto = false; E.paused = true; E.rate = 1; }
+}
 // ------------------------------------------------------------------ input
 function wire() {
   const cv = E.canvas, opt = { passive: false, capture: true };
@@ -122,7 +135,7 @@ function wire() {
   cv.addEventListener('pointermove', e => {
     UI.mx = e.clientX; UI.my = e.clientY; UI.inside = true; const pp = UI.ptrs.get(e.pointerId); if (!pp) return; const px = pp.x, py = pp.y; pp.x = e.clientX; pp.y = e.clientY;
     if (UI.ptrs.size === 2) { const a = [...UI.ptrs.values()], d = Math.hypot(a[0].x - a[1].x, a[0].y - a[1].y), d0 = UI.pinch || d; UI.pinch = d; zoomBy(Math.log(d0 / d) * 1.2); return; }
-    if (UI.drag && !E.flight) { const dx = e.clientX - px, dy = e.clientY - py; UI.drag.moved += Math.abs(dx) + Math.abs(dy); if (UI.drag.shift) panBy(-dx, -dy); else { const k = 0.0052; E.cam.az -= dx * k; E.cam.el = clamp(E.cam.el + dy * k, -1.5, 1.52); UI.vel.az = -dx * k * 60; UI.vel.el = dy * k * 60; } }
+    if (UI.drag && !E.flight) { const dx = e.clientX - px, dy = e.clientY - py; UI.drag.moved += Math.abs(dx) + Math.abs(dy); if (E.cam.look) { const k = 0.0042 * Math.min(1, E.fov / 0.9); E.cam.az -= dx * k; E.cam.el = clamp(E.cam.el + dy * k, -1.4, 1.55); } else if (UI.drag.shift) panBy(-dx, -dy); else { const k = 0.0052; E.cam.az -= dx * k; E.cam.el = clamp(E.cam.el + dy * k, -1.5, 1.52); UI.vel.az = -dx * k * 60; UI.vel.el = dy * k * 60; } }
   }, opt);
   const up = e => { UI.ptrs.delete(e.pointerId); UI.pinch = 0; if (UI.drag && UI.drag.moved < 5 && performance.now() - UI.drag.t < 450 && UI.drag.btn === 0) clickAt(e.clientX, e.clientY); UI.drag = null; };
   cv.addEventListener('pointerup', up, opt); cv.addEventListener('pointercancel', up, opt); cv.addEventListener('pointerleave', () => { UI.inside = false; }, opt);
@@ -136,7 +149,7 @@ function wire() {
   $('sndbtn').onclick = () => soundToggle && soundToggle();
 }
 function zoomBy(dl, fromWheel) {
-  if (E.flight) return; const c = E.cam, hov = UI.hover; const d = c.d * Math.exp(dl);
+  if (E.flight) return; if (E.cam.look) { E.fov = clamp(E.fov * Math.exp(dl * 0.8), 0.2, 1.5); return; } const c = E.cam, hov = UI.hover; const d = c.d * Math.exp(dl);
   if (dl < 0 && fromWheel && hov && hov.cat !== 'person' && !(c.f === 'obj' && c.id === hov.id)) { const dist = V.len(V.sub(hov.tc, E.camT)); if (dist > hov.r * 3 && dist < c.d * 3 + 1 && performance.now() - (UI.diveCool || 0) > 900) { UI.diveCool = performance.now(); E.flyTo({ f: hov.special === 'village' ? 'town' : 'obj', id: hov.id, d: Math.max(hov.fd, dist * 0.5), az: c.az, el: c.el, pan: [0, 0], h: 1.4 }, { dur: 1.3 }); return; } }
   c.d = clamp(d, E.focusMin(c), E.focusMax(c));
 }
@@ -150,19 +163,24 @@ function keyCmd(k, e) {
   if (/^[1-8]$/.test(k) && !UI.tourOpen) { go(['constellation', 'sun', 'earth', 'moon', 'orbit', 'village', 'plaza', 'person'][+k - 1]); return; }
   switch (k) {
     case 'escape': if (UI.cineOn) return filmStop(); if (E.flight) { E.flight.t0 = -1e9; return; } if (UI.tourOpen) return tourClose(); UI.pin = null; showInfo(); $('help').style.display = 'none'; break;
-    case ' ': E.paused = !E.paused; e.preventDefault(); break; case 'h': case '?': toggle('help'); break; case 'l': UI.labelsOn = !UI.labelsOn; break;
+    case ' ': E.paused = !E.paused; e.preventDefault(); break; case 'h': case '?': toggle('help'); break; case 'g': toggleLook(); break; case 'l': UI.labelsOn = !UI.labelsOn; break;
     case 'c': E.constMode = E.constMode === 'auto' ? 'on' : E.constMode === 'on' ? 'off' : 'auto'; $('cm').textContent = E.constMode; break;
     case 'f': filmStart(); break; case 't': tourOpen(0); break; case 'm': soundToggle(); break;
     case '[': E.rate = Math.max(1, Math.abs(E.rate) / 4); break; case ']': E.rate = Math.min(5e6, Math.max(1, Math.abs(E.rate)) * 4); E.paused = false; break;
     case 'arrowright': if (UI.tourOpen) tourOpen(UI.tourI + 1); break; case 'arrowleft': if (UI.tourOpen) tourOpen(UI.tourI - 1); break;
   }
 }
+function toggleLook() {
+  const c = E.cam, S = E.S; if (c.look) { const a = c.az, p0 = c.pan; c.look = false; c.d = 12; c.pan = [p0[0] + Math.sin(a) * 12, p0[1] - Math.cos(a) * 12]; c.az = a + Math.PI; c.el = 0.16; c.h = 1.4; E.fov = 0.95; return; }
+  if (!E.near || E.alt > 400) { UI.toast && UI.toast('Walk mode needs a ground position: press 7 (plaza) first'); return; }
+  const f = E.fwdT, ct = E.camT; c.look = true; c.f = 'town'; c.pan = [ct[0], ct[2]]; c.az = Math.atan2(f[0], -f[2]); c.el = Math.asin(clamp(f[1], -1, 1)); c.d = 0.05; E.fov = 0.95; }
 function toggle(id) { const n = $(id), on = n.style.display !== 'block'; $('help').style.display = 'none'; n.style.display = on ? 'block' : 'none'; }
 function stepKeys(dt) {
   const k = UI.keys; if (E.flight) return; const c = E.cam; let mx = 0, my = 0, rot = 0, zm = 0;
   if (k['w'] || k['arrowup']) my -= 1; if (k['s'] || k['arrowdown']) my += 1; if (k['a'] || (k['arrowleft'] && !UI.tourOpen)) mx -= 1; if (k['d'] || (k['arrowright'] && !UI.tourOpen)) mx += 1; if (k['q']) rot -= 1; if (k['e']) rot += 1; if (k['r']) zm -= 1; if (k['z']) zm += 1;
-  if (mx || my) { if (c.f === 'town') panBy(mx * 360 * dt * (k['shift'] ? 3 : 1), my * 360 * dt * (k['shift'] ? 3 : 1)); else { c.az -= mx * dt * 0.8; c.el = clamp(c.el - my * dt * 0.6, -1.5, 1.52); } if (window.tourPause) tourPause(); }
-  if (rot) c.az += rot * dt * 1.1; if (zm) c.d = clamp(c.d * Math.exp(zm * dt * 1.2), E.focusMin(c), E.focusMax(c));
+  if ((mx || my) && c.look) { const sp = (k['shift'] ? 9 : 2.6) * dt, ps = Math.sin(c.az), pc = Math.cos(c.az); c.pan[0] += (ps * -my + pc * mx) * sp; c.pan[1] += (-pc * -my + ps * mx) * sp; clampPan(); }
+  else if (mx || my) { if (c.f === 'town') panBy(mx * 360 * dt * (k['shift'] ? 3 : 1), my * 360 * dt * (k['shift'] ? 3 : 1)); else { c.az -= mx * dt * 0.8; c.el = clamp(c.el - my * dt * 0.6, -1.5, 1.52); } if (window.tourPause) tourPause(); }
+  if (rot) c.az += rot * dt * 1.1; if (zm) if (!c.look) c.d = clamp(c.d * Math.exp(zm * dt * 1.2), E.focusMin(c), E.focusMax(c));
 }
 // ------------------------------------------------------------------ HUD, tooltip, info panel
 function infoBlock(i, max) { return [el('div', { class: 'h' }, i.t, ' ', gradeTag(i.g)), i.sub && el('div', { class: 'sub' }, i.sub)].concat(i.l.slice(0, max || 99).map(x => el('div', { class: 'ln' }, x)), i.live && el('div', { class: 'live', id: 'live' }, i.live), el('div', { class: 'src' }, i.src || '')); }
@@ -177,11 +195,11 @@ function showTip() {
   t.style.display = 'block'; const w = t.offsetWidth, h = t.offsetHeight; t.style.left = Math.min(innerWidth - w - 12, UI.mx + 18) + 'px'; t.style.top = Math.min(innerHeight - h - 12, UI.my + 18) + 'px';
 }
 function hud() {
-  const c = E.cam, f = E.FOCUS[c.f], e = c.f === 'obj' ? E.by.get(c.id) : null; $('where').textContent = e ? e.name : f ? f.label : '—'; const w = E.pose ? E.pose.w : c.d;
+  const c = E.cam, f = E.FOCUS[c.f], e = c.f === 'obj' ? E.by.get(c.id) : null; $('where').textContent = c.look ? 'Village · walking (G to leave)' : e ? e.name : f ? f.label : '—'; const w = E.pose ? E.pose.w : c.d;
   $('dist').textContent = `${fmtD(w)} from the focus` + (E.near ? ` · altitude ${fmtD(Math.max(0, E.alt))}` : '') + (E.flight ? ' · flying…' : '');
   $('utc').textContent = new Date(E.t * 1000).toISOString().replace('T', ' ').slice(0, 19) + ' UTC';
   const rate = E.paused ? 'paused' : E.rate === 1 ? 'real time' : E.rate >= 86400 ? +(E.rate / 86400).toPrecision(2) + ' days/s' : E.rate >= 3600 ? +(E.rate / 3600).toPrecision(2) + ' h/s' : +(E.rate / 60).toPrecision(2) + ' min/s';
-  setKids($('lst'), el('span', null, 'village solar time ' + fmtHM(localHours(E.t)) + ' · sun ' + ldeg(E.S.sunElev)), el('span', null, rate));
+  setKids($('lst'), el('span', null, 'village solar time ' + fmtHM(localHours(E.t)) + ' · sun ' + ldeg(E.S.sunElev) + (E.S.obsc > 0.001 ? ' · eclipse ' + (E.S.obsc * 100).toFixed(1) + ' %' : '')), el('span', null, rate));
   document.querySelectorAll('#clock [data-rate]').forEach(b => b.classList.toggle('on', (b.dataset.rate === '0' && E.paused) || (!E.paused && +b.dataset.rate === E.rate)));
 }
 // ------------------------------------------------------------------ boot
@@ -197,6 +215,7 @@ function boot() {
         if (E.ready || !nd('World') || !nd('Cam') || !nd('T_P01')) return;
         for (const [k, v] of [['LogarithmicDepthBuffer', true], ['ToneMapping', 'KHR_PBR_NEUTRAL'], ['PrimitiveQuality', 'HIGH'], ['TextureQuality', 'HIGH']]) { try { B.setBrowserOption(k, v); } catch (e) { console.warn('option', k, e); } }
         try { const kl = nd('KeyLight'); kl.shadowMapSize = 4096; kl.shadowBias = 0.004; } catch (e) { console.warn('shadow', e); }
+        try { nd('CloudsT').children[0].appearance.material.transparency = 0.02; } catch (e) { console.warn('clouds', e); }   // a non-zero transparency puts the cloud shell on X_ITE's blend path
         lstat('building the pick registry…'); refreshFrames(); buildRegistry(); wire(); initStart();
         E.ready = true; $('load').style.opacity = 0; setTimeout(() => $('load').style.display = 'none', 900); nd('Cam').set_bind = true; console.log('v2 ready'); window.dispatchEvent(new Event('v2ready'));
       };
@@ -211,8 +230,8 @@ function initStart() {
 }
 let uiTick = 0;
 function frameUI(dt, now) {
-  stepKeys(dt); if (!E.flight && !UI.drag) { E.cam.az += UI.vel.az * dt; E.cam.el = clamp(E.cam.el + UI.vel.el * dt, -1.5, 1.52); const k = Math.exp(-dt * 3.2); UI.vel.az *= k; UI.vel.el *= k; if (Math.abs(UI.vel.az) < 1e-3) UI.vel.az = 0; if (Math.abs(UI.vel.el) < 1e-3) UI.vel.el = 0; }
-  if (E.cam.f === 'town') { clampPan(); const c = E.cam; c.d = clamp(c.d, E.focusMin(c), E.focusMax(c)); }
+  eclipseAuto(dt); stepKeys(dt); if (!E.flight && !UI.drag) { E.cam.az += UI.vel.az * dt; E.cam.el = clamp(E.cam.el + UI.vel.el * dt, -1.5, 1.52); const k = Math.exp(-dt * 3.2); UI.vel.az *= k; UI.vel.el *= k; if (Math.abs(UI.vel.az) < 1e-3) UI.vel.az = 0; if (Math.abs(UI.vel.el) < 1e-3) UI.vel.el = 0; }
+  if (E.cam.f === 'town') { clampPan(); const c = E.cam; if (!c.look) c.d = clamp(c.d, E.focusMin(c), E.focusMax(c)); }
   refreshReg(); if (UI.inside && !UI.drag && !E.flight) UI.hover = pickAt(UI.mx, UI.my); else if (E.flight || !UI.inside) UI.hover = null; if (E.canvas) E.canvas.style.cursor = UI.hover ? 'pointer' : UI.drag ? 'grabbing' : 'grab';
   drawOverlay(dt, now); showTip(); if ((uiTick++ & 7) === 0) { hud(); const e = UI.pin; if (e) { if (!e.on) { UI.pin = null; showInfo(); } else if (e.info && $('live')) { const i = e.info(E.S); if (i.live) $('live').textContent = i.live; } } }
   if (UI.snd) UI.snd(dt);

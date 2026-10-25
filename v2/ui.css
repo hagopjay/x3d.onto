@@ -9,10 +9,10 @@ button:hover{background:#21325a;border-color:#4a68a8}button:active{transform:tra
 #load{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:radial-gradient(ellipse at 50% 40%,#0b1330 0%,#02040a 70%);z-index:90;transition:opacity .9s}
 #loadbox{text-align:center;max-width:560px;padding:0 20px}#loadbox .ttl{font-size:26px;letter-spacing:.18em;color:#e6eeff;font-weight:300;margin-bottom:10px}#lstat{color:#8ea6d6;margin-bottom:10px;min-height:20px}#loadbox .sub{color:#667aa4;font-size:12px}
 #err{position:fixed;left:12px;bottom:40px;color:#ff8a8a;display:none;z-index:95;max-width:70vw;background:#200;border:1px solid #600;padding:8px 10px;border-radius:8px}
-#brand{position:fixed;left:18px;top:14px;z-index:20;pointer-events:none;text-shadow:0 1px 12px #000}
+#brand{position:fixed;left:18px;top:14px;z-index:20;pointer-events:none;text-shadow:0 1px 3px #000a}
 #brand .b1{letter-spacing:.2em;font-size:12px;color:#c8d6f2;font-weight:600}#brand .b1 b{color:var(--wm)}#brand .b2{font-size:20px;font-weight:300;color:#fff;margin-top:2px;letter-spacing:.02em}#brand .b3{font-size:12px;color:var(--mu);margin-top:1px}
 #clock{position:fixed;right:14px;top:12px;z-index:20;padding:8px 10px;width:392px}
-#clock .r1{font:600 15px/1.2 ui-monospace,SFMono-Regular,Menlo,monospace;color:#f2f6ff}#clock .r2{font-size:12px;color:var(--mu);margin:2px 0 6px;display:flex;justify-content:space-between}#clock .r3,#clock .r4{display:flex;gap:4px;flex-wrap:wrap;margin-top:4px}#clock button{padding:2px 7px;font-size:12px}
+#clock .r1{font:600 15px/1.2 ui-monospace,SFMono-Regular,Menlo,monospace;color:#f2f6ff}#clock .r2{font-size:12px;color:var(--mu);margin:2px 0 6px}#lst{display:flex;justify-content:space-between;width:100%}#clock .r3,#clock .r4{display:flex;gap:4px;flex-wrap:wrap;margin-top:4px}#clock button{padding:2px 7px;font-size:12px}
 #nav{position:fixed;left:50%;transform:translateX(-50%);bottom:34px;z-index:20;padding:6px 8px;display:flex;gap:5px;flex-wrap:wrap;justify-content:center;max-width:min(980px,92vw)}
 #nav button{padding:5px 11px;border-radius:999px;font-size:12.5px;display:flex;gap:6px;align-items:center}#nav button i{font-style:normal;color:var(--mu);font-size:11px}
 #foot{position:fixed;left:0;right:0;bottom:8px;text-align:center;color:#6c7fa6;font-size:11.5px;z-index:15;pointer-events:none;text-shadow:0 1px 6px #000}#foot b{color:#9db4e6}

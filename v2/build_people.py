@@ -11,13 +11,15 @@ async def build_people(b: B, core: str):
     lib = await b.mk("Switch", {"whichChoice": -1}, parent=core, name="HumanLibrary")
     for key, m in G.items():
         sh = await b.mk("Shape", parent=lib, name="GS_" + key); await b.ifs(sh, m.export(uv=False, colors=False), crease=0.9, solid=True, name="G_" + key)
-    ap_made = {}
+    ap_made = set()
     async def appearance(shape, pid, cls, skin, hair):
+        """appearances are DEF'd once per person and class inside the (unrendered) library, then USE'd by every segment shape"""
         name = f"Ap_{pid}_{cls}"
-        if name in ap_made: return await b.use(shape, name, "appearance")
-        col = {"skin": skin, "hair": hair, "shirt": colour(pcfg["shirt"]), "sleeve": colour(pcfg["shirt"]), "pants": colour(pcfg["pants"])}.get(cls) or Hm.ACC_COLOR.get(cls) or (0.5, 0.5, 0.5)
-        rough, metal = {"skin": (0.55, 0.0), "hair": (0.7, 0.0), "tool": (0.4, 0.9), "eye": (0.2, 0.0), "shoes": (0.6, 0.0)}.get(cls, (0.88, 0.0))
-        ap = await b.mk("Appearance", parent=shape, name=name); await b.mk("PhysicalMaterial", {"baseColor": list(col), "roughness": rough, "metallic": metal}, parent=ap); ap_made[name] = True; return ap
+        if name not in ap_made:
+            col = {"skin": skin, "hair": hair, "shirt": colour(pcfg["shirt"]), "sleeve": colour(pcfg["shirt"]), "pants": colour(pcfg["pants"])}.get(cls) or Hm.ACC_COLOR.get(cls) or (0.5, 0.5, 0.5)
+            rough, metal = {"skin": (0.55, 0.0), "hair": (0.7, 0.0), "tool": (0.4, 0.9), "eye": (0.2, 0.0), "shoes": (0.6, 0.0)}.get(cls, (0.88, 0.0))
+            ls = await b.mk("Shape", parent=lib); ap = await b.mk("Appearance", parent=ls, name=name); await b.mk("PhysicalMaterial", {"baseColor": list(col), "roughness": rough, "metallic": metal}, parent=ap); ap_made.add(name)
+        return await b.use(shape, name, "appearance")
     positions = {p[0]: (p[5][0] if isinstance(p[5], tuple) else None, p[5][1] if isinstance(p[5], tuple) else None) for p in L.PEOPLE}
     for p in L.PEOPLE:
         pid, name, role, arch, (shirt_n, pants_n), where, face_or_speed, scl, note = p[0], p[1], p[2], p[3], p[4], p[5], p[6], p[7], p[8]

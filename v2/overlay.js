@@ -24,22 +24,29 @@ function drawOverlay(dt, now) {
   drawLadder(c);
   drawMini(S);
 }
+// elevation angle (radians) of the terrain horizon toward a direction (town coordinates), from a coarse ray march over the real height field
+function horizonAngle(dirT) {
+  const h = Math.hypot(dirT[0], dirT[2]); if (h < 1e-6) return 0; const ux = dirT[0] / h, uz = dirT[2] / h, x0 = E.camT[0], z0 = E.camT[2], y0 = E.camT[1]; let best = -0.05;
+  for (const d of [60, 150, 300, 600, 1000, 1600, 2400, 3500, 5000, 7000, 10000, 14000, 20000]) { const a = Math.atan2(terrainH(x0 + ux * d, z0 + uz * d) - y0, d); if (a > best) best = a; }
+  return best;
+}
 // ---------------------------------------------------------------- sun glare / corona
 function drawSun(c, view, S) {
   const p = view.project([0, 0, 0]); if (!p) return; const camS = E.camS, d = V.norm(V.mul(camS, -1)), L = V.len(camS);
   let vis = clamp(Math.min(occ(camS, d, L, S.E, RE * 1.001), occ(camS, d, L, S.M, RM * 1.001)) - 0.995, 0, 0.3) / 0.3; vis = smooth(0, 1, vis);
+  if (E.near && E.alt < 3000) { const hz = horizonAngle(S.sunT); vis *= smooth(-0.002, 0.006, S.sunElev - hz); }
   if (E.near && S.sunElev < -1.2 * D2R) vis = 0; if (!E.near || E.alt > 50000) { } else vis *= smooth(-1.5, 0.5, S.sunElev / D2R);
   const disc = RS * p[3]; let eclipse = 0;
   { const mo = V.sub(S.M, camS), dm = V.len(mo), sepAng = Math.acos(clamp(V.dot(V.norm(mo), d), -1, 1)), rM = Math.asin(clamp(RM / dm, 0, 1)), rS = Math.asin(clamp(RS / L, 0, 1)); eclipse = clamp((rM + rS - sepAng) / (2 * Math.min(rM, rS)), 0, 1); E.eclipse = { sep: sepAng, rM, rS, cover: clamp((rM + rS - sepAng) / (2 * rS), 0, 1), dm }; }
-  const X = p[0], Y = p[1]; if (X < -400 || X > OV.w + 400 || Y < -400 || Y > OV.h + 400) return;
+  const X = p[0], Y = p[1]; if (!isFinite(E.eclipse.cover)) E.eclipse.cover = 0; if (!isFinite(X) || !isFinite(Y) || !isFinite(disc)) return; if (X < -400 || X > OV.w + 400 || Y < -400 || Y > OV.h + 400) return;
   const k = E.near ? 1 : 0.8, R = clamp(disc * 7, 38, 420) * (1 - 0.82 * smooth(0.6, 1, E.eclipse.cover) * 0.6), col = E.sky ? E.sky.day : 1;
   const warm = E.near ? clamp(1 - S.sunElev / (22 * D2R), 0, 1) : 0.15, cR = 255, cG = Math.round(236 - 80 * warm), cB = Math.round(205 - 130 * warm);
   const dim = 1 - 0.93 * smooth(0.82, 1.0, E.eclipse.cover);
   let g = c.createRadialGradient(X, Y, 0, X, Y, R); g.addColorStop(0, `rgba(${cR},${cG},${cB},${0.85 * vis * dim * k})`); g.addColorStop(0.18, `rgba(${cR},${cG},${cB},${0.38 * vis * dim * k})`); g.addColorStop(1, `rgba(${cR},${cG},${cB},0)`); c.fillStyle = g; c.fillRect(X - R, Y - R, R * 2, R * 2);
   const R2 = R * 3.4; g = c.createRadialGradient(X, Y, R * 0.3, X, Y, R2); g.addColorStop(0, `rgba(${cR},${cG - 30},${cB - 30},${0.16 * vis * dim * k})`); g.addColorStop(1, `rgba(${cR},${cG - 30},${cB - 30},0)`); c.fillStyle = g; c.fillRect(X - R2, Y - R2, R2 * 2, R2 * 2);
   if (E.eclipse.cover > 0.92) { // corona: only when the Moon covers the disc
-    const f = smooth(0.92, 1.0, E.eclipse.cover), Rc = Math.max(disc * 4.2, 20); const gg = c.createRadialGradient(X, Y, disc * 0.9, X, Y, Rc); gg.addColorStop(0, `rgba(255,248,235,${0.95 * f})`); gg.addColorStop(0.25, `rgba(190,205,255,${0.45 * f})`); gg.addColorStop(1, 'rgba(120,150,255,0)'); c.fillStyle = gg; c.fillRect(X - Rc, Y - Rc, Rc * 2, Rc * 2);
-    c.strokeStyle = `rgba(235,240,255,${0.35 * f})`; c.lineWidth = 1; for (let i = 0; i < 18; i++) { const a = i * TAU / 18 + 0.3 * Math.sin(i * 3.7), L2 = Rc * (1.0 + 0.9 * Math.abs(Math.sin(i * 2.3 + 1))); c.beginPath(); c.moveTo(X + Math.cos(a) * disc * 1.05, Y + Math.sin(a) * disc * 1.05); c.lineTo(X + Math.cos(a) * L2, Y + Math.sin(a) * L2); c.stroke(); } }
+    const f = smooth(0.92, 1.0, E.eclipse.cover), Rc = Math.max(disc * 4.6, 24), r0 = Math.max(disc * 0.97, 3); const gg = c.createRadialGradient(X, Y, 0, X, Y, Rc), q0 = r0 / Rc; gg.addColorStop(0, 'rgba(0,0,0,0)'); gg.addColorStop(Math.max(0, q0 - 0.002), 'rgba(0,0,0,0)'); gg.addColorStop(q0, `rgba(255,250,240,${0.85 * f})`); gg.addColorStop(q0 + (1 - q0) * 0.12, `rgba(235,240,255,${0.55 * f})`); gg.addColorStop(q0 + (1 - q0) * 0.4, `rgba(170,190,255,${0.2 * f})`); gg.addColorStop(1, 'rgba(120,150,255,0)'); c.fillStyle = gg; c.fillRect(X - Rc, Y - Rc, Rc * 2, Rc * 2);
+    c.strokeStyle = `rgba(235,240,255,${0.35 * f})`; c.lineWidth = 1; for (let i = 0; i < 18; i++) { const a = i * TAU / 18 + 0.3 * Math.sin(i * 3.7), L2 = Rc * (1.0 + 0.9 * Math.abs(Math.sin(i * 2.3 + 1))); c.beginPath(); c.moveTo(X + Math.cos(a) * disc * 1.02, Y + Math.sin(a) * disc * 1.02); c.lineTo(X + Math.cos(a) * L2, Y + Math.sin(a) * L2); c.stroke(); } }
   // glare streaks and a few lens ghosts toward the centre of the screen
   if (vis * dim > 0.05 && R > 60) {
     c.strokeStyle = `rgba(255,235,200,${0.20 * vis * dim})`; c.lineWidth = 1.2; for (const [ox, oy] of [[1, 0], [0, 1], [0.7, 0.7], [0.7, -0.7]]) { c.beginPath(); c.moveTo(X - ox * R * 2.4, Y - oy * R * 2.4); c.lineTo(X + ox * R * 2.4, Y + oy * R * 2.4); c.stroke(); }
@@ -51,18 +58,26 @@ function drawLimbs(c, view, S) {
   const dE = V.len(V.sub(E.camS, S.E)); if (dE > RE * 60 || dE < RE * 1.0008) return; const pc = view.project(S.E); if (!pc) return;
   const ang = Math.asin(RE / dE), Rpx = Math.tan(ang) * view.sy; if (Rpx < 12 || pc[0] < -Rpx * 2 || pc[0] > OV.w + Rpx * 2 || pc[1] < -Rpx * 2 || pc[1] > OV.h + Rpx * 2) return;
   const qi = Q.conj(E.qCamT), sdir = Q.rot(qi, S.qInv ? Q.rot(S.qInv, V.norm(V.sub([0, 0, 0], S.E))) : [0, 0, 1]); // direction to the Sun in camera space
-  const n = 120, thick = Math.max(3, Rpx * 0.018); const shell = E.near ? 0 : 1;
-  for (let j = 0; j < 6; j++) {
-    const rr = Rpx * (1.0 + 0.0035 + j * 0.0075 * (1 + dE / RE / 30)), lw = thick * (0.8 + j * 0.9), a0 = 0.30 * Math.pow(1 - j / 6.5, 2);
-    for (let i = 0; i < n; i++) { const a = i * TAU / n, u = [Math.cos(a), Math.sin(a), 0], lit = clamp(0.5 + 0.55 * V.dot(u, sdir) - 0.25 * Math.max(0, sdir[2]), 0, 1) ; const alpha = a0 * Math.pow(lit, 1.4); if (alpha < 0.004) continue;
-      c.strokeStyle = `rgba(${90 + 60 * lit | 0},${160 + 50 * lit | 0},255,${alpha})`; c.lineWidth = lw; c.beginPath(); c.arc(pc[0], pc[1], rr, -a - TAU / n * 1.02, -a + 0.001); c.stroke(); } }
+  // angular step so that one segment is about 3 px long; only the part of the ring that can be on screen is drawn
+  const W = OV.w, Hh = OV.h, pad = 120, thick = clamp(Rpx * 0.0105, 3, 90), step = clamp(3 / Rpx, 0.0009, 0.05);
+  const onS = a => { const x = pc[0] + Math.cos(a) * Rpx, y = pc[1] - Math.sin(a) * Rpx; return x > -pad && x < W + pad && y > -pad && y < Hh + pad; };
+  const arcs = []; let start = null;
+  for (let a = 0; a < TAU + 1e-6; a += Math.min(step * 8, 0.02)) { const v = onS(a); if (v && start === null) start = a; if (!v && start !== null) { arcs.push([start, a]); start = null; } } if (start !== null) arcs.push([start, TAU]);
+  let budget = 900;
+  for (const [a0, a1] of arcs) {
+    const n = Math.max(1, Math.min(Math.ceil((a1 - a0) / step), budget)); budget -= n; if (budget <= 0) break; const da = (a1 - a0) / n;
+    for (let j = 0; j < 5; j++) {
+      const rr = Rpx + thick * (0.15 + j * 0.55), lw = thick * (1.0 + j * 0.55), a_j = 0.34 * Math.pow(1 - j / 5.5, 2);
+      for (let i = 0; i < n; i++) { const a = a0 + (i + 0.5) * da, u = [Math.cos(a), Math.sin(a), 0], lit = clamp(0.5 + 0.55 * V.dot(u, sdir) - 0.25 * Math.max(0, sdir[2]), 0, 1), alpha = a_j * Math.pow(lit, 1.5); if (alpha < 0.004) continue;
+        c.strokeStyle = `rgba(${90 + 60 * lit | 0},${160 + 50 * lit | 0},255,${alpha})`; c.lineWidth = lw; c.beginPath(); c.arc(pc[0], pc[1], rr, -(a + da * 0.55), -(a - da * 0.55)); c.stroke(); } }
+  }
 }
 // ---------------------------------------------------------------- labels
 function drawLabels(c, view, S) {
   const placed = [], out = []; const add = (e, wx, wy, text, o) => { const ch = chip(wx, wy, text, o); for (const p of placed) if (ch.x < p.x + p.w + 3 && ch.x + ch.w + 3 > p.x && ch.y < p.y + p.h + 2 && ch.y + ch.h + 2 > p.y) return false; placed.push(ch); out.push(ch); return true; };
-  const cand = []; for (const e of E.reg) { if (!e.lab || !e.on) continue; const t = e.tc, p = view.projectTown(t); if (!p) continue; const px = (e.r || 1) * p[3]; if (px < (e.minPx || 4)) continue; if (p[0] < -50 || p[0] > OV.w + 50 || p[1] < -30 || p[1] > OV.h + 30) continue; cand.push({ e, p, px, pr: (e.pri || 0) * 1e4 + Math.min(px, 9999) }); }
+  const cand = []; for (const e of E.reg) { if (!e.lab || !e.on) continue; const t = e.tc, p = view.projectTown(t); if (!p) continue; const px = (e.r || 1) * p[3]; if (px < (e.minPx || 4)) continue; if (e.maxD && V.len(V.sub(t, E.camT)) > e.maxD) continue; if (p[0] < -50 || p[0] > OV.w + 50 || p[1] < -30 || p[1] > OV.h + 30) continue; cand.push({ e, p, px, pr: (e.pri || 0) * 1e4 + Math.min(px, 9999) }); }
   cand.sort((a, b) => b.pr - a.pr); let n = 0;
-  for (const { e, p, px } of cand) { if (n > 70) break; const hot = UI.hover === e || UI.pin === e; const o = { bold: e.cat === 'body' || e.cat === 'town', size: e.cat === 'body' ? 13 : 12, hot, color: e.col || '#e6eeff', sub: hot ? e.sub && e.sub() : (e.subAlways && e.subAlways()) };
+  const maxL = document.body.classList.contains('cinema') ? 16 : 70; for (const { e, p, px } of cand) { if (n > maxL) break; const hot = UI.hover === e || UI.pin === e; const o = { bold: e.cat === 'body' || e.cat === 'town', size: e.cat === 'body' ? 13 : 12, hot, color: e.col || '#e6eeff', sub: hot ? e.sub && e.sub() : (e.subAlways && e.subAlways()) };
     const lift = Math.min(px, 60) + 8; if (add(e, p[0], p[1] - lift, e.label || e.name, o)) { n++; const ch = out[out.length - 1]; if (lift > 14) { c.strokeStyle = 'rgba(140,175,235,.4)'; c.lineWidth = 1; c.beginPath(); c.moveTo(p[0], p[1] - Math.min(px, 60)); c.lineTo(p[0], ch.y + ch.h); c.stroke(); } } }
   for (const ch of out) ch.draw();
 }

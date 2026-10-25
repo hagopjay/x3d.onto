@@ -18,7 +18,7 @@ def H(x, z):
 WALL = {"ochre": (0.98, 0.82, 0.55), "cream": (1.0, 0.97, 0.88), "terracotta": (0.95, 0.66, 0.50), "blue": (0.66, 0.77, 0.88), "stone": (0.90, 0.88, 0.84), "wood": (0.78, 0.62, 0.46)}
 SHUT = {"green": (0.20, 0.40, 0.26), "blue": (0.22, 0.36, 0.58), "brown": (0.42, 0.26, 0.15), "cream": (0.92, 0.88, 0.74)}
 KEYS = ["plaster", "paint", "roof_tile", "roof_slate", "wood", "stone", "metal", "glass", "glass_lit", "cloth", "lampglass", "forge", "goods"]
-TILE = dict(plaster=4.0, paint=4.0, roof_tile=4.0, roof_slate=3.0, wood=2.0, stone=3.0, cobble=3.6, dirt=6.0, grass=5.0)
+TILE = dict(plaster=4.0, paint=4.0, roof_tile=4.0, roof_slate=3.0, wood=2.0, stone=3.0, cobble=2.4, dirt=6.0, grass=5.0)
 
 class AtAll:
     def __init__(s, M, x=0.0, y=0.0, z=0.0, rot=0.0, scale=1.0, keys=None): s.M = M; s.a = (x, y, z, rot, scale); s.keys = keys or list(M.keys())

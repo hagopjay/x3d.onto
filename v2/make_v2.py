@@ -18,7 +18,7 @@ async def main():
     async with stdio_client(server_params()) as (r, w):
         async with ClientSession(r, w) as s:
             await s.initialize(); await s.call_tool("reset_scene", {}); b = B(s)
-            await S.build_env(b)
+            await S.build_materials(b); await S.build_env(b)
             picks = []; people = []; tinfo = {}
             if only in ("all", "space"):
                 world = await S.build_world(b); picks, pos = await S.build_constellation(b, world)
@@ -32,10 +32,8 @@ async def main():
                     "    <meta name='description' content='A vision scene: 364 classes of X3D Ontology 4.1 and three domain rings orbit the Sun, Earth and Moon (true sizes and distances); the camera can descend to a fictional village with H-Anim villagers. Orbits use low-precision mean elements; the village, its people and the Earth/Moon maps are invented or procedural. Private until 2027-01-01.'/>\n"
                     f"    <meta name='source-ontology-sha256' content='{S.MAN['input_sha256']}'/>\n    <meta name='source-model-sha256' content='{S.MAN['output_sha256']}'/>\n"
                     f"    <meta name='created' content='{datetime.datetime.now(datetime.timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')}'/>\n"
-                    f"    <meta name='generator' content='x3d_mcp granular tools ({git}) driven by v2/make_v2.py; head, profile and Sphere subdivision patched in by the script because no tool sets them'/>\n  </head>\n")
+                    f"    <meta name='generator' content='x3d_mcp granular tools ({git}) driven by v2/make_v2.py; head and profile patched in by the script because no tool sets them'/>\n  </head>\n")
             xml = re.sub(r"(<X3D[^>]*?)profile='[^']*'", r"\1profile='Full'", xml, count=1); xml = xml.replace("<Scene>", head + "  <Scene>", 1)
-            xml = re.sub(r"<Sphere radius='(6371000(?:\.0)?)'", r"<Sphere subdivision='256 128' radius='\1'", xml); xml = re.sub(r"<Sphere radius='(1737400(?:\.0)?)'", r"<Sphere subdivision='128 64' radius='\1'", xml); xml = re.sub(r"<Sphere radius='(6371000\.0*)(\d*)'", r"<Sphere radius='\1\2'", xml)
-            xml = xml.replace("radius='6371000.0'", "radius='6371000.0'")
             (HERE / "scenes").mkdir(exist_ok=True); name = {"all": "solar-town", "space": "space-only", "town": "town-only", "people": "town-people"}[only]
             path = HERE / "scenes" / f"{name}.x3d"; path.write_text(xml, encoding="utf-8")
             rep = dict(file=str(path), bytes=len(xml.encode()), sha256=hashlib.sha256(xml.encode()).hexdigest(), x3d_mcp_commit=git, tool_calls=sum(b.calls.values()), calls=b.calls, build_seconds=round(build_s, 1),
@@ -44,7 +42,7 @@ async def main():
                 for tool, args in (("validate_x3d", {"content": xml, "encoding": "xml"}), ("validate_semantic", {"content": xml})):
                     t0 = time.perf_counter(); t = txt(await s.call_tool(tool, args)); rep[tool + "_ms"] = round((time.perf_counter() - t0) * 1000)
                     try: rep[tool] = json.loads(t)
-                    except Exception: rep[tool] = {"raw": t[:2500]}
+                    except Exception: rep[tool] = {"raw": t[:2500]}; (HERE / "data" / (tool + "_report.txt")).write_text(t)
     (HERE / "data").mkdir(exist_ok=True); (HERE / "data" / "picks.json").write_text(json.dumps(picks, separators=(",", ":"))); (HERE / "data" / "people.json").write_text(json.dumps(people, indent=1))
     (ROOT / "out").mkdir(exist_ok=True); (ROOT / "out" / "v2_run.json").write_text(json.dumps(rep, indent=1))
     print(json.dumps({k: rep[k] for k in ("bytes", "tool_calls", "build_seconds", "call_ms") if k in rep})); print("validate_x3d:", json.dumps(rep.get("validate_x3d"))[:600]); print("semantic:", json.dumps(rep.get("validate_semantic"))[:900])

@@ -60,8 +60,9 @@ const bodyToScene = (B, v) => V.add(V.add(V.mul(B[0], v[0]), V.mul(B[1], v[1])),
 const TOWN = { lat: 46.80 * D2R, lon: 8.20 * D2R };
 const townBody = (() => { const p = [Math.cos(TOWN.lat) * Math.sin(TOWN.lon), Math.sin(TOWN.lat), Math.cos(TOWN.lat) * Math.cos(TOWN.lon)], e = [Math.cos(TOWN.lon), 0, -Math.sin(TOWN.lon)], n = V.cross(p, e); return { P: p, E: e, U: p, N: n }; })();
 // ---- one call computes everything the renderer needs for time t (unix seconds)
-function solar(t) {
-  const d = daysJ2000(t), E = earthPos(d), m = moonRel(d), B = earthBasis(d), Mpos = V.add(E, m.pos);
+const ECLIPSE = { on: false, t0: 0, sig: 5 * 3600, delta: [0, 0, 0], info: null };   // staged eclipse: the Moon is nudged near one chosen new moon so that the village sees totality
+function solar(t, raw) {
+  const d = daysJ2000(t), E = earthPos(d), m = moonRel(d), B = earthBasis(d); if (ECLIPSE.on && !raw) { const w = Math.exp(-Math.pow((t - ECLIPSE.t0) / ECLIPSE.sig, 2)); if (w > 1e-4) m.pos = V.add(m.pos, V.mul(ECLIPSE.delta, w)); m.dist = V.len(m.pos); } const Mpos = V.add(E, m.pos);
   const X = bodyToScene(B, townBody.E), Y = bodyToScene(B, townBody.U), Z = bodyToScene(B, V.mul(townBody.N, -1)), T0 = V.add(E, V.mul(bodyToScene(B, townBody.P), RE));
   const qT = Q.fromCols(X, Y, Z), qInv = Q.conj(qT);
   const toTown = p => { const r = V.sub(p, T0); return [V.dot(r, X), V.dot(r, Y), V.dot(r, Z)]; }, fromTown = q => V.add(T0, V.add(V.add(V.mul(X, q[0]), V.mul(Y, q[1])), V.mul(Z, q[2])));
@@ -70,7 +71,8 @@ function solar(t) {
   const toSun = V.norm(V.mul(E, -1)), toMoon = V.norm(m.pos), cosElong = V.dot(toSun, toMoon), phaseFrac = (1 - cosElong) / 2;   // 0 new .. 1 full (elongation-based)
   // moon body: +z toward Earth (near side), y toward ecliptic north
   const mz = V.norm(V.mul(m.pos, -1)), mx = V.norm(V.cross([0, 1, 0], mz)), my = V.cross(mz, mx), qMoon = Q.fromCols(mx, my, mz);
-  return { t, d, E, M: Mpos, Mrel: m.pos, B, X, Y, Z, T0, qT, qInv, toTown, fromTown, sunT, moonT, sunElev: Math.asin(clamp(sunT[1], -1, 1)), moonElev: Math.asin(clamp(moonT[1], -1, 1)), phaseFrac, qMoon, qEarth: Q.fromCols(B[0], B[1], B[2]), moonDist: m.dist, moonLam: m.lam, moonBet: m.bet };
+  const sunDist = V.len(T0), moonD = V.len(V.sub(Mpos, T0)), rS_ = Math.asin(clamp(RS / sunDist, 0, 1)), rM_ = Math.asin(clamp(RM / moonD, 0, 1)), sep = Math.acos(clamp(V.dot(sunT, moonT), -1, 1)), obsc = obscuration(rS_, rM_, sep);
+  return { t, d, E, M: Mpos, obsc, sep, rS: rS_, rM: rM_, Mrel: m.pos, B, X, Y, Z, T0, qT, qInv, toTown, fromTown, sunT, moonT, sunElev: Math.asin(clamp(sunT[1], -1, 1)), moonElev: Math.asin(clamp(moonT[1], -1, 1)), phaseFrac, qMoon, qEarth: Q.fromCols(B[0], B[1], B[2]), moonDist: m.dist, moonLam: m.lam, moonBet: m.bet };
 }
 // ---- terrain height above the village tangent plane (mirrors town_geo.H in the builder)
 function fbmSin(x, z, seed, oct = 4) { let s = 0, a = 1, f = 1, tot = 0; for (let o = 0; o < oct; o++) { const ph = seed * 1.7 + o * 2.3; s += a * (Math.sin(f * 0.0123 * x + ph) * Math.sin(f * 0.0137 * z + ph * 1.3) + 0.6 * Math.sin(f * 0.0091 * (x + z) + ph * 0.7) * Math.cos(f * 0.0111 * (x - z) + ph * 1.9)); tot += a * 1.6; a *= 0.5; f *= 2.07; } return s / tot; }
@@ -78,4 +80,22 @@ function terrainH(x, z) {
   const r2 = x * x + z * z, r = Math.sqrt(r2); let h = smooth(280, 1100, r) * (24 * fbmSin(x, z, 1) + 9 * fbmSin(x * 2.3, z * 2.3, 2));
   const m = smooth(2500, 9500, r), ang = Math.atan2(z, x), ridge = 0.5 + 0.5 * fbmSin(x * 0.12, z * 0.12, 7), bias = 0.55 + 0.45 * Math.cos(ang - 1.1); h += m * (260 + 900 * ridge) * (0.3 + 0.7 * bias);
   return h - r2 / (2 * RE);
+}
+
+function obscuration(r1, r2, d) { // fraction of the Sun's disc (radius r1) covered by the Moon (radius r2) at centre separation d
+  if (d >= r1 + r2) return 0; if (d <= Math.abs(r1 - r2)) return r2 >= r1 ? 1 : (r2 * r2) / (r1 * r1);
+  const A = r1 * r1 * Math.acos(clamp((d * d + r1 * r1 - r2 * r2) / (2 * d * r1), -1, 1)) + r2 * r2 * Math.acos(clamp((d * d + r2 * r2 - r1 * r1) / (2 * d * r2), -1, 1)) - 0.5 * Math.sqrt(Math.max(0, (-d + r1 + r2) * (d + r1 - r2) * (d - r1 + r2) * (d + r1 + r2)));
+  return clamp(A / (Math.PI * r1 * r1), 0, 1);
+}
+// choose the new moon in the next two years whose closest approach to the Sun, as seen from the village in daytime, is smallest; then stage totality there
+function findEclipse(from) {
+  const t00 = from || Date.now() / 1000; let best = null;
+  for (let day = 0; day < 760; day += 1) { const t = t00 + day * 86400; if (solar(t, true).phaseFrac > 0.03 && solar(t + 43200, true).phaseFrac > 0.03 && solar(t - 43200, true).phaseFrac > 0.03) continue;
+    for (let s = -43200; s <= 43200; s += 600) { const tt = t + s, S = solar(tt, true); if (S.sunElev < 12 * D2R) continue; const sep = S.sep; if (!best || sep < best.sep) best = { t: tt, sep, el: S.sunElev }; } }
+  if (!best) return null;
+  for (let s = -900; s <= 900; s += 20) { const S = solar(best.t + s, true); if (S.sep < best.sep) best = { t: best.t + s, sep: S.sep, el: S.sunElev }; }
+  const S0 = solar(best.t, true), u = V.norm(V.mul(S0.T0, -1)), Dtop = 3.62e8, target = V.sub(V.add(S0.T0, V.mul(u, Dtop)), S0.E), delta = V.sub(target, S0.Mrel);
+  ECLIPSE.on = true; ECLIPSE.t0 = best.t; ECLIPSE.delta = delta; const S1 = solar(best.t);
+  ECLIPSE.info = { t0: best.t, rawSepDeg: best.sep / D2R, nudgeDeg: Math.acos(clamp(V.dot(V.norm(S0.Mrel), V.norm(target)), -1, 1)) / D2R, nudgeKm: V.len(delta) / 1000, moonKm: Dtop / 1000, sunElevDeg: S1.sunElev / D2R, obsc: S1.obsc };
+  return ECLIPSE.info;
 }

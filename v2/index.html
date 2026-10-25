@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><title>Ontology constellation 2 · Sun, Earth, Moon and a village</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<link rel="stylesheet" href="ui.css?v=4">
+<link rel="stylesheet" href="ui.css?t=5">
 <script src="https://cdn.jsdelivr.net/npm/x_ite@16.5.0/dist/x_ite.min.js"></script>
 </head><body>
 <x3d-canvas id="cv" src="scenes/solar-town.x3d" contextMenu="false" notification="false" splashScreen="false" timings="false"></x3d-canvas>
@@ -35,5 +35,5 @@
 <div id="foot"><span>drag orbit · right-drag or WASD pan · wheel zoom · double-click fly to · click pin · <b>H</b> help · <b>F</b> film · <b>T</b> tour · <b>M</b> sound</span></div>
 <div id="sndbtn" title="sound (M)">♪</div>
 
-<script src="astro.js?v=4"></script><script src="engine.js?v=4"></script><script src="overlay.js?v=4"></script><script src="ui.js?v=4"></script><script src="tour.js?v=4"></script>
+<script>(function(){var t=Date.now(),L=["astro","engine","overlay","ui","tour"],i=0;function nx(){if(i>=L.length)return;var e=document.createElement("script");e.src=L[i++]+".js?t="+t;e.onload=nx;document.body.appendChild(e);}nx();})();</script>
 </body></html>

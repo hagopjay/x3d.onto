@@ -136,6 +136,27 @@ class Mesh:
         if not white: out["color"] = [[round(min(1.0, max(0.0, x)), 2) for x in c] for c in self.c]; out["colorIndex"] = tidx
         return out
 
+def uv_sphere(nlon=200, nlat=100, nd=4):
+    """unit sphere as an indexed face set (positions welded, texture seam kept): X3D Sphere texture convention, u = 0.5 at +Z increasing toward +X, v = 1 at the north pole"""
+    pts = [(0.0, 1.0, 0.0)]
+    for j in range(1, nlat):
+        ph = math.pi / 2 - math.pi * j / nlat
+        for i in range(nlon):
+            la = 2 * math.pi * i / nlon - math.pi; pts.append((round(math.cos(ph) * math.sin(la), nd), round(math.sin(ph), nd), round(math.cos(ph) * math.cos(la), nd)))
+    pts.append((0.0, -1.0, 0.0)); south = len(pts) - 1
+    ring = lambda j, i: 1 + (j - 1) * nlon + (i % nlon)
+    uvs = [(round(i / nlon, 5), round(1 - j / nlat, 5)) for j in range(nlat + 1) for i in range(nlon + 1)]; uvi = lambda j, i: j * (nlon + 1) + i
+    ci = []; ti = []
+    def add(pi_, ti_):
+        p = [pts[k] for k in pi_]; a = [p[1][k] - p[0][k] for k in range(3)]; b = [p[2][k] - p[1][k] for k in range(3)]; n = (a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]); c = [sum(q[k] for q in p) for k in range(3)]
+        if n[0] * c[0] + n[1] * c[1] + n[2] * c[2] < 0: pi_ = pi_[::-1]; ti_ = ti_[::-1]
+        ci.extend(pi_ + [-1]); ti.extend(ti_ + [-1])
+    for i in range(nlon): add([0, ring(1, i), ring(1, i + 1)], [uvi(0, i), uvi(1, i), uvi(1, i + 1)])
+    for j in range(1, nlat - 1):
+        for i in range(nlon): add([ring(j, i), ring(j + 1, i), ring(j + 1, i + 1), ring(j, i + 1)], [uvi(j, i), uvi(j + 1, i), uvi(j + 1, i + 1), uvi(j, i + 1)])
+    for i in range(nlon): add([ring(nlat - 1, i), south, ring(nlat - 1, i + 1)][::-1], [uvi(nlat - 1, i), uvi(nlat, i), uvi(nlat - 1, i + 1)][::-1])
+    return dict(point=[list(p) for p in pts], coordIndex=ci, uv=[list(u) for u in uvs], texCoordIndex=ti, faces=len(ci) // 4, verts=len(pts), corners=len(ci))
+
 def fbm_sin(x, z, seed=0, octaves=4):
     """smooth deterministic pseudo-noise shared with engine.js (same formula): sum of products of sines"""
     s = 0.0; a = 1.0; f = 1.0; tot = 0.0
