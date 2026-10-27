@@ -14,3 +14,7 @@ Only EVAL_PLAN.md was read in full. The other five were listed, not opened.
 4. **Gaps, not done.** (a) No DSPy run has touched the radiation lab; the planted-task proposer eval is only a baseline. (b) The B32 transcription issue (0.4 J/cm2 / 33 ns = 12.1 MW/cm2, row says 16) is the lab's, not ours; not adjudicated. (c) The plan's "agreement with human labels on a seed set" for CritiqueRender is the same calibration gap as the picture-judge spec (Claude Doc f484ec0f-df8f-4ece-9a03-ce26605a5568).
 
 Added only; no existing record was replaced.
+
+## Added after a sibling thread's Drive listing (27 Oct ~21:15Z)
+- Same six `bundle/dspy/` files confirmed; also staged on the Mac but not uploaded: DOC.md (79,404 B) and README (27)-(30). The Shared Drive Shroud export folder holds older copies (DOC.md 46,933 B vs rev 70 here: compare by hash before trusting either).
+- The Mac catalog's open items P1-6 (BootstrapFewShot/MIPROv2 on planted tasks; a writer prompt with a lawful metric and closed escape hatches, on the 1,200 Polys trials, vs few-shot 6%) are already measured here: Full-barred prompt 30% vs few-shot 6% on Polys prompts 5-9, repair ladder v4 83.7 to 86.9% on the test half. The Mac agent likely lacks the later ladder and rung results (S). Full sibling list: /mnt/project-files/ontology-extraction/DRIVE-DSPY-RECORDS-2026-10-27.md.
