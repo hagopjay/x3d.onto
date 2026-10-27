@@ -1,0 +1,191 @@
+{
+ "shape": {
+  "idx": 2338,
+  "label": "Shape",
+  "cls": "NodeType",
+  "prov": "data",
+  "grade": "Confirmed",
+  "tier": 1,
+  "deg": 10,
+  "props": {
+   "scenes": 255
+  },
+  "metrics": [],
+  "docs": [
+   "data-spine-plan.md",
+   "flywheel-hub-handoff.md"
+  ],
+  "neighbors": [
+   {
+    "pred": "contains",
+    "dir": "in",
+    "label": "x3d_spine",
+    "cls": "Dataset",
+    "grade": "Confirmed",
+    "prov": "data",
+    "ev": "",
+    "docs": []
+   },
+   {
+    "pred": "implements",
+    "dir": "in",
+    "label": "X_ITE 16.5.0",
+    "cls": "Tool",
+    "grade": "Confirmed",
+    "prov": "doc",
+    "ev": "X_ITE 16.5.0 transparency: shapes sort far to near by the view depth of their bbox centre and write no depth, so a glow behind an opaque-ish",
+    "docs": [
+     "library-hall-build.md"
+    ]
+   },
+   {
+    "pred": "part_of",
+    "dir": "in",
+    "label": "PhysicalMaterial",
+    "cls": "NodeType",
+    "grade": "Confirmed",
+    "prov": "doc",
+    "ev": "6 Doha exhibits lack component Shape 2 for PhysicalMaterial/UnlitMaterial under Immersive",
+    "docs": [
+     "data-spine-plan.md"
+    ]
+   },
+   {
+    "pred": "part_of",
+    "dir": "in",
+    "label": "UnlitMaterial",
+    "cls": "NodeType",
+    "grade": "Confirmed",
+    "prov": "doc",
+    "ev": "6 Doha exhibits lack component Shape 2 for PhysicalMaterial/UnlitMaterial under Immersive",
+    "docs": [
+     "data-spine-plan.md"
+    ]
+   },
+   {
+    "pred": "part_of",
+    "dir": "out",
+    "label": "X3D 4.0",
+    "cls": "Standard",
+    "grade": "Confirmed",
+    "prov": "doc",
+    "ev": "X3D 4.0 (ISO/IEC 19775-1:2023) deliberately aligned its Shape component with glTF 2.0",
+    "docs": [
+     "repo_x3d-blender-io_docs_planning_upstream-state-and-gap.md"
+    ]
+   }
+  ],
+  "n_edges": 10
+ },
+ "finding": {
+  "idx": 723,
+  "label": "X_ITE renders on demand and starts every scene with blank frames",
+  "cls": "Finding",
+  "prov": "doc",
+  "grade": "Confirmed",
+  "tier": 1,
+  "deg": 2,
+  "props": {},
+  "metrics": [
+   {
+    "name": "non-drawable scene median frames",
+    "value": "4 frames",
+    "check": "Playwright Chromium with SwiftShader",
+    "doc": "xite-draw-measurement.md"
+   },
+   {
+    "name": "non-drawable scene last frame timing",
+    "value": "157 ms",
+    "check": "Playwright Chromium with SwiftShader",
+    "doc": "xite-draw-measurement.md"
+   },
+   {
+    "name": "drawing scene median frames",
+    "value": "64 frames",
+    "check": "Playwright Chromium with SwiftShader",
+    "doc": "xite-draw-measurement.md"
+   }
+  ],
+  "docs": [
+   "xite-draw-measurement.md"
+  ],
+  "neighbors": [
+   {
+    "pred": "discovered_in",
+    "dir": "out",
+    "label": "Traceability",
+    "cls": "Workstream",
+    "grade": "Confirmed",
+    "prov": "doc",
+    "ev": "X_ITE renders on demand and starts every scene with blank frames.",
+    "docs": [
+     "xite-draw-measurement.md"
+    ]
+   },
+   {
+    "pred": "motivates",
+    "dir": "out",
+    "label": "Register watcher on end-of-frame field before load",
+    "cls": "Rule",
+    "grade": "Confirmed",
+    "prov": "doc",
+    "ev": "sampling once after a fixed delay misreads both ways (my first pass did).\n- Register a watcher on the end-of-frame field BEFORE the load",
+    "docs": [
+     "xite-draw-measurement.md"
+    ]
+   }
+  ],
+  "n_edges": 2
+ },
+ "loop": {
+  "name": "THE TETHER",
+  "prov": "doc",
+  "grade": "Likely",
+  "votes": 3,
+  "steps": [
+   "Model writes",
+   "Validator says exactly what's wrong",
+   "Model repairs",
+   "Browser shows",
+   "Blender round-trips"
+  ],
+  "ev": "Model writes, validator says exactly what's wrong, model repairs, browser shows, Blender round-trips.",
+  "gain": "7 to 10 of 10 repairs pass"
+ },
+ "tooltip": [
+  {
+   "label": "x3d_spine",
+   "cls": "Dataset"
+  }
+ ],
+ "onto_shape": {
+  "iri_class": "Shape",
+  "component": "Shape",
+  "level": 1,
+  "ancestors": [
+   "X3DNode",
+   "X3DBoundedObject",
+   "X3DChildNode",
+   "X3DShapeNode"
+  ],
+  "defn": "Shape can appear under any grouping node.",
+  "n_fields": 7,
+  "predicted_placements": 59,
+  "xsd_accept": 22,
+  "xsd_reject": 30,
+  "xsd_inconclusive": 7,
+  "accepted_parents_distinct": 21,
+  "accepted_parents_sample": [
+   "Anchor",
+   "Billboard",
+   "CADAssembly",
+   "CADLayer",
+   "CollidableShape",
+   "Collision",
+   "EspduTransform",
+   "GeoLocation"
+  ],
+  "xsd": "XSD 4.1 via x3d_mcp validate_xml",
+  "ontology_sha256_16": "8307e9045104cc58"
+ }
+}

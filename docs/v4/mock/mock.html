@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Gobbler v4 UI mock</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- MOCK on the owner's own stills. Hover positions are illustrative; every word on the cards is real data from
+     graph-v3.json (Gobbler 3 Deep), data/ontology41.json and data/xcheck_all.json (see data.json).
+     Params: still=A|B  state=none|rest|min|card|zones  card=shape|finding  hover=x,y (still pixels) -->
+<style>
+:root{--bg:#08070a;--ink:#efe9de;--ink2:#b9b2a5;--ink3:#8a8478;--gold:#e9cf8a;--gold2:#b8964a;--maroon:#9b2c47;--ember:#e5751f;--rule:#2a2530;
+--font:"Iowan Old Style","Palatino Linotype",Palatino,"Bitstream Charter",Georgia,serif;--sans:-apple-system,"SF Pro Text",Inter,system-ui,"Segoe UI",sans-serif;--mono:ui-monospace,"SF Mono","JetBrains Mono",Menlo,Consolas,monospace}
+*{box-sizing:border-box}html,body{margin:0;background:#050406;color:var(--ink);font:14px/1.45 var(--sans)}
+#frame{position:relative;overflow:hidden;background:#050406}
+#frame>img{position:absolute;left:0;max-width:none;display:block}
+#heat,.dim,svg.ov{position:absolute;left:0;top:0;pointer-events:none}
+.chrome>*{position:absolute}
+.glass{background:rgba(12,10,15,.72);backdrop-filter:blur(14px) saturate(1.2);-webkit-backdrop-filter:blur(14px) saturate(1.2);border:1px solid rgba(233,207,138,.3)}
+/* corner chips (minimal mode) */
+.brand{left:26px;top:22px;font:600 12px/1 var(--mono);letter-spacing:.22em;color:var(--gold);text-transform:uppercase;text-shadow:0 1px 10px #000}
+.brand small{display:block;margin-top:8px;font:500 11px/1 var(--mono);letter-spacing:.06em;color:var(--ink3);text-transform:none}
+.legend{right:26px;top:22px;display:flex;align-items:center;gap:14px;font:11.5px/1 var(--mono);color:var(--ink3);text-shadow:0 1px 8px #000}
+.legend .dots{display:flex;gap:7px}.legend .dots i{width:9px;height:9px;border-radius:50%;background:var(--c);box-shadow:0 0 8px var(--c)}
+.legend .ok{color:#9fd1af}
+.pills{left:26px;bottom:22px;display:flex;gap:6px}
+.chip{font:500 12px/1 var(--sans);color:var(--ink);background:rgba(16,14,19,.66);border:1px solid rgba(233,207,138,.3);border-radius:999px;padding:9px 13px;backdrop-filter:blur(6px);white-space:nowrap}
+.chip.on{background:var(--gold);color:#1a1408;border-color:var(--gold)}
+.chip.cur{background:rgba(233,207,138,.16);color:var(--gold);border-color:var(--gold)}
+.chip .k{font:10.5px var(--mono);opacity:.65;margin-left:6px}
+.hud{right:26px;bottom:22px;font:11.5px/1.4 var(--mono);color:var(--ink3);text-align:right;text-shadow:0 1px 8px #000}
+/* tooltip */
+.tip{position:absolute;display:flex;align-items:center;gap:9px;border-radius:999px;padding:8px 14px 8px 11px;white-space:nowrap;box-shadow:0 8px 30px rgba(0,0,0,.5);max-width:420px}
+.tip b{font:500 15px var(--font);overflow:hidden;text-overflow:ellipsis}.tip span.m{font:11px var(--mono);color:var(--ink3)}
+.sw{width:10px;height:10px;border-radius:50%;background:var(--c);box-shadow:0 0 10px var(--c);flex:none}
+/* card */
+.card{position:absolute;width:348px;border-radius:14px;padding:15px 18px 13px;box-shadow:0 18px 60px rgba(0,0,0,.6)}
+.card .hd{display:flex;align-items:center;gap:8px;margin-bottom:9px;white-space:nowrap}
+.card .cls{font:600 10.5px/1 var(--mono);letter-spacing:.16em;color:var(--gold2);text-transform:uppercase}
+.card .tags{margin-left:auto;display:flex;gap:4px}
+.tag{font:10.5px/1 var(--mono);border:1px solid var(--rule);border-radius:5px;padding:3px 6px;color:var(--ink2)}
+.tag.dat{border-color:#3f6b4f;color:#9fd1af}.tag.doc{border-color:#4a4256;color:#cfc7e6}.tag.ok{border-color:#3f6b4f;color:#9fd1af}
+.card h4{font:500 23px/1.15 var(--font);margin:0 0 5px;letter-spacing:.005em}
+.card h4.long{font-size:18px;line-height:1.25;margin-bottom:10px}
+.crumb{font:11px/1.5 var(--mono);color:var(--ink3);margin-bottom:9px}.crumb b{color:var(--gold);font-weight:500}
+.card blockquote{margin:0 0 11px;padding:2px 0 2px 11px;border-left:2px solid var(--gold2);font:italic 14px/1.4 var(--font);color:var(--ink2)}
+.card blockquote cite{display:block;font:normal 10.5px/1.4 var(--mono);color:var(--ink3);margin-top:3px}
+.bar{display:flex;height:9px;border-radius:5px;overflow:hidden;gap:2px;margin:2px 0 6px}
+.bar i{display:block;height:100%}.bar .a{background:#6fae85}.bar .r{background:var(--maroon)}.bar .i{background:#4b4650}
+.barcap{font:11.5px/1.5 var(--sans);color:var(--ink2);margin-bottom:11px}.barcap b{color:var(--ink);font-weight:600}
+.barcap em{font:normal 10.5px var(--mono);color:var(--gold);border:1px solid rgba(233,207,138,.35);border-radius:4px;padding:1px 5px;margin-left:4px;white-space:nowrap}
+.met{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:2px 0 11px}
+.met div{border:1px solid var(--rule);border-radius:9px;padding:8px 9px;background:rgba(255,255,255,.02)}
+.met b{display:block;font:500 22px/1 var(--font);color:var(--gold)}.met b small{font:11px var(--sans);color:var(--ink3);margin-left:4px}
+.met span{display:block;margin-top:6px;font:10.5px/1.3 var(--sans);color:var(--ink3)}
+.nbh{font:10.5px var(--mono);letter-spacing:.1em;color:var(--ink3);text-transform:uppercase;margin:2px 0 4px}
+.nb{list-style:none;margin:0 0 9px;padding:0}.nb li{display:flex;align-items:baseline;gap:7px;padding:3px 0;font-size:13px;color:var(--ink2);border-top:1px solid rgba(255,255,255,.05)}
+.nb .p{font:11px var(--mono);color:var(--gold2);min-width:92px}.nb .n{color:var(--ink);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nb .c{font:10.5px var(--mono);color:var(--ink3)}.gd{width:7px;height:7px;border-radius:50%;flex:none;align-self:center}
+.gd.Confirmed{background:#7fc297}.gd.Likely{background:var(--gold)}.gd.Suspected{background:var(--ember)}
+.nb li.more{color:var(--ink3);font:11.5px var(--mono)}
+.nb li.ev{display:block;border-top:0;padding:1px 0 5px 99px;font:italic 12.5px/1.35 var(--font);color:var(--ink2);white-space:normal}
+.nb li.ev small{display:block;font:normal 10.5px var(--mono);color:var(--ink3);margin-top:2px}
+.ft{font:10.5px/1.55 var(--mono);color:var(--ink3);border-top:1px solid var(--rule);padding-top:8px}
+kbd{font:10px var(--mono);border:1px solid var(--rule);border-radius:4px;padding:1px 4px;color:var(--ink2)}
+.tier{display:flex;gap:3px;align-items:center;margin-left:2px}.tier i{width:5px;height:5px;border-radius:50%;background:var(--rule)}.tier i.on{background:var(--gold)}
+.zlab{position:absolute;font:600 11.5px/1.25 var(--mono);letter-spacing:.03em;padding:3px 7px;border-radius:5px;background:rgba(5,4,6,.82);border:1px solid currentColor;white-space:nowrap}
+.cap{padding:13px 26px 15px;background:#0b0a0d;border-top:1px solid var(--rule);font:12.5px/1.55 var(--sans);color:var(--ink2)}
+.cap b{color:var(--gold)}.cap .mono{font:11.5px var(--mono);color:var(--ink3)}
+.cap .sc{display:inline-flex;gap:2px;vertical-align:-2px;margin:0 4px}.cap .sc i{width:12px;height:12px;border-radius:2px}
+</style></head>
+<body>
+<div id="frame"><img id="still" alt="owner still"><canvas id="heat"></canvas><div class="dim" id="dim"></div><div class="chrome" id="chrome"></div><svg class="ov" id="ov"></svg><div id="layer"></div></div>
+<div class="cap" id="cap"></div>
+<script src="placement.js"></script>
+<script>
+(function(){
+'use strict';
+var q=new URLSearchParams(location.search), STILL=q.get('still')||'B', STATE=q.get('state')||'card', KIND=q.get('card')||'shape';
+if(STATE==='finding'){STATE='card';KIND='finding'}
+/* hover star positions are in the original still's pixel space (found by luminance blobs, then eyeballed) */
+var HOVER={A:{x:1177,y:318},B:{x:1183,y:384}}[STILL]; if(q.get('hover')){var h=q.get('hover').split(',');HOVER={x:+h[0],y:+h[1]};}
+/* the stills were screenshots of the v3 viewer: crop its old bottom chip strip (and B's 1 px window border) so the v4 chrome is shown alone */
+var CROP={A:{top:0,bottom:32},B:{top:1,bottom:54}}[STILL]||{top:0,bottom:0};
+var FAM={spec:'#facc73',tool:'#57dbf5',people:'#f575a8',work:'#ff9e42',learn:'#9ef275',rule:'#ad85ff',loop:'#fff2cc'};
+var M=22, GAP=10, HALO=96;
+function $(s){return document.querySelector(s)}
+function el(t,c,h){var e=document.createElement(t);if(c)e.className=c;if(h!=null)e.innerHTML=h;return e}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function svgNS(t,a){var e=document.createElementNS('http://www.w3.org/2000/svg',t);for(var k in a)e.setAttribute(k,a[k]);return e}
+Promise.all([fetch('data.json').then(function(r){return r.json()}),new Promise(function(ok){var i=$('#still');i.onload=function(){ok(i)};i.src='stills/still-'+STILL+'.png'})]).then(function(a){run(a[0],a[1])});
+
+function densityFrom(img){                    /* 0..1 "subject" per screen point, from the still's own luminance */
+  var s=8,w=Math.ceil(img.naturalWidth/s),h=Math.ceil(img.naturalHeight/s),c=document.createElement('canvas');c.width=w;c.height=h;
+  var x=c.getContext('2d');x.drawImage(img,0,0,w,h);var d=x.getImageData(0,0,w,h).data,g=new Float32Array(w*h),i;
+  for(i=0;i<w*h;i++){var l=(d[i*4]+d[i*4+1]+d[i*4+2])/765;g[i]=Math.max(0,Math.min(1,(l-0.04)/0.42))}
+  var b=new Float32Array(w*h),j,k,sum,n,u,v;
+  for(j=0;j<h;j++)for(k=0;k<w;k++){sum=0;n=0;for(v=-1;v<=1;v++)for(u=-1;u<=1;u++){var xx=k+u,yy=j+v;if(xx>=0&&yy>=0&&xx<w&&yy<h){sum+=g[yy*w+xx];n++}}b[j*w+k]=sum/n}
+  return function(px,py){var xx=Math.max(0,Math.min(w-1,(px/s)|0)),yy=Math.max(0,Math.min(h-1,(py/s)|0));return b[yy*w+xx]};
+}
+function tierDots(n){return '<span class="tier"><i class="on"></i><i'+(n>=2?' class="on"':'')+'></i><i'+(n>=3?' class="on"':'')+'></i></span>'}
+function nbRows(c,k,expand){return c.neighbors.slice(0,k).map(function(n,i){
+  var row='<li><span class="p">'+(n.dir==='in'?'← ':'→ ')+esc(n.pred)+'</span><span class="n">'+esc(n.label)+'</span><span class="c">'+esc(n.cls)+'</span><i class="gd '+n.grade+'" title="'+n.grade+'"></i></li>';
+  if(i===expand)row+='<li class="ev">“'+esc(n.ev.split('\n')[0])+'”<small>edge evidence · '+esc(n.docs[0])+' · '+esc(n.prov)+'</small></li>';
+  return row}).join('')}
+
+function cardShape(D){var c=D.shape,o=D.onto_shape,tot=o.predicted_placements;
+  return {tier:3,tip:{label:c.label,meta:c.cls+' · '+c.prov,fam:FAM.spec},fam:FAM.spec,html:
+  '<div class="hd"><i class="sw" style="--c:'+FAM.spec+'"></i><span class="cls">'+esc(c.cls)+'</span>'+tierDots(3)+'<span class="tags"><span class="tag dat">'+esc(c.prov)+'</span><span class="tag ok">'+esc(c.grade)+'</span></span></div>'+
+  '<h4>'+esc(c.label)+'</h4><div class="crumb">'+o.ancestors.join(' › ')+' › <b>'+esc(c.label)+'</b></div>'+
+  '<blockquote>“'+esc(o.defn)+'”<cite>ontology 4.1 definition · component '+esc(o.component)+' · '+o.n_fields+' fields</cite></blockquote>'+
+  '<div class="bar" title="XSD verdicts on the ontology’s predicted placements"><i class="a" style="flex:'+o.xsd_accept+'"></i><i class="r" style="flex:'+o.xsd_reject+'"></i><i class="i" style="flex:'+o.xsd_inconclusive+'"></i></div>'+
+  '<div class="barcap">The ontology predicts <b>'+tot+'</b> placements for '+esc(c.label)+'; XSD 4.1 accepts <b>'+o.xsd_accept+'</b>, rejects <b>'+o.xsd_reject+'</b>, <b>'+o.xsd_inconclusive+'</b> inconclusive <em>map, not gate</em></div>'+
+  '<div class="nbh">Connected to · '+c.n_edges+' relations</div><ul class="nb">'+nbRows(c,4)+'<li class="more">+ '+(c.n_edges-4)+' more · seen in '+c.props.scenes+' scenes</li></ul>'+
+  '<div class="ft">graph-v3-deep · ontology 4.1 sha '+o.ontology_sha256_16.slice(0,8)+'… · XSD via x3d_mcp fa0b389<br><kbd>click</kbd> pin · <kbd>dbl-click</kbd> fly to · <kbd>H</kbd> hide UI</div>'}}
+
+function cardFinding(D){var c=D.finding;
+  var t=c.label.length>38?c.label.slice(0,37)+'…':c.label;
+  return {tier:2,tip:{label:t,meta:c.cls+' · '+c.prov,fam:FAM.learn},fam:FAM.learn,html:
+  '<div class="hd"><i class="sw" style="--c:'+FAM.learn+'"></i><span class="cls">'+esc(c.cls)+'</span>'+tierDots(2)+'<span class="tags"><span class="tag doc">'+esc(c.prov)+'</span><span class="tag ok">'+esc(c.grade)+'</span></span></div>'+
+  '<h4 class="long">'+esc(c.label)+'</h4>'+
+  '<div class="met">'+c.metrics.map(function(m){var v=m.value.match(/^([\d.,]+)\s*(.*)$/)||[0,m.value,''];return '<div><b>'+esc(v[1])+(v[2]?'<small>'+esc(v[2])+'</small>':'')+'</b><span>'+esc(m.name)+'</span></div>'}).join('')+'</div>'+
+  '<div class="nbh">Connected to · '+c.n_edges+' relations</div><ul class="nb">'+nbRows(c,2,1)+'</ul>'+
+  '<div class="ft">measured: '+esc(c.metrics[0].check)+' · '+esc(c.metrics[0].doc)+'<br><kbd>click</kbd> pin · <kbd>dbl-click</kbd> fly to · <kbd>H</kbd> hide UI</div>'}}
+
+/* chrome returns the measured boxes so the placement function reserves exactly the space the chips use */
+function chrome(live,W,H){var ch=$('#chrome');ch.innerHTML='';
+  var b=el('div','brand','Gobbler<small>3 Deep · 2,476 stars · 19 loops</small>'),
+      l=el('div','legend','<span class="dots">'+Object.keys(FAM).map(function(k){return '<i style="--c:'+FAM[k]+'" title="'+k+'"></i>'}).join('')+'</span><span class="ok">✓ valid · fork 2b696f5</span>'),
+      p=el('div','pills','<span class="chip on">◐ UI<span class="k">minimal</span></span><span class="chip cur">Face</span><span class="chip">Wide</span><span class="chip">Flywheel</span><span class="chip">Crown</span>'),
+      u=el('div','hud','57 fps'+(live?'<br>hover a star':''));
+  [b,l,p,u].forEach(function(e){ch.appendChild(e)});
+  var fr=$('#frame').getBoundingClientRect();
+  function box(e){var r=e.getBoundingClientRect();return {x:r.left-fr.left,y:r.top-fr.top,w:r.width,h:r.height}}
+  var B={TL:box(b),TR:box(l),BL:box(p),BR:box(u)};
+  return {boxes:B,reserved:{TL:{h:B.TL.h+GAP},TR:{h:B.TR.h+GAP},BL:{h:B.BL.h+GAP},BR:{h:B.BR.h+GAP}}};
+}
+
+function run(D,img){
+  var nw=img.naturalWidth,nh=img.naturalHeight,W=nw,H=nh-CROP.top-CROP.bottom;
+  var F=$('#frame');F.style.width=W+'px';F.style.height=H+'px';img.style.cssText='top:'+(-CROP.top)+'px;width:'+nw+'px;height:'+nh+'px';
+  $('#cap').style.width=W+'px';document.body.style.width=W+'px';
+  var ov=$('#ov');ov.setAttribute('viewBox','0 0 '+W+' '+H);ov.setAttribute('width',W);ov.setAttribute('height',H);
+  $('#dim').style.width=W+'px';$('#dim').style.height=H+'px';
+  var raw=densityFrom(img),dens=function(px,py){return raw(px,py+CROP.top)};      /* density works in frame coordinates */
+  var layer=$('#layer'),cap=$('#cap'),hv={x:HOVER.x,y:HOVER.y-CROP.top};
+  var built=(KIND==='finding'?cardFinding:cardShape)(D),fam=built.fam;
+
+  function measure(){var c=el('div','card glass',built.html);c.style.visibility='hidden';c.style.left='-999px';layer.appendChild(c);var s={w:c.offsetWidth,h:c.offsetHeight};layer.removeChild(c);return s}
+  function ring(prog){var g=svgNS('g',{});
+    g.appendChild(svgNS('circle',{cx:hv.x,cy:hv.y,r:15,fill:'none',stroke:'#e9cf8a','stroke-width':1.6,filter:'url(#glow)'}));
+    g.appendChild(svgNS('circle',{cx:hv.x,cy:hv.y,r:4.5,fill:'#fff6dc'}));
+    if(prog!=null){var R=22,C=2*Math.PI*R;g.appendChild(svgNS('circle',{cx:hv.x,cy:hv.y,r:R,fill:'none',stroke:fam,'stroke-width':2.6,'stroke-linecap':'round','stroke-dasharray':(C*prog)+' '+C,transform:'rotate(-90 '+hv.x+' '+hv.y+')'}))}
+    return g}
+  var defs=svgNS('defs',{});defs.innerHTML='<filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>';ov.appendChild(defs);
+  function dimAround(a){$('#dim').style.background='radial-gradient(circle 330px at '+hv.x+'px '+hv.y+'px, rgba(0,0,0,0) 0, rgba(0,0,0,'+a+') 78%)'}
+  function leader(p,q){var dx=q.x-p.x,dy=q.y-p.y,L=Math.hypot(dx,dy),nx=-dy/L,ny=dx/L,cx=(p.x+q.x)/2+nx*L*.1,cy=(p.y+q.y)/2+ny*L*.1,d='M'+p.x+' '+p.y+' Q'+cx+' '+cy+' '+q.x+' '+q.y;
+    ov.appendChild(svgNS('path',{d:d,fill:'none',stroke:'rgba(0,0,0,.62)','stroke-width':4.6,'stroke-linecap':'round'}));
+    ov.appendChild(svgNS('path',{d:d,fill:'none',stroke:'#f2dc9b','stroke-width':1.5,'stroke-linecap':'round'}));
+    ov.appendChild(svgNS('circle',{cx:q.x,cy:q.y,r:3.2,fill:'#f2dc9b',stroke:'rgba(0,0,0,.6)','stroke-width':1.5}))}
+  function scoreLine(res){return res.scores.map(function(s){return s.slot+' '+(s.feasible?s.score.toFixed(2):'covers star')}).join(' · ')}
+
+  if(STATE==='none'){
+    cap.innerHTML='<b>UI: none.</b> A pure frame: no chips, no tooltip, no hover feedback; camera input still works. This is your still, only its old v3 chip strip cropped. <span class="mono">MOCK frame</span>';
+  }
+  if(STATE==='rest'){
+    chrome(false,W,H);
+    cap.innerHTML='<b>UI: minimal, at rest.</b> Four quiet corner chips and nothing else: identity and counts (TL), family legend plus the validator badge (TR), view pills and the UI toggle (BL), fps (BR). The toggle cycles <b>none</b> and <b>minimal</b>; deep data appears only on hover. <span class="mono">MOCK · chip text real (2,476 stars, 19 loops, fork 2b696f5)</span>';
+  }
+  if(STATE==='min'){
+    chrome(true,W,H);dimAround(.34);ov.appendChild(ring(.45));
+    var t=el('div','tip glass','<i class="sw" style="--c:'+built.tip.fam+'"></i><b>'+esc(built.tip.label)+'</b><span class="m">'+esc(built.tip.meta)+'</span>');t.style.left=(hv.x+24)+'px';t.style.top=(hv.y-48)+'px';layer.appendChild(t);
+    cap.innerHTML='<b>UI: minimal, hovering.</b> The pointer snapped to the nearest star (ring), everything farther than 330 px dims a little to focus the neighbourhood, and a one-line tooltip follows. The ring is 45% filled: at 100% (0.45 s) the card opens. <span class="mono">MOCK · tooltip text real (graph node “'+esc(built.tip.label)+'”)</span>';
+  }
+  if(STATE==='card'){
+    var ch=chrome(false,W,H);dimAround(.46);
+    var cd=el('div','card glass',built.html);cd.style.visibility='hidden';layer.appendChild(cd);
+    var size={w:cd.offsetWidth,h:cd.offsetHeight};
+    var res=Place.choose({W:W,H:H,hover:hv,size:size,density:dens,margin:M,reserved:ch.reserved,halo:HALO});
+    cd.style.left=res.rect.x+'px';cd.style.top=res.rect.y+'px';cd.style.visibility='visible';
+    leader(hv,res.leader);ov.appendChild(ring(1));
+    cap.innerHTML='<b>'+(KIND==='finding'?'Dwell card, a measured Finding.':'Dwell card, an ontology-aware NodeType.')+'</b> Slot <b>'+res.slot+'</b>: the emptiest corner that does not cover the star (lower score wins; '+scoreLine(res)+'), stacked above the corner chips. '+
+      (KIND==='finding'?'The three numbers lead because a Finding’s job is its measurement; each is named verbatim from the graph.':'The bar is the Lentz/Polys lesson on screen: the ontology proposes, the XSD disposes.')+' <span class="mono">MOCK · positions illustrative, all text real data</span>';
+  }
+  if(STATE==='zones'){
+    var ch2=chrome(false,W,H),hc=$('#heat'),x=hc.getContext('2d');hc.width=W;hc.height=H;
+    var cs=48,cx,cy;for(cy=0;cy<H;cy+=cs)for(cx=0;cx<W;cx+=cs){var d=dens(cx+cs/2,cy+cs/2);if(d>.02){x.fillStyle='rgba(229,117,31,'+(0.05+d*0.4)+')';x.fillRect(cx+1,cy+1,cs-2,cs-2)}}
+    var size2=measure(),res2=Place.choose({W:W,H:H,hover:hv,size:size2,density:dens,margin:M,reserved:ch2.reserved,halo:HALO});
+    ov.appendChild(svgNS('rect',{x:M,y:M,width:W-2*M,height:H-2*M,fill:'none',stroke:'#e9cf8a','stroke-width':1,'stroke-dasharray':'6 6',opacity:.4,rx:6}));
+    var bx=ch2.boxes;
+    Object.keys(bx).forEach(function(k){var c=bx[k];ov.appendChild(svgNS('rect',{x:c.x-4,y:c.y-4,width:c.w+8,height:c.h+8,fill:'rgba(233,207,138,.08)',stroke:'#e9cf8a','stroke-width':1,rx:5,opacity:.85}))});
+    res2.scores.forEach(function(s){var r=s.rect,chosen=s.slot===res2.slot;
+      ov.appendChild(svgNS('rect',{x:r.x,y:r.y,width:r.w,height:r.h,rx:12,fill:chosen?'rgba(233,207,138,.14)':(s.feasible?'rgba(255,255,255,.03)':'rgba(155,44,71,.22)'),stroke:chosen?'#e9cf8a':(s.feasible?'#8a8478':'#c2587a'),'stroke-width':chosen?2.4:1.2,'stroke-dasharray':chosen?'':'7 5'}));
+      var lab=el('div','zlab',(chosen?'✓ ':'')+s.slot+' · density '+s.density.toFixed(2)+' · '+(s.feasible?'score '+s.score.toFixed(2):'covers star'));
+      lab.style.left=(r.x+10)+'px';lab.style[s.slot.charAt(0)==='T'?'top':'bottom']=(s.slot.charAt(0)==='T'?r.y+10:H-(r.y+r.h)+10)+'px';lab.style.color=chosen?'#e9cf8a':(s.feasible?'#cfc7b8':'#e58aa5');layer.appendChild(lab)});
+    ov.appendChild(svgNS('circle',{cx:hv.x,cy:hv.y,r:HALO,fill:'rgba(155,44,71,.10)',stroke:'#c2587a','stroke-width':1.2,'stroke-dasharray':'5 5'}));
+    ov.appendChild(svgNS('circle',{cx:hv.x,cy:hv.y,r:30,fill:'none',stroke:'#57dbf5','stroke-width':1.2,'stroke-dasharray':'3 4'}));
+    leader(hv,res2.leader);ov.appendChild(ring(1));
+    function note(t,css,col){var n=el('div','zlab',t);for(var k in css)n.style[k]=css[k];n.style.color=col;layer.appendChild(n)}
+    note('no-cover halo 96 px',{left:(hv.x+HALO*0.62)+'px',top:(hv.y-HALO-8)+'px'},'#e58aa5');
+    note('snap radius 30 px',{left:(hv.x+36)+'px',top:(hv.y+20)+'px'},'#57dbf5');
+    note('dwell 0.15 s label · 0.45 s card · 1.2 s deep',{left:(hv.x-200)+'px',top:(hv.y+HALO+10)+'px'},'#e9cf8a');
+    note('TL identity',{left:(bx.TL.x+bx.TL.w+12)+'px',top:(bx.TL.y+4)+'px'},'#e9cf8a');
+    note('TR legend + validator badge',{right:(W-(bx.TR.x-12))+'px',top:(bx.TR.y-3)+'px'},'#e9cf8a');
+    note('BL views + UI toggle',{left:(bx.BL.x+bx.BL.w+12)+'px',top:(bx.BL.y+4)+'px'},'#e9cf8a');
+    note('BR health',{right:(W-(bx.BR.x-12))+'px',top:(bx.BR.y)+'px'},'#e9cf8a');
+    cap.innerHTML='<b>Placement map.</b> Orange cells are the subject (real luminance of your still, 48 px cells, <span class="sc"><i style="background:rgba(229,117,31,.1)"></i><i style="background:rgba(229,117,31,.25)"></i><i style="background:rgba(229,117,31,.45)"></i></span>empty to dense); gold boxes are the always-on corner chips the card stacks above; the red disc is the halo no card may cover. The four rectangles are the card slots with the score <span class="mono">placement.js</span> computes from these same pixels. Chosen: <b>'+res2.slot+'</b>. <span class="mono">MOCK diagram on still '+STILL+' · '+scoreLine(res2)+'</span>';
+  }
+}
+})();
+</script></body></html>
