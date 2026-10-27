@@ -30,7 +30,7 @@ A. PIN.md + RUN-LOG.md (this PR). B. Blenderizer round trip of v2 (needs Blender
 History carries author emails; docs name models and costs (`xdomain/eval-plan/*`, `cost_table.md`); sim/ is a guess, not Polys's ontology; Shroud ledger layer stays out until 2027-01-01.
 
 ## 6. Addendum 27 Oct (20:40Z): Gobbler 3 Deep joins the v4 plan (additive; nothing above is replaced)
-Source: relayed by the coordinator from the Gobbler thread, not independently checked here (S until read). "Gobbler 3 Deep": 3,759 entities, 2,476 drawn as stars, 19 flywheel loops; private artifact https://claude.ai/artifact/3iSLGQNVftiD6Xh5WX4FJa, x3d.ML PR #8. Owner's rule: lose nothing; keep every prior version and layer, add rather than replace.
+Source: relayed by the coordinator from the Gobbler thread, not independently checked here (S until read). "Gobbler 3 Deep": 3,759 entities, 2,476 drawn as stars, 19 flywheel loops; private artifact (link in the Gobbler thread), x3d.ML PR #8. Owner's rule: lose nothing; keep every prior version and layer, add rather than replace.
 - **Layer stack for v4 (all kept, each switchable):** (1) Gobbler v1 and v2, (2) Gobbler v3 (604 drawn), (3) Gobbler 3 Deep (2,476 stars), (4) ontology shell (364 classes, x3d.onto v1/v2), (5) village and solar system (x3d.onto v2), (6) flywheel loops (now 19). Each layer lives in its own X3D Layer or Switch so none is overwritten.
 - **Mapping:** 3 Deep's stars are the chaos; the 364-class shell is the ordered sky; the 19 loops become orbital paths and villager routes (section 3 ideas 1 and 3 unchanged).
 - **Versioning:** v4 gets a new folder beside the old ones; earlier builds stay untouched (never-overwrite rule).
