@@ -1,0 +1,7 @@
+{
+ "(True, True, True)": 251,
+ "(False, True, True)": 283,
+ "(False, False, True)": 60,
+ "(False, True, False)": 4,
+ "(True, True, False)": 2
+}

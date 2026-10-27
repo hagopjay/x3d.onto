@@ -1,0 +1,1564 @@
+[
+ {
+  "scene_id": "seed_bench_anim-01",
+  "arm": "seed",
+  "pid": "bench:anim-01",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.5467,
+  "score": 2,
+  "present": [
+   "blue cube"
+  ],
+  "missing": [],
+  "note": "The blue cube is properly displayed from all viewpoints."
+ },
+ {
+  "scene_id": "seed_bench_anim-04",
+  "arm": "seed",
+  "pid": "bench:anim-04",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.3363,
+  "score": 2,
+  "present": [
+   "sphere",
+   "colored sphere geometry"
+  ],
+  "missing": [
+   "single centered sphere"
+  ],
+  "note": "Spheres of various colors are visible across the viewpoints."
+ },
+ {
+  "scene_id": "seed_bench_hanim-03",
+  "arm": "seed",
+  "pid": "bench:hanim-03",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0,
+  "score": 0,
+  "note": "blank render"
+ },
+ {
+  "scene_id": "seed_bench_int-02",
+  "arm": "seed",
+  "pid": "bench:int-02",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.2412,
+  "score": 2,
+  "present": [
+   "red sphere geometry"
+  ],
+  "missing": [],
+  "note": "A red sphere is properly displayed across viewpoints; interactivity cannot be validated in static frames."
+ },
+ {
+  "scene_id": "seed_bench_int-03",
+  "arm": "seed",
+  "pid": "bench:int-03",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.3746,
+  "score": 2,
+  "present": [
+   "cone",
+   "ground plane"
+  ],
+  "missing": [],
+  "note": "Both the cone and the ground plane are properly modeled and visible in the scene."
+ },
+ {
+  "scene_id": "seed_ood_ood-04",
+  "arm": "seed",
+  "pid": "ood:ood-04",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.3506,
+  "score": 2,
+  "present": [
+   "Glowing white sphere",
+   "Lit grey box"
+  ],
+  "missing": [],
+  "note": "Both the glowing unlit sphere and the lit grey box are clearly present as described."
+ },
+ {
+  "scene_id": "seed_ood_ood-05",
+  "arm": "seed",
+  "pid": "ood:ood-05",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.2688,
+  "score": 2,
+  "present": [
+   "planar geometry",
+   "red material face",
+   "blue material face"
+  ],
+  "missing": [],
+  "note": "The planar surface correctly shows distinct red and blue coloration on opposite sides across the orbit viewpoints."
+ },
+ {
+  "scene_id": "seed_ood_ood-06",
+  "arm": "seed",
+  "pid": "ood:ood-06",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.2416,
+  "score": 2,
+  "present": [
+   "sphere geometry",
+   "shading showing color variation between red and blue"
+  ],
+  "missing": [],
+  "note": "A sphere with intermediate purple coloration is visible across views, though dynamic fading cannot be fully verified from static renders."
+ },
+ {
+  "scene_id": "seed_ood_ood-07",
+  "arm": "seed",
+  "pid": "ood:ood-07",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.2672,
+  "score": 2,
+  "present": [
+   "box geometry",
+   "base plane"
+  ],
+  "missing": [],
+  "note": "The box model is clearly displayed across viewpoints, with animation aspects ignored per instructions."
+ },
+ {
+  "scene_id": "seed_ood_ood-08",
+  "arm": "seed",
+  "pid": "ood:ood-08",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.3473,
+  "score": 2,
+  "present": [
+   "IndexedFaceSet surface mesh",
+   "deformed/rippled planar geometry"
+  ],
+  "missing": [
+   "extensive grid resolution"
+  ],
+  "note": "A low-resolution segmented mesh displaying elevation variation is visible."
+ },
+ {
+  "scene_id": "seed_ood_ood-09",
+  "arm": "seed",
+  "pid": "ood:ood-09",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.2895,
+  "score": 2,
+  "present": [
+   "brass cylinder"
+  ],
+  "missing": [],
+  "note": "A brass-colored cylinder is rendered properly; animation cannot be verified from static images."
+ },
+ {
+  "scene_id": "seed_ood_ood-10",
+  "arm": "seed",
+  "pid": "ood:ood-10",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0,
+  "score": 0,
+  "note": "blank render"
+ },
+ {
+  "scene_id": "seed_ood_ood-11",
+  "arm": "seed",
+  "pid": "ood:ood-11",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.4954,
+  "score": 2,
+  "present": [
+   "box"
+  ],
+  "missing": [],
+  "note": "A blue 3D box geometry is clearly visible from multiple viewpoints."
+ },
+ {
+  "scene_id": "seed_ood_ood-17",
+  "arm": "seed",
+  "pid": "ood:ood-17",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.1926,
+  "score": 2,
+  "present": [
+   "pyramid geometry",
+   "triangular faces"
+  ],
+  "missing": [],
+  "note": "A triangular pyramid formed by distinct faces is clearly rendered across all viewpoints."
+ },
+ {
+  "scene_id": "seed_ood_ood-20",
+  "arm": "seed",
+  "pid": "ood:ood-20",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.0615,
+  "score": 2,
+  "present": [
+   "blue circle",
+   "red rectangle",
+   "green arc",
+   "side-by-side arrangement"
+  ],
+  "missing": [],
+  "note": "All requested 2D geometries are displayed side by side in their respective colors."
+ },
+ {
+  "scene_id": "seed_ood_ood-25",
+  "arm": "seed",
+  "pid": "ood:ood-25",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.4559,
+  "score": 1,
+  "present": [
+   "Wall geometry"
+  ],
+  "missing": [
+   "MultiTexture blending",
+   "Two ImageTextures",
+   "TextureTransform scaling"
+  ],
+  "note": "Only a plain white/grey wall geometry is rendered; no textures or texture transformations are visible."
+ },
+ {
+  "scene_id": "seed_ood_ood-27",
+  "arm": "seed",
+  "pid": "ood:ood-27",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.5,
+  "score": 1,
+  "present": [
+   "low-poly elevation geometry fragment"
+  ],
+  "missing": [
+   "identifiable Mount Fuji terrain patch",
+   "proper viewpoint framing"
+  ],
+  "note": "Only fragmented polygon geometry is visible with severe camera clipping."
+ },
+ {
+  "scene_id": "seed_ood_ood-28",
+  "arm": "seed",
+  "pid": "ood:ood-28",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.4148,
+  "score": 1,
+  "present": [],
+  "missing": [
+   "IndexedLineSet path",
+   "Marker geometry",
+   "Geographic reference visualization"
+  ],
+  "note": "The scene displays only an empty background gradient without discernible path or marker geometry."
+ },
+ {
+  "scene_id": "seed_ood_ood-30",
+  "arm": "seed",
+  "pid": "ood:ood-30",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.0411,
+  "score": 2,
+  "present": [
+   "Wireframe cube structure",
+   "Black color",
+   "Thick line width"
+  ],
+  "missing": [],
+  "note": "The wireframe cube displays properly with black lines and enlarged thickness across views."
+ },
+ {
+  "scene_id": "earlier_learned_bench_anim-01",
+  "arm": "earlier_learned",
+  "pid": "bench:anim-01",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.542,
+  "score": 2,
+  "present": [
+   "blue cube"
+  ],
+  "missing": [],
+  "note": "The blue cube is properly rendered across viewpoints; animation cannot be judged in stills."
+ },
+ {
+  "scene_id": "earlier_learned_bench_anim-02",
+  "arm": "earlier_learned",
+  "pid": "bench:anim-02",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.024,
+  "score": 2,
+  "present": [
+   "ball"
+  ],
+  "missing": [],
+  "note": "The ball is present; motion and keyframe behavior cannot be evaluated from static views."
+ },
+ {
+  "scene_id": "earlier_learned_bench_anim-03",
+  "arm": "earlier_learned",
+  "pid": "bench:anim-03",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.225,
+  "score": 2,
+  "present": [
+   "door frame",
+   "door panel",
+   "doorknob"
+  ],
+  "missing": [],
+  "note": "The door model with frame and handle is clearly modeled, though dynamic movement cannot be evaluated in static views."
+ },
+ {
+  "scene_id": "earlier_learned_bench_anim-04",
+  "arm": "earlier_learned",
+  "pid": "bench:anim-04",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.3362,
+  "score": 2,
+  "present": [
+   "sphere",
+   "red, green, blue colors visible across views"
+  ],
+  "missing": [],
+  "note": "Spheres with requested primary colors are rendered across viewpoints."
+ },
+ {
+  "scene_id": "earlier_learned_bench_anim-05",
+  "arm": "earlier_learned",
+  "pid": "bench:anim-05",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.1646,
+  "score": 2,
+  "present": [
+   "three cubes"
+  ],
+  "missing": [],
+  "note": "Three colored cubes are present; rotational motion and sensor drivers cannot be verified in still images."
+ },
+ {
+  "scene_id": "earlier_learned_bench_asm-01",
+  "arm": "earlier_learned",
+  "pid": "bench:asm-01",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.2959,
+  "score": 2,
+  "present": [
+   "box body",
+   "pyramid roof",
+   "door",
+   "two windows"
+  ],
+  "missing": [],
+  "note": "All requested visual components of the house are present."
+ },
+ {
+  "scene_id": "earlier_learned_bench_asm-02",
+  "arm": "earlier_learned",
+  "pid": "bench:asm-02",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.2134,
+  "score": 2,
+  "present": [
+   "Sun",
+   "Three planets at different distances",
+   "Orbital paths"
+  ],
+  "missing": [],
+  "note": "The solar system includes the central Sun and three distinct planets properly spaced."
+ },
+ {
+  "scene_id": "earlier_learned_bench_asm-04",
+  "arm": "earlier_learned",
+  "pid": "bench:asm-04",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.3561,
+  "score": 2,
+  "present": [
+   "street lamp structure",
+   "light source active"
+  ],
+  "missing": [
+   "PointLight correctly positioned at the top"
+  ],
+  "note": "A street lamp model is present with lighting enabled, but the light appears focused near the base rather than casting primarily from the top lantern."
+ },
+ {
+  "scene_id": "earlier_learned_bench_geo-03",
+  "arm": "earlier_learned",
+  "pid": "bench:geo-03",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0,
+  "score": 0,
+  "note": "blank render"
+ },
+ {
+  "scene_id": "earlier_learned_bench_geo-04",
+  "arm": "earlier_learned",
+  "pid": "bench:geo-04",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.0569,
+  "score": 2,
+  "present": [
+   "small box representing drone",
+   "building geometry representing Torgersen Hall"
+  ],
+  "missing": [
+   "identifiable Torgersen Hall details or textures",
+   "multi-angle visibility across contact sheet"
+  ],
+  "note": "The scene contains a basic structure and drone marker, but most viewports are black and details are minimal."
+ },
+ {
+  "scene_id": "earlier_learned_bench_int-01",
+  "arm": "earlier_learned",
+  "pid": "bench:int-01",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.1685,
+  "score": 2,
+  "present": [
+   "box button",
+   "cylinder"
+  ],
+  "missing": [],
+  "note": "Both the box button and the cylinder are clearly rendered in the scene."
+ },
+ {
+  "scene_id": "earlier_learned_bench_int-02",
+  "arm": "earlier_learned",
+  "pid": "bench:int-02",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.2412,
+  "score": 2,
+  "present": [
+   "red sphere"
+  ],
+  "missing": [],
+  "note": "A red sphere is visible in all viewpoints; interaction functionality cannot be determined from static images."
+ },
+ {
+  "scene_id": "earlier_learned_bench_int-03",
+  "arm": "earlier_learned",
+  "pid": "bench:int-03",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.2637,
+  "score": 2,
+  "present": [
+   "orange cone",
+   "ground plane"
+  ],
+  "missing": [],
+  "note": "A cone and ground plane are visible, matching static visual requirements."
+ },
+ {
+  "scene_id": "earlier_learned_bench_int-04",
+  "arm": "earlier_learned",
+  "pid": "bench:int-04",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.4954,
+  "score": 2,
+  "present": [
+   "box"
+  ],
+  "missing": [],
+  "note": "A solid blue box is clearly visible across viewpoints; hover behavior cannot be assessed in static frames."
+ },
+ {
+  "scene_id": "earlier_learned_bench_obj-02",
+  "arm": "earlier_learned",
+  "pid": "bench:obj-02",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.0921,
+  "score": 2,
+  "present": [
+   "wooden tabletop",
+   "four cylindrical legs"
+  ],
+  "missing": [],
+  "note": "The model shows a wooden table with rectangular top and four cylindrical legs consistent with the request."
+ },
+ {
+  "scene_id": "earlier_learned_bench_obj-03",
+  "arm": "earlier_learned",
+  "pid": "bench:obj-03",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.1276,
+  "score": 2,
+  "present": [
+   "orange cone",
+   "black square base"
+  ],
+  "missing": [],
+  "note": "The model accurately portrays a traffic cone with an orange body and black square base."
+ },
+ {
+  "scene_id": "earlier_learned_bench_obj-04",
+  "arm": "earlier_learned",
+  "pid": "bench:obj-04",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.0201,
+  "score": 2,
+  "present": [
+   "neon-green wireframe cube",
+   "unlit line geometry"
+  ],
+  "missing": [],
+  "note": "Wireframe cube matches requested neon-green unlit style across viewpoints."
+ },
+ {
+  "scene_id": "earlier_learned_ood_ood-01",
+  "arm": "earlier_learned",
+  "pid": "ood:ood-01",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.3566,
+  "score": 2,
+  "present": [
+   "Cube",
+   "Red SpotLight from above",
+   "Dark grey background"
+  ],
+  "missing": [
+   "Exclusively spotlight illumination (headlight or ambient light illuminates the cube sides)"
+  ],
+  "note": "The scene fulfills key elements, though ambient or headlight illumination affects the cube faces."
+ },
+ {
+  "scene_id": "earlier_learned_ood_ood-02",
+  "arm": "earlier_learned",
+  "pid": "ood:ood-02",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.921,
+  "score": 2,
+  "present": [
+   "room corner",
+   "warm yellow hanging light fixture",
+   "table"
+  ],
+  "missing": [],
+  "note": "The scene accurately features the requested room corner, table, and warm yellow hanging light."
+ },
+ {
+  "scene_id": "earlier_learned_ood_ood-03",
+  "arm": "earlier_learned",
+  "pid": "ood:ood-03",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.498,
+  "score": 2,
+  "present": [
+   "fog effect",
+   "field ground plane",
+   "cones"
+  ],
+  "missing": [
+   "clear author viewpoint showing full row of five cones receding"
+  ],
+  "note": "Fog and cones are rendered, but only one cone is prominent in the primary view while the row is barely discernible."
+ },
+ {
+  "scene_id": "earlier_learned_ood_ood-04",
+  "arm": "earlier_learned",
+  "pid": "ood:ood-04",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.3308,
+  "score": 2,
+  "present": [
+   "glowing white sphere",
+   "lit grey box"
+  ],
+  "missing": [],
+  "note": "Both requested objects appear correctly rendered with their designated material appearances."
+ },
+ {
+  "scene_id": "earlier_learned_ood_ood-05",
+  "arm": "earlier_learned",
+  "pid": "ood:ood-05",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.2375,
+  "score": 2,
+  "present": [
+   "plane surface",
+   "red front side",
+   "blue back side"
+  ],
+  "missing": [],
+  "note": "Plane correctly displays distinct red and blue materials on opposing faces across viewpoints."
+ },
+ {
+  "scene_id": "earlier_learned_ood_ood-06",
+  "arm": "earlier_learned",
+  "pid": "ood:ood-06",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.242,
+  "score": 2,
+  "present": [
+   "Sphere shape",
+   "Color gradient states between red and blue"
+  ],
+  "missing": [],
+  "note": "Spherical geometry is shown across viewpoints displaying shades of red, purple, and blue as requested."
+ },
+ {
+  "scene_id": "earlier_learned_ood_ood-07",
+  "arm": "earlier_learned",
+  "pid": "ood:ood-07",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.2329,
+  "score": 2,
+  "present": [
+   "Box geometry",
+   "Base platform"
+  ],
+  "missing": [],
+  "note": "The box object is correctly rendered on a circular base; dynamic scaling cannot be judged from static views."
+ },
+ {
+  "scene_id": "earlier_learned_ood_ood-09",
+  "arm": "earlier_learned",
+  "pid": "ood:ood-09",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.3322,
+  "score": 2,
+  "present": [
+   "brass material",
+   "cylinder geometry"
+  ],
+  "missing": [],
+  "note": "A brass-colored cylinder is clearly visible across all viewpoints."
+ },
+ {
+  "scene_id": "earlier_learned_ood_ood-10",
+  "arm": "earlier_learned",
+  "pid": "ood:ood-10",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.0536,
+  "score": 2,
+  "present": [
+   "Text label 'Fading In...'"
+  ],
+  "missing": [],
+  "note": "Text label is clearly rendered across multiple viewpoints."
+ },
+ {
+  "scene_id": "earlier_learned_ood_ood-11",
+  "arm": "earlier_learned",
+  "pid": "ood:ood-11",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.4954,
+  "score": 2,
+  "present": [
+   "3D box shape"
+  ],
+  "missing": [],
+  "note": "A box geometry is rendered in the scene; interaction mechanics are not directly verifiable from static views."
+ },
+ {
+  "scene_id": "earlier_learned_ood_ood-12",
+  "arm": "earlier_learned",
+  "pid": "ood:ood-12",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.2541,
+  "score": 2,
+  "present": [
+   "turnable knob geometry",
+   "base mounting plate",
+   "position indicator mark"
+  ],
+  "missing": [],
+  "note": "A complete visual model of a knob ready for rotational interaction is displayed."
+ },
+ {
+  "scene_id": "earlier_learned_ood_ood-13",
+  "arm": "earlier_learned",
+  "pid": "ood:ood-13",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.0283,
+  "score": 2,
+  "present": [
+   "cone",
+   "lamp sphere representation"
+  ],
+  "missing": [
+   "distinct separate lamp fixture"
+  ],
+  "note": "An orange cone with a spherical lamp top is rendered, though overall structure is minimal."
+ },
+ {
+  "scene_id": "earlier_learned_ood_ood-14",
+  "arm": "earlier_learned",
+  "pid": "ood:ood-14",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.2424,
+  "score": 2,
+  "present": [
+   "sphere"
+  ],
+  "missing": [],
+  "note": "Sphere geometry is rendered; sensor-driven animation cannot be verified in static views."
+ },
+ {
+  "scene_id": "earlier_learned_ood_ood-16",
+  "arm": "earlier_learned",
+  "pid": "ood:ood-16",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.5197,
+  "score": 2,
+  "present": [
+   "hilly terrain",
+   "brown material",
+   "ElevationGrid mesh"
+  ],
+  "missing": [],
+  "note": "The model displays a brown hilly ElevationGrid terrain conforming to the specifications."
+ },
+ {
+  "scene_id": "earlier_learned_ood_ood-17",
+  "arm": "earlier_learned",
+  "pid": "ood:ood-17",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.1324,
+  "score": 2,
+  "present": [
+   "pyramid shape",
+   "triangular faces"
+  ],
+  "missing": [],
+  "note": "A four-sided triangular pyramid is clearly rendered across viewpoints."
+ },
+ {
+  "scene_id": "earlier_learned_ood_ood-18",
+  "arm": "earlier_learned",
+  "pid": "ood:ood-18",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.3805,
+  "score": 2,
+  "present": [
+   "flat square tile",
+   "blue material",
+   "quad shape"
+  ],
+  "missing": [],
+  "note": "The flat square geometry is visible and appropriately shaded in blue."
+ },
+ {
+  "scene_id": "earlier_learned_ood_ood-19",
+  "arm": "earlier_learned",
+  "pid": "ood:ood-19",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.0027,
+  "score": 0,
+  "note": "blank render"
+ },
+ {
+  "scene_id": "earlier_learned_ood_ood-20",
+  "arm": "earlier_learned",
+  "pid": "ood:ood-20",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.0731,
+  "score": 2,
+  "present": [
+   "blue circle",
+   "red rectangle",
+   "green arc",
+   "side by side layout"
+  ],
+  "missing": [],
+  "note": "All requested 2D geometries are present and colored accurately, arranged horizontally."
+ },
+ {
+  "scene_id": "earlier_learned_ood_ood-23",
+  "arm": "earlier_learned",
+  "pid": "ood:ood-23",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.235,
+  "score": 2,
+  "present": [
+   "top-down orthogonal view",
+   "floor plan layout with walls",
+   "grey box structures"
+  ],
+  "missing": [
+   "multiple distinct grey boxes as interior museum exhibits"
+  ],
+  "note": "Floor plan layout is visible from an orthographic top view, with basic grey geometric forms."
+ },
+ {
+  "scene_id": "earlier_learned_ood_ood-24",
+  "arm": "earlier_learned",
+  "pid": "ood:ood-24",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.6231,
+  "score": 2,
+  "present": [
+   "red cube geometry"
+  ],
+  "missing": [
+   "named viewpoint validation"
+  ],
+  "note": "A red cube is visible across all perspectives, though internal viewpoint definitions cannot be confirmed visually."
+ },
+ {
+  "scene_id": "earlier_learned_ood_ood-25",
+  "arm": "earlier_learned",
+  "pid": "ood:ood-25",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.4688,
+  "score": 1,
+  "present": [
+   "Wall geometry"
+  ],
+  "missing": [
+   "MultiTexture",
+   "ImageTextures",
+   "TextureTransform scaling"
+  ],
+  "note": "Only a plain white untextured rectangular geometry is rendered."
+ },
+ {
+  "scene_id": "earlier_learned_ood_ood-26",
+  "arm": "earlier_learned",
+  "pid": "ood:ood-26",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0,
+  "score": 0,
+  "note": "blank render"
+ },
+ {
+  "scene_id": "earlier_learned_ood_ood-27",
+  "arm": "earlier_learned",
+  "pid": "ood:ood-27",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.5,
+  "score": 2,
+  "present": [
+   "Terrain patch",
+   "Faceted elevation grid structure"
+  ],
+  "missing": [
+   "Full Mount Fuji context",
+   "Proper view framing across viewpoints"
+  ],
+  "note": "A small elevation surface is partially visible in the main viewpoint, but other angles show mostly empty space."
+ },
+ {
+  "scene_id": "earlier_learned_ood_ood-28",
+  "arm": "earlier_learned",
+  "pid": "ood:ood-28",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.0031,
+  "score": 0,
+  "note": "blank render"
+ },
+ {
+  "scene_id": "earlier_learned_ood_ood-30",
+  "arm": "earlier_learned",
+  "pid": "ood:ood-30",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.0411,
+  "score": 2,
+  "present": [
+   "black wireframe cube",
+   "thick lines"
+  ],
+  "missing": [],
+  "note": "A thick black wireframe cube matches the request well across all viewpoints."
+ },
+ {
+  "scene_id": "new_learned_bench_anim-01",
+  "arm": "new_learned",
+  "pid": "bench:anim-01",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.5554,
+  "score": 2,
+  "present": [
+   "blue cube"
+  ],
+  "missing": [],
+  "note": "The blue cube is correctly rendered."
+ },
+ {
+  "scene_id": "new_learned_bench_anim-02",
+  "arm": "new_learned",
+  "pid": "bench:anim-02",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.0205,
+  "score": 2,
+  "present": [
+   "ball",
+   "floor reference plane"
+  ],
+  "missing": [],
+  "note": "A red sphere is positioned vertically above a baseline plane. Animation dynamics cannot be evaluated from stills."
+ },
+ {
+  "scene_id": "new_learned_bench_anim-03",
+  "arm": "new_learned",
+  "pid": "bench:anim-03",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.4748,
+  "score": 2,
+  "present": [
+   "door",
+   "door frame",
+   "door knob",
+   "wall"
+  ],
+  "missing": [],
+  "note": "The door model and frame are present, while the requested animation state cannot be evaluated from static images."
+ },
+ {
+  "scene_id": "new_learned_bench_anim-04",
+  "arm": "new_learned",
+  "pid": "bench:anim-04",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.242,
+  "score": 2,
+  "present": [
+   "sphere geometry",
+   "colored material"
+  ],
+  "missing": [],
+  "note": "A sphere is visible showing different colors across views or viewpoints, matching primary color requirements."
+ },
+ {
+  "scene_id": "new_learned_bench_anim-05",
+  "arm": "new_learned",
+  "pid": "bench:anim-05",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.182,
+  "score": 2,
+  "present": [
+   "three cubes",
+   "different orientations indicating rotation"
+  ],
+  "missing": [],
+  "note": "Three colored cubes are present as requested, with rotation mechanisms not verifiable from static views."
+ },
+ {
+  "scene_id": "new_learned_bench_asm-01",
+  "arm": "new_learned",
+  "pid": "bench:asm-01",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.2943,
+  "score": 2,
+  "present": [
+   "box body",
+   "pyramid roof",
+   "door",
+   "two windows"
+  ],
+  "missing": [],
+  "note": "All requested visual components of the house are present and clearly rendered."
+ },
+ {
+  "scene_id": "new_learned_bench_asm-03",
+  "arm": "new_learned",
+  "pid": "bench:asm-03",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.5874,
+  "score": 2,
+  "present": [
+   "chess board",
+   "64 alternating squares"
+  ],
+  "missing": [],
+  "note": "The model displays a complete 8x8 checkerboard layout on a raised base."
+ },
+ {
+  "scene_id": "new_learned_bench_asm-05",
+  "arm": "new_learned",
+  "pid": "bench:asm-05",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.311,
+  "score": 2,
+  "present": [
+   "Bookshelf",
+   "Thin box books with various colors",
+   "Three shelves with books"
+  ],
+  "missing": [
+   "Exactly three shelves total (there are four tiers/shelves visible)"
+  ],
+  "note": "The bookshelf contains shelves with five multicolored books each as requested, though an extra empty lower shelf is present."
+ },
+ {
+  "scene_id": "new_learned_bench_geo-04",
+  "arm": "new_learned",
+  "pid": "bench:geo-04",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.0483,
+  "score": 2,
+  "present": [
+   "small box (drone)",
+   "building shape (Torgersen Hall representation)"
+  ],
+  "missing": [
+   "detailed Torgersen Hall model",
+   "visibility in orbiting viewpoints"
+  ],
+  "note": "A minimal box and building form appear in one viewpoint while the remaining views are empty."
+ },
+ {
+  "scene_id": "new_learned_bench_int-01",
+  "arm": "new_learned",
+  "pid": "bench:int-01",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.222,
+  "score": 2,
+  "present": [
+   "box button",
+   "cylinder"
+  ],
+  "missing": [],
+  "note": "Both required shapes are clearly modeled and visible across viewpoints."
+ },
+ {
+  "scene_id": "new_learned_bench_int-02",
+  "arm": "new_learned",
+  "pid": "bench:int-02",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.2412,
+  "score": 2,
+  "present": [
+   "red sphere"
+  ],
+  "missing": [],
+  "note": "The sphere is rendered correctly in red; interactive toggling cannot be verified in still images."
+ },
+ {
+  "scene_id": "new_learned_bench_int-03",
+  "arm": "new_learned",
+  "pid": "bench:int-03",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.2756,
+  "score": 2,
+  "present": [
+   "cone",
+   "ground plane"
+  ],
+  "missing": [],
+  "note": "The scene correctly depicts a 3D cone positioned on a ground plane as specified."
+ },
+ {
+  "scene_id": "new_learned_bench_int-04",
+  "arm": "new_learned",
+  "pid": "bench:int-04",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.4954,
+  "score": 2,
+  "present": [
+   "box geometry"
+  ],
+  "missing": [],
+  "note": "A blue box is present; hover interactivity and highlighting cannot be evaluated in static views."
+ },
+ {
+  "scene_id": "new_learned_bench_obj-01",
+  "arm": "new_learned",
+  "pid": "bench:obj-01",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.5673,
+  "score": 2,
+  "present": [
+   "red sphere",
+   "grey ground plane",
+   "directional lighting",
+   "viewpoint"
+  ],
+  "missing": [],
+  "note": "All requested visual elements are present."
+ },
+ {
+  "scene_id": "new_learned_bench_obj-02",
+  "arm": "new_learned",
+  "pid": "bench:obj-02",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.0842,
+  "score": 2,
+  "present": [
+   "wooden tabletop",
+   "cylindrical legs"
+  ],
+  "missing": [
+   "properly positioned four legs under the corners"
+  ],
+  "note": "The tabletop and cylindrical legs are present with wood coloring, but the legs are misaligned and disconnected from proper table corners."
+ },
+ {
+  "scene_id": "new_learned_bench_obj-03",
+  "arm": "new_learned",
+  "pid": "bench:obj-03",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.1261,
+  "score": 2,
+  "present": [
+   "orange cone",
+   "black square base",
+   "reflective stripes"
+  ],
+  "missing": [],
+  "note": "The traffic cone matches the description well with correct colors and base."
+ },
+ {
+  "scene_id": "new_learned_bench_obj-04",
+  "arm": "new_learned",
+  "pid": "bench:obj-04",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.0152,
+  "score": 2,
+  "present": [
+   "neon-green wireframe lines",
+   "cube structure",
+   "unlit appearance"
+  ],
+  "missing": [],
+  "note": "The scene displays an unlit neon-green wireframe cube as requested."
+ },
+ {
+  "scene_id": "new_learned_bench_obj-05",
+  "arm": "new_learned",
+  "pid": "bench:obj-05",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.3608,
+  "score": 2,
+  "present": [
+   "ring shape",
+   "metallic highlights"
+  ],
+  "missing": [
+   "clear bright gold coloration"
+  ],
+  "note": "The ring geometry is successfully constructed with specular highlights, but the lighting makes the gold appearance very dark."
+ },
+ {
+  "scene_id": "new_learned_ood_ood-01",
+  "arm": "new_learned",
+  "pid": "ood:ood-01",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.4803,
+  "score": 2,
+  "present": [
+   "cube",
+   "red spotlight aimed from above"
+  ],
+  "missing": [
+   "dark grey background"
+  ],
+  "note": "The scene features the cube lit from above by a red spotlight, but the background appears completely black instead of dark grey."
+ },
+ {
+  "scene_id": "new_learned_ood_ood-02",
+  "arm": "new_learned",
+  "pid": "ood:ood-02",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.5537,
+  "score": 2,
+  "present": [
+   "room corner",
+   "hanging light fixture",
+   "warm illumination",
+   "table"
+  ],
+  "missing": [],
+  "note": "The scene accurately includes a room corner with a warm hanging light over a dining table."
+ },
+ {
+  "scene_id": "new_learned_ood_ood-04",
+  "arm": "new_learned",
+  "pid": "ood:ood-04",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.4682,
+  "score": 2,
+  "present": [
+   "glowing unlit white sphere",
+   "lit grey box next to sphere",
+   "supporting ground plane"
+  ],
+  "missing": [],
+  "note": "The scene displays a bright white sphere alongside a shaded grey box as requested."
+ },
+ {
+  "scene_id": "new_learned_ood_ood-05",
+  "arm": "new_learned",
+  "pid": "ood:ood-05",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.3856,
+  "score": 2,
+  "present": [
+   "two-sided plane",
+   "red front material",
+   "blue back material"
+  ],
+  "missing": [],
+  "note": "The scene displays a planar geometry with red on the front face and blue on the rear face."
+ },
+ {
+  "scene_id": "new_learned_ood_ood-06",
+  "arm": "new_learned",
+  "pid": "ood:ood-06",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.2419,
+  "score": 2,
+  "present": [
+   "sphere",
+   "intermediate red-blue coloration"
+  ],
+  "missing": [],
+  "note": "The sphere geometry is clearly rendered with appropriate color shading, though temporal fade cannot be verified in stills."
+ },
+ {
+  "scene_id": "new_learned_ood_ood-07",
+  "arm": "new_learned",
+  "pid": "ood:ood-07",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.6309,
+  "score": 2,
+  "present": [
+   "box geometry"
+  ],
+  "missing": [],
+  "note": "A box shape is visible; animation features cannot be evaluated from static views."
+ },
+ {
+  "scene_id": "new_learned_ood_ood-08",
+  "arm": "new_learned",
+  "pid": "ood:ood-08",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.1124,
+  "score": 2,
+  "present": [
+   "IndexedFaceSet mesh surface",
+   "Visible surface wave/ripple deformation pattern"
+  ],
+  "missing": [
+   "Uniform flat grid boundaries (geometry shape is uneven/jagged)"
+  ],
+  "note": "The geometry shows an IndexedFaceSet mesh with rippling surface displacement, though the boundary profile deviates from a standard rectangular flat grid."
+ },
+ {
+  "scene_id": "new_learned_ood_ood-09",
+  "arm": "new_learned",
+  "pid": "ood:ood-09",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.293,
+  "score": 2,
+  "present": [
+   "brass material",
+   "cylinder geometry"
+  ],
+  "missing": [],
+  "note": "The brass cylinder is fully visible across all viewpoints."
+ },
+ {
+  "scene_id": "new_learned_ood_ood-10",
+  "arm": "new_learned",
+  "pid": "ood:ood-10",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0,
+  "score": 0,
+  "note": "blank render"
+ },
+ {
+  "scene_id": "new_learned_ood_ood-11",
+  "arm": "new_learned",
+  "pid": "ood:ood-11",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.4954,
+  "score": 2,
+  "present": [
+   "box"
+  ],
+  "missing": [],
+  "note": "The box geometry is visible from all viewpoints; interactivity cannot be verified in still images."
+ },
+ {
+  "scene_id": "new_learned_ood_ood-12",
+  "arm": "new_learned",
+  "pid": "ood:ood-12",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.2499,
+  "score": 2,
+  "present": [
+   "cylindrical knob body",
+   "rotational indicator stripe",
+   "base dial with markings"
+  ],
+  "missing": [],
+  "note": "The knob model is clearly rendered with appropriate dial markers."
+ },
+ {
+  "scene_id": "new_learned_ood_ood-14",
+  "arm": "new_learned",
+  "pid": "ood:ood-14",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.2408,
+  "score": 2,
+  "present": [
+   "sphere geometry"
+  ],
+  "missing": [],
+  "note": "A sphere is visible across multiple viewpoints; sensors and animation timing cannot be verified from static images."
+ },
+ {
+  "scene_id": "new_learned_ood_ood-15",
+  "arm": "new_learned",
+  "pid": "ood:ood-15",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.4914,
+  "score": 2,
+  "present": [
+   "green box button",
+   "red box button",
+   "light fixture representing PointLight"
+  ],
+  "missing": [],
+  "note": "Both colored box buttons and a light fixture are visible in the scene."
+ },
+ {
+  "scene_id": "new_learned_ood_ood-16",
+  "arm": "new_learned",
+  "pid": "ood:ood-16",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.5757,
+  "score": 2,
+  "present": [
+   "ElevationGrid hilly terrain",
+   "brown material"
+  ],
+  "missing": [],
+  "note": "The terrain features a brown hilly surface generated via an elevation grid."
+ },
+ {
+  "scene_id": "new_learned_ood_ood-17",
+  "arm": "new_learned",
+  "pid": "ood:ood-17",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.1318,
+  "score": 2,
+  "present": [
+   "triangular pyramid geometry",
+   "indexed triangle structure",
+   "shaded triangular faces"
+  ],
+  "missing": [
+   "fully illuminated base or clear distinction of all four separate triangles"
+  ],
+  "note": "A pyramid formed of triangular faces is rendered, but low lighting hides several details."
+ },
+ {
+  "scene_id": "new_learned_ood_ood-20",
+  "arm": "new_learned",
+  "pid": "ood:ood-20",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.0615,
+  "score": 2,
+  "present": [
+   "blue circle",
+   "red rectangle",
+   "green arc"
+  ],
+  "missing": [],
+  "note": "All requested 2D geometric shapes appear side by side as specified."
+ },
+ {
+  "scene_id": "new_learned_ood_ood-21",
+  "arm": "new_learned",
+  "pid": "ood:ood-21",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.5646,
+  "score": 2,
+  "present": [
+   "detailed tree model",
+   "simplified distant tree model",
+   "level of detail variation across views"
+  ],
+  "missing": [],
+  "note": "The LOD switching between a detailed tree close up and a simplified tree at distance is clearly depicted."
+ },
+ {
+  "scene_id": "new_learned_ood_ood-24",
+  "arm": "new_learned",
+  "pid": "ood:ood-24",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.6231,
+  "score": 2,
+  "present": [
+   "red cube",
+   "viewpoints"
+  ],
+  "missing": [
+   "visible distinction of named viewpoint hierarchy"
+  ],
+  "note": "A red cube is visible across multiple viewpoints, though viewpoint grouping is internal."
+ },
+ {
+  "scene_id": "new_learned_ood_ood-25",
+  "arm": "new_learned",
+  "pid": "ood:ood-25",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.4768,
+  "score": 1,
+  "present": [
+   "wall geometry"
+  ],
+  "missing": [
+   "blended ImageTextures",
+   "MultiTexture effect",
+   "TextureTransform scaling"
+  ],
+  "note": "A wall shape is present, but it renders completely untextured white/grey."
+ },
+ {
+  "scene_id": "new_learned_ood_ood-26",
+  "arm": "new_learned",
+  "pid": "ood:ood-26",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0,
+  "score": 0,
+  "note": "blank render"
+ },
+ {
+  "scene_id": "new_learned_ood_ood-27",
+  "arm": "new_learned",
+  "pid": "ood:ood-27",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.5457,
+  "score": 2,
+  "present": [
+   "terrain patch geometry",
+   "elevation grid structure"
+  ],
+  "missing": [
+   "recognizable Mount Fuji terrain context"
+  ],
+  "note": "An elevation grid patch is visible, though it appears highly abstract and detached from identifiable geographical landmarks."
+ },
+ {
+  "scene_id": "new_learned_ood_ood-28",
+  "arm": "new_learned",
+  "pid": "ood:ood-28",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.4148,
+  "score": 1,
+  "present": [],
+  "missing": [
+   "marker",
+   "GeoCoordinate-based IndexedLineSet path"
+  ],
+  "note": "The scene is empty, showing only background sky gradients without any path geometry or marker."
+ },
+ {
+  "scene_id": "new_learned_ood_ood-30",
+  "arm": "new_learned",
+  "pid": "ood:ood-30",
+  "ok": true,
+  "load_ok": true,
+  "nonblank_max": 0.0429,
+  "score": 2,
+  "present": [
+   "wireframe cube",
+   "black lines"
+  ],
+  "missing": [
+   "thick lines (linewidthScaleFactor 3 appears thin/standard)"
+  ],
+  "note": "A black wireframe cube is depicted across all views, though line thickness appears standard rather than noticeably scaled."
+ }
+]
