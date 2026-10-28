@@ -1,7 +1,7 @@
 {
  "blender": "5.2.2 LTS",
  "blenderio": "x3d-blender-io d9bbf91",
- "script_sha256": "f9295291862a40162276609635a67e05e9e0b718afab7ebd96c6819a22368e73",
+ "script_sha256": "0bb47b3082fec1a8d13c892c0b25c4ad5a4cf2f2d6fd1b018c216beaabeadb23",
  "samples": 48,
  "bake": "Cycles CPU diffuse, direct+indirect, multiple-scattering sky",
  "variants": {
@@ -18,21 +18,14 @@
     "Fa_near_vane": {
      "tris": 288,
      "lum_min": 0.24,
-     "lum_mean": 0.549,
+     "lum_mean": 0.554,
      "lum_max": 0.978,
-     "warm_r_over_b": 1.58
-    },
-    "Fa_mid_vane": {
-     "tris": 32,
-     "lum_min": 0.24,
-     "lum_mean": 0.423,
-     "lum_max": 0.962,
-     "warm_r_over_b": 1.01
+     "warm_r_over_b": 1.63
     }
    },
    "file": "feather_a.x3d",
-   "bytes": 71430,
-   "sha256": "cd5768fd6bfd77494ec065216556e549f0b9f0b73f65623ac9c8f1fe27cfae25"
+   "bytes": 68033,
+   "sha256": "11852de30110a34d891669a50c25a49aa90230bef16682d35fd989185559ffb3"
   },
   "b": {
    "params": {
@@ -47,21 +40,14 @@
     "Fb_near_vane": {
      "tris": 288,
      "lum_min": 0.24,
-     "lum_mean": 0.596,
+     "lum_mean": 0.607,
      "lum_max": 1.0,
-     "warm_r_over_b": 1.5
-    },
-    "Fb_mid_vane": {
-     "tris": 32,
-     "lum_min": 0.24,
-     "lum_mean": 0.382,
-     "lum_max": 0.941,
-     "warm_r_over_b": 0.82
+     "warm_r_over_b": 1.53
     }
    },
    "file": "feather_b.x3d",
-   "bytes": 72504,
-   "sha256": "984cda7ef05ddaf0016d36217b675b3205330df304fa5a14738952e25bbd466b"
+   "bytes": 68323,
+   "sha256": "a6bad8d45f3db4ec23f71e5f0ec9a7a5783251f87c7c5fd81a2634bb12132fcf"
   },
   "c": {
    "params": {
@@ -76,21 +62,14 @@
     "Fc_near_vane": {
      "tris": 288,
      "lum_min": 0.24,
-     "lum_mean": 0.47,
+     "lum_mean": 0.484,
      "lum_max": 0.987,
-     "warm_r_over_b": 1.28
-    },
-    "Fc_mid_vane": {
-     "tris": 32,
-     "lum_min": 0.24,
-     "lum_mean": 0.414,
-     "lum_max": 0.989,
-     "warm_r_over_b": 0.89
+     "warm_r_over_b": 1.35
     }
    },
    "file": "feather_c.x3d",
-   "bytes": 69817,
-   "sha256": "481ca9c0b86c7c8ceabcf674400ec8ab696eff1e8ccc0f2de6e71b5536a53e95"
+   "bytes": 67922,
+   "sha256": "3a1201da639fd49dc5aaae7c8fa0b2a3d036332989f741a28a8caf9ebc9ddef9"
   }
  }
 }

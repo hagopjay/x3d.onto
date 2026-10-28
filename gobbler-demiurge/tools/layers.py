@@ -350,7 +350,7 @@ def build(explorer_path, seed=4):
     ring = []                                                       # a flat annulus facing the camera: the "ping" that leaves the heart with every validator run
     for k in range(64):
         a0, a1 = 2 * math.pi * k / 64, 2 * math.pi * (k + 1) / 64
-        ring.append((math.cos(a0), math.sin(a0), 0)); ring.append((0.84 * math.cos(a0), 0.84 * math.sin(a0), 0))
+        ring.append((math.cos(a0), math.sin(a0), 0)); ring.append((0.93 * math.cos(a0), 0.93 * math.sin(a0), 0))
     idx = ' '.join('%d %d %d %d -1' % (2 * k, 2 * k + 1, (2 * k + 3) % 128, (2 * k + 2) % 128) for k in range(64))
     X.append("<Transform DEF='HeartRing'><Billboard axisOfRotation='0 0 0'><Shape><Appearance alphaMode='BLEND'><Material DEF='HeartRingMat' diffuseColor='0 0 0' emissiveColor='1 0.84 0.38' transparency='1'/></Appearance>"
              "<IndexedFaceSet solid='false' coordIndex='%s'><Coordinate point='%s'/></IndexedFaceSet></Shape></Billboard></Transform>" % (idx, ' '.join(v3(p) for p in ring)))

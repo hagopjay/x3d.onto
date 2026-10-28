@@ -7,7 +7,7 @@ import os, re, json
 import xml.etree.ElementTree as ET
 
 ASSETS = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'assets', 'feathers')
-PARTS = ('near_vane', 'near_quill', 'near_barbs', 'outline', 'spine', 'mid_vane')
+PARTS = ('near_vane', 'near_quill', 'near_barbs', 'outline', 'spine')
 
 
 def _floats(s): return [float(x) for x in s.split()]

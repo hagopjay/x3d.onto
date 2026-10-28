@@ -10,7 +10,7 @@ tools/feathers.py reads them back for the page; the page build itself does not n
 Feather frame: root at the origin, the quill runs along +X to 1.0, the vane's width is along Y, its face normal is +Z.
 The geometry is exported in that local frame; layers.py places it with a Transform (rotation from the plume's own axes, uniform scale = length).
 Objects per variant (mesh names F<v>_<part>): near_vane (faceted, light baked), near_quill (tapered tube), near_barbs (edges),
-outline (edges), spine (edges), mid_vane (8 stations, light baked).
+outline (edges), spine (edges). The page uses near_vane at both detail levels.
 """
 import sys, os, math, json, random, hashlib, argparse, importlib.util
 
@@ -178,7 +178,6 @@ def main():
         setup_world(V['az'])
         coll = sc.collection; rng = random.Random(V['seed'])
         near = add_obj(vane_mesh('F%s_near_vane' % name, 24, 3, V, rng, True), coll)
-        mid = add_obj(vane_mesh('F%s_mid_vane' % name, 8, 1, V, random.Random(V['seed'] + 1), False), coll)
         add_obj(quill_mesh('F%s_near_quill' % name, V), coll)
         P = vane_vertices(24, 3, V, random.Random(V['seed']), True)             # same rng stream as near_vane: the barbs end on its (jittered) edge vertices
         barbs = []
@@ -190,7 +189,7 @@ def main():
         add_obj(edges_mesh('F%s_outline' % name, [[P[(0, 0, 0)]] + L + Rr[::-1] + [P[(0, 0, 0)]]]), coll)
         add_obj(edges_mesh('F%s_spine' % name, [[P[(i, 0, 0)] for i in range(25)]]), coll)
         stats = {}
-        for ob in (near, mid):
+        for ob in (near,):
             vals = bake_vertex_light(ob, sc)
             lum = [0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2] for c in vals]; warm = sum(c[0] / max(c[2], 1e-3) for c in vals) / len(vals)
             stats[ob.name] = dict(tris=len(ob.data.polygons), lum_min=round(min(lum), 3), lum_mean=round(sum(lum) / len(lum), 3), lum_max=round(max(lum), 3), warm_r_over_b=round(warm, 2))

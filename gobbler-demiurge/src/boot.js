@@ -183,10 +183,12 @@
     [26, 'Orbit', orbitPos(-35, 11, 14), SUN, 0.8],
     [33, 'Orbit', orbitPos(-95, 12, 38), SUN, 0.8],
     [40, 'Orbit', orbitPos(-150, 12.5, 30), SUN, 0.8],
-    [48, 'Tenders', [SUN[0] + 4.6, SUN[1] + 3.0, SUN[2] + 5.4], SUN, 0.82],
-    [55, 'Heart', [SUN[0] + 0.9, SUN[1] + 0.8, SUN[2] + 3.4], SUN, 0.8],
-    [64, 'Fan reveal', [19.0, -1.0, 16.0], [21.5, -2.5, 0], 0.9],
-    [74, 'Return', [12, -1.5, 25], [12, -1.5, 0], 0.88]];
+    [46, 'Underside', [SUN[0] - 1, SUN[1] - 9, SUN[2] - 8], SUN, 0.8],           /* under the bird, clear of the wing, back to the front */
+    [52, 'Underside', [SUN[0] + 3, SUN[1] - 8, SUN[2] + 7], SUN, 0.8],
+    [58, 'Tenders', [SUN[0] + 4.6, SUN[1] + 3.0, SUN[2] + 5.4], SUN, 0.82],
+    [65, 'Heart', [SUN[0] + 0.9, SUN[1] + 0.8, SUN[2] + 3.4], SUN, 0.8],
+    [73, 'Fan reveal', [19.0, -1.0, 16.0], [21.5, -2.5, 0], 0.9],
+    [83, 'Return', [12, -1.5, 25], [12, -1.5, 0], 0.88]];
   var TOURK = SHOTS.map(function (s) { return { t: s[0], v: s[2].concat(s[3], [s[4]]) }; }), TOURD = TOURK[TOURK.length - 1].t, LEAD = 2.4;
   var DRIFT = [0, 1, 2, 3, 4, 5].map(function () { return { f: 0.05 + RND() * 0.11, g: 0.17 + RND() * 0.16, p: RND() * 6.283, q: RND() * 6.283 }; });
   function sampleTour(tau) {
