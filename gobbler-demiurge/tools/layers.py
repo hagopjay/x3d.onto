@@ -6,6 +6,7 @@ Look = B's faceted head (already in the Deep scene) plus lots of D: plumage draw
 import json, math, os, random, colorsys, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import feathers as FE
+import tender as TD
 
 SUN = (6.5, -2.6, 0.4)          # the heart, in the chest where the neck meets the graph (Deep scene coordinates)
 RIB_R = 3.3                      # Dyson ribcage radius around the Sun
@@ -309,6 +310,33 @@ def plume_lod(name, root, u, v, n, L, W, style, rng, nb_near=22, nb_mid=8):
     xml = "<LOD DEF='%s' center='%s' range='11 60'>%s<Group>%s</Group></LOD>" % (name, v3(mid_pt), lvl(near) + lvl(mid), far)
     return xml, tip
 
+TENDER_H = 0.55                   # a tender stands this tall (the Blender figure is 1 unit)
+TENDER_GAITS = (1.2, 1.5, 1.8)    # seconds per walk cycle of the three humanoid copies
+
+def tender_walk(n, Tg, steps=16):
+    """one copy's walk cycle: OrientationInterpolators on the H-Anim joints (turns about the joint's own X, the figure's left-right axis; negative swings forward),
+    a pelvis twist and a bob. One looping TimeSensor drives them all, so the copy and every walker that shares it keep step."""
+    def ax(name, fn, axis='1 0 0'):
+        keys = ' '.join(f(i / steps) for i in range(steps + 1))
+        vals = ', '.join('%s %s' % (axis, f(fn(2 * math.pi * i / steps))) for i in range(steps + 1))
+        return ("<OrientationInterpolator DEF='T%dW_%s' key='%s' keyValue='%s'/><ROUTE fromNode='T%dGait' fromField='fraction_changed' toNode='T%dW_%s' toField='set_fraction'/>"
+                "<ROUTE fromNode='T%dW_%s' fromField='value_changed' toNode='hanim_T%d_%s' toField='set_rotation'/>" % (n, name, keys, vals, n, n, name, n, name, n, name))
+    swing = lambda side, ph: (lambda t: -0.42 * math.cos(t + ph))                            # hip: forward at heel strike, back at toe-off
+    knee = lambda ph: (lambda t: 0.10 + 0.78 * max(0.0, -math.sin(t + ph)) ** 1.3)             # the knee folds while the leg swings through
+    out = ["<TimeSensor DEF='T%dGait' cycleInterval='%s' loop='true'/>" % (n, f(Tg))]
+    for side, ph, sg in (('l', 0.0, 1), ('r', math.pi, -1)):
+        out.append(ax('%s_hip' % side, swing(side, ph)))
+        out.append(ax('%s_knee' % side, knee(ph)))
+        out.append(ax('%s_ankle' % side, lambda t, ph=ph: 0.16 * math.cos(t + ph + 1.2)))
+        out.append(ax('%s_shoulder' % side, lambda t, ph=ph: 0.34 * math.cos(t + ph)))      # the arm swings against its own-side leg
+        out.append(ax('%s_elbow' % side, lambda t, ph=ph: -0.38 - 0.12 * math.cos(t + ph)))
+    out.append(ax('vt6', lambda t: 0.10 * math.cos(t), '0 0 1'))                             # the chest turns against the pelvis
+    out.append(ax('sacroiliac', lambda t: -0.07 * math.cos(t), '0 0 1'))
+    keys = ' '.join(f(i / steps) for i in range(steps + 1)); vals = ', '.join('0 0 %s' % f(0.012 * (1 - math.cos(4 * math.pi * i / steps)) * 0.5 - 0.012) for i in range(steps + 1))
+    out.append("<PositionInterpolator DEF='T%dW_bob' key='%s' keyValue='%s'/><ROUTE fromNode='T%dGait' fromField='fraction_changed' toNode='T%dW_bob' toField='set_fraction'/>"
+               "<ROUTE fromNode='T%dW_bob' fromField='value_changed' toNode='hanim_T%d_humanoid_root' toField='set_translation'/>" % (n, keys, vals, n, n, n, n))
+    return ''.join(out)
+
 def hash_name(s): return sum((i + 1) * ord(c) for i, c in enumerate(s)) * 2654435761 % (2 ** 32)
 
 FE_R = 0.125                      # the vane's full width over its length in the Blender asset (tools/blender_feather.py R)
@@ -436,24 +464,26 @@ def build(explorer_path, seed=4):
              "<ROUTE fromNode='FlywheelClock' fromField='fraction_changed' toNode='FlywheelSpin' toField='set_fraction'/><ROUTE fromNode='FlywheelSpin' fromField='value_changed' toNode='FlywheelPulse' toField='set_rotation'/>" % ((v3(norm(lax)),) * 3))
     anchor('flywheel', 'The flywheel', 'write, validate, repair, render, around the heart · pulse is display only', st[2])
 
-    # ---- shell tenders: faceted mannequins that walk the lattice (H-Anim is step 8), points of light from far away
-    man_inner = ("<Shape DEF='TenderMat'><Appearance><Material diffuseColor='0 0 0' emissiveColor='0.95 0.82 0.5'/></Appearance><Box size='0.1 0.16 0.06'/></Shape>"
-           "<Transform translation='0 0.13 0'><Shape><Appearance><Material diffuseColor='0 0 0' emissiveColor='1 0.92 0.7'/></Appearance><Sphere radius='0.04'/></Shape></Transform>"
-           "<Transform translation='-0.075 0.01 0' rotation='0 0 1 0.35'><Shape USE='TenderMat'/></Transform>"
-           "<Transform translation='0.075 0.01 0' rotation='0 0 1 -0.35'><Shape USE='TenderMat'/></Transform>"
-           "<Transform translation='-0.03 -0.15 0'><Shape USE='TenderMat'/></Transform><Transform translation='0.03 -0.15 0'><Shape USE='TenderMat'/></Transform>"
-           "<Transform translation='0 0.2 0'><Shape><Appearance><Material diffuseColor='0 0 0' emissiveColor='0.35 1 0.55'/></Appearance><Sphere radius='0.028'/></Shape></Transform>")
-    NT = 10
-    for k in range(NT):
-        axis = norm((rng.uniform(-1, 1), rng.uniform(-.3, 1), rng.uniform(-1, 1))); per = rng.choice([47, 59, 71, 83, 97])
-        r0 = add(SUN, mul(norm((rng.uniform(.3, 1), rng.uniform(-.4, .4), rng.uniform(-1, 1))), RIB_R * 1.01))
-        body = ("<Group DEF='TenderBody'>%s</Group>" % man_inner) if k == 0 else "<Group USE='TenderBody'/>"
-        X.append("<Transform DEF='TenderOrbit%d' center='%s'><Transform translation='%s' rotation='0 0 1 %s'><LOD range='5'>"
-                 "%s<Group>%s</Group></LOD></Transform></Transform>" % (k, v3(SUN), v3(r0), f(rng.uniform(-.5, .5)), body, points_shape([(0, 0, 0)], [(1.0, 0.92, 0.7)], 3, [1.9])))
+    # ---- shell tenders: H-Anim humanoids modelled in Blender (tools/blender_tender.py, exported through the blenderizer), walking the ribcage; points of light from far away.
+    # Three copies of the humanoid with their own gait (1.2, 1.5 and 1.8 s a cycle), shared by USE among ten walkers. How they walk and what they tend is simulated.
+    NTEN = 10; NG = 3; STRIDE = 0.8 * TENDER_H
+    for k in range(NTEN):
+        n = k % NG; Tg = TENDER_GAITS[n]
+        a0 = norm((rng.uniform(-1, 1), rng.uniform(-.3, 1), rng.uniform(-1, 1))); rng.choice([47, 59, 71, 83, 97])     # the same random draws as the box placeholders made,
+        d = norm((rng.uniform(.3, 1), rng.uniform(-.4, .4), rng.uniform(-1, 1))); rng.uniform(-.5, .5)               # so the wing and fan that follow keep their look
+        a = norm(sub(a0, mul(d, sum(x * y for x, y in zip(a0, d)))))                            # the walker's great circle: axis a, perpendicular to where it stands (d)
+        fwd = cross(a, d); left = cross(d, fwd)                                                  # forward is the direction of the orbit; the figure faces +Z, up +Y, its left +X
+        per = max(20, int(round(2 * math.pi * RIB_R * 1.01 * Tg / STRIDE)))                      # the orbit takes as long as the gait needs for its stride, so feet do not slide
+        r0 = add(SUN, mul(d, RIB_R * 1.01))
+        body = ("<Group DEF='TenderBody%d'><Transform scale='%s %s %s'>%s</Transform></Group>" % (n, f(TENDER_H), f(TENDER_H), f(TENDER_H), TD.humanoid(n))) if k < NG else "<Group USE='TenderBody%d'/>" % n
+        X.append("<Transform DEF='TenderOrbit%d' center='%s'><Transform translation='%s' rotation='%s %s'><LOD range='5'>"
+                 "%s<Group>%s</Group></LOD></Transform></Transform>" % (k, v3(SUN), v3(r0), v3(basis_rotation(left, d, fwd)[0]), f(basis_rotation(left, d, fwd)[1]), body,
+                                                                             points_shape([(0, 0, 0)], [(1.0, 0.92, 0.7)], 3, [1.9])))
         X.append("<TimeSensor DEF='TenderClock%d' cycleInterval='%d' loop='true'/><OrientationInterpolator DEF='TenderSpin%d' key='0 0.5 1' keyValue='%s 0, %s 3.14159, %s 6.28318'/>"
                  "<ROUTE fromNode='TenderClock%d' fromField='fraction_changed' toNode='TenderSpin%d' toField='set_fraction'/><ROUTE fromNode='TenderSpin%d' fromField='value_changed' toNode='TenderOrbit%d' toField='set_rotation'/>"
-                 % (k, per, k, v3(axis), v3(axis), v3(axis), k, k, k, k))
-    anchor('tenders', 'Shell tenders', 'they tend the ribcage · simulated placeholders, H-Anim in step 8', add(SUN, (-RIB_R * .2, RIB_R * 1.0, RIB_R * .3)), 'full')
+                 % (k, per, k, v3(a), v3(a), v3(a), k, k, k, k))
+    for n in range(NG): X.append(tender_walk(n, TENDER_GAITS[n]))
+    anchor('tenders', 'Shell tenders', 'they tend the ribcage · H-Anim humanoids made in Blender, their walk and their tending simulated', add(SUN, (-RIB_R * .2, RIB_R * 1.0, RIB_R * .3)), 'full')
 
     # ---- wing: 10 primaries on the upper back (orchestrator roles; role colour only while working, simulated)
     ROLES = [('planner', (0.25, 0.85, 0.85)), ('router', (0.30, 0.65, 1.0)), ('validator', (1.0, 0.93, 0.66)), ('repair', (0.30, 0.95, 0.55)), ('vision judge', (0.95, 0.35, 0.85)),
@@ -555,4 +585,4 @@ def build(explorer_path, seed=4):
     vp_xml = ''.join("<Viewpoint DEF='%s' description='%s' position='%s' orientation='%s' centerOfRotation='%s' fieldOfView='%s'/>" % (k, k, v3(d['position']), v3(d['orientation']), v3(d['center']), f(d['fov'])) for k, d in vps.items())
     vp_xml += "<Viewpoint DEF='TourCam' description='Tour' position='3 -1.8 13.2' fieldOfView='0.8'/>"
     routes = ''.join("<ROUTE fromNode='%s' fromField='bindTime' toNode='Intro' toField='set_startTime'/>" % k for k in vps)
-    return dict(sway=sway, viewpoints=vp_xml, routes=routes, anchors=anchors, counts=dict(beads=len(bp), tenders=NT, wing=len(ROLES), fan=18, streams=len(streams)))
+    return dict(sway=sway, viewpoints=vp_xml, component="<component name='HAnim' level='1'/>", routes=routes, anchors=anchors, counts=dict(beads=len(bp), tenders=NTEN, wing=len(ROLES), fan=18, streams=len(streams)))

@@ -16,7 +16,8 @@ class T(unittest.TestCase):
         self.assertEqual(len(re.findall(r"<LOD DEF='Fan\d+'", x)), 18)                 # tail fan: 18 plumes
         self.assertEqual(len(re.findall(r"<LOD DEF='Wing\d+'", x)), 10)                # 10 primaries
         self.assertEqual(len(re.findall(r"<Transform DEF='TenderOrbit\d+'", x)), 10)
-        self.assertEqual(x.count("<Group DEF='TenderBody'>"), 1); self.assertEqual(x.count("<Group USE='TenderBody'/>"), 9)   # one body, reused by USE
+        self.assertEqual(len(re.findall(r"<Group DEF='TenderBody\d'>", x)), 3); self.assertEqual(len(re.findall(r"<Group USE='TenderBody\d'/>", x)), 7)   # three H-Anim copies, shared by USE
+        self.assertEqual(x.count('<HAnimHumanoid'), 3); self.assertEqual(len(re.findall(r'<HAnimJoint DEF="hanim_T\d_\w+"', x)), 54)   # 18 joints each
         ids = {a['id'] for a in L['anchors']}; self.assertEqual(len(L['anchors']), 15)
         for t in ('fan_gltf', 'fan_usd', 'fan_video', 'fan_o3de', 'fan_paraview', 'fan_3dslicer', 'fan_unity', 'fan_defold', 'fan_ifc'): self.assertIn(t, ids)
         self.assertEqual(sum(1 for a in L['anchors'] if a['id'].startswith('fan_') and 'mock' in a['tag']), 6)   # six mocks, tagged
@@ -31,8 +32,8 @@ class T(unittest.TestCase):
     def test_compose_adds_never_edits(self):
         deep = open(DEEP, encoding='utf-8').read(); L = layers.build(EXP); out = build_bird.compose(deep, L)
         self.assertLess(out.index("<Viewpoint DEF='Face'"), out.index("<Viewpoint DEF='Wide'"))           # Face binds at load
-        out2 = out.replace(L['viewpoints'] + '\n    ', '', 1); m = out2.index('\n    <!-- Gobbler demiurge layers'); k = out2.rindex('</Scene>')
-        rest = out2[:m] + out2[k:]                                                                         # drop the two insertions
+        out2 = out.replace(L['viewpoints'] + '\n    ', '', 1).replace('    ' + L['component'] + '\n', '', 1); m = out2.index('\n    <!-- Gobbler demiurge layers'); k = out2.rindex('</Scene>')
+        rest = out2[:m] + out2[k:]                                                                         # drop the three insertions (viewpoints, the HAnim component statement, the layers block)
         self.assertEqual(rest, deep)                                                                       # everything else is the Deep scene, byte for byte
         for nm in ('PointShader', 'SwayTurn', 'Twinkle', 'Intro', 'Probe'): self.assertIn("DEF='%s'" % nm, deep)
     def test_every_use_follows_its_def(self):

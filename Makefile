@@ -37,7 +37,7 @@ v4:               ## serve the live viewer: http://127.0.0.1:$(PORT)/index.html 
 
 e2e-v4:           ## live-scene tests in Chromium (Playwright); serve with `make v4` first (same PORT), see gobbler-v4/README.md
 	cd gobbler-v4/e2e && GV4_BASE=http://127.0.0.1:$(PORT)/ node e2e.js
-.PHONY: v4-data test-v4 v4 e2e-v4 demiurge-data feathers test-demiurge demiurge e2e-demiurge frames-demiurge artifact-demiurge
+.PHONY: v4-data test-v4 v4 e2e-v4 demiurge-data feathers tender test-demiurge demiurge e2e-demiurge frames-demiurge artifact-demiurge
 
 # Gobbler demiurge, step 2: the bird-first page (gobbler-demiurge/README.md). Needs make v4-data first (Deep build and X_ITE are fetched there, not committed).
 demiurge-data:    ## compose the bird scene (Deep scene + layers), gzip it and the graph, validate with the fork (X3D_MCP=/path/to/x3d_mcp, default /home/user/x3d_mcp)
@@ -45,6 +45,9 @@ demiurge-data:    ## compose the bird scene (Deep scene + layers), gzip it and t
 
 feathers:         ## (needs a Python with bpy) model the feathers in Blender, bake golden-hour light, export through x3d-blender-io -> gobbler-demiurge/assets/feathers (committed)
 	python3 gobbler-demiurge/tools/blender_feather.py --blenderio $${BLENDERIO:-../x3d-blender-io/source}
+
+tender:           ## (needs a Python with bpy) model the shell tender in Blender as an H-Anim humanoid, export through x3d-blender-io -> gobbler-demiurge/assets/tender (committed)
+	python3 gobbler-demiurge/tools/blender_tender.py --blenderio $${BLENDERIO:-../x3d-blender-io/source}
 
 test-demiurge:    ## unit tests for the layers (node-free)
 	python3 -I gobbler-demiurge/test/test_layers.py

@@ -1,0 +1,11 @@
+{
+ "blender": "5.2.2 LTS",
+ "blenderio": "x3d-blender-io d9bbf91",
+ "script_sha256": "d9d1666e2d23c5966dd177d9cfc963868ea3807dc9c1c67b18c12884d2c91826",
+ "joints": 18,
+ "skin_faces": 182,
+ "file": "tender.x3d",
+ "bytes": 59116,
+ "sha256": "573d5a7928ba1316bc49697bb6fb3bfd2978b3f58fa6ffc2deed32c42e1908ab",
+ "joint_names": "lowest-level H-Anim 2.0 set, from memory, not checked against the standard"
+}

@@ -15,6 +15,8 @@ def compose(deep_text, L):
     first_vp = deep_text.index("<Viewpoint DEF='Wide'")
     assert deep_text.count('</Scene>') == 1 and "DEF='PointShader'" in deep_text and "DEF='SwayTurn'" in deep_text
     t = deep_text[:first_vp] + L['viewpoints'] + '\n    ' + deep_text[first_vp:]
+    last_comp = t.index('<head>'); last_comp = t.index('\n', t.rindex('<component ', 0, t.index('</head>'))) + 1           # the tenders are H-Anim: one more component statement, after the Deep scene's own
+    t = t[:last_comp] + '    ' + L['component'] + '\n' + t[last_comp:]
     end = t.rindex('</Scene>')
     block = '\n    <!-- Gobbler demiurge layers (tools/layers.py, seed 4): Sun in the chest, Dyson ribcage, flywheel, tenders, wing, tail fan with the Blender root. Added; nothing above is edited. -->\n    ' + L['sway'] + L['routes'] + '\n  '
     t = t[:end] + block + t[end:]

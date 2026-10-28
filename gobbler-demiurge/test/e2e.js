@@ -27,6 +27,9 @@ async function open(b, q, vp) {
     return { face: n('Face'), est: n('Establishing'), heart: n('Heart'), loom: n('Loom'), wing: n('Wing9'), fan: n('Fan17'), root: n('BlenderRoot'), tender: n('TenderOrbit9'), probe: n('Probe'), bound: document.getElementById('x3d').browser.activeViewpoint.description }; });
   check('scene: Face is a real Viewpoint and is the one bound at load', scene.face && scene.bound === 'Face', JSON.stringify(scene));
   check('scene: Sun, ribcage group, 10 wing primaries, 18 plumes, root, tenders all exist', scene.heart && scene.loom && scene.wing && scene.fan && scene.root && scene.tender);
+  const gait = await p.evaluate(async () => { const sc = document.getElementById('x3d').browser.currentScene; const k = sc.getNamedNode('hanim_T0_l_knee'), h = sc.getNamedNode('hanim_T2_r_hip');
+    const a = k.rotation.toString() + h.rotation.toString(); await new Promise(r => setTimeout(r, 900)); const b = k.rotation.toString() + h.rotation.toString(); return { moved: a !== b, joints: sc.getNamedNode('hanim_T1').name }; });
+  check('tenders: three H-Anim humanoids from Blender are in the scene and their joints are walking', gait.moved && gait.joints === 'Tender', JSON.stringify(gait));
   const tags = await p.evaluate(() => window.gdApi.tags().length); check('tags: 9 fan targets + heart, ribcage, flywheel, tenders, wing, blender = 15 anchors', tags === 15, String(tags));
   check('controls: exactly four (UI, Face, Tour, rail)', await p.evaluate(() => document.querySelectorAll('.gv4-pills button').length === 3 && document.querySelectorAll('#gd-rail button').length === 8));
   check('rail: stops 1, 2, 3, 8 live; 4 to 7 marked as next step', await p.evaluate(() => [...document.querySelectorAll('#gd-rail button')].map(b => b.classList.contains('off') ? 0 : 1).join('') === '11100001'));
