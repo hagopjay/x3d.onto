@@ -79,7 +79,7 @@ graph + onto-hover.json ──▶ cards.js ──▶ tooltip and card HTML ─�
 | `engine/common.js` | the shared PolyXandria engine from Gobbler 3 Deep plus `PX.tourHold` / `PX.tourRelease` |
 | `tools/build_onto_hover.py`, `data/onto-hover.json` | the ontology block |
 | `tools/fetch_deep.sh` | fetches the Deep build (x3d.ML `51e185f`, `gobbler-v3/deep/build-private/`) and X_ITE 16.5.1; verifies sha256 before installing |
-| `tools/make_artifact.py` | a copy of the page for a host that adds its own document skeleton (body only, plus exactly the files the page loads) |
+| `tools/make_artifact.py` | a copy of the page for a host that adds its own document skeleton (body only, plus exactly the files the page loads; the scene goes out as `.xml` because such hosts do not serve `.x3d`) |
 | `test/`, `e2e/` | unit tests and the live-scene Playwright suite; `e2e/frames.js` and `e2e/storyboard.py` make the frames in `docs/v4/live/` |
 
 Fetched, not committed: `data/deep/`, `vendor/`.

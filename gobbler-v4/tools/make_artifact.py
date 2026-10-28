@@ -2,6 +2,7 @@
 
 A copy of the page for a host that adds its own document skeleton: the body of index.html (no doctype, html, head or body tags, a plain title),
 plus exactly the files the page asked the server for in e2e/requests.js, plus the X_ITE licence. Nothing else is copied.
+The scene is published as .xml (the host does not serve .x3d).
 Prints the published paths and the total size."""
 import json
 import os
@@ -13,6 +14,8 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 TITLE = 'Gobbler 4 Live Hover'
 EXTRA = ['vendor/x_ite/LICENSE.md']
+# the artifact host serves .xml but not .x3d: the scene is published under a .xml name and the page's one reference follows it
+RENAME = {'data/deep/gobbler3.x3d': 'data/deep/gobbler3.xml'}
 
 
 def page():
@@ -22,6 +25,9 @@ def page():
     s = re.sub(r'<title>.*?</title>', '', s, count=1, flags=re.S)
     s = s.replace('</head>\n<body>', '').replace('</body></html>', '')
     assert not re.search(r'<head[\s>]|<body[\s>]|</html|</head>|</body>', s), 'skeleton tags left in the page'
+    for a, b in RENAME.items():
+        assert s.count("'" + a + "'") == 1, 'expected exactly one reference to ' + a
+        s = s.replace("'" + a + "'", "'" + b + "'")
     return '<title>' + TITLE + '</title>\n' + s.strip() + '\n'
 
 
@@ -35,10 +41,11 @@ def main(out, runtime):
         src = os.path.join(ROOT, f)
         if not os.path.isfile(src):
             sys.exit('missing runtime file: ' + f)
-        dst = os.path.join(out, f)
+        dst = os.path.join(out, RENAME.get(f, f))
         os.makedirs(os.path.dirname(dst), exist_ok=True)
         shutil.copyfile(src, dst)
         total += os.path.getsize(dst)
+    files = [RENAME.get(f, f) for f in files]
     print(json.dumps({'files': ['index.html'] + files, 'count': len(files) + 1, 'bytes': total}, indent=1))
 
 
