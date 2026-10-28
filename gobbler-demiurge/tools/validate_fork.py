@@ -1,9 +1,8 @@
-"""Fork x3d_mcp validator (branch integration/validator-fixes) on one or more X3D files.
-Run with the venv that has the fork installed:
-  /tmp/claude-0/-home-claude/dae07dfe-133a-572d-8ebf-054b136e7172/scratchpad/fvenv/bin/python tools/validate.py FILE.x3d [...]
+"""The x3d_mcp fork validator (XSD, semantic check, profile check) on one or more X3D files. X3D_MCP = a checkout of the fork (default /home/user/x3d_mcp); needs lxml.
+  python3 tools/validate_fork.py FILE.x3d [...]
 Prints one JSON object per file: xsd_valid, xsd_errors, semantic (report text), profile_ok, profile."""
 import sys, os, json
-sys.path.insert(0, '/home/user/x3d_mcp/src')
+sys.path.insert(0, os.path.join(os.environ.get('X3D_MCP', '/home/user/x3d_mcp'), 'src'))
 from validation.validate import validate_xml
 from validation.semantic import validate_semantic
 from validation.profile import check_profile
