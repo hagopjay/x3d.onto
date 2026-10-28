@@ -1,8 +1,8 @@
-// node e2e/e2e.js [suite,suite,...]   suites: fit pick place ui toggle keys tour deterministic resize cost   (default: all)
+// node e2e/e2e.js [suite,suite,...]   suites: fit pick place ui toggle keys tour deterministic badparams touch resize cost   (default: all)
 // Needs the page served at GV4_BASE (default http://127.0.0.1:8795/), see README. Frames land in e2e/out/.
 const fs = require('fs'), path = require('path'), L = require('./lib.js');
 const OUT = path.join(__dirname, 'out'); fs.mkdirSync(OUT, { recursive: true });
-const want = (process.argv[2] || 'fit,pick,place,ui,toggle,keys,tour,deterministic,resize,cost').split(',');
+const want = (process.argv[2] || 'fit,pick,place,ui,toggle,keys,tour,deterministic,badparams,touch,resize,cost').split(',');
 const VIEWS = ['Wide', 'Colossus', 'EyeToEye', 'Inside', 'Flywheel', 'Crown'];
 const pct = (a, q) => { const s = a.slice().sort((x, y) => x - y); return s.length ? s[Math.min(s.length - 1, Math.floor(q * s.length))] : NaN; };
 const f1 = v => (Math.round(v * 10) / 10).toString();
@@ -129,6 +129,8 @@ async function suiteUi(b) {
   L.check('UI none: hovering shows no tooltip or card', !/ on/.test(tipOn), tipOn);
   await p.screenshot({ path: path.join(OUT, 'ui-none.png') });
   await p.keyboard.press('u'); await p.waitForTimeout(800);
+  const under = await p.evaluate(() => { const b = document.getElementById('gv4-ui').getBoundingClientRect(), e = document.elementFromPoint(b.left + 6, b.top + b.height / 2); return e && e.closest('#gv4-ui') ? 'toggle' : (e && e.className) || 'nothing'; });
+  L.check('in minimal the whole toggle chip takes the click (the hidden peek zone is off)', under === 'toggle', String(under));
   const min = await p.evaluate(() => ({ level: window.gobbler.state().level, sensor: window.gobbler.state().sensor, chips: [...document.querySelectorAll('.gv4-corner')].filter(e => getComputedStyle(e).display !== 'none').length, clean: document.getElementById('stage').classList.contains('clean') }));
   L.check('U switches none to minimal: four corner chips back, sensor installed, stage not clean', min.level === 'min' && min.sensor && min.chips === 4 && !min.clean, JSON.stringify(min));
   await p.keyboard.down('h'); await p.waitForTimeout(300);
@@ -174,9 +176,12 @@ async function suiteKeys(b) {
   L.check('dwell tiers arrive in order, label then card then deep', seen.t1 != null && seen.t2 != null && seen.t3 != null && seen.t1 <= seen.t2 && seen.t2 < seen.t3, JSON.stringify(seen));
   L.check('deep arrives after 1.2 s of dwell and the card no earlier than 0.45 s', seen.t3 >= 1150 && seen.t2 >= 400, JSON.stringify(seen));
   // double click flies
-  const before = await p.evaluate(() => window.gobbler.camera().pos); await p.mouse.dblclick(s1.x, s1.y); await p.waitForTimeout(3500);
+  const before = await p.evaluate(() => window.gobbler.camera().pos); await p.mouse.dblclick(s1.x, s1.y); await p.mouse.move(640, 400); await p.waitForTimeout(4000);        // the star ends up at the centre; the pointer waits there and never moves again
   const after = await p.evaluate(() => window.gobbler.camera().pos), moved = Math.hypot(after[0] - before[0], after[1] - before[1], after[2] - before[2]);
   L.check('double-click flies the camera to the star', moved > 0.3, `moved ${f1(moved)} units`);
+  const rest = await p.evaluate(() => window.gobbler.state()); L.check('after the flight a pointer that rests on the star picks it without moving', rest.snap === s1.i, JSON.stringify({ snap: rest.snap, want: s1.i }));
+  await p.keyboard.down('h'); await p.waitForTimeout(200); await p.evaluate(() => window.dispatchEvent(new Event('blur'))); await p.waitForTimeout(300);
+  const lost = await p.evaluate(() => document.getElementById('gv4').dataset.ui); await p.keyboard.up('h'); L.check('losing window focus while H is held brings the UI back', lost === 'min', lost);
   L.check('no page errors', p.errs.filter(e => !/favicon/.test(e)).length === 0, JSON.stringify(p.errs.slice(0, 3))); await p.close();
 }
 
@@ -198,6 +203,15 @@ async function suiteTour(b) {
   await p.mouse.move(640, 400); await p.waitForTimeout(500); await p.mouse.down(); await p.mouse.up(); await p.waitForTimeout(300);
   L.check('a click on the canvas ends the tour for good (v3 behaviour kept)', await p.evaluate(() => !PX.tourOn && !PX.tourHeld()));
   await p.close();
+  // the Pause button must stop a tour that a hover is holding, not restart it
+  const q = await L.open(b, ''); await L.settle(q, 3000);
+  const hit2 = await q.evaluate(() => { const g = window.gobbler; let best = null; for (let i = 0; i < 2476; i++) { const n = g.node(i); if (n.tier !== 1) continue; const s = g.screen(i); if (!s.visible || s.x < 80 || s.y < 120 || s.x > 1200 || s.y > 700) continue; const d = Math.hypot(s.x - 640, s.y - 400); if (!best || d < best.d) best = { i, d }; } return best; });
+  let held2 = false; for (let k = 0; k < 40 && !held2; k++) { const s = await q.evaluate(i => window.gobbler.screen(i), hit2.i); if (s.visible) await q.mouse.move(s.x, s.y); await q.waitForTimeout(120); held2 = await q.evaluate(() => PX.tourHeld()); }
+  await q.evaluate(() => document.getElementById('btn-tour').click()); await q.waitForTimeout(300);
+  const a1 = await q.evaluate(() => ({ on: PX.tourOn, held: PX.tourHeld(), label: document.getElementById('btn-tour').textContent, pos: window.gobbler.camera().pos }));
+  await q.waitForTimeout(2500); const a2 = await q.evaluate(() => ({ on: PX.tourOn, pos: window.gobbler.camera().pos }));
+  L.check('Pause tour while a hover holds the tour stops it for good (button says Resume, camera stays put)', held2 && !a1.on && !a1.held && a1.label === 'Resume tour' && !a2.on && Math.hypot(a2.pos[0] - a1.pos[0], a2.pos[1] - a1.pos[1], a2.pos[2] - a1.pos[2]) < 1e-3, JSON.stringify({ held2, a1: { on: a1.on, held: a1.held, label: a1.label }, a2on: a2.on }));
+  await q.close();
 }
 
 async function suiteDeterministic(b) {
@@ -211,6 +225,31 @@ async function suiteDeterministic(b) {
     L.check(`?hover=${name}: card opened by URL, deterministic, not covering its star`, m.st.open === i && m.st.place && !m.st.place.fallback, JSON.stringify(m.st.place));
     await p.screenshot({ path: path.join(OUT, `hover-${name}.png`) }); await p.close();
   }
+}
+
+async function suiteBadParams(b) {
+  for (const q of ['?hover=99999', '?hover=', '?hover=-1', '?hover=1.5', '?hover=abc']) {
+    const p = await L.open(b, q); await L.settle(p, 1500);
+    const st = await p.evaluate(() => window.gobbler.state()); L.check(`${q}: the page loads, no card is forced, no errors`, st.ready && st.open === -1 && p.errs.filter(e => !/favicon/.test(e)).length === 0, JSON.stringify({ open: st.open, errs: p.errs.slice(0, 2) }));
+    await p.close();
+  }
+}
+
+async function suiteTouch(b) {                                 // a phone: tap a star for its label, tap it again for the card (a sheet), tap the sky to close
+  const p = await L.open(b, '?view=Inside', { width: 390, height: 844 }, { hasTouch: true, isMobile: true }); await L.settle(p, 2000);
+  const stars = (await starsOnScreen(p)).filter(s => s.x > 40 && s.y > 160 && s.x < 350 && s.y < 640);
+  if (!stars.length) { L.check('touch: a star on screen to tap', false, 'none in the middle of the phone view'); await p.close(); return; }
+  const s = stars[0], vis = () => p.evaluate(() => ({ tip: document.querySelector('.gv4-tip').classList.contains('on'), card: document.querySelector('.gv4-card').classList.contains('on'), sheet: document.querySelector('.gv4-card').classList.contains('sheet'), place: window.gobbler.state().place }));
+  await p.touchscreen.tap(s.x, s.y); await p.waitForTimeout(900); const one = await vis();
+  L.check('touch: one tap shows the star\'s label, not the card', one.tip && !one.card, JSON.stringify(one));
+  await p.touchscreen.tap(s.x, s.y); await p.waitForTimeout(1500); const two = await vis();
+  L.check('touch: a second tap opens the card as a sheet', two.card && two.sheet && two.place && two.place.slot === 'SHEET', JSON.stringify(two));
+  const box = await p.evaluate(() => { const r = document.querySelector('.gv4-card').getBoundingClientRect(); return [r.left, r.top, r.width, r.height, innerWidth, innerHeight]; });
+  L.check('touch: the sheet fits the phone screen', box[0] >= 0 && box[0] + box[2] <= box[4] + 1 && box[1] >= 0 && box[1] + box[3] <= box[5] + 1, JSON.stringify(box.map(v => Math.round(v))));
+  await p.screenshot({ path: path.join(OUT, 'touch-sheet.png') });
+  await p.touchscreen.tap(4, 420); await p.waitForTimeout(800); const three = await vis();
+  L.check('touch: a tap on empty sky closes the card', !three.card, JSON.stringify(three));
+  L.check('touch: no page errors', p.errs.filter(e => !/favicon/.test(e)).length === 0, JSON.stringify(p.errs.slice(0, 3))); await p.close();
 }
 
 async function suiteResize(b) {
@@ -242,7 +281,7 @@ async function suiteCost(b) {                                  // informational:
 
 (async () => {
   const b = await L.launch();
-  const S = { fit: suiteFit, pick: suitePick, place: suitePlace, ui: suiteUi, toggle: suiteToggle, keys: suiteKeys, tour: suiteTour, deterministic: suiteDeterministic, resize: suiteResize, cost: suiteCost };
+  const S = { fit: suiteFit, pick: suitePick, place: suitePlace, ui: suiteUi, toggle: suiteToggle, keys: suiteKeys, tour: suiteTour, deterministic: suiteDeterministic, badparams: suiteBadParams, touch: suiteTouch, resize: suiteResize, cost: suiteCost };
   for (const k of want) { console.log('--- ' + k); try { await S[k](b); } catch (e) { L.check('suite ' + k + ' ran to the end', false, String(e).slice(0, 300)); } }
   await b.close();
   const sm = L.summary(); fs.writeFileSync(path.join(OUT, 'results.json'), JSON.stringify({ when: new Date().toISOString(), ...sm, results: L.results }, null, 1));

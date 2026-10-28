@@ -16,7 +16,7 @@
     var S = { level: 'min', hold: false, ready: false, W: 0, H: 0, pos: null, ori: null, fov: 0.9, camDirty: true, camT: 0, ps: null, gates: { Intro: false, Dissolve: false }, gate: false,
       ptr: { x: 0, y: 0, x0: 0, y0: 0, in: false, down: false, drag: false, onCard: false, onUi: false, type: 'mouse' }, shift: false, lastMoveT: 0, lastSnapT: 0, resumeAt: 0,
       snap: -1, snapT: 0, tier: 0, cands: [], userPick: -1, pin: -1, forced: -1, forcedTier: 3, open: -1, openTier: 0, echo: -1, touchStar: -1, touchT: 0,
-      held: false, lastWant: 0, openT: 0, density: null, denKind: '', lumaStale: true, capBusy: false, capFail: 0, cardSize: null, prevSlot: null, place: null, chips: null, raf: 0, flyRaf: 0, sig: {}, solid: false };
+      held: false, lastWant: 0, openT: 0, capRetryAt: 0, capFailT: 0, density: null, denKind: '', lumaStale: true, capBusy: false, capFail: 0, cardSize: null, prevSlot: null, place: null, chips: null, raf: 0, flyRaf: 0, sig: {}, solid: false };
 
     /* ---------- svg layers ---------- */
     function sv(tag, attrs, parent) { var e = document.createElementNS(SVGNS, tag); for (var k in attrs) e.setAttribute(k, attrs[k]); (parent || svg).appendChild(e); return e; }
@@ -67,7 +67,7 @@
       if (l === 'none') { closeAll(); if (S.ps) S.ps.enabled = false; releaseTour(true); } else if (S.ready) { ensureSensor(); S.camDirty = true; kick(); }
       if (persist) try { localStorage.setItem('gv4.ui', l); } catch (e) {}
     }
-    function momentary(on) { S.hold = on; root.dataset.ui = on ? 'none' : S.level; if (on) closeAll(true); else kick(); }
+    function momentary(on) { S.hold = on; root.dataset.ui = on ? 'none' : S.level; if (on) { closeAll(true); releaseTour(true); } else kick(); }
 
     /* ---------- chips: measured boxes feed the placement ---------- */
     function chipBoxes() {
@@ -88,13 +88,18 @@
       for (k = 0; k < E.length; k++) { var e = E[k]; if (e.s >= G.drawn || e.t >= G.drawn) continue; if (idx.proj(e.s, a) && idx.proj(e.t, b)) segs.push(a.x, a.y, b.x, b.y); }
       return (S.starDen = Density.fromGraph(idx.sx, idx.sy, idx.vis, idx.nvis, segs, S.W, S.H));
     }
+    function canCapture(now) {                          /* a hard failure (exception, black frame) three times switches the readback off for 15 s; a timeout only waits 1.5 s */
+      if (S.capFail >= 3 && now - S.capFailT > 15000) S.capFail = 0;
+      return S.lumaStale && !S.capBusy && S.capFail < 3 && now >= S.capRetryAt && now - S.camT > 250;
+    }
     function capture() {                                /* one readback inside the frame that was just drawn: the drawing buffer is valid there without preserveDrawingBuffer */
       if (S.capBusy) return; S.capBusy = true; var t0 = S.camT, done = false;
-      var finish = function (res) {
+      var finish = function (res, timedOut) {
         if (done) return; done = true; S.capBusy = false;
         try { br().finishEvents().removeFieldCallback('gv4cap'); } catch (e) {}
         if (res && res.meanLuma > 0.001) { if (S.denKind !== 'luma') S.prevSlot = null; S.density = res; S.denKind = 'luma';   /* a new basis: no hysteresis from a slot chosen on the proxy */
-          S.lumaStale = S.camT !== t0; S.capFail = 0; } else { S.capFail++; S.lumaStale = false; S.denKind = 'stars'; S.density = null; }
+          S.lumaStale = S.camT !== t0; S.capFail = 0; }
+        else { if (timedOut) S.capRetryAt = performance.now() + 1500; else { S.capFail++; S.capFailT = performance.now(); S.lumaStale = false; } S.denKind = 'stars'; S.density = null; }
         kick();
       };
       try {
@@ -104,7 +109,7 @@
           try { cx.drawImage(cv, 0, 0, w, h); finish(Density.fromLuma(cx.getImageData(0, 0, w, h).data, w, h, S.W, S.H)); } catch (e) { finish(null); }
         });
         try { br().nextFrame(); } catch (e) {}
-        setTimeout(function () { finish(null); }, 800);
+        setTimeout(function () { finish(null, true); }, 800);
       } catch (e) { finish(null); }
     }
 
@@ -191,6 +196,7 @@
       if (open !== S.open) { S.open = open; if (open < 0) { hideCard(); } else { S.prevSlot = null; S.openT = now; if (S.denKind !== 'luma') S.lumaStale = true; } }
 
       /* hold the tour still while something is being read */
+      if (S.held && window.PX && PX.tourHeld && !PX.tourHeld()) S.held = false;       /* the engine's Pause button ends a hold: re-hold next time */
       var wantHold = (snap >= 0 && tier >= 1) || open >= 0;
       if (wantHold) { S.lastWant = now; if (!S.held && window.PX && PX.tourHold) S.held = PX.tourHold(); } else releaseTour(false);
 
@@ -200,14 +206,14 @@
       if (tipStar >= 0) { var tp = tipStar === snap ? sp : starXY(tipStar); if (tp) setTip(tipStar, tipStar === snap ? Math.max(0, S.cands.length - 1) : 0, tp.x, tp.y); else hideTip(); } else hideTip();
       setRing(rings[0], sp && snap !== open ? sp : null, snap >= 0 ? C.hex(G.nodes[snap]) : '#e9cf8a', snap !== open && tier < 2 ? Math.min(1, dt / DWELL.card) : null);
       setRing(rings[1], op, '#e9cf8a', null);
-      if (tier >= 1 && open < 0 && S.lumaStale && !S.capBusy && S.capFail < 3 && now - S.camT > 250) capture();       /* read the frame while the dwell runs, so the card appears already placed */
+      if (tier >= 1 && open < 0 && canCapture(now)) capture();       /* read the frame while the dwell runs, so the card appears already placed */
       if (open >= 0) {
         renderCard(open, want);
-        if (S.lumaStale && !S.capBusy && S.capFail < 3 && now - S.camT > 250 && !S.gate) capture();
+        if (canCapture(now) && !S.gate) capture();
         placeCard(open); S.waitPaint = !(S.denKind === 'luma' || S.capFail >= 3 || now - S.openT > 500); card.style.visibility = S.waitPaint ? 'hidden' : ''; setDim(op, 0.46);
       } else { S.waitPaint = false; setDim(sp && tier >= 1 ? sp : null, 0.34); }
       var ep = S.echo >= 0 ? starXY(S.echo) : null; show(echo, !!ep); if (ep) { echo.setAttribute('cx', ep.x.toFixed(1)); echo.setAttribute('cy', ep.y.toFixed(1)); }
-      if ((snap >= 0 && tier < 3) || S.camDirty || S.held || (open >= 0 && S.waitPaint) || (tipStar >= 0 && S.touchStar >= 0) || (open >= 0 && (S.pin < 0 && S.forced < 0 || S.lumaStale || S.capBusy))) loop = true;     /* otherwise events (pointer, camera, keys) wake it */
+      if ((snap >= 0 && tier < 3) || S.camDirty || S.held || (open >= 0 && S.waitPaint) || (pt.in && now < S.resumeAt) || (tipStar >= 0 && S.touchStar >= 0) || (open >= 0 && (S.pin < 0 && S.forced < 0 || S.lumaStale || S.capBusy))) loop = true;     /* otherwise events (pointer, camera, keys) wake it */
       if (loop) kick();
     }
 
@@ -255,13 +261,15 @@
         S.userPick = nx; S.snapT = performance.now(); kick(); ev.preventDefault();
       }
     });
+    function dropKeys() { S.shift = false; S.ptr.down = false; S.ptr.drag = false; if (S.hold) momentary(false); }       /* keyup never arrives if the window loses focus first */
+    window.addEventListener('blur', dropKeys); document.addEventListener('visibilitychange', function () { if (document.hidden) dropKeys(); });
     document.addEventListener('keyup', function (ev) { if (ev.key === 'h' || ev.key === 'H') momentary(false); else if (ev.key === 'Shift') { S.shift = false; kick(); } });
     var peek = $('.gv4-peek'); if (peek) peek.addEventListener('click', function () { setLevel('min', true); });
     var tg = document.getElementById('gv4-ui'); if (tg) tg.addEventListener('click', function () { setLevel(S.level === 'none' ? 'min' : 'none', true); });
 
     /* ---------- fly (through the scene's Probe viewpoint, from the real camera pose) ---------- */
     function fly(i, ms) {
-      if (!window.PX || !S.pos || !S.ori) return; var p = G.nodes[i].xyz, v;
+      if (!window.PX || !S.pos || !S.ori || !G.nodes[i]) return; var p = G.nodes[i].xyz, v;
       PX.tourStop(); S.held = false;
       try { v = br().currentScene.getNamedNode('Probe'); } catch (e) { return; }
       var a = S.pos.slice(), b = [p[0] + 0.35, p[1] + 0.4, p[2] + 2.6], t0 = performance.now(), D = ms == null ? FLY_MS : ms;
@@ -285,7 +293,7 @@
     /* ---------- go ---------- */
     var api = window.gobbler = {
       version: 'gobbler-v4 live hover',
-      hover: function (i, tier) { PX.tourStop(); S.forced = i; S.forcedTier = tier || 3; S.pin = -1; if (S.level === 'none') setLevel('min'); if (S.pos && S.ori) fly(i, 0); else S.pendingFly = i; kick(); },
+      hover: function (i, tier) { if (!(i >= 0 && i < G.drawn && i % 1 === 0)) return false; PX.tourStop(); S.forced = i; S.forcedTier = tier || 3; S.pin = -1; if (S.level === 'none') setLevel('min'); if (S.pos && S.ori) fly(i, 0); else S.pendingFly = i; kick(); return true; },
       fly: function (i) { fly(i); },
       ui: function (l) { if (l) setLevel(l === 'none' ? 'none' : 'min', true); return S.level; },
       screen: function (i) { project(); return idx.screen(i); },

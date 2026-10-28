@@ -37,8 +37,8 @@
     function hex(n) { return PAL[n.cls] || '#b9b2a5'; }
     function onto(n) {
       if (!ONTO || (n.cls !== 'NodeType' && n.cls !== 'Component')) return null;
-      var id = ONTO.by_lower[String(n.label).toLowerCase()];
-      return id ? { id: id, c: ONTO.c[id] } : null;
+      var has = Object.prototype.hasOwnProperty, key = String(n.label).toLowerCase(), id = has.call(ONTO.by_lower, key) ? ONTO.by_lower[key] : null;      /* own keys only: a star called "constructor" is not a class */
+      return id && has.call(ONTO.c, id) ? { id: id, c: ONTO.c[id] } : null;
     }
 
     function relRows(i, list, k) {

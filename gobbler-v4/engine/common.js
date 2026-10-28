@@ -184,7 +184,7 @@
     var cb = $('#btn-clean'); var clean = PX.clean = function (on) { $('#stage').classList.toggle('clean', on); cb.classList.toggle('on', on); cb.textContent = on ? 'Show text' : 'Hide text'; };
     cb.addEventListener('click', function () { clean(!$('#stage').classList.contains('clean')); });
     /* v4: the H key belongs to the overlay (hold = momentary UI none), so the v3 toggle is gone */
-    var tb = $('#btn-tour'); if (tb) tb.addEventListener('click', function () { PX.tourOn ? tourStop() : tourStart(); });
+    var tb = $('#btn-tour'); if (tb) tb.addEventListener('click', function () { (PX.tourOn || tourHeld) ? tourStop() : tourStart(); });   /* v4: a held tour still counts as running */
     (cfg.tours || []).forEach(function (t, i) {
       var b = document.createElement('button'); b.className = 'chip tourchip' + (i ? '' : ' on'); b.textContent = t.label;
       b.addEventListener('click', function () { document.querySelectorAll('.tourchip').forEach(function (x) { x.classList.toggle('on', x === b); }); PX.cfg.tour = t; tourStop(); tourStart(); });

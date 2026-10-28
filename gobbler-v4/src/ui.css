@@ -27,8 +27,9 @@
 .gv4-pills .chip.cur { background: rgba(233, 207, 138, .16); color: var(--gold); border-color: var(--gold); }
 .gv4-pills .chip .k { font: 10.5px var(--mono); opacity: .65; margin-left: 6px; }
 .gv4-hud { font: 11.5px/1.4 var(--mono); color: var(--ink3); text-align: right; text-shadow: 0 1px 8px #000; }
-.gv4-peek { position: absolute; left: 0; bottom: 0; width: 56px; height: 56px; pointer-events: auto; opacity: 0; transition: opacity .2s; color: var(--gold); font: 600 14px/56px var(--mono); text-align: center; cursor: pointer; }
+.gv4-peek { position: absolute; left: 0; bottom: 0; width: 56px; height: 56px; pointer-events: none; opacity: 0; transition: opacity .2s; color: var(--gold); font: 600 14px/56px var(--mono); text-align: center; cursor: pointer; }
 .gv4-peek:hover { opacity: .6; }
+.gv4[data-ui="none"] .gv4-peek { pointer-events: auto; }
 
 /* tooltip */
 .gv4-tip { position: absolute; left: 0; top: 0; display: none; align-items: center; gap: 9px; border-radius: 999px; padding: 8px 14px 8px 11px; white-space: nowrap; max-width: 440px; box-shadow: 0 8px 30px rgba(0, 0, 0, .5); }

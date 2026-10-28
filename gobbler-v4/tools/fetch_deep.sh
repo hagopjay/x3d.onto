@@ -11,7 +11,8 @@ mkdir -p "$D" "$HERE/vendor"
 sum() { if command -v sha256sum >/dev/null 2>&1; then sha256sum "$1" | cut -d' ' -f1; else shasum -a 256 "$1" | cut -d' ' -f1; fi; }
 get() {    # name sha256
   [ -f "$D/$1" ] && [ "$(sum "$D/$1")" = "$2" ] && { echo "have  $1"; return; }
-  curl -fsSL "$BASE/$1" -o "$D/$1.part" && mv "$D/$1.part" "$D/$1"
+  curl -fsSL "$BASE/$1" -o "$D/$1.part" || { rm -f "$D/$1.part"; echo "download failed: $1" >&2; exit 1; }
+  mv "$D/$1.part" "$D/$1"
   [ "$(sum "$D/$1")" = "$2" ] || { echo "HASH MISMATCH for $1" >&2; exit 1; }
   echo "got   $1"
 }

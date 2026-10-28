@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Make engine/common.js from the shared PolyXandria engine of Gobbler 3 Deep (x3d.ML branch claude/project-thread-0105va @ 51e185f,
-gobbler-v3/deep/build-private/common.js) plus two small changes. Added: PX.tourHold() / PX.tourRelease(), a pause that keeps the tour's phase so the
-camera resumes where it stopped instead of restarting the spiral; hover uses it so the star under the pointer holds still. Removed: the v3
+gobbler-v3/deep/build-private/common.js) plus three small changes. Added: PX.tourHold() / PX.tourRelease(), a pause that keeps the tour's phase so the
+camera resumes where it stopped instead of restarting the spiral; hover uses it so the star under the pointer holds still. Changed: the Pause tour button and a press on the canvas also stop a held tour. Removed: the v3
 H-key toggle of the clean mode, because H is now a momentary UI none. Nothing else in the file changes. Every edit is asserted to match exactly once and the input hash is checked.
 
     python3 -I gobbler-v4/tools/patch_engine.py data/deep/common.js gobbler-v4/engine/common.js
@@ -35,6 +35,8 @@ def main(src, dst):
              "  PX.tourStart = tourStart; PX.tourStop = tourStop; PX.tourHold = tourHold; PX.tourRelease = tourRelease; PX.tourHeld = function () { return tourHeld; };\n")
     s = once(s, "    el.addEventListener('pointerdown', function () { if (PX.tourOn) tourStop(); });\n",
              "    el.addEventListener('pointerdown', function () { if (PX.tourOn || tourHeld) tourStop(); });\n")
+    s = once(s, "    var tb = $('#btn-tour'); if (tb) tb.addEventListener('click', function () { PX.tourOn ? tourStop() : tourStart(); });\n",
+             "    var tb = $('#btn-tour'); if (tb) tb.addEventListener('click', function () { (PX.tourOn || tourHeld) ? tourStop() : tourStart(); });   /* v4: a held tour still counts as running */\n")
     s = once(s, "    document.addEventListener('keydown', function (ev) { if (ev.key === 'h' && !ev.metaKey && !ev.ctrlKey) clean(!$('#stage').classList.contains('clean')); });\n",
              "    /* v4: the H key belongs to the overlay (hold = momentary UI none), so the v3 toggle is gone */\n")
     s = "/* v4 engine: the Gobbler 3 Deep common.js plus PX.tourHold/tourRelease (see gobbler-v4/tools/patch_engine.py). */\n" + s

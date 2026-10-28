@@ -35,6 +35,6 @@ v4:               ## serve the live viewer: http://127.0.0.1:$(PORT)/index.html 
 	@echo "http://127.0.0.1:$(PORT)/index.html"
 	cd gobbler-v4 && python3 -m http.server $(PORT) --bind 127.0.0.1
 
-e2e-v4:           ## live-scene tests in Chromium (Playwright); serve with `make v4` on port 8795 first, see gobbler-v4/README.md
-	cd gobbler-v4/e2e && node e2e.js
+e2e-v4:           ## live-scene tests in Chromium (Playwright); serve with `make v4` first (same PORT), see gobbler-v4/README.md
+	cd gobbler-v4/e2e && GV4_BASE=http://127.0.0.1:$(PORT)/ node e2e.js
 .PHONY: v4-data test-v4 v4 e2e-v4

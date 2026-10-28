@@ -3,8 +3,8 @@ const { chromium } = require('playwright');
 const BASE = process.env.GV4_BASE || 'http://127.0.0.1:8795/';
 const ARGS = ['--no-sandbox', '--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'];
 async function launch() { return chromium.launch({ executablePath: process.env.GV4_CHROME || '/opt/pw-browsers/chromium-1243/chrome-linux64/chrome', args: ARGS }); }
-async function open(browser, query, vp) {
-  const page = await browser.newPage({ viewport: vp || { width: 1280, height: 800 } });
+async function open(browser, query, vp, opts) {
+  const page = await browser.newPage({ viewport: vp || { width: 1280, height: 800 }, ...(opts || {}) });
   const errs = []; page.on('pageerror', e => errs.push('pageerror ' + e)); page.on('console', m => { if (m.type() === 'error') errs.push('console ' + m.text()); });
   await page.goto(BASE + 'index.html' + (query || ''), { waitUntil: 'load' });
   await page.waitForFunction(() => document.body.dataset.v4 === '1', null, { timeout: 170000 });

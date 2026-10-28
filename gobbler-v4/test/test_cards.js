@@ -22,6 +22,12 @@ t('every card carries a provenance tag and a grade tag, even for missing grade o
   [0, 1, 2, 3].forEach(function (i) { [2, 3].forEach(function (tier) { var c = C.card(i, tier).html; assert(/gv4-tag (dat|doc|rec|sim)/.test(c), 'prov ' + i); assert(/gv4-tag g-/.test(c), 'grade ' + i); }); });
   assert(/ungraded/.test(C.card(3, 2).html));
 });
+t('a star named like an Object.prototype member is not an ontology class, and its deep card still renders', function () {
+  var g = tiny(); g.nodes[3].cls = 'NodeType'; ['constructor', 'toString', '__proto__', 'hasOwnProperty'].forEach(function (name) {
+    g.nodes[3].label = name; var C = Cards.create(g, ONTO), c = C.card(3, 3);
+    assert(!c.onto && !/ontology 4\.1/.test(c.html), name);
+  });
+});
 t('every dynamic string is escaped', function () {
   var h = Cards.create(tiny(), ONTO).card(1, 3).html + Cards.create(tiny(), ONTO).tip(1, 2).html;
   assert(!/<script>/.test(h) && /&lt;script&gt;/.test(h)); assert(!/<b>x<\/b>/.test(Cards.create(tiny(), ONTO).card(0, 3).html));
