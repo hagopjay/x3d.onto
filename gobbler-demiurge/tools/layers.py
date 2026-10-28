@@ -314,6 +314,18 @@ def hash_name(s): return sum((i + 1) * ord(c) for i, c in enumerate(s)) * 265443
 FE_R = 0.125                      # the vane's full width over its length in the Blender asset (tools/blender_feather.py R)
 
 # ---------------------------------------------------------------- assembly
+def heart_beats(seed=4):
+    """the heartbeat tape: one beat per validator verdict in data/heartbeat/xbench-run1.json. A scene that failed first shows a red beat
+    (and one more red beat for every repair attempt that failed again), then a gold beat when it passes. returns [(seconds, is_red)]; the
+    beat length varies by a few percent (seeded) like a real pulse"""
+    doc = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'data', 'heartbeat', 'xbench-run1.json')))
+    hr = random.Random(seed * 131 + 7); out = []
+    for r in doc['rounds']:
+        if r['first_pass']: out.append((1.0 * (1 + hr.uniform(-.06, .06)), False)); continue
+        for k in range(r['repair_attempts']): out.append((0.85 * (1 + hr.uniform(-.06, .06)), True))
+        out.append((1.0 * (1 + hr.uniform(-.06, .06)), False))
+    return out
+
 def build(explorer_path, seed=4):
     rng = random.Random(seed); _glow_defined[0] = False; _defined.clear()
     D = json.load(open(explorer_path))
@@ -327,18 +339,53 @@ def build(explorer_path, seed=4):
     def anchor(id_, label, tag, pos, level='min'):
         anchors.append(dict(id=id_, label=label, tag=tag, pos=[round(c, 3) for c in pos], level=level))
 
-    # ---- the Sun: validator heart (idle breathing is display only; step 7 replays real validator rounds)
+    # ---- the Sun: validator heart. It beats the tape of 30 real validator runs (data/heartbeat/xbench-run1.json): gold = a clean or repaired scene, red = a defect found
+    beats = heart_beats(seed)
+    T = sum(d for d, _ in beats); eps = 0.002
     X.append("<Transform DEF='Heart' translation='%s'><Transform DEF='HeartPulse'>" % v3(SUN))
     X.append("<Shape><Appearance><Material diffuseColor='0 0 0' emissiveColor='1 0.9 0.6'/>%s</Appearance><Sphere radius='0.36'/></Shape>" % SUN_SHADER)
     X.append(glow((0, 0, 0), 2.1, (1.0, 0.62, 0.18)))
     X.append(glow((0, 0, 0), 0.95, (1.0, 0.92, 0.62)))
-    X.append("</Transform></Transform>")
-    X.append("<TimeSensor DEF='HeartClock' cycleInterval='3.4' loop='true'/>"
-             "<PositionInterpolator DEF='HeartBreath' key='0 0.18 0.34 1' keyValue='1 1 1, 1.1 1.1 1.1, 0.98 0.98 0.98, 1 1 1'/>"
+    X.append("</Transform>")
+    ring = []                                                       # a flat annulus facing the camera: the "ping" that leaves the heart with every validator run
+    for k in range(64):
+        a0, a1 = 2 * math.pi * k / 64, 2 * math.pi * (k + 1) / 64
+        ring.append((math.cos(a0), math.sin(a0), 0)); ring.append((0.84 * math.cos(a0), 0.84 * math.sin(a0), 0))
+    idx = ' '.join('%d %d %d %d -1' % (2 * k, 2 * k + 1, (2 * k + 3) % 128, (2 * k + 2) % 128) for k in range(64))
+    X.append("<Transform DEF='HeartRing'><Billboard axisOfRotation='0 0 0'><Shape><Appearance alphaMode='BLEND'><Material DEF='HeartRingMat' diffuseColor='0 0 0' emissiveColor='1 0.84 0.38' transparency='1'/></Appearance>"
+             "<IndexedFaceSet solid='false' coordIndex='%s'><Coordinate point='%s'/></IndexedFaceSet></Shape></Billboard></Transform>" % (idx, ' '.join(v3(p) for p in ring)))
+    X.append("</Transform>")
+    kS, vS, kR, vR, kF, vF, kC, vC = [], [], [], [], [], [], [], []
+    t0 = 0.0
+    for i, (d, red) in enumerate(beats):
+        amp = 0.13 if red else 0.10
+        for off, val in ((0.0, 1.0), (0.07, 1 + amp), (0.17, 0.99), (0.30, 1 + 0.55 * amp), (0.52, 1.0)):
+            kS.append((t0 + off * d) / T); vS.append(val)
+        col = (1.0, 0.22, 0.16) if red else (1.0, 0.86, 0.42)
+        for off, sc, fade in ((0.0, 0.45, 0.0), (0.75 * d, 2.7, 1.0), (d - eps, 2.7, 1.0)):
+            kR.append((t0 + off) / T); vR.append(sc); kF.append((t0 + off) / T); vF.append(fade); kC.append((t0 + off) / T); vC.append(col)
+        t0 += d
+    kS.append(1.0); vS.append(1.0)
+    kR[-1] = kF[-1] = kC[-1] = 1.0
+    ks = lambda k: ' '.join('%.5f' % x for x in k)
+    X.append("<TimeSensor DEF='HeartClock' cycleInterval='%s' loop='true'/>"
+             "<PositionInterpolator DEF='HeartBreath' key='%s' keyValue='%s'/>"
+             "<PositionInterpolator DEF='HeartRingGrow' key='%s' keyValue='%s'/>"
+             "<ScalarInterpolator DEF='HeartRingFade' key='%s' keyValue='%s'/>"
+             "<ColorInterpolator DEF='HeartRingColor' key='%s' keyValue='%s'/>"
              "<ROUTE fromNode='Twinkle' fromField='elapsedTime' toNode='SunShader' toField='time'/>"
              "<ROUTE fromNode='HeartClock' fromField='fraction_changed' toNode='HeartBreath' toField='set_fraction'/>"
-             "<ROUTE fromNode='HeartBreath' fromField='value_changed' toNode='HeartPulse' toField='set_scale'/>")
-    anchor('heart', 'The validator', 'the Sun, the bird\'s heart · idle pulse (display only)', add(SUN, (0.5, -0.45, 0.4)))
+             "<ROUTE fromNode='HeartBreath' fromField='value_changed' toNode='HeartPulse' toField='set_scale'/>"
+             "<ROUTE fromNode='HeartClock' fromField='fraction_changed' toNode='HeartRingGrow' toField='set_fraction'/>"
+             "<ROUTE fromNode='HeartRingGrow' fromField='value_changed' toNode='HeartRing' toField='set_scale'/>"
+             "<ROUTE fromNode='HeartClock' fromField='fraction_changed' toNode='HeartRingFade' toField='set_fraction'/>"
+             "<ROUTE fromNode='HeartRingFade' fromField='value_changed' toNode='HeartRingMat' toField='set_transparency'/>"
+             "<ROUTE fromNode='HeartClock' fromField='fraction_changed' toNode='HeartRingColor' toField='set_fraction'/>"
+             "<ROUTE fromNode='HeartRingColor' fromField='value_changed' toNode='HeartRingMat' toField='set_emissiveColor'/>"
+             % (f(T), ks(kS), ', '.join('%s %s %s' % (f(x), f(x), f(x)) for x in vS), ks(kR), ', '.join('%s %s %s' % (f(x), f(x), f(x)) for x in vR),
+                ks(kF), ' '.join(f(x) for x in vF), ks(kC), ', '.join(v3(c) for c in vC)))
+    nred = sum(1 for _, r in beats if r)
+    anchor('heart', 'The validator', 'the Sun, the bird\'s heart · it beats a replay of 30 real validator runs (X3D-Bench run 1, 8 Oct 2026): red = a defect found (%d beats), gold = clean or repaired (%d)' % (nred, len(beats) - nred), add(SUN, (0.5, -0.45, 0.4)))
 
     # ---- Dyson ribcage: lat/lon lattice + 364 ontology class beads (x3d.onto v2 layout: longitude = a, latitude from depth)
     wires = []
@@ -412,18 +459,25 @@ def build(explorer_path, seed=4):
     ROLES = [('planner', (0.25, 0.85, 0.85)), ('router', (0.30, 0.65, 1.0)), ('validator', (1.0, 0.93, 0.66)), ('repair', (0.30, 0.95, 0.55)), ('vision judge', (0.95, 0.35, 0.85)),
              ('DSPy optimizer', (0.68, 0.45, 1.0)), ('memory', (1.0, 0.65, 0.25)), ('Blender operator', BLENDER), ('exporter', (0.40, 0.85, 1.0)), ('curator', (0.85, 0.85, 0.45))]
     shoulder = (8.6, 1.6, 2.0)
-    interp = []
+    interp = []; preen = []; wr = random.Random(seed * 17 + 5)
     for i, (role, rc) in enumerate(ROLES):
         ang = math.radians(8 + i * 6.2)
         u = norm((math.cos(ang), math.sin(ang), 0.22 - 0.03 * i)); v = norm(cross((0, 0, 1), u)); n = norm(cross(u, v))
         L = 6.4 + 1.5 * math.sin(math.pi * (i + .5) / 10)
-        xml, tip = plume_lod('Wing%d' % i, add(shoulder, (0, 0.06 * i, 0.0)), u, v, n, L, 0.9, ('work', rc), rng, 18, 7)
-        X.append(xml)
+        wroot = add(shoulder, (0, 0.06 * i, 0.0))
+        xml, tip = plume_lod('Wing%d' % i, wroot, u, v, n, L, 0.9, ('work', rc), rng, 18, 7)
+        X.append("<Transform DEF='WingPreen%d' center='%s'>%s</Transform>" % (i, v3(wroot), xml))
+        # the preening wave: one pass along the primaries, each lifting its tip a few degrees a beat after its neighbour (a seeded wobble in timing and height)
+        s0 = 0.05 + 0.034 * i + wr.uniform(-.006, .006); pk = 0.16 + wr.uniform(-.03, .03)
+        ks = [0, s0, s0 + .018, s0 + .042, s0 + .066, s0 + .09, 1]; an = [0, 0, .55 * pk, pk, .5 * pk, 0, 0]
+        preen.append("<OrientationInterpolator DEF='WingLift%d' key='%s' keyValue='%s'/><ROUTE fromNode='PreenClock' fromField='fraction_changed' toNode='WingLift%d' toField='set_fraction'/>"
+                     "<ROUTE fromNode='WingLift%d' fromField='value_changed' toNode='WingPreen%d' toField='set_rotation'/>" % (i, ' '.join(f(k) for k in ks), ', '.join('%s %s' % (v3(v), f(a_)) for a_ in an), i, i, i))
         per = round(11 + 1.7 * i, 1)
         interp.append("<TimeSensor DEF='WingClock%d' cycleInterval='%s' loop='true'/><ColorInterpolator DEF='WingTint%d' key='0 0.08 0.3 0.42 1' keyValue='0.80 0.64 0.30, %s, %s, 0.80 0.64 0.30, 0.80 0.64 0.30'/>"
                       "<ROUTE fromNode='WingClock%d' fromField='fraction_changed' toNode='WingTint%d' toField='set_fraction'/><ROUTE fromNode='WingTint%d' fromField='value_changed' toNode='Wing%d_edge' toField='set_emissiveColor'/>"
                       % (i, per, i, v3(rc), v3(rc), i, i, i, i))
     X += interp
+    X.append("<TimeSensor DEF='PreenClock' cycleInterval='27' loop='true'/>" + ''.join(preen))
     anchor('wing', 'Primaries', '10 orchestrator roles; a colour = that role working · simulated until real runs replace them', add(shoulder, (3.4, 3.0, 0)))
 
     # ---- Blender: the i/o window at the tail root, streams converging on it, 18 plumes fanned from it
@@ -469,6 +523,28 @@ def build(explorer_path, seed=4):
         if tg: anchor('fan_' + tg[0].lower().replace(' ', ''), tg[0], ('Blender export path · simulated for now, a real export is the ultimate vision' if tg[1] == 'real' else 'mock: outline only, no Blender path yet'), tip, 'min' if tg[1] == 'real' else 'full')
     X.append("<ProximitySensor DEF='FanSense' center='%s' size='30 30 56'/><TimeSensor DEF='FanClock' cycleInterval='4.2' loop='false'/><ROUTE fromNode='FanSense' fromField='enterTime' toNode='FanClock' toField='set_startTime'/>" % v3(add(ROOT, (8, 0, 0))))
     X += fold
+
+    # ---- shuttles: four agents weaving across the bird on smooth closed paths, each with a short fading trail (simulated; they stand for the orchestrator's work)
+    sr = random.Random(seed * 29 + 3)
+    SHUT = [((11.5, -1.2, 1.2), (8.5, 2.4, 1.8), (0.0, 0.6, 1.0), 13.0, (0.25, 0.85, 0.85)), ((10.5, -3.2, -0.8), (7.5, 2.0, 2.2), (2.2, 1.7, 0.2), 17.0, (0.30, 0.65, 1.0)),
+            ((13.0, 0.8, 2.4), (6.5, 3.0, 1.2), (4.0, 0.3, 2.5), 11.0, (0.30, 0.95, 0.55)), ((9.5, -2.0, -2.0), (8.8, 2.6, 1.6), (5.1, 2.4, 3.4), 19.0, (0.95, 0.35, 0.85))]
+    NS, NT = 48, 5
+    for j, (C, A, ph, per, rc) in enumerate(SHUT):
+        wob = [(sr.uniform(0, 6.28), sr.uniform(0, 6.28), sr.uniform(0, 6.28)) for _ in range(3)]
+        def spos(s, C=C, A=A, ph=ph, wob=wob):
+            x = C[0] + A[0] * math.cos(2 * math.pi * s + ph[0]) + 0.16 * math.sin(2 * math.pi * 7 * s + wob[0][0])
+            y = C[1] + A[1] * math.sin(4 * math.pi * s + ph[1]) + 0.14 * math.sin(2 * math.pi * 9 * s + wob[1][0])
+            z = C[2] + A[2] * math.sin(2 * math.pi * s + ph[2]) + 0.14 * math.sin(2 * math.pi * 11 * s + wob[2][0])
+            return (x, y, z)
+        X.append("<TimeSensor DEF='ShuttleClock%d' cycleInterval='%s' loop='true'/>" % (j, f(per)))
+        for m in range(NT):
+            lag = 0.011 * m
+            keys = [i / NS for i in range(NS + 1)]; vals = [spos((k - lag) % 1.0) for k in keys]
+            head = m == 0
+            col = (1.0, 0.93, 0.72) if head else tuple(min(1.0, (0.55 + 0.45 * (1 - m / NT)) * (0.62 * g + 0.38 * r_)) for g, r_ in zip((1.0, 0.82, 0.48), rc))
+            X.append("<Transform DEF='Shuttle%d_%d' translation='%s'>%s</Transform><PositionInterpolator DEF='ShuttlePath%d_%d' key='%s' keyValue='%s'/>"
+                     "<ROUTE fromNode='ShuttleClock%d' fromField='fraction_changed' toNode='ShuttlePath%d_%d' toField='set_fraction'/><ROUTE fromNode='ShuttlePath%d_%d' fromField='value_changed' toNode='Shuttle%d_%d' toField='set_translation'/>"
+                     % (j, m, v3(vals[0]), points_shape([(0, 0, 0)], [col], 1 if head else 3, [2.6 if head else max(0.7, 2.0 - 0.32 * m)]), j, m, ' '.join(f(k) for k in keys), ', '.join(v3(v_) for v_ in vals), j, j, m, j, m, j, m))
 
     sway = "<Transform DEF='Loom' center='0.72 -0.76 0'>%s</Transform><ROUTE fromNode='SwayTurn' fromField='value_changed' toNode='Loom' toField='set_rotation'/>" % ''.join(X)
     # ---- viewpoints (spliced before the Deep scene's own first Viewpoint so Face is the one bound at load)

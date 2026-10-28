@@ -1,0 +1,193 @@
+{
+ "source": "X3D-Bench slice, run 1: 30 scenes written cold from a rules prompt, checked by the x3d_mcp fork validator (branch integration/validator-fixes, profile and component check on), repaired by validate-and-repair rounds",
+ "date": "2026-10-08",
+ "order": "as the run scoreboard lists them (by category); the run itself wrote the scenes in parallel, so the order is not a time order",
+ "counts": {
+  "scenes": 30,
+  "first_pass": 24,
+  "final_pass": 30,
+  "repair_attempts": 8
+ },
+ "rounds": [
+  {
+   "id": "anim-01",
+   "first_pass": true,
+   "repair_attempts": 0,
+   "final_pass": true
+  },
+  {
+   "id": "anim-02",
+   "first_pass": true,
+   "repair_attempts": 0,
+   "final_pass": true
+  },
+  {
+   "id": "anim-03",
+   "first_pass": true,
+   "repair_attempts": 0,
+   "final_pass": true
+  },
+  {
+   "id": "anim-04",
+   "first_pass": true,
+   "repair_attempts": 0,
+   "final_pass": true
+  },
+  {
+   "id": "anim-05",
+   "first_pass": true,
+   "repair_attempts": 0,
+   "final_pass": true
+  },
+  {
+   "id": "asm-01",
+   "first_pass": true,
+   "repair_attempts": 0,
+   "final_pass": true
+  },
+  {
+   "id": "asm-02",
+   "first_pass": true,
+   "repair_attempts": 0,
+   "final_pass": true
+  },
+  {
+   "id": "asm-03",
+   "first_pass": true,
+   "repair_attempts": 0,
+   "final_pass": true
+  },
+  {
+   "id": "asm-04",
+   "first_pass": true,
+   "repair_attempts": 0,
+   "final_pass": true
+  },
+  {
+   "id": "asm-05",
+   "first_pass": true,
+   "repair_attempts": 0,
+   "final_pass": true
+  },
+  {
+   "id": "geo-01",
+   "first_pass": true,
+   "repair_attempts": 0,
+   "final_pass": true
+  },
+  {
+   "id": "geo-02",
+   "first_pass": true,
+   "repair_attempts": 0,
+   "final_pass": true
+  },
+  {
+   "id": "geo-03",
+   "first_pass": true,
+   "repair_attempts": 0,
+   "final_pass": true
+  },
+  {
+   "id": "geo-04",
+   "first_pass": true,
+   "repair_attempts": 0,
+   "final_pass": true
+  },
+  {
+   "id": "geo-05",
+   "first_pass": false,
+   "repair_attempts": 3,
+   "final_pass": true
+  },
+  {
+   "id": "hanim-01",
+   "first_pass": true,
+   "repair_attempts": 0,
+   "final_pass": true
+  },
+  {
+   "id": "hanim-02",
+   "first_pass": true,
+   "repair_attempts": 0,
+   "final_pass": true
+  },
+  {
+   "id": "hanim-03",
+   "first_pass": true,
+   "repair_attempts": 0,
+   "final_pass": true
+  },
+  {
+   "id": "hanim-04",
+   "first_pass": true,
+   "repair_attempts": 0,
+   "final_pass": true
+  },
+  {
+   "id": "hanim-05",
+   "first_pass": true,
+   "repair_attempts": 0,
+   "final_pass": true
+  },
+  {
+   "id": "int-01",
+   "first_pass": true,
+   "repair_attempts": 0,
+   "final_pass": true
+  },
+  {
+   "id": "int-02",
+   "first_pass": true,
+   "repair_attempts": 0,
+   "final_pass": true
+  },
+  {
+   "id": "int-03",
+   "first_pass": true,
+   "repair_attempts": 0,
+   "final_pass": true
+  },
+  {
+   "id": "int-04",
+   "first_pass": true,
+   "repair_attempts": 0,
+   "final_pass": true
+  },
+  {
+   "id": "int-05",
+   "first_pass": true,
+   "repair_attempts": 0,
+   "final_pass": true
+  },
+  {
+   "id": "obj-01",
+   "first_pass": false,
+   "repair_attempts": 1,
+   "final_pass": true
+  },
+  {
+   "id": "obj-02",
+   "first_pass": false,
+   "repair_attempts": 1,
+   "final_pass": true
+  },
+  {
+   "id": "obj-03",
+   "first_pass": false,
+   "repair_attempts": 1,
+   "final_pass": true
+  },
+  {
+   "id": "obj-04",
+   "first_pass": false,
+   "repair_attempts": 1,
+   "final_pass": true
+  },
+  {
+   "id": "obj-05",
+   "first_pass": false,
+   "repair_attempts": 1,
+   "final_pass": true
+  }
+ ]
+}

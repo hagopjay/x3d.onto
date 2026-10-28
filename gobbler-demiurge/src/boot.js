@@ -107,9 +107,12 @@
     var pos = Cam.pos ? Cam.pos.slice() : stop[2].slice(), ori = Cam.ori || [0, 0, 1, 0], a = pos, tgt0 = Cam.pos ? orbit({ pos: pos, ori: ori, look: stop[3] }) : stop[3].slice();
     var b = stop[2], tgt1 = stop[3], fov0 = Cam.fov, fov1 = stop[4], t0 = performance.now(), D = ms == null ? (REDUCED ? 0 : 2200) : ms;
     try { v.position = new X3D.SFVec3f(a[0], a[1], a[2]); v.orientation = new X3D.SFRotation(ori[0], ori[1], ori[2], ori[3]); v.fieldOfView = fov0; v.centerOfRotation = new X3D.SFVec3f(tgt1[0], tgt1[1], tgt1[2]); v.set_bind = true; } catch (e) {}
+    var dv = [b[0] - a[0], b[1] - a[1], b[2] - a[2]], dl = Math.hypot(dv[0], dv[1], dv[2]) || 1, pv = [dv[1] * 0 - dv[2] * 1, dv[2] * 0 - dv[0] * 0, dv[0] * 1 - dv[1] * 0];      /* the flight bows a little off the straight line (up cross direction), seeded */
+    var pl = Math.hypot(pv[0], pv[1], pv[2]) || 1, bow = SEED && D > 0 ? (RND() - 0.5) * 0.34 * dl : 0;
     (function step() {
       var k = D <= 0 ? 1 : Math.min(1, (performance.now() - t0) / D); k = k * k * k * (k * (6 * k - 15) + 10);          /* smootherstep */
-      var p = [0, 1, 2].map(function (i) { return a[i] + (b[i] - a[i]) * k; }), t = [0, 1, 2].map(function (i) { return tgt0[i] + (tgt1[i] - tgt0[i]) * k; }), o = lookAt(p, t);
+      var bk = bow * Math.sin(Math.PI * k);
+      var p = [0, 1, 2].map(function (i) { return a[i] + (b[i] - a[i]) * k + bk * pv[i] / pl; }), t = [0, 1, 2].map(function (i) { return tgt0[i] + (tgt1[i] - tgt0[i]) * k; }), o = lookAt(p, t);
       try { v.position = new X3D.SFVec3f(p[0], p[1], p[2]); v.orientation = new X3D.SFRotation(o[0], o[1], o[2], o[3]); v.fieldOfView = Cam.fov = fov0 + (fov1 - fov0) * k; } catch (e) {}
       if (k < 1) fly.raf = requestAnimationFrame(step); else if (then) then();
     })();
@@ -169,14 +172,62 @@
     [].forEach.call(document.querySelectorAll('#gd-rail button'), function (b) { b.classList.toggle('on', +b.dataset.stop === i + 1); });
     flyTo(s, ms);
   }
-  var TOUR = { kind: 'keys', vp: 'TourCam', fov: 0.8, auto: false, keys: [        /* time, camera xyz, look-at xyz: Establishing, Face push-in, ribcage, tenders, fan reveal, back */
-    [0, 12, -1.5, 25, 12, -1.5, 0], [9, -0.4, -0.3, 8.4, -0.8, 0.2, 0], [18, 3.0, -1.8, 13.2, 3.0, -1.8, 0],
-    [28, 13.5, 1.8, 9.5, SUN[0], SUN[1], SUN[2]], [38, 2.0, 2.6, 9.0, SUN[0], SUN[1], SUN[2]], [46, SUN[0] + 1.6, SUN[1] + 4.6, SUN[2] + 2.8, SUN[0], SUN[1] + 2.9, SUN[2]],
-    [56, 19.0, -1.0, 16.0, 21.0, -2.5, 0], [66, 12, -1.5, 25, 12, -1.5, 0]] };
+  /* ---------- the tour: the shot list on a spline (continuous velocity, no stop at every key), with seeded handheld drift ---------- */
+  function rng32(a) { return function () { a |= 0; a = a + 0x6D2B79F5 | 0; var t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+  var SEED = q.get('seed') === null ? 4 : (+q.get('seed') || 0), RND = rng32(SEED * 7919 + 13);          /* ?seed=0 turns the drift and the bows off; the same seed repeats a take exactly */
+  function orbitPos(az, r, el) { var a = az * Math.PI / 180, e = el * Math.PI / 180; return [SUN[0] + r * Math.sin(a) * Math.cos(e), SUN[1] + r * Math.sin(e), SUN[2] + r * Math.cos(a) * Math.cos(e)]; }
+  var SHOTS = [                                   /* the shot list: seconds, name, camera, look-at, field of view. The village shots (dive, plaza) come with the village step */
+    [0, 'Establishing', [12, -1.5, 25], [12, -1.5, 0], 0.88],
+    [9, 'Face', [3.0, -1.8, 13.2], [3.0, -1.8, 0], 0.74],
+    [17, 'Push-in', [-0.4, -0.3, 8.4], [-0.8, 0.2, 0], 0.72],
+    [26, 'Orbit', orbitPos(-35, 11, 14), SUN, 0.8],
+    [33, 'Orbit', orbitPos(-95, 12, 38), SUN, 0.8],
+    [40, 'Orbit', orbitPos(-150, 12.5, 30), SUN, 0.8],
+    [48, 'Tenders', [SUN[0] + 4.6, SUN[1] + 3.0, SUN[2] + 5.4], SUN, 0.82],
+    [55, 'Heart', [SUN[0] + 0.9, SUN[1] + 0.8, SUN[2] + 3.4], SUN, 0.8],
+    [64, 'Fan reveal', [19.0, -1.0, 16.0], [21.5, -2.5, 0], 0.9],
+    [74, 'Return', [12, -1.5, 25], [12, -1.5, 0], 0.88]];
+  var TOURK = SHOTS.map(function (s) { return { t: s[0], v: s[2].concat(s[3], [s[4]]) }; }), TOURD = TOURK[TOURK.length - 1].t, LEAD = 2.4;
+  var DRIFT = [0, 1, 2, 3, 4, 5].map(function () { return { f: 0.05 + RND() * 0.11, g: 0.17 + RND() * 0.16, p: RND() * 6.283, q: RND() * 6.283 }; });
+  function sampleTour(tau) {
+    var K = TOURK, i = 0; while (i < K.length - 2 && tau > K[i + 1].t) i++;
+    var a = K[i], b = K[i + 1], dt = b.t - a.t, u = Math.max(0, Math.min(1, (tau - a.t) / dt)), u2 = u * u, u3 = u2 * u;
+    var h00 = 2 * u3 - 3 * u2 + 1, h10 = u3 - 2 * u2 + u, h01 = -2 * u3 + 3 * u2, h11 = u3 - u2;
+    return a.v.map(function (_, c) {
+      var m0 = i === 0 ? 0 : (b.v[c] - K[i - 1].v[c]) / (b.t - K[i - 1].t), m1 = i + 1 === K.length - 1 ? 0 : (K[i + 2].v[c] - a.v[c]) / (K[i + 2].t - a.t);
+      return h00 * a.v[c] + h10 * dt * m0 + h01 * b.v[c] + h11 * dt * m1;
+    });
+  }
+  var tr = { on: false, held: false, t0: 0, heldAt: 0, raf: 0, vp: null, from: null };
+  function trStep() {
+    if (!tr.on) return;
+    var t = (performance.now() - tr.t0) / 1000, v, k;
+    if (t < LEAD) { k = t / LEAD; k = k * k * k * (k * (6 * k - 15) + 10); var s0 = sampleTour(0); v = s0.map(function (x, c) { return tr.from[c] + (x - tr.from[c]) * k; }); }
+    else v = sampleTour((t - LEAD) % TOURD);
+    if (SEED) {                                   /* slow seeded drift, a little different every take of a different seed; it grows with the distance to the subject */
+      var dist = Math.hypot(v[0] - v[3], v[1] - v[4], v[2] - v[5]) / 12 + 0.25;
+      for (var c = 0; c < 6; c++) { var d = DRIFT[c]; v[c] += (c < 3 ? 0.16 : 0.07) * dist * (Math.sin(6.283 * d.f * t + d.p) + 0.5 * Math.sin(6.283 * d.g * t + d.q)); }
+      v[6] += 0.006 * Math.sin(6.283 * 0.07 * t + DRIFT[0].q);
+    }
+    var o = lookAt(v.slice(0, 3), v.slice(3, 6));
+    try { tr.vp.position = new X3D.SFVec3f(v[0], v[1], v[2]); tr.vp.orientation = new X3D.SFRotation(o[0], o[1], o[2], o[3]); tr.vp.fieldOfView = Cam.fov = v[6]; } catch (e) {}
+    tr.raf = requestAnimationFrame(trStep);
+  }
+  function trStart() {
+    var sc = PX.el.browser.currentScene; try { tr.vp = sc.getNamedNode('TourCam'); } catch (e) { return; }
+    cancelAnimationFrame(fly.raf); cancelAnimationFrame(tr.raf);
+    var ori = Cam.ori || [0, 0, 1, 0], pos = Cam.pos ? Cam.pos.slice() : SHOTS[0][2].slice(), tg = Cam.pos ? orbit({ pos: pos, ori: ori, look: SHOTS[0][3] }) : SHOTS[0][3];
+    tr.from = pos.concat(tg, [Cam.fov]);
+    try { tr.vp.position = new X3D.SFVec3f(pos[0], pos[1], pos[2]); tr.vp.orientation = new X3D.SFRotation(ori[0], ori[1], ori[2], ori[3]); tr.vp.fieldOfView = Cam.fov; tr.vp.set_bind = true; } catch (e) {}
+    PX.tourOn = tr.on = true; tr.held = false; tr.t0 = performance.now(); tr.raf = requestAnimationFrame(trStep);
+  }
+  function trStop() { PX.tourOn = tr.on = false; tr.held = false; cancelAnimationFrame(tr.raf); }
+  function trHold() { if (!tr.on) return false; tr.heldAt = performance.now() - tr.t0; tr.held = true; PX.tourOn = tr.on = false; cancelAnimationFrame(tr.raf); return true; }
+  function trRelease() { if (!tr.held) return false; tr.held = false; PX.tourOn = tr.on = true; tr.t0 = performance.now() - tr.heldAt; cancelAnimationFrame(tr.raf); tr.raf = requestAnimationFrame(trStep); return true; }
   function tourLabel(on) { var b = $('#btn-tour'); if (b) { b.classList.toggle('on', on); b.textContent = on ? 'Pause tour' : 'Tour'; } }
   function tourToggle() {
     if (PX.tourOn || PX.tourHeld()) { PX.tourStop(); tourLabel(false); }
-    else { PX.cfg = Object.assign(PX.cfg || {}, { tour: TOUR }); PX.tourStart(); Cam.fov = TOUR.fov; tourLabel(true); }
+    else { PX.tourStart(); tourLabel(true); }
   }
 
   /* ---------- fps ---------- */
@@ -213,7 +264,7 @@
       Boot.done = true; clearInterval(beat); beat = 0; busy.hidden = true; stageEl.dataset.stage = 'bird';
       Boot.birdMs = Math.round(performance.now() - Boot.t0); Boot.log.push(secs(Boot.t0) + ' bird on screen (' + kb(Boot.bytes.bird || 0) + ' gzipped scene)');
       Boot.summary = 'bird ' + (Boot.birdMs / 1000).toFixed(1) + ' s · ' + kb(Boot.bytes.bird || 0);
-      PX.cfg = { tour: TOUR }; installSensor(el); hud(el); buildRail(); wire(el);
+      installSensor(el); hud(el); buildRail(); wire(el);
       document.body.dataset.loaded = '1';
       var v = q.get('view'); if (v && v in VIEWS) go(VIEWS[v], 0);
       later(el);
@@ -236,6 +287,7 @@
   }
 
   function wire(el) {
+    PX.tourStart = trStart; PX.tourStop = trStop; PX.tourHold = trHold; PX.tourRelease = trRelease; PX.tourHeld = function () { return tr.held; };      /* the spline tour replaces the engine's; the hover layer holds and releases it the same way */
     var ts = PX.tourStop, tb = PX.tourStart;                    /* the engine writes 'Resume tour' on its own button; the page owns the label */
     PX.tourStop = function () { ts(); tourLabel(false); }; PX.tourStart = function () { tb(); tourLabel(true); };
     $('#gd-face').addEventListener('click', function () { go(0); });

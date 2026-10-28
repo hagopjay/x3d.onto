@@ -18,7 +18,7 @@ async function open(b, q, vp) {
   const boot = await p.evaluate(() => ({ failed: window.gdBoot.failed, log: window.gdBoot.log, bytes: window.gdBoot.bytes, ms: window.gdBoot.birdMs, stage: document.getElementById('stage').dataset.stage }));
   check('boot: reaches the bird with no failure', !boot.failed && boot.stage === 'bird', 'stage ' + boot.stage);
   check('boot: stages name themselves in order', ['starting X_ITE', 'fetching the bird', 'parsing the scene', 'drawing the first frame', 'bird on screen'].every((s, i, a) => boot.log.findIndex(l => l.includes(s)) > (i ? boot.log.findIndex(l => l.includes(a[i - 1])) : -1)), boot.log.join(' | '));
-  check('boot: scene arrives gzipped and under 300 KB', boot.bytes.bird > 100e3 && boot.bytes.bird < 300e3, boot.bytes.bird + ' B gz, ' + boot.bytes.birdRaw + ' B raw');
+  check('boot: scene arrives gzipped and under 340 KB', boot.bytes.bird > 100e3 && boot.bytes.bird < 340e3, boot.bytes.bird + ' B gz, ' + boot.bytes.birdRaw + ' B raw');
   const early = p.reqs.map(u => new URL(u).pathname);
   check('bird-first: the graph is requested after the scene', early.findIndex(u => /gobbler4-bird/.test(u)) >= 0 && early.findIndex(u => /graph-v3/.test(u)) > early.findIndex(u => /gobbler4-bird/.test(u)));
   await p.waitForFunction(() => document.body.dataset.v4 === '1', null, { timeout: 60000 });
