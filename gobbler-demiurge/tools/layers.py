@@ -3,12 +3,15 @@ Everything here is plain X3D 4.0 (no Script): Sun in the chest, Dyson ribcage (3
 shell tenders, wing primaries, tail fan with the Blender root, Face and Establishing viewpoints.  Nothing in the Deep scene is edited:
 the layers are spliced in before </Scene> by build_bird.py, and they USE two things the Deep scene already DEFs (PointShader, SwayTurn).
 Look = B's faceted head (already in the Deep scene) plus lots of D: plumage drawn as gold wireframe feathers with translucent facets, the flywheel ring, tenders, the Blender fan root. Not drawn yet: the nebula sky and the red and blue streaming trails of frame D."""
-import json, math, random, colorsys
+import json, math, os, random, colorsys, sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import feathers as FE
 
 SUN = (6.5, -2.6, 0.4)          # the heart, in the chest where the neck meets the graph (Deep scene coordinates)
 RIB_R = 3.3                      # Dyson ribcage radius around the Sun
 ROOT = (17.4, -2.5, 0.0)         # tail root: the Blender i/o window
 FAN_L = 8.4                      # tail plume length
+FAN_CLOSED = 0.16                # the fan starts closed to this share of its opening angle and unfurls when the camera first comes near
 GOLD = (0.84, 0.70, 0.36)
 BLENDER = (0.95, 0.52, 0.10)
 
@@ -157,8 +160,9 @@ def feather(root, u, v, n, L, W, nb, arch, curl, tilt):
         Lt.append(add(l, mul(n, tilt * w))); Rt.append(add(r, mul(n, -tilt * w)))
     return S, Lt, Rt
 
-def plume_lod(name, root, u, v, n, L, W, style, rng, nb_near=22, nb_mid=8):
-    """style: plain | mock | (real, rgb) | (work, rgb): returns an LOD (near, mid, far) in X3D, plus the tip position"""
+def plume_lod_proc(name, root, u, v, n, L, W, style, rng, nb_near=22, nb_mid=8):
+    """the earlier procedural plume (kept as the fallback when assets/feathers is missing, and as the source of the random draws that keep the rest of the scene where it was).
+    style: plain | mock | (real, rgb) | (work, rgb): returns an LOD (near, mid, far) in X3D, plus the tip position"""
     arch, curl, tilt = rng.uniform(.04, .10), rng.uniform(-.05, .05), rng.uniform(.10, .22)
     out = []
     kind = style if isinstance(style, str) else style[0]
@@ -197,9 +201,121 @@ def plume_lod(name, root, u, v, n, L, W, style, rng, nb_near=22, nb_mid=8):
     xml = "<LOD DEF='%s' center='%s' range='11 60'>%s</LOD>" % (name, v3(mid_pt), ''.join("<Group>%s</Group>" % s for s in (levels[0], levels[1], far)))
     return xml, tip
 
+
+# ---------------------------------------------------------------- Blender-made feathers (assets/feathers, tools/blender_feather.py)
+_feathers = {}                    # variant -> parts, loaded once
+_defined = set()                  # DEF names already written in this build (later uses are USE)
+GOLD_MASK = (1.0, 0.93, 0.66)     # sunlit facets: a touch more gold on the warm bake
+COOL_MASK = (0.78, 0.98, 1.18)    # shadowed facets: kept cool (teal and blue), the complement of the sun
+
+def feather_parts(variant):
+    if variant not in _feathers: _feathers[variant] = FE.load(variant)
+    return _feathers[variant]
+
+def have_feathers():
+    try: return len(FE.variants()) > 0
+    except OSError: return False
+
+def basis_rotation(u, v, n):
+    """axis-angle (X3D rotation) of the matrix whose columns are u, v, n (an orthonormal right-handed basis)"""
+    m = ((u[0], v[0], n[0]), (u[1], v[1], n[1]), (u[2], v[2], n[2]))
+    tr = m[0][0] + m[1][1] + m[2][2]
+    if tr > 0:
+        s = math.sqrt(tr + 1) * 2; qw = s / 4; qx = (m[2][1] - m[1][2]) / s; qy = (m[0][2] - m[2][0]) / s; qz = (m[1][0] - m[0][1]) / s
+    elif m[0][0] > m[1][1] and m[0][0] > m[2][2]:
+        s = math.sqrt(1 + m[0][0] - m[1][1] - m[2][2]) * 2; qw = (m[2][1] - m[1][2]) / s; qx = s / 4; qy = (m[0][1] + m[1][0]) / s; qz = (m[0][2] + m[2][0]) / s
+    elif m[1][1] > m[2][2]:
+        s = math.sqrt(1 + m[1][1] - m[0][0] - m[2][2]) * 2; qw = (m[0][2] - m[2][0]) / s; qx = (m[0][1] + m[1][0]) / s; qy = s / 4; qz = (m[1][2] + m[2][1]) / s
+    else:
+        s = math.sqrt(1 + m[2][2] - m[0][0] - m[1][1]) * 2; qw = (m[1][0] - m[0][1]) / s; qx = (m[0][2] + m[2][0]) / s; qy = (m[1][2] + m[2][1]) / s; qz = s / 4
+    qw = max(-1.0, min(1.0, qw)); ang = 2 * math.acos(qw); sn = math.sqrt(max(0.0, 1 - qw * qw))
+    return ((1, 0, 0), 0.0) if sn < 1e-6 else ((qx / sn, qy / sn, qz / sn), ang)
+
+def _lum(c): return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]
+
+def feather_faces(variant, part, key, mask, alpha, gain=1.0):
+    """a Blender-modelled vane as one unlit Shape. Face colour = the baked golden-hour light: sunlit facets take the role mask (gold, or the role colour),
+    shadowed facets stay cool (blue-teal), so the blade reads as jewel facets, not brown glass. Alpha follows the light."""
+    dn = 'FV_%s_%s_%s' % (variant, part, key)
+    if dn in _defined: return "<Shape USE='%s'/>" % dn
+    _defined.add(dn)
+    g = feather_parts(variant)[part]
+    cols = []
+    for c in g['colors']:
+        l = _lum(c); s = min(1.0, max(0.0, (l - 0.22) / 0.5)); s = s * s * (3 - 2 * s)
+        m = tuple(COOL_MASK[i] + (mask[i] - COOL_MASK[i]) * s for i in range(3))
+        rgb = tuple(min(1.0, c[i] * m[i] * gain) for i in range(3))
+        cols.append('%s %s %s %s' % (f(rgb[0]), f(rgb[1]), f(rgb[2]), f(min(0.95, alpha * (0.50 + 0.95 * l)))))
+    return ("<Shape DEF='%s'><Appearance alphaMode='BLEND'/><IndexedFaceSet solid='false' coordIndex='%s'><ColorRGBA color='%s'/><Coordinate point='%s'/></IndexedFaceSet></Shape>"
+            % (dn, ' '.join(map(str, g['index'])), ' '.join(cols), ' '.join(v3(p) for p in g['points'])))
+
+def feather_quill(variant, key, base):
+    """the quill tube: flat facets lit by a fixed key light (B's facets), unlit so the tube reads as cut metal"""
+    dn = 'FQ_%s_%s' % (variant, key)
+    if dn in _defined: return "<Shape USE='%s'/>" % dn
+    _defined.add(dn)
+    g = feather_parts(variant)['near_quill']; P = g['points']; I = g['index']; cols = []
+    L = norm((-0.35, 0.55, 0.75))
+    for k in range(0, len(I), 4):
+        a, b, c = P[I[k]], P[I[k + 1]], P[I[k + 2]]
+        nrm = norm(cross(sub(b, a), sub(c, a))); kk = 0.45 + 0.75 * abs(nrm[0] * L[0] + nrm[1] * L[1] + nrm[2] * L[2])
+        cols.append(v3(tuple(min(1.0, x * kk) for x in base)))
+    return ("<Shape DEF='%s'><Appearance/><IndexedFaceSet solid='false' colorPerVertex='false' coordIndex='%s'><Color color='%s'/><Coordinate point='%s'/></IndexedFaceSet></Shape>"
+            % (dn, ' '.join(map(str, I)), ' '.join(cols), ' '.join(v3(p) for p in P)))
+
+def feather_lines(variant, part, mat, key, transparency=0.0, mat_def=None):
+    """Blender edge geometry as lines. The geometry node is shared per variant; the Appearance is the plume's own when its colour animates (mat_def)"""
+    gd = 'FL_%s_%s' % (variant, part)
+    g = feather_parts(variant)[part]
+    if gd in _defined: geo = "<IndexedLineSet USE='%s'/>" % gd
+    else:
+        _defined.add(gd)
+        geo = "<IndexedLineSet DEF='%s' coordIndex='%s'><Coordinate point='%s'/></IndexedLineSet>" % (gd, ' '.join(map(str, g['index'])), ' '.join(v3(p) for p in g['points']))
+    m = "<Material %semissiveColor='%s' diffuseColor='0 0 0'%s/>" % ("DEF='%s' " % mat_def if mat_def else '', v3(mat), (" transparency='%s'" % f(transparency)) if transparency else '')
+    return "<Shape><Appearance alphaMode='BLEND'>%s</Appearance>%s</Shape>" % (m, geo)
+
+def plume_lod(name, root, u, v, n, L, W, style, rng, nb_near=22, nb_mid=8):
+    """a plume from the Blender-modelled feather: same signature and the same random draws as the procedural one, so nothing else in the scene moves.
+    returns an LOD (near, mid, far) and the tip position"""
+    if not have_feathers():
+        return plume_lod_proc(name, root, u, v, n, L, W, style, rng, nb_near, nb_mid)
+    plume_lod_proc(name, root, u, v, n, L, W, style, rng, nb_near, nb_mid)             # burn the draws it used to take
+    pr = random.Random(hash_name(name))
+    vs = FE.variants(); var = vs[pr.randrange(len(vs))]
+    kind = style if isinstance(style, str) else style[0]
+    col = None if isinstance(style, str) else style[1]
+    edge = {'plain': (0.80, 0.64, 0.30), 'mock': (0.42, 0.40, 0.38), 'real': col, 'work': (0.80, 0.64, 0.30)}[kind]
+    barb = {'plain': (0.50, 0.38, 0.17), 'mock': None, 'real': tuple(c * 0.55 for c in col) if col else None, 'work': (0.50, 0.38, 0.17)}[kind]
+    face_a = {'plain': 0.48, 'mock': 0.0, 'real': 0.58, 'work': 0.48}[kind]
+    if kind == 'real': mask = tuple(0.45 * GOLD_MASK[i] + 0.55 * col[i] for i in range(3)); key = 'r%02d%02d%02d' % tuple(int(c * 9.99) for c in col)
+    else: mask = GOLD_MASK; key = 'gold'
+    ax, ang = basis_rotation(u, v, n)
+    sx, sy = L, W / FE_R                                                              # length along the quill, width from the plume's own W
+    xf = "<Transform translation='%s' rotation='%s %s' scale='%s %s %s'>" % (v3(root), v3(ax), f(ang), f(sx), f(sy), f(sx))
+    def place(p): return add(root, add(add(mul(u, sx * p[0]), mul(v, sy * p[1])), mul(n, sx * p[2])))
+    sp = feather_parts(var)['spine']['points']
+    tip = place(sp[-1]); mid_pt = place(sp[len(sp) // 2])
+    near, mid = [], []
+    if face_a > 0:
+        near.append(feather_faces(var, 'near_vane', key, mask, face_a * 1.25, 1.05)); mid.append(feather_faces(var, 'near_vane', key, mask, face_a * 1.05, 1.05))
+    near.append(feather_quill(var, key, edge if kind == 'real' else (0.95, 0.80, 0.46)))
+    if barb: near.append(feather_lines(var, 'near_barbs', barb, key, 0.25))
+    near.append(feather_lines(var, 'outline', edge, key, 0.0, (name + '_edge') if kind == 'work' else None))
+    near.append(feather_lines(var, 'spine', edge, key))
+    mid.append(feather_lines(var, 'outline', edge, key)); mid.append(feather_lines(var, 'spine', edge, key))
+    far_pts = [place(p) for p in sp[::6]] + [tip]
+    far = lines_shape([far_pts], edge, transparency=0.2) + points_shape([tip], [edge], 1, [2.4 if kind == 'real' else 1.5])
+    lvl = lambda parts: "<Group>%s%s</Transform></Group>" % (xf, ''.join(parts))
+    xml = "<LOD DEF='%s' center='%s' range='11 60'>%s<Group>%s</Group></LOD>" % (name, v3(mid_pt), lvl(near) + lvl(mid), far)
+    return xml, tip
+
+def hash_name(s): return sum((i + 1) * ord(c) for i, c in enumerate(s)) * 2654435761 % (2 ** 32)
+
+FE_R = 0.125                      # the vane's full width over its length in the Blender asset (tools/blender_feather.py R)
+
 # ---------------------------------------------------------------- assembly
 def build(explorer_path, seed=4):
-    rng = random.Random(seed); _glow_defined[0] = False
+    rng = random.Random(seed); _glow_defined[0] = False; _defined.clear()
     D = json.load(open(explorer_path))
     maxd = D['stats']['max_depth']
     fams = sorted(D['families'], key=lambda k: -D['families'][k])
@@ -336,6 +452,7 @@ def build(explorer_path, seed=4):
 
     TARGETS = {1: ('O3DE', 'mock'), 3: ('ParaView', 'mock'), 5: ('3D Slicer', 'mock'), 6: ('video', 'real', (0.95, 0.30, 0.85)), 8: ('USD', 'real', (1.0, 0.93, 0.7)), 9: ('glTF', 'real', (0.25, 0.85, 1.0)),
                11: ('Unity', 'mock'), 13: ('Defold', 'mock'), 15: ('IFC', 'mock')}
+    fold = []
     for i in range(18):
         th = math.radians(-82 + i * (164 / 17))
         u = norm((math.cos(th), math.sin(th), 0.10 * math.sin(th * 1.0)))
@@ -344,8 +461,14 @@ def build(explorer_path, seed=4):
         style = 'plain' if not tg else ('mock' if tg[1] == 'mock' else ('real', tg[2]))
         L = FAN_L * (0.92 + 0.12 * math.cos(th) + rng.uniform(-.03, .03))
         xml, tip = plume_lod('Fan%d' % i, add(ROOT, mul(u, 0.9)), u, v, n, L, 1.0 if tg is None or tg[1] != 'mock' else 0.9, style, rng, 22, 8)
-        X.append(xml)
-        if tg: anchor('fan_' + tg[0].lower().replace(' ', ''), tg[0], ('Blender export, real path · lights on a passing export in step 9' if tg[1] == 'real' else 'mock: outline only, no real path yet'), tip, 'min' if tg[1] == 'real' else 'full')
+        # the fan unfurls the first time the camera comes near: each plume swings out from a closed fan about the root, a little later than its neighbour
+        r0 = -(1 - FAN_CLOSED) * th; s0 = 0.30 * i / 17; mid = s0 + (1 - s0) * 0.45
+        X.append("<Transform DEF='FanFold%d' center='%s' rotation='0 0 1 %s'>%s</Transform>" % (i, v3(ROOT), f(r0), xml))
+        fold.append("<OrientationInterpolator DEF='FanSwing%d' key='0 %s %s 1' keyValue='0 0 1 %s, 0 0 1 %s, 0 0 1 %s, 0 0 1 0'/><ROUTE fromNode='FanClock' fromField='fraction_changed' toNode='FanSwing%d' toField='set_fraction'/>"
+                    "<ROUTE fromNode='FanSwing%d' fromField='value_changed' toNode='FanFold%d' toField='set_rotation'/>" % (i, f(s0), f(mid), f(r0), f(r0), f(r0 * 0.12), i, i, i))
+        if tg: anchor('fan_' + tg[0].lower().replace(' ', ''), tg[0], ('Blender export path · simulated for now, a real export is the ultimate vision' if tg[1] == 'real' else 'mock: outline only, no Blender path yet'), tip, 'min' if tg[1] == 'real' else 'full')
+    X.append("<ProximitySensor DEF='FanSense' center='%s' size='30 30 56'/><TimeSensor DEF='FanClock' cycleInterval='4.2' loop='false'/><ROUTE fromNode='FanSense' fromField='enterTime' toNode='FanClock' toField='set_startTime'/>" % v3(add(ROOT, (8, 0, 0))))
+    X += fold
 
     sway = "<Transform DEF='Loom' center='0.72 -0.76 0'>%s</Transform><ROUTE fromNode='SwayTurn' fromField='value_changed' toNode='Loom' toField='set_rotation'/>" % ''.join(X)
     # ---- viewpoints (spliced before the Deep scene's own first Viewpoint so Face is the one bound at load)

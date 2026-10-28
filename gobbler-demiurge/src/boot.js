@@ -128,7 +128,7 @@
     var cols = { heart: '#ffe9a8', ribcage: '#d6b25c', flywheel: '#f2c35f', blender: '#f5851a', fan_gltf: '#40d9ff', fan_usd: '#ffeebb', fan_video: '#f24dd9', tenders: '#8cf0a8', wing: '#9ed7ff' };
     tags = anchors.map(function (a) {
       var mock = /mock/.test(a.tag), d = document.createElement('div'); d.className = 'gd-tag' + (mock ? ' mock' : ''); d.style.setProperty('--c', cols[a.id] || '#e9cf8a');
-      d.innerHTML = '<i></i><b></b><small></small>'; $('b', d).textContent = a.label + (/^fan_/.test(a.id) ? (mock ? ' · mock' : ' · real path') : ''); $('small', d).textContent = '';
+      d.innerHTML = '<i></i><b></b><small></small>'; $('b', d).textContent = a.label + (/^fan_/.test(a.id) ? (mock ? ' · mock' : ' · simulated') : ''); $('small', d).textContent = '';
       d.title = a.tag; host.appendChild(d); return { a: a, el: d, shown: false };
     });
   }
