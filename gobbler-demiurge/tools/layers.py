@@ -1,0 +1,359 @@
+"""Gobbler demiurge, step 2: the layers that sit on top of the Gobbler 3 Deep scene (generated, seeded, deterministic).
+Everything here is plain X3D 4.0 (no Script): Sun in the chest, Dyson ribcage (364 class beads from the ontology), flywheel ring,
+shell tenders, wing primaries, tail fan with the Blender root, Face and Establishing viewpoints.  Nothing in the Deep scene is edited:
+the layers are spliced in before </Scene> by build_bird.py, and they USE two things the Deep scene already DEFs (PointShader, SwayTurn).
+Look = B's faceted head (already in the Deep scene) plus lots of D (gold wireframe plumage, flywheel focus, tenders, Blender fan root)."""
+import json, math, random, colorsys
+
+SUN = (6.5, -2.6, 0.4)          # the heart, in the chest where the neck meets the graph (Deep scene coordinates)
+RIB_R = 3.3                      # Dyson ribcage radius around the Sun
+ROOT = (17.4, -2.5, 0.0)         # tail root: the Blender i/o window
+FAN_L = 8.4                      # tail plume length
+GOLD = (0.84, 0.70, 0.36)
+BLENDER = (0.95, 0.52, 0.10)
+
+def f(x): return ('%.4g' % x) if abs(x) >= 1e-4 else '0'
+def v3(p): return ' '.join(f(x) for x in p)
+def add(a, b): return (a[0] + b[0], a[1] + b[1], a[2] + b[2])
+def sub(a, b): return (a[0] - b[0], a[1] - b[1], a[2] - b[2])
+def mul(a, k): return (a[0] * k, a[1] * k, a[2] * k)
+def cross(a, b): return (a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0])
+def norm(a):
+    l = math.sqrt(sum(x * x for x in a)) or 1.0
+    return (a[0] / l, a[1] / l, a[2] / l)
+def axis_angle_to_q(ax, ang): s = math.sin(ang / 2); n = norm(ax); return (n[0] * s, n[1] * s, n[2] * s, math.cos(ang / 2))
+
+SUN_SHADER = """<ComposedShader DEF='SunShader' language='GLSL'><field name='time' type='SFTime' accessType='inputOutput' value='0'/>
+<ShaderPart type='VERTEX'><![CDATA[data:x-shader/x-vertex,#version 300 es
+precision highp float;
+precision highp int;
+uniform mat4 x3d_ProjectionMatrix;
+uniform mat4 x3d_ModelViewMatrix;
+uniform mat3 x3d_NormalMatrix;
+in vec4 x3d_Vertex;
+in vec3 x3d_Normal;
+out vec3 vN;
+out vec3 vP;
+void main() {
+  vN = normalize(x3d_NormalMatrix * x3d_Normal);
+  vP = x3d_Vertex.xyz;
+  gl_Position = x3d_ProjectionMatrix * x3d_ModelViewMatrix * x3d_Vertex;
+}
+]]></ShaderPart>
+<ShaderPart type='FRAGMENT'><![CDATA[data:x-shader/x-fragment,#version 300 es
+precision highp float;
+precision highp int;
+uniform float time;
+in vec3 vN;
+in vec3 vP;
+out vec4 x3d_FragColor;
+float h1(vec3 p) { p = fract(p * 0.3183099 + 0.1); p *= 17.0; return fract(p.x * p.y * p.z * (p.x + p.y + p.z)); }
+float vnoise(vec3 x) {
+  vec3 i = floor(x), f = fract(x); f = f * f * (3.0 - 2.0 * f);
+  return mix(mix(mix(h1(i), h1(i + vec3(1, 0, 0)), f.x), mix(h1(i + vec3(0, 1, 0)), h1(i + vec3(1, 1, 0)), f.x), f.y),
+             mix(mix(h1(i + vec3(0, 0, 1)), h1(i + vec3(1, 0, 1)), f.x), mix(h1(i + vec3(0, 1, 1)), h1(i + vec3(1, 1, 1)), f.x), f.y), f.z);
+}
+void main() {
+  float mu = clamp(normalize(vN).z, 0.0, 1.0);
+  float g = vnoise(vP * 26.0 + vec3(0.0, time * 0.10, 0.0)) * 0.6 + vnoise(vP * 64.0 - vec3(time * 0.17, 0.0, 0.0)) * 0.4;
+  vec3 c = mix(vec3(1.0, 0.55, 0.12), vec3(1.0, 0.97, 0.82), pow(mu, 0.5)) * (0.8 + 0.5 * g);
+  c += vec3(1.0, 0.45, 0.08) * pow(1.0 - mu, 3.0) * 0.6;
+  x3d_FragColor = vec4(c, 1.0);
+}
+]]></ShaderPart></ComposedShader>"""
+
+GLOW_SHADER = """<ComposedShader DEF='GlowShader' language='GLSL'>
+<ShaderPart type='VERTEX'><![CDATA[data:x-shader/x-vertex,#version 300 es
+precision highp float;
+precision highp int;
+uniform mat4 x3d_ProjectionMatrix;
+uniform mat4 x3d_ModelViewMatrix;
+in vec4 x3d_Vertex;
+in vec4 x3d_Color;
+out vec2 vUV;
+out vec3 vCol;
+void main() {
+  vUV = x3d_Vertex.xy;
+  vCol = x3d_Color.rgb;
+  gl_Position = x3d_ProjectionMatrix * x3d_ModelViewMatrix * x3d_Vertex;
+}
+]]></ShaderPart>
+<ShaderPart type='FRAGMENT'><![CDATA[data:x-shader/x-fragment,#version 300 es
+precision highp float;
+precision highp int;
+in vec2 vUV;
+in vec3 vCol;
+out vec4 x3d_FragColor;
+void main() {
+  float r = length(vUV);
+  if (r >= 1.0) discard;
+  float a = pow(1.0 - r, 2.6) * 0.85 + exp(-r * r * 22.0) * 0.5;
+  x3d_FragColor = vec4(vCol * (0.9 + 0.8 * exp(-r * r * 14.0)), clamp(a, 0.0, 1.0));
+}
+]]></ShaderPart></ComposedShader>"""
+_glow_defined = [False]
+def glow(center, radius, col):
+    """a screen-facing soft glow (Billboard quad with GlowShader): size in scene units, no point-size limit"""
+    sh = "<ComposedShader USE='GlowShader'/>" if _glow_defined[0] else GLOW_SHADER
+    _glow_defined[0] = True
+    c = v3(col)
+    return ("<Transform translation='%s' scale='%s %s %s'><Billboard axisOfRotation='0 0 0'><Shape><Appearance alphaMode='BLEND'>%s</Appearance>"
+            "<IndexedFaceSet solid='false' coordIndex='0 1 2 3 -1'><Color color='%s'/><Coordinate point='-1 -1 0 1 -1 0 1 1 0 -1 1 0'/></IndexedFaceSet></Shape></Billboard></Transform>"
+            % (v3(center), f(radius), f(radius), f(radius), sh, ' '.join([c] * 4)))
+
+def gems(pts, cols, radii):
+    """faceted gem beads: one octahedron per point, flat per-face colour with a fake key light (B's facets, unlit), one IndexedFaceSet"""
+    P, I, C = [], [], []
+    L = norm((-0.4, 0.7, 0.6))
+    for p, c, r in zip(pts, cols, radii):
+        b = len(P)
+        V = [(r, 0, 0), (-r, 0, 0), (0, r, 0), (0, -r, 0), (0, 0, r), (0, 0, -r)]
+        P += [add(p, v) for v in V]
+        for (a_, b_, c_) in ((2, 4, 0), (2, 1, 4), (2, 5, 1), (2, 0, 5), (3, 0, 4), (3, 4, 1), (3, 1, 5), (3, 5, 0)):
+            I.append('%d %d %d -1' % (b + a_, b + b_, b + c_))
+            n = norm(add(add(V[a_], V[b_]), V[c_])); k = 0.5 + 0.62 * max(0.0, n[0] * L[0] + n[1] * L[1] + n[2] * L[2])
+            C.append(v3(tuple(min(1.0, x * k) for x in c)))
+    return ("<Shape><Appearance/><IndexedFaceSet solid='false' colorPerVertex='false' coordIndex='%s'><Color color='%s'/><Coordinate point='%s'/></IndexedFaceSet></Shape>"
+            % (' '.join(I), ' '.join(C), ' '.join(v3(p) for p in P)))
+
+def alpha(kind, size):
+    """PointShader (Deep scene) encodes the sprite kind and size in the colour alpha: kind * 0.25 + size / 16, size under 4.
+    kind 1 = star (lit by the scene's moving lights, spikes above size 2.75), kind 3 = mote (steady)"""
+    assert 0 <= kind <= 3 and 0 < size < 4
+    return kind * 0.25 + size / 16.0
+
+def points_shape(pts, cols, kind, sizes, bind_def=None):
+    rgba = ' '.join('%s %s %s %s' % (f(c[0]), f(c[1]), f(c[2]), '%.4f' % alpha(kind, s)) for c, s in zip(cols, sizes))
+    return ("<Shape><Appearance alphaMode='BLEND'><Material diffuseColor='0 0 0' emissiveColor='1 0.8 0.42'/><ComposedShader USE='PointShader'/></Appearance>"
+            "<PointSet><ColorRGBA color='%s'/><Coordinate point='%s'/></PointSet></Shape>") % (rgba, ' '.join(v3(p) for p in pts))
+
+def lines_shape(polys, mat, defname=None, transparency=0.0):
+    pts, idx = [], []
+    for poly in polys:
+        base = len(pts); pts += poly; idx += list(range(base, base + len(poly))) + [-1]
+    m = "<Material %semissiveColor='%s' diffuseColor='0 0 0'%s/>" % ("DEF='%s' " % defname if defname else '', v3(mat), (" transparency='%s'" % f(transparency)) if transparency else '')
+    return ("<Shape><Appearance alphaMode='BLEND'>%s</Appearance><IndexedLineSet coordIndex='%s'><Coordinate point='%s'/></IndexedLineSet></Shape>"
+            % (m, ' '.join(map(str, idx)), ' '.join(v3(p) for p in pts)))
+
+def circle(c, ax, r, n=96):
+    ax = norm(ax); h = (0, 1, 0) if abs(ax[1]) < .9 else (1, 0, 0)
+    u = norm(cross(ax, h)); w = cross(ax, u)
+    return [add(c, add(mul(u, r * math.cos(2 * math.pi * i / n)), mul(w, r * math.sin(2 * math.pi * i / n)))) for i in range(n + 1)]
+
+# ---------------------------------------------------------------- feathers
+def feather(root, u, v, n, L, W, nb, arch, curl, tilt):
+    """one feather as a faceted wireframe: spine, barbs, outline, facets. returns lists in world coordinates"""
+    S, Lt, Rt = [], [], []
+    for i in range(nb + 1):
+        t = i / nb
+        p = add(root, mul(u, L * t)); p = add(p, mul(n, arch * L * t * t)); p = add(p, mul(v, curl * L * t * t))
+        S.append(p)
+    for i in range(1, nb + 1):
+        t = i / nb
+        prof = (math.sin(math.pi * min(1.0, t ** 0.82)) ** 0.62) if t < 1 else 0.0
+        w = 0.5 * W * prof
+        base = S[i]
+        l = add(add(base, mul(v, w)), mul(u, 0.55 * w)); r = add(add(base, mul(v, -w)), mul(u, 0.55 * w))
+        Lt.append(add(l, mul(n, tilt * w))); Rt.append(add(r, mul(n, -tilt * w)))
+    return S, Lt, Rt
+
+def plume_lod(name, root, u, v, n, L, W, style, rng, nb_near=22, nb_mid=8):
+    """style: plain | mock | (real, rgb) | (work, rgb): returns an LOD (near, mid, far) in X3D, plus the tip position"""
+    arch, curl, tilt = rng.uniform(.04, .10), rng.uniform(-.05, .05), rng.uniform(.10, .22)
+    out = []
+    kind = style if isinstance(style, str) else style[0]
+    col = None if isinstance(style, str) else style[1]
+    edge = {'plain': (0.80, 0.64, 0.30), 'mock': (0.42, 0.40, 0.38), 'real': col, 'work': (0.80, 0.64, 0.30)}[kind]
+    barb = {'plain': (0.50, 0.38, 0.17), 'mock': None, 'real': tuple(c * 0.55 for c in col) if col else None, 'work': (0.50, 0.38, 0.17)}[kind]
+    face_a = {'plain': 0.26, 'mock': 0.0, 'real': 0.36, 'work': 0.26}[kind]
+    ftint = col if kind == 'real' else (1.0, 0.80, 0.40)
+    levels = []
+    for nb, with_barbs in ((nb_near, True), (nb_mid, False)):
+        S, Lt, Rt = feather(root, u, v, n, L, W, nb, arch, curl, tilt)
+        parts = []
+        # facets: a quad strip each side, per-face tint and alpha (B's facets), unlit
+        if face_a > 0:
+            pts = S[1:] + Lt + Rt; k = len(S) - 1
+            sI = lambda i: i - 1                 # S[1..nb] -> 0..nb-1
+            lI = lambda i: k + i - 1
+            rI = lambda i: 2 * k + i - 1
+            faces, cols = [], []
+            for i in range(1, nb):
+                faces.append((sI(i), sI(i + 1), lI(i + 1), lI(i))); faces.append((sI(i), rI(i), rI(i + 1), sI(i + 1)))
+            for fi in range(len(faces)):
+                jit = rng.uniform(.55, 1.15); tcol = tuple(min(1, c * jit) for c in ftint)
+                cols.append('%s %s %s %s' % (f(tcol[0]), f(tcol[1]), f(tcol[2]), f(face_a * rng.uniform(.6, 1.25))))
+            parts.append("<Shape><Appearance alphaMode='BLEND'/><IndexedFaceSet solid='false' colorPerVertex='false' coordIndex='%s'><ColorRGBA color='%s'/><Coordinate point='%s'/></IndexedFaceSet></Shape>"
+                         % (' '.join(' '.join(map(str, q)) + ' -1' for q in faces), ' '.join(cols), ' '.join(v3(p) for p in pts)))
+        if with_barbs and barb:
+            parts.append(lines_shape([[S[i], Lt[i - 1]] for i in range(1, nb + 1)] + [[S[i], Rt[i - 1]] for i in range(1, nb + 1)], barb, transparency=0.25))
+        outline = [S[0]] + Lt + [S[-1]] + Rt[::-1] + [S[0]]
+        parts.append(lines_shape([S, outline] if kind != 'mock' else [outline, S], edge, defname=(name + '_edge') if kind == 'work' and nb == nb_near else None))
+        levels.append(''.join(parts))
+    S, _, _ = feather(root, u, v, n, L, W, 4, arch, curl, tilt)
+    tip = S[-1]
+    far = lines_shape([S], edge, transparency=0.2) + points_shape([tip], [edge], 1, [2.4 if kind == 'real' else 1.5])
+    mid_pt = S[len(S) // 2]
+    xml = "<LOD DEF='%s' center='%s' range='11 60'>%s</LOD>" % (name, v3(mid_pt), ''.join("<Group>%s</Group>" % s for s in (levels[0], levels[1], far)))
+    return xml, tip
+
+# ---------------------------------------------------------------- assembly
+def build(explorer_path, seed=4):
+    rng = random.Random(seed); _glow_defined[0] = False
+    D = json.load(open(explorer_path))
+    maxd = D['stats']['max_depth']
+    fams = sorted(D['families'], key=lambda k: -D['families'][k])
+    def fam_col(fm):
+        h = (fams.index(fm) * 137.5 % 360) / 360
+        return colorsys.hls_to_rgb(h, .66, .72)
+    anchors = []
+    X = []                                  # xml chunks inside the sway group
+    def anchor(id_, label, tag, pos, level='min'):
+        anchors.append(dict(id=id_, label=label, tag=tag, pos=[round(c, 3) for c in pos], level=level))
+
+    # ---- the Sun: validator heart (idle breathing is display only; step 7 replays real validator rounds)
+    X.append("<Transform DEF='Heart' translation='%s'><Transform DEF='HeartPulse'>" % v3(SUN))
+    X.append("<Shape><Appearance><Material diffuseColor='0 0 0' emissiveColor='1 0.9 0.6'/>%s</Appearance><Sphere radius='0.36'/></Shape>" % SUN_SHADER)
+    X.append(glow((0, 0, 0), 2.1, (1.0, 0.62, 0.18)))
+    X.append(glow((0, 0, 0), 0.95, (1.0, 0.92, 0.62)))
+    X.append("</Transform></Transform>")
+    X.append("<TimeSensor DEF='HeartClock' cycleInterval='3.4' loop='true'/>"
+             "<PositionInterpolator DEF='HeartBreath' key='0 0.18 0.34 1' keyValue='1 1 1, 1.1 1.1 1.1, 0.98 0.98 0.98, 1 1 1'/>"
+             "<ROUTE fromNode='Twinkle' fromField='elapsedTime' toNode='SunShader' toField='time'/>"
+             "<ROUTE fromNode='HeartClock' fromField='fraction_changed' toNode='HeartBreath' toField='set_fraction'/>"
+             "<ROUTE fromNode='HeartBreath' fromField='value_changed' toNode='HeartPulse' toField='set_scale'/>")
+    anchor('heart', 'The validator', 'the Sun, the bird\'s heart · idle pulse (display only)', add(SUN, (0.5, -0.45, 0.4)))
+
+    # ---- Dyson ribcage: lat/lon lattice + 364 ontology class beads (x3d.onto v2 layout: longitude = a, latitude from depth)
+    wires = []
+    for lat in (-60, -30, 0, 30, 60):
+        la = math.radians(lat); wires.append([add(SUN, (RIB_R * math.cos(la) * math.cos(2 * math.pi * i / 72), RIB_R * math.sin(la), RIB_R * math.cos(la) * math.sin(2 * math.pi * i / 72))) for i in range(73)])
+    for lon in range(0, 360, 30):
+        lo = math.radians(lon); wires.append([add(SUN, (RIB_R * math.cos(math.pi * (i / 48 * 2 - 1) / 2) * math.cos(lo), RIB_R * math.sin(math.pi * (i / 48 * 2 - 1) / 2), RIB_R * math.cos(math.pi * (i / 48 * 2 - 1) / 2) * math.sin(lo))) for i in range(49)])
+    X.append(lines_shape(wires, (1.0, 0.82, 0.42), transparency=0.0))
+    dots = [p for w in wires for p in w[::3]]
+    X.append(points_shape(dots, [(1.0, 0.85, 0.5)] * len(dots), 3, [0.9] * len(dots)))
+    bp, bc, bs = [], [], []
+    bands = {}
+    for nd in D['nodes']: bands.setdefault(nd['d'], []).append(nd)
+    place = {}
+    for d_, grp in bands.items():                                   # latitude from depth as in v2; longitude respaced evenly (v2's own `a` stacks classes into strings)
+        grp.sort(key=lambda n_: n_['a']); ph = rng.uniform(0, 2 * math.pi)
+        for k, nd in enumerate(grp):
+            lon = ph + 2 * math.pi * (k + 0.5) / len(grp); lat = math.radians(70 - d_ * 140 / maxd + (9 if k % 2 else -9) * rng.uniform(.3, 1.0))
+            place[nd['id']] = (lon, max(-1.45, min(1.45, lat)))
+    for nd in D['nodes']:
+        lon, lat = place[nd['id']]
+        p = add(SUN, (RIB_R * math.cos(lat) * math.cos(lon), RIB_R * math.sin(lat), RIB_R * math.cos(lat) * math.sin(lon)))
+        bp.append(p)
+        if nd['new']: bc.append((0.35, 1.0, 0.55)); bs.append(2.74)
+        else: bc.append(fam_col(nd['fam'])); bs.append(1.7 if nd['kind'] == 'abstract' else 2.1)
+    assert len(bp) == 364
+    X.append(gems(bp, bc, [0.17 if z > 2.5 else 0.105 for z in bs]))
+    anchor('ribcage', 'Dyson ribcage', '364 ontology classes, X3D Ontology 4.1 (x3d.onto) · green = new in 4.1', add(SUN, (RIB_R * .7, RIB_R * .75, 0)))
+
+    # ---- three domain rings, slowly turning (X3D, URDF, glTF) and the flywheel loop ring with a running pulse
+    rings = [('RingX3D', (1, 0.2, 0), RIB_R * 1.22, (0.84, 0.70, 0.36), 63), ('RingURDF', (0.1, 0, 1), RIB_R * 1.38, (0.45, 0.62, 0.9), 83), ('RingGLTF', (0.7, 0, 0.7), RIB_R * 1.54, (0.30, 0.82, 0.78), 103)]
+    for nm, ax, r, col, per in rings:
+        X.append("<Transform DEF='%s' center='%s'>" % (nm, v3(SUN)))
+        X.append(lines_shape([circle(SUN, ax, r, 120)], col, transparency=0.35))
+        dots = circle(SUN, ax, r, 40)[:-1]
+        X.append(points_shape(dots, [col] * len(dots), 3, [1.3] * len(dots)))
+        X.append("</Transform>")
+        X.append("<TimeSensor DEF='%sClock' cycleInterval='%d' loop='true'/><OrientationInterpolator DEF='%sSpin' key='0 0.5 1' keyValue='0 1 0 0, 0 1 0 3.14159, 0 1 0 6.28318'/>"
+                 "<ROUTE fromNode='%sClock' fromField='fraction_changed' toNode='%sSpin' toField='set_fraction'/><ROUTE fromNode='%sSpin' fromField='value_changed' toNode='%s' toField='set_rotation'/>" % (nm, per, nm, nm, nm, nm, nm))
+    LR = RIB_R * 1.72; lax = (0.25, 0.1, 1.0)
+    X.append("<Transform DEF='Flywheel4' center='%s'>" % v3(SUN))
+    X.append(lines_shape([circle(SUN, lax, LR, 140)], (0.95, 0.75, 0.35), transparency=0.15))
+    st = circle(SUN, lax, LR, 8)[:-1]
+    X.append(points_shape(st, [(1.0, 0.82, 0.45)] * 8, 1, [2.4] * 8))
+    X.append("<Transform DEF='FlywheelPulse' center='%s'>%s</Transform>" % (v3(SUN), points_shape([st[0]], [(1.0, 0.97, 0.8)], 3, [3.2])))
+    X.append("</Transform>")
+    X.append("<TimeSensor DEF='FlywheelClock' cycleInterval='9' loop='true'/><OrientationInterpolator DEF='FlywheelSpin' key='0 0.5 1' keyValue='%s 0, %s 3.14159, %s 6.28318'/>"
+             "<ROUTE fromNode='FlywheelClock' fromField='fraction_changed' toNode='FlywheelSpin' toField='set_fraction'/><ROUTE fromNode='FlywheelSpin' fromField='value_changed' toNode='FlywheelPulse' toField='set_rotation'/>" % ((v3(norm(lax)),) * 3))
+    anchor('flywheel', 'The flywheel', 'write, validate, repair, render, around the heart · pulse is display only', st[2])
+
+    # ---- shell tenders: faceted mannequins that walk the lattice (H-Anim is step 8), points of light from far away
+    man_inner = ("<Shape DEF='TenderMat'><Appearance><Material diffuseColor='0 0 0' emissiveColor='0.95 0.82 0.5'/></Appearance><Box size='0.1 0.16 0.06'/></Shape>"
+           "<Transform translation='0 0.13 0'><Shape><Appearance><Material diffuseColor='0 0 0' emissiveColor='1 0.92 0.7'/></Appearance><Sphere radius='0.04'/></Shape></Transform>"
+           "<Transform translation='-0.075 0.01 0' rotation='0 0 1 0.35'><Shape USE='TenderMat'/></Transform>"
+           "<Transform translation='0.075 0.01 0' rotation='0 0 1 -0.35'><Shape USE='TenderMat'/></Transform>"
+           "<Transform translation='-0.03 -0.15 0'><Shape USE='TenderMat'/></Transform><Transform translation='0.03 -0.15 0'><Shape USE='TenderMat'/></Transform>"
+           "<Transform translation='0 0.2 0'><Shape><Appearance><Material diffuseColor='0 0 0' emissiveColor='0.35 1 0.55'/></Appearance><Sphere radius='0.028'/></Shape></Transform>")
+    NT = 10
+    for k in range(NT):
+        axis = norm((rng.uniform(-1, 1), rng.uniform(-.3, 1), rng.uniform(-1, 1))); per = rng.choice([47, 59, 71, 83, 97])
+        r0 = add(SUN, mul(norm((rng.uniform(.3, 1), rng.uniform(-.4, .4), rng.uniform(-1, 1))), RIB_R * 1.01))
+        body = ("<Group DEF='TenderBody'>%s</Group>" % man_inner) if k == 0 else "<Group USE='TenderBody'/>"
+        X.append("<Transform DEF='TenderOrbit%d' center='%s'><Transform translation='%s' rotation='0 0 1 %s'><LOD range='5'>"
+                 "%s<Group>%s</Group></LOD></Transform></Transform>" % (k, v3(SUN), v3(r0), f(rng.uniform(-.5, .5)), body, points_shape([(0, 0, 0)], [(1.0, 0.92, 0.7)], 3, [1.9])))
+        X.append("<TimeSensor DEF='TenderClock%d' cycleInterval='%d' loop='true'/><OrientationInterpolator DEF='TenderSpin%d' key='0 0.5 1' keyValue='%s 0, %s 3.14159, %s 6.28318'/>"
+                 "<ROUTE fromNode='TenderClock%d' fromField='fraction_changed' toNode='TenderSpin%d' toField='set_fraction'/><ROUTE fromNode='TenderSpin%d' fromField='value_changed' toNode='TenderOrbit%d' toField='set_rotation'/>"
+                 % (k, per, k, v3(axis), v3(axis), v3(axis), k, k, k, k))
+    anchor('tenders', 'Shell tenders', 'they tend the ribcage · simulated placeholders, H-Anim in step 8', add(SUN, (-RIB_R * .2, RIB_R * 1.0, RIB_R * .3)), 'full')
+
+    # ---- wing: 10 primaries on the upper back (orchestrator roles; role colour only while working, simulated)
+    ROLES = [('planner', (0.25, 0.85, 0.85)), ('router', (0.30, 0.65, 1.0)), ('validator', (1.0, 0.93, 0.66)), ('repair', (0.30, 0.95, 0.55)), ('vision judge', (0.95, 0.35, 0.85)),
+             ('DSPy optimizer', (0.68, 0.45, 1.0)), ('memory', (1.0, 0.65, 0.25)), ('Blender operator', BLENDER), ('exporter', (0.40, 0.85, 1.0)), ('curator', (0.85, 0.85, 0.45))]
+    shoulder = (8.6, 1.6, 2.0)
+    interp = []
+    for i, (role, rc) in enumerate(ROLES):
+        ang = math.radians(8 + i * 6.2)
+        u = norm((math.cos(ang), math.sin(ang), 0.22 - 0.03 * i)); v = norm(cross((0, 0, 1), u)); n = norm(cross(u, v))
+        L = 6.4 + 1.5 * math.sin(math.pi * (i + .5) / 10)
+        xml, tip = plume_lod('Wing%d' % i, add(shoulder, (0, 0.06 * i, 0.0)), u, v, n, L, 0.9, ('work', rc), rng, 18, 7)
+        X.append(xml)
+        per = round(11 + 1.7 * i, 1)
+        interp.append("<TimeSensor DEF='WingClock%d' cycleInterval='%s' loop='true'/><ColorInterpolator DEF='WingTint%d' key='0 0.08 0.3 0.42 1' keyValue='0.80 0.64 0.30, %s, %s, 0.80 0.64 0.30, 0.80 0.64 0.30'/>"
+                      "<ROUTE fromNode='WingClock%d' fromField='fraction_changed' toNode='WingTint%d' toField='set_fraction'/><ROUTE fromNode='WingTint%d' fromField='value_changed' toNode='Wing%d_edge' toField='set_emissiveColor'/>"
+                      % (i, per, i, v3(rc), v3(rc), i, i, i, i))
+    X += interp
+    anchor('wing', 'Primaries', '10 orchestrator roles; a colour = that role working · simulated until real runs replace them', add(shoulder, (3.4, 3.0, 0)))
+
+    # ---- Blender: the i/o window at the tail root, streams converging on it, 18 plumes fanned from it
+    cloud = [p for p in [(rng.uniform(9, 16.5), rng.uniform(-6.5, 4.5), rng.uniform(-6, 6)) for _ in range(40)]]
+    X.append("<Transform DEF='BlenderRoot' translation='%s'>" % v3(ROOT))
+    X.append("<Transform DEF='BlenderPulse'>%s%s%s</Transform>" % (glow((0, 0, 0), 1.7, BLENDER), glow((0, 0, 0), 0.8, (1.0, 0.86, 0.6)), points_shape([(0, 0, 0)], [(1.0, 0.95, 0.85)], 1, [3.0])))
+    X.append(lines_shape([circle((0, 0, 0), (0, 0, 1), 0.95, 64), circle((0, 0, 0), (0, 0.4, 1), 1.25, 64)], BLENDER, transparency=0.15))
+    X.append("</Transform>")
+    X.append("<TimeSensor DEF='BlenderClock' cycleInterval='5.2' loop='true'/><PositionInterpolator DEF='BlenderBreath' key='0 0.5 1' keyValue='1 1 1, 1.12 1.12 1.12, 1 1 1'/>"
+             "<ROUTE fromNode='BlenderClock' fromField='fraction_changed' toNode='BlenderBreath' toField='set_fraction'/><ROUTE fromNode='BlenderBreath' fromField='value_changed' toNode='BlenderPulse' toField='set_scale'/>")
+    streams = []
+    for k, c0 in enumerate(cloud[:16]):
+        mid = add(mul(add(c0, ROOT), .5), (rng.uniform(-1, 1), rng.uniform(-1.6, 1.6), rng.uniform(-1, 1)))
+        pts = []
+        for i in range(25):
+            t = i / 24; a = mul(c0, (1 - t) ** 2); b = mul(mid, 2 * (1 - t) * t); c = mul(ROOT, t * t); pts.append(add(add(a, b), c))
+        streams.append(pts)
+    X.append(lines_shape(streams, (0.62, 0.40, 0.16), transparency=0.5))
+    for k in range(5):                      # five pulses that run in along the streams (simulated input traffic)
+        sp = streams[k * 3]; key = ' '.join(f(i / (len(sp) - 1)) for i in range(len(sp)))
+        X.append("<Transform DEF='InPulse%d' translation='%s'>%s</Transform>" % (k, v3(sp[0]), points_shape([(0, 0, 0)], [(1.0, 0.75, 0.4)], 3, [2.0])))
+        X.append("<TimeSensor DEF='InClock%d' cycleInterval='%s' loop='true'/><PositionInterpolator DEF='InPath%d' key='%s' keyValue='%s'/>"
+                 "<ROUTE fromNode='InClock%d' fromField='fraction_changed' toNode='InPath%d' toField='set_fraction'/><ROUTE fromNode='InPath%d' fromField='value_changed' toNode='InPulse%d' toField='set_translation'/>"
+                 % (k, f(5.5 + 1.3 * k), k, key, ', '.join(v3(p) for p in sp), k, k, k, k))
+    anchor('blender', 'Blender', 'the i/o window: everything in and out passes through it (the real exporter and the blenderizer)', ROOT)
+
+    TARGETS = {1: ('O3DE', 'mock'), 3: ('ParaView', 'mock'), 5: ('3D Slicer', 'mock'), 6: ('video', 'real', (0.95, 0.30, 0.85)), 8: ('USD', 'real', (1.0, 0.93, 0.7)), 9: ('glTF', 'real', (0.25, 0.85, 1.0)),
+               11: ('Unity', 'mock'), 13: ('Defold', 'mock'), 15: ('IFC', 'mock')}
+    for i in range(18):
+        th = math.radians(-82 + i * (164 / 17))
+        u = norm((math.cos(th), math.sin(th), 0.10 * math.sin(th * 1.0)))
+        v = norm(cross((0, 0, 1), u)); n = norm(cross(u, v))
+        tg = TARGETS.get(i)
+        style = 'plain' if not tg else ('mock' if tg[1] == 'mock' else ('real', tg[2]))
+        L = FAN_L * (0.92 + 0.12 * math.cos(th) + rng.uniform(-.03, .03))
+        xml, tip = plume_lod('Fan%d' % i, add(ROOT, mul(u, 0.9)), u, v, n, L, 1.0 if tg is None or tg[1] != 'mock' else 0.9, style, rng, 22, 8)
+        X.append(xml)
+        if tg: anchor('fan_' + tg[0].lower().replace(' ', ''), tg[0], ('Blender export, real path · lights on a passing export in step 9' if tg[1] == 'real' else 'mock: outline only, no real path yet'), tip, 'min' if tg[1] == 'real' else 'full')
+
+    sway = "<Transform DEF='Loom' center='0.72 -0.76 0'>%s</Transform><ROUTE fromNode='SwayTurn' fromField='value_changed' toNode='Loom' toField='set_rotation'/>" % ''.join(X)
+    # ---- viewpoints (spliced before the Deep scene's own first Viewpoint so Face is the one bound at load)
+    vps = {
+        'Face': dict(position=(3.0, -1.8, 13.2), orientation=(0, 0, 1, 0), fov=0.74, center=(3.0, -1.8, 0)),
+        'Establishing': dict(position=(12.0, -1.5, 25.0), orientation=(0, 0, 1, 0), fov=0.88, center=(12, -1.5, 0)),
+    }
+    vp_xml = ''.join("<Viewpoint DEF='%s' description='%s' position='%s' orientation='%s' centerOfRotation='%s' fieldOfView='%s'/>" % (k, k, v3(d['position']), v3(d['orientation']), v3(d['center']), f(d['fov'])) for k, d in vps.items())
+    vp_xml += "<Viewpoint DEF='TourCam' description='Tour' position='3 -1.8 13.2' fieldOfView='0.8'/>"
+    routes = ''.join("<ROUTE fromNode='%s' fromField='bindTime' toNode='Intro' toField='set_startTime'/>" % k for k in vps)
+    return dict(sway=sway, viewpoints=vp_xml, routes=routes, anchors=anchors, counts=dict(beads=len(bp), tenders=NT, wing=len(ROLES), fan=18, streams=len(streams)))
