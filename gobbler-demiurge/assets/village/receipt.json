@@ -1,0 +1,14 @@
+{
+ "blender": "5.2.2 LTS",
+ "blenderio": "x3d-blender-io d9bbf91",
+ "script_sha256": "c46449c0ac98dd1c9b665149cf2b4c6e7d2c7216cc22609988fa7972505af9ef",
+ "village_spec_sha256": "4b754d626b5ffdaed1cc583a7a8583c630caca211d38725abefbe491a0be7ac5",
+ "objects": 108,
+ "buildings": 17,
+ "stalls": 6,
+ "lamps": 12,
+ "trees": 70,
+ "file": "village.x3d",
+ "bytes": 300325,
+ "sha256": "c9ef0df6a60390e6b26930023864847f72078c1abeb3a36fa6034f937f2c6458"
+}

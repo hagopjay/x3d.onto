@@ -7,6 +7,7 @@ import json, math, os, random, colorsys, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import feathers as FE
 import tender as TD
+import world_layer as WL
 
 SUN = (6.5, -2.6, 0.4)          # the heart, in the chest where the neck meets the graph (Deep scene coordinates)
 RIB_R = 3.3                      # Dyson ribcage radius around the Sun
@@ -275,6 +276,16 @@ def feather_lines(variant, part, mat, key, transparency=0.0, mat_def=None):
     m = "<Material %semissiveColor='%s' diffuseColor='0 0 0'%s/>" % ("DEF='%s' " % mat_def if mat_def else '', v3(mat), (" transparency='%s'" % f(transparency)) if transparency else '')
     return "<Shape><Appearance alphaMode='BLEND'>%s</Appearance>%s</Shape>" % (m, geo)
 
+def feather_nodes(variant, key, col):
+    """white-gold glowing nodes on the vane's outline and spine, in the feather's unit frame (shared per variant): the references put a node on every vertex"""
+    dn = 'FN_%s_%s' % (variant, key)
+    if dn in _defined: return "<Shape USE='%s'/>" % dn
+    _defined.add(dn)
+    P = feather_parts(variant); pts = P['outline']['points'] + P['spine']['points'][::2]
+    rgba = ' '.join('%s %s %s %.4f' % (f(c[0]), f(c[1]), f(c[2]), alpha(3, s_)) for c, s_ in zip([col] * len(pts), [1.35] * len(pts)))
+    return ("<Shape DEF='%s'><Appearance alphaMode='BLEND'><Material diffuseColor='0 0 0' emissiveColor='1 0.8 0.42'/><ComposedShader USE='PointShader'/></Appearance>"
+            "<PointSet><ColorRGBA color='%s'/><Coordinate point='%s'/></PointSet></Shape>" % (dn, rgba, ' '.join(v3(p) for p in pts)))
+
 def plume_lod(name, root, u, v, n, L, W, style, rng, nb_near=22, nb_mid=8):
     """a plume from the Blender-modelled feather: same signature and the same random draws as the procedural one, so nothing else in the scene moves.
     returns an LOD (near, mid, far) and the tip position"""
@@ -303,6 +314,7 @@ def plume_lod(name, root, u, v, n, L, W, style, rng, nb_near=22, nb_mid=8):
     if barb: near.append(feather_lines(var, 'near_barbs', barb, key, 0.25))
     near.append(feather_lines(var, 'outline', edge, key, 0.0, (name + '_edge') if kind == 'work' else None))
     near.append(feather_lines(var, 'spine', edge, key))
+    if FEATHER_NODES and kind != 'mock': near.append(feather_nodes(var, key, tuple(min(1.0, 0.55 + 0.45 * c) for c in (col if kind == 'real' else (1.0, 0.9, 0.62)))))
     mid.append(feather_lines(var, 'outline', edge, key)); mid.append(feather_lines(var, 'spine', edge, key))
     far_pts = [place(p) for p in sp[::6]] + [tip]
     far = lines_shape([far_pts], edge, transparency=0.2) + points_shape([tip], [edge], 1, [2.4 if kind == 'real' else 1.5])
@@ -310,6 +322,8 @@ def plume_lod(name, root, u, v, n, L, W, style, rng, nb_near=22, nb_mid=8):
     xml = "<LOD DEF='%s' center='%s' range='11 60'>%s<Group>%s</Group></LOD>" % (name, v3(mid_pt), lvl(near) + lvl(mid), far)
     return xml, tip
 
+FEATHER_NODES = True               # glowing nodes on the near feathers (picture judge round 1); False = the build before that fix
+BEAD_GOLD = 0.62                  # share of gold in an ontology bead's colour (the rest is its family hue)
 TENDER_H = 0.55                   # a tender stands this tall (the Blender figure is 1 unit)
 TENDER_GAITS = (1.2, 1.5, 1.8)    # seconds per walk cycle of the three humanoid copies
 
@@ -359,9 +373,11 @@ def build(explorer_path, seed=4):
     D = json.load(open(explorer_path))
     maxd = D['stats']['max_depth']
     fams = sorted(D['families'], key=lambda k: -D['families'][k])
+    GOLD_BEAD = (1.0, 0.82, 0.45)
     def fam_col(fm):
-        h = (fams.index(fm) * 137.5 % 360) / 360
-        return colorsys.hls_to_rgb(h, .66, .72)
+        h = (fams.index(fm) * 137.5 % 360) / 360                       # the family hue, kept as a hint over gold: the judge round 1 read the full rainbow as clutter against the gold references
+        c = colorsys.hls_to_rgb(h, .66, .72)
+        return tuple(BEAD_GOLD * g + (1 - BEAD_GOLD) * x for g, x in zip(GOLD_BEAD, c))
     anchors = []
     X = []                                  # xml chunks inside the sway group
     def anchor(id_, label, tag, pos, level='min'):
@@ -485,6 +501,9 @@ def build(explorer_path, seed=4):
     for n in range(NG): X.append(tender_walk(n, TENDER_GAITS[n]))
     anchor('tenders', 'Shell tenders', 'they tend the ribcage · H-Anim humanoids made in Blender, their walk and their tending simulated', add(SUN, (-RIB_R * .2, RIB_R * 1.0, RIB_R * .3)), 'full')
 
+    # ---- the world: Earth, clouds and Moon, the village Aurelsbrunn and its villagers, the tether to the heart (tools/world_layer.py; the Blender files load when the camera comes near)
+    wxml, winfo = WL.build(sys.modules[__name__], anchor); X.append(wxml)
+
     # ---- wing: 10 primaries on the upper back (orchestrator roles; role colour only while working, simulated)
     ROLES = [('planner', (0.25, 0.85, 0.85)), ('router', (0.30, 0.65, 1.0)), ('validator', (1.0, 0.93, 0.66)), ('repair', (0.30, 0.95, 0.55)), ('vision judge', (0.95, 0.35, 0.85)),
              ('DSPy optimizer', (0.68, 0.45, 1.0)), ('memory', (1.0, 0.65, 0.25)), ('Blender operator', BLENDER), ('exporter', (0.40, 0.85, 1.0)), ('curator', (0.85, 0.85, 0.45))]
@@ -585,4 +604,4 @@ def build(explorer_path, seed=4):
     vp_xml = ''.join("<Viewpoint DEF='%s' description='%s' position='%s' orientation='%s' centerOfRotation='%s' fieldOfView='%s'/>" % (k, k, v3(d['position']), v3(d['orientation']), v3(d['center']), f(d['fov'])) for k, d in vps.items())
     vp_xml += "<Viewpoint DEF='TourCam' description='Tour' position='3 -1.8 13.2' fieldOfView='0.8'/>"
     routes = ''.join("<ROUTE fromNode='%s' fromField='bindTime' toNode='Intro' toField='set_startTime'/>" % k for k in vps)
-    return dict(sway=sway, viewpoints=vp_xml, component="<component name='HAnim' level='1'/>", routes=routes, anchors=anchors, counts=dict(beads=len(bp), tenders=NTEN, wing=len(ROLES), fan=18, streams=len(streams)))
+    return dict(world=winfo, sway=sway, viewpoints=vp_xml, component="<component name='HAnim' level='1'/>", routes=routes, anchors=anchors, counts=dict(beads=len(bp), tenders=NTEN, wing=len(ROLES), fan=18, streams=len(streams)))
