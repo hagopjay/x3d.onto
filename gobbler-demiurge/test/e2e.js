@@ -41,6 +41,9 @@ async function open(b, q, vp) {
   await p.click('#btn-tour'); await p.waitForTimeout(500); const lab = await p.evaluate(() => document.getElementById('btn-tour').textContent);
   await p.waitForTimeout(5000); const pt = await pose();
   check('tour: starts, label says Pause tour, camera moves', lab === 'Pause tour' && JSON.stringify(pt) !== JSON.stringify(pf), lab + ' ' + JSON.stringify(pt));
+  await p.keyboard.press('t'); await p.waitForTimeout(300); const tl = await p.evaluate(() => document.getElementById('btn-tour').textContent); check('keys: plain t toggles the tour (stops it here)', tl === 'Tour', tl);
+  await p.keyboard.press('Shift+T'); await p.waitForTimeout(300); check('keys: Shift+T opens the tuning panel, plain t did not', await p.evaluate(() => !document.getElementById('gv4-tune').hidden));
+  await p.keyboard.press('Shift+T'); await p.click('#btn-tour'); await p.waitForTimeout(200);
   await p.click('#btn-tour'); const lab2 = await p.evaluate(() => document.getElementById('btn-tour').textContent); check('tour: second click stops it, label back to Tour', lab2 === 'Tour', lab2);
   check('no page errors', p.errs.length === 0, p.errs.slice(0, 3).join(' | ')); await p.close();
   // ui none: nothing visible on top of the scene, same boot

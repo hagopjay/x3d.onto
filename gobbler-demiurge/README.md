@@ -38,7 +38,7 @@ The scene ships as `gobbler4-bird.x3d.gz` and is inflated in the page (`Decompre
 
 ## Controls: four, as planned
 
-UI level (`U`, none / minimal), Face (home view, key 1), Tour (a slow flight over the shot list), and a right-edge rail of 8 zoom stops (keys 1 to 8). Live stops: 1 Face, 2 Dyson ribcage, 3 Heart, 8 A feather. Stops 4 to 7 (Earth and Moon, village from orbit, plaza, a villager) show dashed and "next step". `Shift+F` is full screen; hold `H` hides everything, `T` opens the v4 tuning panel. Lights out (`L`) is not wired in this step. The v4 corner cards stay the one card style. Minimal UI also shows 15 small anchor tags (heart, ribcage, flywheel, wing, tenders, Blender, 9 export targets); tenders and mock plumes appear only within 15 units.
+UI level (`U`, none / minimal), Face (home view, key 1), Tour (a slow flight over the shot list), and a right-edge rail of 8 zoom stops (keys 1 to 8). Live stops: 1 Face, 2 Dyson ribcage, 3 Heart, 8 A feather. Stops 4 to 7 (Earth and Moon, village from orbit, plaza, a villager) show dashed and "next step". `T` toggles the tour and `Shift+T` opens the v4 tuning panel (the plan's key rule; the panel's own footer still says "T tune"). `Shift+F` is full screen; hold `H` hides everything. Lights out (`L`) is not wired in this step. The v4 corner cards stay the one card style. Minimal UI also shows 15 small anchor tags (heart, ribcage, flywheel, wing, tenders, Blender, 9 export targets); tenders and mock plumes appear only within 15 units.
 
 ## Measured (X_ITE 16.5.1 npm package, unpatched, full Chromium 1243 on SwiftShader software GL, local server, 1280 x 800 and 1527 x 923)
 
@@ -51,12 +51,19 @@ Grades: **Confirmed** = reproduced by a test or tool output in this folder; **Li
 | Bytes | scene 1,147,882 raw, 239,417 gzipped (Deep alone 685,470); graph 1,638,991 raw, 265,588 gzipped. First frame needs the scene only: 239 KB on the wire (plus X_ITE), against 2,324,461 raw for scene plus graph | Confirmed |
 | Boot, software GL | bird on screen in 4.8 to 5.8 s (X_ITE start about 1 s, fetch 0.2 s, parse 2.6 s, first frame 1.5 to 1.8 s); graph 0.1 s later | Confirmed here, real GPU and real network Suspected |
 | Failure path | a 404 on the scene shows "Stage: fetching the bird / HTTP 404 ..." | Confirmed (e2e) |
-| Frame rate | 3 to 5 fps on software GL; real GPU not measured | Suspected |
+| Frame rate | not measured on a GPU (software GL is not a bench); the fps readout in the corner shows the viewer's own number | Suspected |
 | Overlay | `?ui=none`: no element of the overlay displayed (e2e) | Confirmed |
 | Ladder and tour | key 3 flies to the heart, Face chip flies home, Tour moves the camera and the label follows | Confirmed (e2e) |
-| Gold wireframe plumage and the Sun read at the Face, ribcage, heart and feather stops | frames in `docs/frames/` | Likely (one rig, one judge: the owner's eye) |
+| Gold wireframe plumage and the Sun read at the Face, ribcage, heart and feather stops | frames in `docs/frames/` | Likely (one rig; the judge is the owner's eye, not yet given) |
 
-`node test/e2e.js` runs 17 checks, `python3 -I test/test_layers.py` 6.
+`node test/e2e.js` runs 19 checks, `python3 -I test/test_layers.py` 6.
+
+## Notes for step 3 (from the planning review)
+
+- Scale the Loom group uniformly so the ribcage radius 3.3 equals 2.4 AU (about 1.088e11 m per unit); the bird's ribcage is then the shell on the combined page (v2's shell geometry is skipped) and hover reads the same bead positions. The 0.36 Sun becomes the far child of a Sun LOD (v2's true-radius Sun the near child). Keep v2's camera-relative placement and log depth buffer; check that Earth's orbit clears the head.
+- The `Loom` group sways about the scene's pivot (0.72, -0.76); pivot it on the Sun, or move Heart and the ribcage out of the swaying group, before the Sun becomes a cosmic anchor.
+- LOD ranges (11 and 60) are local and survive the scale. Inline loads are keyed off ProximitySensors in the frame of what they load (village at v2's near-town threshold, Earth and Moon textures at about twice the Moon's distance); the 364 beads stay in the boot payload.
+- Not in this step: the nebula sky and the red and blue streaming trails of frame D (only the gold and orange Blender streams are drawn), Earth and Moon.
 
 ## Known rough edges
 

@@ -2,7 +2,7 @@
 Everything here is plain X3D 4.0 (no Script): Sun in the chest, Dyson ribcage (364 class beads from the ontology), flywheel ring,
 shell tenders, wing primaries, tail fan with the Blender root, Face and Establishing viewpoints.  Nothing in the Deep scene is edited:
 the layers are spliced in before </Scene> by build_bird.py, and they USE two things the Deep scene already DEFs (PointShader, SwayTurn).
-Look = B's faceted head (already in the Deep scene) plus lots of D (gold wireframe plumage, flywheel focus, tenders, Blender fan root)."""
+Look = B's faceted head (already in the Deep scene) plus lots of D: plumage drawn as gold wireframe feathers with translucent facets, the flywheel ring, tenders, the Blender fan root. Not drawn yet: the nebula sky and the red and blue streaming trails of frame D."""
 import json, math, random, colorsys
 
 SUN = (6.5, -2.6, 0.4)          # the heart, in the chest where the neck meets the graph (Deep scene coordinates)

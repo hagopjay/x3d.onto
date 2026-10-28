@@ -246,6 +246,10 @@
       if (/^[1-8]$/.test(ev.key)) { go(+ev.key - 1); }
       else if (ev.key === 'F' && ev.shiftKey) { if (document.fullscreenElement) document.exitFullscreen(); else if (stageEl.requestFullscreen) stageEl.requestFullscreen(); }
         });
+    window.addEventListener('keydown', function (ev) {      /* plan key rule: T = tour, Shift+T = the v4 tuning panel (the hover layer's own T handler never sees a plain t) */
+      if (ev.key !== 't' || ev.shiftKey || ev.metaKey || ev.ctrlKey || ev.altKey || (ev.target && /^(INPUT|TEXTAREA|SELECT)$/.test(ev.target.tagName))) return;
+      ev.stopImmediatePropagation(); ev.preventDefault(); tourToggle();
+    }, true);
     window.addEventListener('resize', function () { tagsDirty = true; });
     new MutationObserver(function () { level = $('#gv4').dataset.ui === 'none' ? 'none' : 'min'; tagsDirty = true; }).observe($('#gv4'), { attributes: true, attributeFilter: ['data-ui'] });   /* the hover layer owns U and the UI chip */
   }
