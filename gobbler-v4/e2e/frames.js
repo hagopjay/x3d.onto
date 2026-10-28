@@ -31,5 +31,8 @@ async function hoverTo(p, st, until, ms) {
   // 6: the same Shape card on a narrow screen: a bottom sheet
   p = await L.open(b, '?hover=2338&tier=3&glass=1', { width: 600, height: 900 }); await L.settle(p, 3000); await p.waitForFunction(() => window.gobbler.state().place, null, { timeout: 30000 }); await p.waitForTimeout(1500);
   await p.screenshot({ path: path.join(OUT, '6-sheet.png') }); await p.close();
+  // 7: the tuning panel open, a deep card docked clear of it
+  p = await L.open(b, '?view=Wide&tune=1&glass=1&hover=2338&tier=3', VP); await L.settle(p, 3000); await p.waitForFunction(() => window.gobbler.state().place, null, { timeout: 30000 }); await p.waitForTimeout(1800);
+  await p.screenshot({ path: path.join(OUT, '7-tune.png') }); await p.close();
   await b.close(); console.log('frames in', OUT);
 })().catch(e => { console.error(e); process.exit(1); });

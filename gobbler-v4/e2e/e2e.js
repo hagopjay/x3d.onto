@@ -1,8 +1,8 @@
-// node e2e/e2e.js [suite,suite,...]   suites: fit pick place ui toggle keys tour deterministic badparams touch resize cost   (default: all)
+// node e2e/e2e.js [suite,suite,...]   suites: fit pick place ui toggle keys tour deterministic badparams touch tune resize cost   (default: all)
 // Needs the page served at GV4_BASE (default http://127.0.0.1:8795/), see README. Frames land in e2e/out/.
 const fs = require('fs'), path = require('path'), L = require('./lib.js');
 const OUT = path.join(__dirname, 'out'); fs.mkdirSync(OUT, { recursive: true });
-const want = (process.argv[2] || 'fit,pick,place,ui,toggle,keys,tour,deterministic,badparams,touch,resize,cost').split(',');
+const want = (process.argv[2] || 'fit,pick,place,ui,toggle,keys,tour,deterministic,badparams,touch,tune,resize,cost').split(',');
 const VIEWS = ['Wide', 'Colossus', 'EyeToEye', 'Inside', 'Flywheel', 'Crown'];
 const pct = (a, q) => { const s = a.slice().sort((x, y) => x - y); return s.length ? s[Math.min(s.length - 1, Math.floor(q * s.length))] : NaN; };
 const f1 = v => (Math.round(v * 10) / 10).toString();
@@ -123,7 +123,6 @@ async function suiteUi(b) {
   let p = await L.open(b, '?ui=none&view=Inside'); await L.settle(p, 6000, true);
   const none = await p.evaluate(() => { const vis = [...document.querySelectorAll('#gv4 > *')].filter(e => getComputedStyle(e).display !== 'none' && !e.classList.contains('gv4-peek')).map(e => e.className); const sc = window.gobbler; return { vis, sensor: sc.state().sensor, stage: document.getElementById('stage').className, nodes: [...document.getElementById('x3d').browser.currentScene.rootNodes].filter(n => n && n.getTypeName().indexOf('Proximity') >= 0).length, level: sc.state().level }; });
   L.check('A7 UI none: no overlay element is visible, no sensor, no added scene node', none.vis.length === 0 && !none.sensor && none.nodes === 0 && none.level === 'none', JSON.stringify(none));
-  const star = await p.evaluate(() => { for (let i = 0; i < 2476; i++) { const n = window.gobbler.node(i); if (n.tier === 1) return n.xyz; } });
   await p.mouse.move(640, 400); await p.waitForTimeout(1500);
   const tipOn = await p.evaluate(() => document.querySelector('.gv4-tip').className + document.querySelector('.gv4-card').className);
   L.check('UI none: hovering shows no tooltip or card', !/ on/.test(tipOn), tipOn);
@@ -152,6 +151,7 @@ async function suiteToggle(b) {                                // the camera can
   await p.keyboard.press('u'); await p.waitForTimeout(3000);
   const st = await p.evaluate(() => window.gobbler.state()), now = await p.evaluate(() => window.gobbler.camera().pos), moved = Math.hypot(now[0] - wide[0], now[1] - wide[1], now[2] - wide[2]);
   L.check('UI off, camera moved, UI on again: the pose is the new one, not the old one', off.level === 'none' && st.level === 'min' && st.havePose && moved > 1, JSON.stringify({ off, level: st.level, moved: f1(moved) }));
+  L.check('and the crowding is measured again for the new view (core-tier hover is off in the sparse Flywheel view)', st.lodCore === false && st.nvis < 1000, JSON.stringify({ lodCore: st.lodCore, nvis: st.nvis, gap: f1(st.medianGap) }));
   const m = await measureFit(p);
   L.check('after none then minimal, projected stars land on the drawn stars' + (m.undetermined ? ' (undetermined: too few isolated sprites)' : ''), m.undetermined || m.ok, m.detail);
   await p.close();
@@ -165,20 +165,22 @@ async function suiteKeys(b) {
   await p.mouse.click(s0.x, s0.y); await p.waitForTimeout(500);
   let st = await p.evaluate(() => window.gobbler.state());
   L.check('click pins the card at the deep tier', st.pin === s0.i && st.openTier === 3, JSON.stringify({ pin: st.pin, tier: st.openTier }));
+  const cam0 = await p.evaluate(() => window.gobbler.camera().pos); await p.dblclick('.gv4-card h4'); await p.waitForTimeout(2200);
+  const cam1 = await p.evaluate(() => window.gobbler.camera().pos); L.check('a double-click on the card (to select a word) does not fly the camera', Math.hypot(cam1[0] - cam0[0], cam1[1] - cam0[1], cam1[2] - cam0[2]) < 1e-3, JSON.stringify([cam0, cam1]));
   await p.mouse.move(8, 780); await p.waitForTimeout(2200);                                // far away, longer than the idle close
   st = await p.evaluate(() => window.gobbler.state()); L.check('a pinned card stays when the pointer leaves', st.open === s0.i, JSON.stringify({ open: st.open }));
   await p.keyboard.press('Escape'); await p.waitForTimeout(600);
   st = await p.evaluate(() => ({ s: window.gobbler.state(), card: document.querySelector('.gv4-card').className })); L.check('Esc unpins and closes', st.s.pin === -1 && st.s.open === -1 && !/ on/.test(st.card), JSON.stringify(st.s));
   // dwell without moving: tooltip at 0.15 s, card at 0.45 s, deep at 1.2 s (rAF runs at ~5 fps on software GL, so allow a frame or two of slack)
   await p.mouse.move(8, 700); await p.waitForTimeout(300); const s1 = stars[Math.min(5, stars.length - 1)];
-  const t0 = Date.now(); await p.mouse.move(s1.x, s1.y);
+  await p.mouse.move(s1.x, s1.y);
   const seen = await p.evaluate(i => new Promise(res => { const t = performance.now(), r = {}; (function poll() { const st = window.gobbler.state(), now = performance.now() - t; if (st.snap === i && st.tier >= 1 && r.t1 == null) r.t1 = now; if (st.open === i && r.t2 == null) r.t2 = now; if (st.open === i && st.openTier >= 3 && r.t3 == null) r.t3 = now; if (r.t3 != null || now > 7000) res(r); else setTimeout(poll, 16); })(); }), s1.i);
   L.check('dwell tiers arrive in order, label then card then deep', seen.t1 != null && seen.t2 != null && seen.t3 != null && seen.t1 <= seen.t2 && seen.t2 < seen.t3, JSON.stringify(seen));
   L.check('deep arrives after 1.2 s of dwell and the card no earlier than 0.45 s', seen.t3 >= 1150 && seen.t2 >= 400, JSON.stringify(seen));
   // double click flies
-  const before = await p.evaluate(() => window.gobbler.camera().pos); await p.mouse.dblclick(s1.x, s1.y); await p.mouse.move(640, 400); await p.waitForTimeout(4000);        // the star ends up at the centre; the pointer waits there and never moves again
+  const before = await p.evaluate(() => window.gobbler.camera().pos), under = await p.evaluate(([x, y]) => { const e = document.elementFromPoint(x, y), st = window.gobbler.state(); return { el: e ? String(e.className || e.tagName).slice(0, 40) : null, snap: st.snap, open: st.open, pin: st.pin, place: st.place && [st.place.slot, Math.round(st.place.rect.x), Math.round(st.place.rect.y), Math.round(st.place.rect.w), Math.round(st.place.rect.h)] }; }, [s1.x, s1.y]); await p.mouse.dblclick(s1.x, s1.y); await p.mouse.move(640, 400); await p.waitForTimeout(4000);        // the star ends up at the centre; the pointer waits there and never moves again
   const after = await p.evaluate(() => window.gobbler.camera().pos), moved = Math.hypot(after[0] - before[0], after[1] - before[1], after[2] - before[2]);
-  L.check('double-click flies the camera to the star', moved > 0.3, `moved ${f1(moved)} units`);
+  L.check('double-click flies the camera to the star', moved > 0.3, `moved ${f1(moved)} units; at the click: ${JSON.stringify({ star: [Math.round(s1.x), Math.round(s1.y)], ...under })}`);
   const rest = await p.evaluate(() => window.gobbler.state()); L.check('after the flight a pointer that rests on the star picks it without moving', rest.snap === s1.i, JSON.stringify({ snap: rest.snap, want: s1.i }));
   await p.keyboard.down('h'); await p.waitForTimeout(200); await p.evaluate(() => window.dispatchEvent(new Event('blur'))); await p.waitForTimeout(300);
   const lost = await p.evaluate(() => document.getElementById('gv4').dataset.ui); await p.keyboard.up('h'); L.check('losing window focus while H is held brings the UI back', lost === 'min', lost);
@@ -252,6 +254,29 @@ async function suiteTouch(b) {                                 // a phone: tap a
   L.check('touch: no page errors', p.errs.filter(e => !/favicon/.test(e)).length === 0, JSON.stringify(p.errs.slice(0, 3))); await p.close();
 }
 
+async function suiteTune(b) {                                  // the tuning panel: T opens it, the settings change behaviour, persist and reset; the panel is an obstacle for the cards
+  const p = await L.open(b, '?view=Wide'); await L.settle(p, 1500);
+  const hid = await p.evaluate(() => document.getElementById('gv4-tune').hidden); await p.keyboard.press('t'); await p.waitForTimeout(500);
+  const box = await p.evaluate(() => { const t = document.getElementById('gv4-tune'), r = t.getBoundingClientRect(); return { hidden: t.hidden, w: r.width, h: r.height, inputs: t.querySelectorAll('input,select').length }; });
+  L.check('the tuning panel is hidden at first and T opens it', hid === true && !box.hidden && box.w > 200 && box.inputs === 9, JSON.stringify({ hid, ...box }));
+  const set = (id, v) => p.evaluate(([i, val]) => { const r = document.getElementById(i); r.value = val; r.dispatchEvent(new Event('input', { bubbles: true })); }, [id, v]);
+  await set('gv4-t-snap', 50); await set('gv4-t-card', 300); await set('gv4-t-dim', 0.5);
+  const t1 = await p.evaluate(() => ({ t: window.gobbler.tune(), d: window.gobbler.dwell({}) }));
+  L.check('sliders change the live settings (snap, dwell, dim)', t1.t.snap === 50 && t1.t.card === 300 && t1.t.dim === 0.5 && t1.d.card === 300, JSON.stringify(t1));
+  await set('gv4-t-label', 600); const t2 = await p.evaluate(() => window.gobbler.tune()); L.check('dwell times keep their order (card is never before the tooltip)', t2.label === 600 && t2.card >= 600 && t2.deep >= t2.card, JSON.stringify(t2));
+  const non = (await starsOnScreen(p)).filter(s => s.tier !== 1)[0], pk = ([x, y]) => p.evaluate(([a, c]) => { const k = window.gobbler.pickAt(a, c, false); return k && k.i; }, [x, y]);
+  const off = await pk([non.x, non.y]); await p.evaluate(() => document.getElementById('gv4-t-core').click()); const on = await pk([non.x, non.y]);
+  L.check('core-tier hover off: a non-core star in the crowded Wide view answers without Shift', off !== non.i && on === non.i, JSON.stringify({ star: non.i, core_only: off, all_stars: on }));
+  await p.reload({ waitUntil: 'load' }); await p.waitForFunction(() => document.body.dataset.v4 === '1', null, { timeout: 170000 }); await L.settle(p, 1000);
+  const kept = await p.evaluate(() => window.gobbler.tune()); L.check('the settings are remembered (localStorage, with try/catch)', kept.snap === 50 && kept.dim === 0.5 && kept.core === false, JSON.stringify(kept));
+  await p.keyboard.press('t'); await p.waitForTimeout(300); await p.evaluate(() => document.getElementById('gv4-t-reset').click());
+  const dflt = await p.evaluate(() => window.gobbler.tune()); L.check('reset brings back the defaults', dflt.snap === 30 && dflt.card === 450 && dflt.dim === 1 && dflt.core === true && dflt.leader === true && dflt.glass === 'auto', JSON.stringify(dflt));
+  await p.evaluate(() => window.gobbler.hover(2338, 3)); await p.waitForFunction(() => window.gobbler.state().place, null, { timeout: 30000 }); await p.waitForTimeout(1500);
+  const clear = await p.evaluate(() => { const c = document.querySelector('.gv4-card').getBoundingClientRect(), t = document.getElementById('gv4-tune').getBoundingClientRect(); return { hidden: t.width === 0, hit: c.left < t.right && t.left < c.right && c.top < t.bottom && t.top < c.bottom }; });
+  L.check('with the panel open a card never lands on it', clear.hidden || !clear.hit, JSON.stringify(clear));
+  L.check('no page errors', p.errs.filter(e => !/favicon/.test(e)).length === 0, JSON.stringify(p.errs.slice(0, 3))); await p.close();
+}
+
 async function suiteResize(b) {
   const p = await L.open(b, '?hover=2338&tier=3', { width: 1280, height: 800 }); await L.settle(p, 2500); await p.waitForFunction(() => window.gobbler.state().place, null, { timeout: 20000 });
   await p.setViewportSize({ width: 640, height: 900 }); await p.waitForTimeout(3500);
@@ -262,10 +287,13 @@ async function suiteResize(b) {
   });
   const near = Math.hypot(m.star[0] - Math.max(m.x, Math.min(m.star[0], m.x + m.w)), m.star[1] - Math.max(m.y, Math.min(m.star[1], m.y + m.h)));
   L.check('below 720 px the card becomes a sheet that fits the viewport (inset 22 px, at most half the height)', m.place && m.place.slot === 'SHEET' && Math.abs(m.w - (m.W - 44)) < 2 && m.h <= m.H / 2 + 2 && m.y >= 0 && m.y + m.h <= m.H + 1, JSON.stringify({ slot: m.place && m.place.slot, w: m.w, h: f1(m.h), y: f1(m.y), W: m.W, H: m.H }));
+  const boxOf = () => p.evaluate(() => { const c = document.querySelector('.gv4-card').getBoundingClientRect(), root = document.getElementById('gv4').getBoundingClientRect(), pl = window.gobbler.state().place; return { dom: [c.left - root.left, c.top - root.top, c.width, c.height], rect: pl && [pl.rect.x, pl.rect.y, pl.rect.w, pl.rect.h] }; });
+  const bx = await boxOf(); L.check('the sheet is drawn where the placement put it', bx.rect && bx.dom.every((v, i) => Math.abs(v - bx.rect[i]) <= 1.5), JSON.stringify(bx));
   L.check('the sheet keeps clear of its star (96 px) and of every corner chip', m.star[2] && near >= 90 && !m.chips.some(([x, y, w, h]) => m.x < x + w && x < m.x + m.w && m.y < y + h && y < m.y + m.h), `star ${f1(near)} px away, fallback ${m.place && m.place.fallback}`);
   await p.screenshot({ path: path.join(OUT, 'hover-sheet.png') });
   await p.setViewportSize({ width: 1280, height: 800 }); await p.waitForTimeout(3500);
   const back = await p.evaluate(() => window.gobbler.state().place); L.check('back at full width the card docks to a corner again', back && back.slot !== 'SHEET', back && back.slot);
+  const bw = await boxOf(); L.check('and is drawn at its docked size and place (348 px wide, flush with its corner)', bw.rect && Math.abs(bw.dom[2] - 348) <= 1.5 && bw.dom.slice(0, 2).every((v, i) => Math.abs(v - bw.rect[i]) <= 1.5), JSON.stringify(bw));
   await p.close();
 }
 
@@ -281,7 +309,7 @@ async function suiteCost(b) {                                  // informational:
 
 (async () => {
   const b = await L.launch();
-  const S = { fit: suiteFit, pick: suitePick, place: suitePlace, ui: suiteUi, toggle: suiteToggle, keys: suiteKeys, tour: suiteTour, deterministic: suiteDeterministic, badparams: suiteBadParams, touch: suiteTouch, resize: suiteResize, cost: suiteCost };
+  const S = { fit: suiteFit, pick: suitePick, place: suitePlace, ui: suiteUi, toggle: suiteToggle, keys: suiteKeys, tour: suiteTour, deterministic: suiteDeterministic, badparams: suiteBadParams, touch: suiteTouch, tune: suiteTune, resize: suiteResize, cost: suiteCost };
   for (const k of want) { console.log('--- ' + k); try { await S[k](b); } catch (e) { L.check('suite ' + k + ' ran to the end', false, String(e).slice(0, 300)); } }
   await b.close();
   const sm = L.summary(); fs.writeFileSync(path.join(OUT, 'results.json'), JSON.stringify({ when: new Date().toISOString(), ...sm, results: L.results }, null, 1));

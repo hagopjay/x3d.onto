@@ -4,7 +4,7 @@ gobbler-v3/deep/build-private/common.js) plus three small changes. Added: PX.tou
 camera resumes where it stopped instead of restarting the spiral; hover uses it so the star under the pointer holds still. Changed: the Pause tour button and a press on the canvas also stop a held tour. Removed: the v3
 H-key toggle of the clean mode, because H is now a momentary UI none. Nothing else in the file changes. Every edit is asserted to match exactly once and the input hash is checked.
 
-    python3 -I gobbler-v4/tools/patch_engine.py data/deep/common.js gobbler-v4/engine/common.js
+    cd gobbler-v4 && python3 -I tools/patch_engine.py data/deep/common.js engine/common.js
 """
 import hashlib, sys
 

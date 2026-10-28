@@ -96,7 +96,7 @@
       return { html: h, hex: hex(n), fam: FAM[n.cls] || 'spec', long: long, onto: !!o };
     }
     function tip(i, extra) {
-      var n = G.nodes[i], l = String(n.label), label = l.length > 38 ? l.slice(0, 37) + '\u2026' : l, meta = n.cls + ' \u00b7 ' + (PROV[n.prov] || [n.prov])[0], hx = hex(n);
+      var n = G.nodes[i], l = String(n.label), label = l.length > 38 ? l.slice(0, 37) + '\u2026' : l, meta = n.cls + ' \u00b7 ' + (PROV[n.prov] || [n.prov || 'unknown'])[0], hx = hex(n);
       return { label: label, meta: meta, hex: hx, fam: FAM[n.cls] || 'spec', extra: extra || 0,
                html: '<i class="gv4-sw" style="--c:' + hx + '"></i><b>' + esc(label) + '</b><span class="m">' + esc(meta) + '</span>' + (extra > 0 ? '<span class="k" title="more stars within 12 px: arrows cycle">+' + extra + '</span>' : '') };
     }

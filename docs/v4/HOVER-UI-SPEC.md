@@ -149,13 +149,13 @@ Verdict: the picking and data side has no measurable efficiency cost; the only o
 
 ## 9. Acceptance tests
 
-1. `node docs/v4/mock/test_placement.js` prints 8 passed (done).
-2. Projection accuracy: projected star position within **2 px** of its rendered centre for 200 random stars in each of Wide and Face (to run in real Chromium; Suspected until run).
-3. Pick accuracy: at 3 px noise, 90% or better in Inside, Eye and Flywheel, and 81% or better in the wide views with the core-tier LOD (arithmetic done above; re-check on the live scene).
-4. Placement: with `?hover=<idx>` over 200 random stars per view, the card never covers the hovered star and never covers a chip; the same slot is chosen at least 90% of the time using the projected-geometry density and using the pixel density (proxy check).
-5. Frame cost on your Mac: fps with a card open is at least 95% of fps with UI none; first-frame time within 3% of v3 Deep.
-6. No-leak: the card shows only fields that exist in the graph; every card has a provenance tag and a grade.
-7. Stills: `?ui=none` frame is pixel-identical to a v3 Deep frame at the same viewpoint (nothing leaks from the overlay).
+1. `node docs/v4/mock/test_placement.js` prints 8 passed (done). *Draft 2:* the shipped `gobbler-v4/src/placement.js` has 19 tests (4,000-case fuzz that includes narrow screens, the sheet's halo and chip rules, mutations caught): all pass.
+2. Projection accuracy: projected star position within **2 px** of its rendered centre for 200 random stars in each of Wide and Face (to run in real Chromium; Suspected until run). *Draft 2, run on the live scene:* the drawn stars are blurred sprites, so the test regresses the centroids of every isolated sprite against the projection (scale and offset, outliers trimmed). Across two runs scale 0.997 to 1.001 and offset 1.6 px or less in Wide, Inside, Flywheel and Crown: **Likely** (software-GL Chromium). Colossus and Eye have too few isolated sprites to decide (Eye reads scale 0.984, offset 9 px from 17 sprites: unresolved). Face is not a Viewpoint of the Deep scene, so it was not run. After UI none, a camera move and UI minimal the fit is scale 0.9995 to 1.0008, offset 0.5 px or less (200 or more sprites): **Confirmed**.
+3. Pick accuracy: at 3 px noise, 90% or better in Inside, Eye and Flywheel, and 81% or better in the wide views with the core-tier LOD (arithmetic done above; re-check on the live scene). *Draft 2, live:* Inside 100%, Eye 92%, Flywheel 91%, Wide 92%, Colossus 80%, Crown 79%. The two wide-view results at 80% and 79% sit just under the 81% the arithmetic predicted (a mouse hover in the page also has the 12 px crowd rule and sprite sizes the arithmetic ignores): **Confirmed** as measured, slightly below target.
+4. Placement: with `?hover=<idx>` over 200 random stars per view, the card never covers the hovered star and never covers a chip; the same slot is chosen at least 90% of the time using the projected-geometry density and using the pixel density (proxy check). *Draft 2, live:* 14 random stars in each of Wide, Flywheel and Crown opened by a real mouse hover (42 of 42): none within 90 px of its star, none over a chip, all placed from the frame's own pixels (**Confirmed**). The proxy check changed meaning, because the page now uses pixels and keeps the stars only as a fallback: the fallback picks the same corner as the pixel density in 6 of 14 (Wide), 4 to 10 of 14 (Flywheel) and 11 of 14 (Crown) across runs; in score terms it is within 0.25 of the pixel-best in 6, 14 and 14 of 14. The Wide miss is the bird, which is not in the graph. The 90% bar is not met by the fallback; it is not the normal path.
+5. Frame cost on your Mac: fps with a card open is at least 95% of fps with UI none; first-frame time within 3% of v3 Deep. *Draft 2:* software-GL Chromium here, frame interval with a deep card open is 82 to 92% of UI none across two runs (e.g. 204 ms against 221 ms, noise included): no measurable cost, **Likely**. Real GPU: still **Suspected** and still yours to run (`?glass=1` and the Tune panel's glass setting switch the blur on and off to compare).
+6. No-leak: the card shows only fields that exist in the graph; every card has a provenance tag and a grade. *Draft 2:* all 2,476 drawn stars at both tiers, no template leak, no field that is not in the graph (`test_cards.js`): **Confirmed**.
+7. Stills: `?ui=none` frame is pixel-identical to a v3 Deep frame at the same viewpoint (nothing leaks from the overlay). *Draft 2:* the scene animates (embers, twinkle, sway), so two frames are never pixel-identical. The test became: in UI none no overlay element is visible, no sensor exists and the scene has no added node (**Confirmed**); the `.x3d` file is the Deep file byte for byte (sha256 pinned in `fetch_deep.sh`).
 
 ## 10. Decisions I made, and what is yours
 
@@ -176,3 +176,25 @@ I chose these so work can continue; each is cheap to flip.
 - ~~Live density from projected stars~~ *Draft 2, resolved:* the frame's own pixels are the primary source, stars are the fallback (section 4).
 - Real-GPU frame cost with the overlay on and off (acceptance test 5): still open, software GL only so far.
 - Where this lands in the layer stack: PLAN.md section 6 (add-only, new v4 folder, versioned).
+
+## 12. Built: step 1 on the live scene (draft 2, 28 Oct 2026)
+
+Everything in sections 1 to 5 runs in `gobbler-v4/` as a layer over the Gobbler 3 Deep scene (new folder, nothing replaced; the README there has the commands). What differs from draft 1, and why:
+
+| Draft 1 | Built | Why |
+|---|---|---|
+| the page owns the camera | a `ProximitySensor` added to the in-memory scene reports the real pose; none is added in UI none | X_ITE's public API does not expose the user's orbit offset; the sensor does, and the scene file stays byte-identical |
+| density from projected stars | density from the frame's own pixels, read at the end of X_ITE's frame; stars and tethers only as the fallback | pixels see the bird and the glow; the stars do not (Wide: the fallback agrees with the pixels in 6 of 14) |
+| bottom sheet under 720 px | a sheet inset 22 px on the bottom or top edge, clear of the star's halo and the corner chips; cut and faded if the room is smaller than the card | the first sheet covered the star when it sat mid-screen (found in the frames) |
+| `H` hides everything while held | and releases the held tour, so the scene keeps moving; losing window focus ends the hold | a held `H` froze the camera |
+| fixed dwell, snap and dim | all of them are live settings in a tuning panel (key `T`) | your taste calls from section 10 can be flipped while you look |
+
+**Frames** (real screenshots of the running page, software GL, `?glass=1`; `docs/v4/live/`, kept as JPEG at quality 95; `node gobbler-v4/e2e/frames.js` makes the PNG originals): `1-none.jpg` UI none, `2-rest.jpg` minimal at rest, `3-tooltip.jpg` tooltip with the dwell ring, `4-card-shape.jpg` the NodeType card with the ontology block, `5-card-finding.jpg` a measured Finding after a flight, `6-sheet.jpg` the narrow-screen sheet, `7-tune.jpg` the tuning panel open with a card clear of it, `storyboard.jpg` all seven.
+
+**The tuning panel** (`T`): snap distance, the three dwell times, focus dim, card halo, core-tier-only hover in crowded views, the leader line, frosted glass (auto, always, off). Settings persist per browser. The two taste calls that were mine in section 10 (core tier first, corner dock with a leader) are two switches there.
+
+**What a review found and what was done.** A first review pass found ten behaviour bugs, all fixed with a regression test (two of the tests were shown to fail with the fix removed): hover stalled after a drag or flight until the mouse moved, `Pause tour` restarted a held tour, held `H` or `Shift` stuck after losing focus, an invisible hot zone covered the toggle chip, one readback timeout switched pixel placement off for the session, `?hover=` took any number, ontology names that match `Object.prototype` members threw, the fetch script did not stop on a failed download, and `make e2e-v4` used another port than `make v4`. A second pass at the highest level (run inline as one pass, not as a fan-out of separate reviewers) found more, fixed in the same way: a card measured with sheet leftovers after widening the window, a double-click on a card or chip that flew the camera, a core-tier crowding measure that stayed stale after a camera jump, a leader line drawn to a card that was still hidden, an unescaped `?view=`, a missing provenance that printed "undefined", an unverified download that was installed before its hash check, and X_ITE not hash-pinned.
+
+**Left for later (tests only, nothing user-visible).** The "extra star" check in `test_pick.js` re-tests its own reference; `test_density.js` covers `fromStars` while the page runs `fromGraph`; the seeded random generator is copied into three test files.
+
+**Open.** The Face camera (not a Viewpoint of the Deep scene); the card-to-tether brightening (rows ring the neighbour star only); real-GPU frame cost; the Eye and Colossus projection fits; touch beyond emulation.

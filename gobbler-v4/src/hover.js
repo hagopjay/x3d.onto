@@ -2,12 +2,24 @@
  * It reads the camera from a ProximitySensor added to the in-memory scene at run time (the .x3d file is never touched, and in UI none nothing is added),
  * projects the graph's own star coordinates (pick.js), and draws everything as DOM and SVG above the canvas.
  *   GobblerV4.start({G, ONTO, el, stage, root, level, hover, hoverTier}) -> window.gobbler
- * o.glass: never drop the blur behind cards (frames for the judge and the docs). Uses globals Cards, Pick, Place, Density (src/*.js) and the engine's PX (engine/common.js).
+ * o.glass: never drop the blur behind cards (frames for the judge and the docs). o.tune: open the tuning panel (key T). Settings persist in localStorage (try/catch). Uses globals Cards, Pick, Place, Density (src/*.js) and the engine's PX (engine/common.js).
  */
 (function () {
   'use strict';
-  var DWELL = { label: 150, card: 450, deep: 1200 }, SNAP = 30, HALO = 96, MARGIN = 22, GAP = 10, IDLE_CLOSE = 1200, RELEASE = 800, RESUME = 120, DRAG_PX = 5, FLY_MS = 1500, TAP_MS = 4000;
+  var DWELL = { label: 150, card: 450, deep: 1200 }, MARGIN = 22, GAP = 10, IDLE_CLOSE = 1200, RELEASE = 800, RESUME = 120, DRAG_PX = 5, FLY_MS = 1500, TAP_MS = 4000;
   var SVGNS = 'http://www.w3.org/2000/svg';
+  /* the tuning panel (key T): the taste calls of the spec as live settings; ranges are [min, max, step] */
+  var TUNE_DEF = { snap: 30, label: 150, card: 450, deep: 1200, dim: 1, halo: 96, core: true, leader: true, glass: 'auto' };
+  var TUNE_SPEC = { snap: [10, 60, 1], label: [0, 600, 10], card: [100, 1500, 10], deep: [300, 3000, 50], dim: [0, 1.5, 0.05], halo: [40, 200, 4] };
+  var TUNE_ROWS = [['snap', 'Snap distance', 'px'], ['label', 'Tooltip after', 'ms'], ['card', 'Card after', 'ms'], ['deep', 'Deep card after', 'ms'], ['dim', 'Focus dim', 'x'], ['halo', 'Card keeps clear of the star', 'px']];
+  function cleanTune(src, base) {
+    var t = {}, k; for (k in TUNE_DEF) t[k] = base && k in base ? base[k] : TUNE_DEF[k];
+    if (src) {
+      for (k in TUNE_SPEC) if (typeof src[k] === 'number' && isFinite(src[k])) t[k] = Math.min(TUNE_SPEC[k][1], Math.max(TUNE_SPEC[k][0], src[k]));
+      if (typeof src.core === 'boolean') t.core = src.core; if (typeof src.leader === 'boolean') t.leader = src.leader; if (/^(auto|on|off)$/.test(src.glass)) t.glass = src.glass;
+    }
+    t.card = Math.max(t.card, t.label); t.deep = Math.max(t.deep, t.card); return t;
+  }
 
   function start(o) {
     var G = o.G, el = o.el, stage = o.stage, root = o.root, C = Cards.create(G, o.ONTO), idx = new Pick.Index(G.nodes.slice(0, G.drawn));
@@ -17,6 +29,9 @@
       ptr: { x: 0, y: 0, x0: 0, y0: 0, in: false, down: false, drag: false, onCard: false, onUi: false, type: 'mouse' }, shift: false, lastMoveT: 0, lastSnapT: 0, resumeAt: 0,
       snap: -1, snapT: 0, tier: 0, cands: [], userPick: -1, pin: -1, forced: -1, forcedTier: 3, open: -1, openTier: 0, echo: -1, touchStar: -1, touchT: 0,
       held: false, lastWant: 0, openT: 0, capRetryAt: 0, capFailT: 0, density: null, denKind: '', lumaStale: true, capBusy: false, capFail: 0, cardSize: null, prevSlot: null, place: null, chips: null, raf: 0, flyRaf: 0, sig: {}, solid: false };
+
+    var T; try { T = cleanTune(JSON.parse(localStorage.getItem('gv4.tune'))); } catch (e) { T = cleanTune(null); }
+    if (o.glass) T.glass = 'on';                          /* ?glass=1: frames for the docs and the judge keep the blur */
 
     /* ---------- svg layers ---------- */
     function sv(tag, attrs, parent) { var e = document.createElementNS(SVGNS, tag); for (var k in attrs) e.setAttribute(k, attrs[k]); (parent || svg).appendChild(e); return e; }
@@ -73,9 +88,9 @@
     function chipBoxes() {
       if (S.chips) return S.chips;
       var rr = root.getBoundingClientRect(), obstacles = [], reserved = {};
-      [].forEach.call(root.querySelectorAll('.gv4-corner'), function (c) {
+      [].forEach.call(root.querySelectorAll('.gv4-corner, .gv4-tune'), function (c) {
         var r = c.getBoundingClientRect(); if (!r.width || !r.height) return; var b = { x: r.left - rr.left, y: r.top - rr.top, w: r.width, h: r.height };
-        obstacles.push({ x: b.x - 6, y: b.y - 6, w: b.w + 12, h: b.h + 12 }); reserved[c.dataset.corner] = { h: b.h + GAP };
+        obstacles.push({ x: b.x - 6, y: b.y - 6, w: b.w + 12, h: b.h + 12 }); if (c.dataset.corner) reserved[c.dataset.corner] = { h: b.h + GAP };
       });
       return (S.chips = { obstacles: obstacles, reserved: reserved });
     }
@@ -114,7 +129,6 @@
     }
 
     /* ---------- draw ---------- */
-    function esc(s) { return Cards.esc(s); }
     function starXY(i) { var p = idx.screen(i); return p.visible ? p : null; }
     function setTip(i, extra, x, y) {
       var t = C.tip(i, extra), sig = i + ':' + extra;
@@ -142,15 +156,15 @@
     function placeCard(i) {
       var p = starXY(i), W = S.W, H = S.H, chips = chipBoxes();
       var hover = p ? { x: p.x, y: p.y } : { x: W / 2, y: H / 2 };          /* star off screen: dock anywhere clear of the middle, no leader */
-      if (!S.cardSize) { card.style.width = W < Place.NARROW ? Math.max(1, W - 2 * MARGIN) + 'px' : ''; card.style.maxHeight = ''; S.cardSize = { w: card.offsetWidth, h: card.offsetHeight }; }
-      var res = Place.choose({ W: W, H: H, hover: hover, size: S.cardSize, density: S.density || starDensity(), margin: MARGIN, reserved: chips.reserved, obstacles: chips.obstacles, halo: HALO, prev: S.prevSlot });
+      if (!S.cardSize) { card.classList.remove('sheet', 'shrunk'); card.style.width = W < Place.NARROW ? Math.max(1, W - 2 * MARGIN) + 'px' : ''; card.style.maxHeight = ''; S.cardSize = { w: card.offsetWidth, h: card.offsetHeight }; }
+      var res = Place.choose({ W: W, H: H, hover: hover, size: S.cardSize, density: S.density || starDensity(), margin: MARGIN, reserved: chips.reserved, obstacles: chips.obstacles, halo: T.halo, prev: S.prevSlot });
       S.prevSlot = res.slot; S.place = { slot: res.slot, rect: res.rect, shrunk: res.shrunk, fallback: res.fallback, kind: S.denKind || 'stars' };
       var r = res.rect, sig = res.slot + ':' + Math.round(r.x) + ':' + Math.round(r.y) + ':' + Math.round(r.h);
       if (S.sig.place !== sig) {
         S.sig.place = sig; card.style.transform = 'translate(' + Math.round(r.x) + 'px,' + Math.round(r.y) + 'px)'; card.classList.toggle('sheet', res.slot === 'SHEET'); card.classList.toggle('shrunk', !!res.shrunk);
         card.style.width = res.slot === 'SHEET' ? r.w + 'px' : ''; card.style.maxHeight = res.shrunk || res.slot === 'SHEET' ? Math.round(r.h) + 'px' : '';
       }
-      if (p && res.leader) {                                    /* leader: star to the nearest point of the card, fading with distance */
+      if (p && res.leader && T.leader && !S.waitPaint) {        /* leader: star to the nearest point of the card, fading with distance */
         var q = res.leader, dx = q.x - p.x, dy = q.y - p.y, L = Math.hypot(dx, dy) || 1, nx = -dy / L, ny = dx / L;
         var d = 'M' + p.x.toFixed(1) + ' ' + p.y.toFixed(1) + ' Q' + ((p.x + q.x) / 2 + nx * L * 0.1).toFixed(1) + ' ' + ((p.y + q.y) / 2 + ny * L * 0.1).toFixed(1) + ' ' + q.x.toFixed(1) + ' ' + q.y.toFixed(1);
         var op = Math.max(0.35, 1 - L / 1400).toFixed(2);
@@ -179,7 +193,7 @@
       /* pick and dwell */
       var snap = -1;
       if (pt.onCard) snap = S.snap; else if (pointing && havePose) {
-        var pk = idx.pick(pt.x, pt.y, { radius: SNAP, all: S.shift });
+        var pk = idx.pick(pt.x, pt.y, { radius: T.snap, all: S.shift || !T.core });
         if (pk) { snap = pk.i; S.cands = pk.cands; if (S.userPick >= 0 && pk.cands.some(function (c) { return c.i === S.userPick; })) snap = S.userPick; else S.userPick = -1; } else { S.cands = []; S.userPick = -1; }
       }
       if (snap !== S.snap) { S.snap = snap; S.snapT = now; }
@@ -209,9 +223,10 @@
       if (tier >= 1 && open < 0 && canCapture(now)) capture();       /* read the frame while the dwell runs, so the card appears already placed */
       if (open >= 0) {
         renderCard(open, want);
-        if (canCapture(now) && !S.gate) capture();
-        placeCard(open); S.waitPaint = !(S.denKind === 'luma' || S.capFail >= 3 || now - S.openT > 500); card.style.visibility = S.waitPaint ? 'hidden' : ''; setDim(op, 0.46);
-      } else { S.waitPaint = false; setDim(sp && tier >= 1 ? sp : null, 0.34); }
+        if (canCapture(now)) capture();
+        S.waitPaint = !(S.denKind === 'luma' || S.capFail >= 3 || now - S.openT > 500);                                   /* decided first: no leader points at a card that is still hidden */
+        placeCard(open); card.style.visibility = S.waitPaint ? 'hidden' : ''; setDim(op, (S.waitPaint ? 0.34 : 0.46) * T.dim);
+      } else { S.waitPaint = false; setDim(sp && tier >= 1 ? sp : null, 0.34 * T.dim); }
       var ep = S.echo >= 0 ? starXY(S.echo) : null; show(echo, !!ep); if (ep) { echo.setAttribute('cx', ep.x.toFixed(1)); echo.setAttribute('cy', ep.y.toFixed(1)); }
       if ((snap >= 0 && tier < 3) || S.camDirty || S.held || (open >= 0 && S.waitPaint) || (pt.in && now < S.resumeAt) || (tipStar >= 0 && S.touchStar >= 0) || (open >= 0 && (S.pin < 0 && S.forced < 0 || S.lumaStale || S.capBusy))) loop = true;     /* otherwise events (pointer, camera, keys) wake it */
       if (loop) kick();
@@ -222,13 +237,13 @@
     stage.addEventListener('pointermove', function (ev) {
       if (S.level === 'none' || S.hold) return;
       var r = root.getBoundingClientRect(), p = S.ptr; p.x = ev.clientX - r.left; p.y = ev.clientY - r.top; p.in = true; p.type = ev.pointerType || 'mouse'; S.shift = ev.shiftKey; S.lastMoveT = performance.now();
-      p.onCard = inUi(ev.target, '.gv4-card'); p.onUi = !p.onCard && inUi(ev.target, '.gv4-corner, .gv4-peek');
+      p.onCard = inUi(ev.target, '.gv4-card'); p.onUi = !p.onCard && inUi(ev.target, '.gv4-corner, .gv4-peek, .gv4-tune');
       if (p.down && !p.drag && Math.hypot(ev.clientX - p.x0, ev.clientY - p.y0) > DRAG_PX) { p.drag = true; closeAll(true); }
       kick();
     }, { passive: true });
     stage.addEventListener('pointerleave', function () { S.ptr.in = false; S.ptr.onCard = false; S.ptr.onUi = false; kick(); });
     stage.addEventListener('pointerdown', function (ev) {
-      var p = S.ptr; p.down = ev.button === 0 && !inUi(ev.target, '.gv4-card, .gv4-corner, .gv4-peek'); p.drag = false; p.x0 = ev.clientX; p.y0 = ev.clientY; p.type = ev.pointerType || 'mouse';
+      var p = S.ptr; p.down = ev.button === 0 && !inUi(ev.target, '.gv4-card, .gv4-corner, .gv4-peek, .gv4-tune'); p.drag = false; p.x0 = ev.clientX; p.y0 = ev.clientY; p.type = ev.pointerType || 'mouse';
     });
     window.addEventListener('pointerup', function (ev) {
       var p = S.ptr, was = p.down, drag = p.drag; p.down = false; p.drag = false;
@@ -243,7 +258,7 @@
       if (S.snap >= 0) { S.pin = S.snap; S.forced = -1; } else if (!S.gate) closeAll();
       kick();
     });
-    stage.addEventListener('dblclick', function () { var i = S.pin >= 0 ? S.pin : S.snap >= 0 ? S.snap : S.open; if (i >= 0) fly(i); });
+    stage.addEventListener('dblclick', function (ev) { if (inUi(ev.target, '.gv4-card, .gv4-corner, .gv4-peek, .gv4-tune')) return; var i = S.pin >= 0 ? S.pin : S.snap >= 0 ? S.snap : S.open; if (i >= 0) fly(i); });
     card.addEventListener('click', function (ev) { var li = ev.target.closest && ev.target.closest('li[data-go]'); if (li) { var i = +li.dataset.go; S.pin = i; S.forced = -1; fly(i); } });
     card.addEventListener('pointerover', function (ev) { var li = ev.target.closest && ev.target.closest('li[data-go]'); S.echo = li ? +li.dataset.go : -1; kick(); });
     card.addEventListener('pointerleave', function () { S.echo = -1; kick(); });
@@ -253,6 +268,7 @@
       if (k === 'u' || k === 'U') { if (!ev.repeat) setLevel(S.level === 'none' ? 'min' : 'none', true); }
       else if (k === 'h' || k === 'H') { if (!ev.repeat) momentary(true); }
       else if (S.level === 'none') return;
+      else if (k === 't' || k === 'T') { if (!ev.repeat) toggleTune(tune.hidden); }
       else if (k === 'Escape') { S.pin = -1; S.forced = -1; S.touchStar = -1; closeAll(); kick(); }
       else if (k === 'f' || k === 'F') { var i = S.pin >= 0 ? S.pin : S.open >= 0 ? S.open : S.snap; if (i >= 0) fly(i); }
       else if (k === 'Shift') { S.shift = true; kick(); }
@@ -266,6 +282,30 @@
     document.addEventListener('keyup', function (ev) { if (ev.key === 'h' || ev.key === 'H') momentary(false); else if (ev.key === 'Shift') { S.shift = false; kick(); } });
     var peek = $('.gv4-peek'); if (peek) peek.addEventListener('click', function () { setLevel('min', true); });
     var tg = document.getElementById('gv4-ui'); if (tg) tg.addEventListener('click', function () { setLevel(S.level === 'none' ? 'min' : 'none', true); });
+
+    /* ---------- tuning panel (key T) ---------- */
+    var tune = document.createElement('div'); tune.className = 'gv4-tune gv4-glass'; tune.id = 'gv4-tune'; tune.hidden = true; tune.setAttribute('role', 'group'); tune.setAttribute('aria-label', 'Tuning');
+    tune.innerHTML = '<div class="gv4-th"><b>Tune</b><button type="button" class="x" data-act="reset" id="gv4-t-reset" title="Back to the defaults">reset</button><button type="button" class="x" data-act="close" id="gv4-t-close" aria-label="Close">&times;</button></div>'
+      + TUNE_ROWS.map(function (r) { var sp = TUNE_SPEC[r[0]]; return '<label class="r" for="gv4-t-' + r[0] + '"><span>' + r[1] + '</span><output id="gv4-o-' + r[0] + '"></output><input type="range" id="gv4-t-' + r[0] + '" data-k="' + r[0] + '" min="' + sp[0] + '" max="' + sp[1] + '" step="' + sp[2] + '"></label>'; }).join('')
+      + '<label class="cb" for="gv4-t-core"><input type="checkbox" id="gv4-t-core" data-k="core"><span>Crowded views: hover core stars only (Shift = all)</span></label>'
+      + '<label class="cb" for="gv4-t-leader"><input type="checkbox" id="gv4-t-leader" data-k="leader"><span>Leader line from star to card</span></label>'
+      + '<label class="cb" for="gv4-t-glass"><span>Frosted glass</span><select id="gv4-t-glass" data-k="glass"><option value="auto">auto</option><option value="on">always</option><option value="off">off</option></select></label>'
+      + '<div class="gv4-tk">U ui &middot; hold H to hide &middot; T tune &middot; Shift all stars &middot; F fly &middot; Esc close</div>';
+    root.appendChild(tune);
+    function syncTune() {
+      TUNE_ROWS.forEach(function (r) { var k = r[0], inp = tune.querySelector('#gv4-t-' + k), out = tune.querySelector('#gv4-o-' + k); if (+inp.value !== T[k]) inp.value = T[k]; out.textContent = (k === 'dim' ? T[k].toFixed(2) : Math.round(T[k])) + ' ' + r[2]; });
+      tune.querySelector('#gv4-t-core').checked = T.core; tune.querySelector('#gv4-t-leader').checked = T.leader; tune.querySelector('#gv4-t-glass').value = T.glass;
+    }
+    function applyTune(save) {
+      DWELL.label = T.label; DWELL.card = T.card; DWELL.deep = T.deep;
+      S.solid = T.glass === 'off'; root.classList.toggle('gv4-solid', S.solid); slow = 0;
+      S.sig.place = ''; S.cardSize = null; S.camDirty = true; syncTune(); kick();
+      if (save) try { localStorage.setItem('gv4.tune', JSON.stringify(T)); } catch (e) {}
+    }
+    function toggleTune(on) { tune.hidden = !on; S.chips = null; S.sig.place = ''; S.cardSize = null; kick(); }
+    tune.addEventListener('input', function (ev) { var el = ev.target, k = el.dataset && el.dataset.k; if (!k) return; var patch = {}; patch[k] = el.type === 'checkbox' ? el.checked : el.type === 'range' ? +el.value : el.value; T = cleanTune(patch, T); applyTune(true); });
+    tune.addEventListener('click', function (ev) { var b = ev.target.closest && ev.target.closest('button[data-act]'); if (!b) return; if (b.dataset.act === 'close') toggleTune(false); else { T = cleanTune(o.glass ? { glass: 'on' } : null); applyTune(true); } });
+    if (window.ResizeObserver) { var ro2 = new ResizeObserver(function () { S.chips = null; kick(); }); ro2.observe(tune); }
 
     /* ---------- fly (through the scene's Probe viewpoint, from the real camera pose) ---------- */
     function fly(i, ms) {
@@ -286,7 +326,7 @@
     /* ---------- health: drop the blur behind cards if the frame rate sags ---------- */
     var slow = 0;
     setInterval(function () {
-      if (S.level === 'none' || S.open < 0 || S.solid || o.glass) return; var hud = document.getElementById('hud'), f = hud && +hud.dataset.fps;
+      if (S.level === 'none' || S.open < 0 || S.solid || T.glass !== 'auto') return; var hud = document.getElementById('hud'), f = hud && +hud.dataset.fps;
       if (f && f < 50) { if (++slow >= 2) { S.solid = true; root.classList.add('gv4-solid'); } } else slow = 0;
     }, 1500);
 
@@ -298,9 +338,10 @@
       ui: function (l) { if (l) setLevel(l === 'none' ? 'none' : 'min', true); return S.level; },
       screen: function (i) { project(); return idx.screen(i); },
       camera: function () { return { pos: S.pos, ori: S.ori, fov: S.fov }; },
-      pickAt: function (x, y, all) { project(); var k = idx.pick(x, y, { radius: SNAP, all: !!all }); return k && { i: k.i, d: k.d, cands: k.cands.map(function (c) { return c.i; }) }; },
+      pickAt: function (x, y, all) { project(); var k = idx.pick(x, y, { radius: T.snap, all: !!all || !T.core }); return k && { i: k.i, d: k.d, cands: k.cands.map(function (c) { return c.i; }) }; },
       state: function () { return { level: S.level, hold: S.hold, ready: S.ready, gate: S.gate, snap: S.snap, tier: S.tier, open: S.open, openTier: S.openTier, pin: S.pin, held: S.held, nvis: idx.nvis, medianGap: idx.medianGap, lodCore: idx.lodCore, density: S.denKind, place: S.place, sensor: !!S.ps, W: S.W, H: S.H, solid: S.solid, havePose: !!(S.pos && S.ori), capFail: S.capFail }; },
       node: function (i) { return G.nodes[i]; },
+      tune: function (patch) { if (patch) { T = cleanTune(patch, T); applyTune(true); } var c = {}; for (var k in T) c[k] = T[k]; return c; },
       dwell: function (o) { for (var k in o) if (k in DWELL) DWELL[k] = o[k]; return DWELL; },          /* test hook: stretch a tier to capture its frame */
       /* test hook: both density sources sampled on a gx x gy grid (after a fresh readback) */
       densityDump: function (gx, gy) {
@@ -310,13 +351,13 @@
       /* test hook: which corner would the card for star i take with the frame's pixels and with the projected stars only (acceptance test 4) */
       placeBoth: function (i, size) {
         project(); var p = starXY(i); if (!p) return Promise.resolve(null); var chips = chipBoxes(), sz = size || { w: 348, h: 380 };
-        var run = function (den) { return Place.choose({ W: S.W, H: S.H, hover: { x: p.x, y: p.y }, size: sz, density: den, margin: MARGIN, reserved: chips.reserved, obstacles: chips.obstacles, halo: HALO }); };
+        var run = function (den) { return Place.choose({ W: S.W, H: S.H, hover: { x: p.x, y: p.y }, size: sz, density: den, margin: MARGIN, reserved: chips.reserved, obstacles: chips.obstacles, halo: T.halo }); };
         var table = function (r) { var t = {}; r.scores.forEach(function (x) { t[x.slot] = x.feasible ? +x.score.toFixed(3) : null; }); return t; };
         return new Promise(function (res) { var tries = 0; (function wait() { if (S.denKind === 'luma' && !S.lumaStale) { var a = run(S.density), b = run(starDensity()); res({ luma: a.slot, stars: b.slot, lumaScores: table(a), starScores: table(b) }); } else { S.lumaStale = true; capture(); if (++tries > 40) res(null); else setTimeout(wait, 150); } })(); });
       }
     };
     S.W = stage.clientWidth; S.H = stage.clientHeight; S.ready = true;
-    watchGates(); setLevel(o.level === 'none' ? 'none' : 'min', false);
+    watchGates(); applyTune(false); setLevel(o.level === 'none' ? 'none' : 'min', false); if (o.tune) toggleTune(true);
     if (o.hover != null && !isNaN(o.hover)) api.hover(o.hover, o.hoverTier);
     return api;
   }

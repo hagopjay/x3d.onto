@@ -12,6 +12,7 @@ CELLS = [
     ('4-card-shape', '4  dwell 1.2 s: NodeType card with the ontology block'),
     ('5-card-finding', '5  a measured Finding, camera flown to it'),
     ('6-sheet', '6  narrow screen: the card becomes a sheet'),
+    ('7-tune', '7  press T: the tuning panel, the card keeps clear of it'),
 ]
 CW, CH, GAP, LAB, TITLE = 720, 432, 14, 34, 58
 BG, GOLD, INK3 = (11, 10, 13), (233, 207, 138), (138, 132, 120)
@@ -25,7 +26,7 @@ def font(name, size):
 
 
 fb, fs = font('DejaVuSans-Bold', 20), font('DejaVuSans', 15)
-cols, rows = 3, 2
+cols, rows = 3, 3
 W = cols * CW + (cols + 1) * GAP
 H = TITLE + rows * (CH + LAB) + (rows + 1) * GAP
 sheet = Image.new('RGB', (W, H), BG)

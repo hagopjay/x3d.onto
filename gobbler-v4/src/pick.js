@@ -24,7 +24,7 @@
     this.xyz = new Float32Array(N * 3); this.tier = new Uint8Array(N);
     for (i = 0; i < N; i++) { var p = nodes[i].xyz || [0, 0, 0]; this.xyz[3 * i] = p[0]; this.xyz[3 * i + 1] = p[1]; this.xyz[3 * i + 2] = p[2]; this.tier[i] = nodes[i].tier || 2; }
     this.sx = new Float32Array(N); this.sy = new Float32Array(N); this.depth = new Float32Array(N);
-    this.vis = new Int32Array(N); this.nvis = 0; this.stamp = new Uint32Array(N); this.gen = 0;
+    this.vis = new Int32Array(N); this.nvis = 0; this.stamp = new Uint32Array(N); this.gen = 1;           /* stamp 0 = never seen, so nothing is visible before the first update */
     this.cellOf = new Int32Array(N); this.items = new Int32Array(N);
     this.W = 0; this.H = 0; this.gw = 0; this.gh = 0; this.cellStart = new Int32Array(1); this._fill = null;
     this.lodCore = false; this.medianGap = Infinity; this._lodAge = 0;
@@ -53,6 +53,8 @@
     var fill = this._fill; if (!fill || fill.length !== cells) fill = this._fill = new Int32Array(cells); else fill.fill(0);
     for (i = 0; i < n; i++) { var s = vis[i], cc = cellOf[s]; this.items[cs[cc] + fill[cc]++] = s; }
     this.W = W; this.H = H; this.gw = gw; this.gh = gh; this.nvis = n;
+    var jump = this._prevN != null && Math.abs(n - this._prevN) > 0.25 * Math.max(n, this._prevN, 50);      /* a new view (UI toggle, resize, end of the intro): do not trust the old crowding */
+    this._prevN = n; if (jump) this._lodAge = 0;
     if (this._lodAge++ % LOD_EVERY === 0) this._lod();         /* the sky changes slowly: re-measure every few updates */
     return n;
   };

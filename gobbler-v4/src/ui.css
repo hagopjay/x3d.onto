@@ -1,6 +1,6 @@
 /* Gobbler v4 overlay: four corner chips, tooltip, dwell card, leader line, focus dim. Tokens are the viewer's own (common.css).
  * Everything is prefixed gv4- so nothing collides with the v3 page styles. UI level none hides all of it. */
-.gv4 { position: absolute; inset: 0; pointer-events: none; overflow: hidden; z-index: 5; --gv4-gold: #e9cf8a; --gv4-gold2: #b8964a; --gv4-maroon: #9b2c47; --gv4-ember: #e5751f; }
+.gv4 { position: absolute; inset: 0; pointer-events: none; overflow: hidden; z-index: 5; --gv4-maroon: #9b2c47; }
 .gv4 > * { pointer-events: none; }
 .gv4[data-ui="none"] > :not(.gv4-peek) { display: none !important; }
 .gv4-glass { background: rgba(12, 10, 15, .72); backdrop-filter: blur(14px) saturate(1.2); -webkit-backdrop-filter: blur(14px) saturate(1.2); border: 1px solid rgba(233, 207, 138, .3); }
@@ -24,7 +24,6 @@
 .gv4-legend .dots i { width: 9px; height: 9px; border-radius: 50%; background: var(--c); box-shadow: 0 0 8px var(--c); }
 .gv4-legend .ok { color: #9fd1af; }
 .gv4-pills { display: flex; gap: 6px; flex-wrap: wrap; max-width: calc(100vw - 52px); }
-.gv4-pills .chip.cur { background: rgba(233, 207, 138, .16); color: var(--gold); border-color: var(--gold); }
 .gv4-pills .chip .k { font: 10.5px var(--mono); opacity: .65; margin-left: 6px; }
 .gv4-hud { font: 11.5px/1.4 var(--mono); color: var(--ink3); text-align: right; text-shadow: 0 1px 8px #000; }
 .gv4-peek { position: absolute; left: 0; bottom: 0; width: 56px; height: 56px; pointer-events: none; opacity: 0; transition: opacity .2s; color: var(--gold); font: 600 14px/56px var(--mono); text-align: center; cursor: pointer; }
@@ -97,3 +96,20 @@
 
 @media (prefers-reduced-motion: reduce) { .gv4-dim { transition: none; } }
 @media (max-width: 719px) { .gv4-legend .dots { display: none; } .gv4-id small { display: none; } }
+
+/* tuning panel (key T) */
+.gv4-tune { position: absolute; top: 58px; right: 22px; width: 276px; max-height: calc(100% - 140px); overflow: auto; border-radius: 12px; padding: 10px 14px; pointer-events: auto; font: 12.5px/1.4 var(--sans); color: var(--ink2); box-shadow: 0 12px 40px rgba(0, 0, 0, .5); }
+.gv4-tune[hidden] { display: none; }
+.gv4-th { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+.gv4-th b { flex: 1; font: 600 11px var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--gold); }
+.gv4-th .x { font: 11px var(--mono); color: var(--ink2); background: none; border: 1px solid var(--rule); border-radius: 6px; padding: 1px 7px; cursor: pointer; }
+.gv4-th .x:hover { color: var(--ink); border-color: var(--gold2); }
+.gv4-tune label.r { display: grid; grid-template-columns: 1fr auto; gap: 1px 8px; align-items: center; margin: 8px 0; }
+.gv4-tune label.r output { font: 11px var(--mono); color: var(--ink); text-align: right; }
+.gv4-tune label.r input { grid-column: 1 / span 2; width: 100%; margin: 2px 0 0; accent-color: var(--gold2); }
+.gv4-tune label.cb { display: flex; align-items: center; gap: 8px; margin: 8px 0; }
+.gv4-tune label.cb input[type="checkbox"] { accent-color: var(--gold2); }
+.gv4-tune label.cb span { flex: 1; }
+.gv4-tune select { background: rgba(0, 0, 0, .4); color: var(--ink); border: 1px solid var(--rule); border-radius: 6px; padding: 2px 6px; font: inherit; }
+.gv4-tune button:focus-visible, .gv4-tune input:focus-visible, .gv4-tune select:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.gv4-tk { margin-top: 8px; padding-top: 7px; border-top: 1px solid var(--rule); font: 10.5px/1.5 var(--mono); color: var(--ink3); }

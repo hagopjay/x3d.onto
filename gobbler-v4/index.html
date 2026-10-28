@@ -1,6 +1,6 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Gobbler 4 live hover · PolyXandria</title>
 <meta name="description" content="Gobbler 3 Deep with the v4 cornerstone UI: a none/minimal toggle, a guided mouse, corner-docked cards and live ontology data on hover.">
-<!-- Gobbler v4, step 1: the Gobbler 3 Deep scene, untouched, with the hover and UI layer on top. Params: ui=none|min  view=Wide|Colossus|EyeToEye|Inside|Flywheel|Crown  hover=<entity index>  tier=2|3  glass=1 (keep the blur even when frames are slow) -->
+<!-- Gobbler v4, step 1: the Gobbler 3 Deep scene, untouched, with the hover and UI layer on top. Params: ui=none|min  view=Wide|Colossus|EyeToEye|Inside|Flywheel|Crown  hover=<entity index>  tier=2|3  glass=1 (keep the blur even when frames are slow)  tune=1 (open the tuning panel) -->
 <link rel="icon" href="data:,"><link rel="stylesheet" href="vendor/x_ite/x_ite.css"><link rel="stylesheet" href="data/deep/common.css"><link rel="stylesheet" href="src/ui.css">
 <style>
 .about{max-width:1120px;margin:0 auto;padding:44px 20px 70px;color:var(--ink2);font-size:15px}
@@ -23,7 +23,7 @@ noscript{display:block;padding:24px;color:var(--ink2)}
     <div class="gv4-corner gv4-tl" data-corner="TL"><div class="gv4-id">Gobbler<small id="gv4-counts">3 Deep</small></div></div>
     <div class="gv4-corner gv4-tr" data-corner="TR"><div class="gv4-legend"><span class="dots" id="gv4-dots"></span><span class="ok" id="gv4-valid"></span></div></div>
     <div class="gv4-corner gv4-bl" data-corner="BL"><div class="gv4-pills" id="vps"><button class="chip on" id="gv4-ui" title="U cycles none and minimal, H hides everything while held">&#9680; UI<span class="k">minimal</span></button><button class="chip" id="btn-tour">Pause tour</button><button class="chip" id="btn-dark">Lights out</button><button class="chip" id="btn-full">Full screen</button><button class="chip" id="btn-clean" hidden>Hide text</button></div></div>
-    <div class="gv4-corner gv4-br" data-corner="BR"><div class="gv4-hud"><div class="hud" id="hud" style="text-align:right">starting</div><div id="gv4-hint">hover a star</div></div></div>
+    <div class="gv4-corner gv4-br" data-corner="BR"><div class="gv4-hud"><div class="hud" id="hud" style="text-align:right">starting</div><div id="gv4-hint">hover a star &middot; T to tune</div></div></div>
     <div class="gv4-peek" title="Show the UI (U)">&#9680;</div>
   </div>
   <div class="busy" id="busy">Starting the viewer</div>
@@ -37,7 +37,7 @@ noscript{display:block;padding:24px;color:var(--ink2)}
 <tr><td><kbd>click</kbd> &middot; <kbd>Esc</kbd></td><td>pin the card &middot; close it</td></tr>
 <tr><td><kbd>dbl-click</kbd> or <kbd>F</kbd></td><td>fly there</td></tr>
 <tr><td><kbd>&larr;</kbd> <kbd>&rarr;</kbd> &middot; <kbd>Shift</kbd></td><td>cycle stars stacked within 12 px &middot; hover every star, not only the 648 core stars in crowded views</td></tr>
-<tr><td><kbd>U</kbd> &middot; hold <kbd>H</kbd></td><td>UI none and minimal &middot; hide everything while held</td></tr></table>
+<tr><td><kbd>U</kbd> &middot; hold <kbd>H</kbd> &middot; <kbd>T</kbd></td><td>UI none and minimal &middot; hide everything while held &middot; tuning panel (snap, dwell times, dimming, core-tier hover, glass)</td></tr></table>
 <p>UI none shows nothing and adds nothing to the scene.</p></main>
 <script>
 (function () {
@@ -55,8 +55,8 @@ noscript{display:block;padding:24px;color:var(--ink2)}
     tour: { vp: 'Wide', center: [5.2, -2.2, 0], r0: 26, r1: 9.5, e0: 34, e1: 6, duration: 44, spin: 0.05, loop: 'pingpong', fov: 0.95, delay: 900, auto: !deterministic },
     onLoaded: function (el) {
       graphP.then(function (a) {
-        window.gobbler = GobblerV4.start({ G: a[0], ONTO: a[1], el: el, stage: document.getElementById('stage'), root: document.getElementById('gv4'), level: ui, hover: hv === null ? null : +hv, hoverTier: +q.get('tier') || 3, glass: q.get('glass') === '1' });
-        if (view) { var b = document.querySelector('.vp[data-vp="' + view + '"]'); if (b) b.click(); }
+        window.gobbler = GobblerV4.start({ G: a[0], ONTO: a[1], el: el, stage: document.getElementById('stage'), root: document.getElementById('gv4'), level: ui, hover: hv === null ? null : +hv, hoverTier: +q.get('tier') || 3, glass: q.get('glass') === '1', tune: q.get('tune') === '1' });
+        if (view) { var b = [].filter.call(document.querySelectorAll('.vp'), function (x) { return x.dataset.vp === view; })[0]; if (b) b.click(); }
         document.body.dataset.v4 = '1';
       }).catch(function (e) { document.getElementById('busy').hidden = false; document.getElementById('busy').textContent = String(e); console.error(e); });
     }
