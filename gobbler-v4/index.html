@@ -1,0 +1,65 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Gobbler 4 live hover · PolyXandria</title>
+<meta name="description" content="Gobbler 3 Deep with the v4 cornerstone UI: a none/minimal toggle, a guided mouse, corner-docked cards and live ontology data on hover.">
+<!-- Gobbler v4, step 1: the Gobbler 3 Deep scene, untouched, with the hover and UI layer on top. Params: ui=none|min  view=Wide|Colossus|EyeToEye|Inside|Flywheel|Crown  hover=<entity index>  tier=2|3  glass=1 (keep the blur even when frames are slow) -->
+<link rel="icon" href="data:,"><link rel="stylesheet" href="vendor/x_ite/x_ite.css"><link rel="stylesheet" href="data/deep/common.css"><link rel="stylesheet" href="src/ui.css">
+<style>
+.about{max-width:1120px;margin:0 auto;padding:44px 20px 70px;color:var(--ink2);font-size:15px}
+.about h2{font-size:26px;color:var(--ink);margin-bottom:12px}
+.about table{border-collapse:collapse;margin:14px 0 22px;font-size:14px}
+.about td,.about th{border-top:1px solid var(--rule);padding:6px 18px 6px 0;text-align:left;vertical-align:top}
+.about th{font:600 11px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--gold2)}
+.about kbd{font:11px var(--mono);border:1px solid var(--rule);border-radius:4px;padding:1px 5px;color:var(--ink)}
+.about p{max-width:70ch}
+noscript{display:block;padding:24px;color:var(--ink2)}
+</style>
+<script src="vendor/x_ite/x_ite.min.js"></script><script src="engine/common.js"></script>
+<script src="src/placement.js"></script><script src="src/pick.js"></script><script src="src/density.js"></script><script src="src/cards.js"></script><script src="src/hover.js"></script></head>
+<body>
+<header class="stage" id="stage">
+  <div class="shade"></div><div class="fog"></div><div class="dark"></div><div class="grain"></div><div class="flash"></div><div class="vignette"></div>
+  <div class="gv4" id="gv4" data-ui="min">
+    <div class="gv4-dim"></div><svg class="gv4-svg" aria-hidden="true"></svg>
+    <div class="gv4-tip gv4-glass" role="tooltip"></div><div class="gv4-card gv4-glass" aria-live="polite"></div>
+    <div class="gv4-corner gv4-tl" data-corner="TL"><div class="gv4-id">Gobbler<small id="gv4-counts">3 Deep</small></div></div>
+    <div class="gv4-corner gv4-tr" data-corner="TR"><div class="gv4-legend"><span class="dots" id="gv4-dots"></span><span class="ok" id="gv4-valid"></span></div></div>
+    <div class="gv4-corner gv4-bl" data-corner="BL"><div class="gv4-pills" id="vps"><button class="chip on" id="gv4-ui" title="U cycles none and minimal, H hides everything while held">&#9680; UI<span class="k">minimal</span></button><button class="chip" id="btn-tour">Pause tour</button><button class="chip" id="btn-dark">Lights out</button><button class="chip" id="btn-full">Full screen</button><button class="chip" id="btn-clean" hidden>Hide text</button></div></div>
+    <div class="gv4-corner gv4-br" data-corner="BR"><div class="gv4-hud"><div class="hud" id="hud" style="text-align:right">starting</div><div id="gv4-hint">hover a star</div></div></div>
+    <div class="gv4-peek" title="Show the UI (U)">&#9680;</div>
+  </div>
+  <div class="busy" id="busy">Starting the viewer</div>
+</header>
+<noscript>This page needs JavaScript: the scene is X3D drawn by X_ITE.</noscript>
+<main class="about"><h2>Gobbler 4, step 1: live hover on the 3 Deep scene</h2>
+<p>The scene is the Gobbler 3 Deep file, byte for byte. This page adds a layer above it: point at a star and it snaps to the nearest one; rest on it and more of the knowledge graph opens, up to a card docked in the emptiest corner. Nothing is sent anywhere; every word is read from the graph already in the page. Each card says how we know a thing and how sure we are.</p>
+<table><tr><th>Do</th><th>Get</th></tr>
+<tr><td>rest on a star <b>0.15 s</b></td><td>name, kind, provenance</td></tr>
+<tr><td><b>0.45 s</b> &middot; <b>1.2 s</b> or <kbd>click</kbd></td><td>the card, then the deep card: ontology block for X3D names, evidence, sources, loops</td></tr>
+<tr><td><kbd>click</kbd> &middot; <kbd>Esc</kbd></td><td>pin the card &middot; close it</td></tr>
+<tr><td><kbd>dbl-click</kbd> or <kbd>F</kbd></td><td>fly there</td></tr>
+<tr><td><kbd>&larr;</kbd> <kbd>&rarr;</kbd> &middot; <kbd>Shift</kbd></td><td>cycle stars stacked within 12 px &middot; hover every star, not only the 648 core stars in crowded views</td></tr>
+<tr><td><kbd>U</kbd> &middot; hold <kbd>H</kbd></td><td>UI none and minimal &middot; hide everything while held</td></tr></table>
+<p>UI none shows nothing and adds nothing to the scene.</p></main>
+<script>
+(function () {
+  var q = new URLSearchParams(location.search), saved = null; try { saved = localStorage.getItem('gv4.ui'); } catch (e) {}
+  var ui = q.get('ui') || saved || 'min', view = q.get('view'), hv = q.get('hover'), deterministic = !!(view || hv !== null);
+  var graphP = Promise.all([fetch('data/deep/graph-v3.json').then(function (r) { if (!r.ok) throw new Error('graph-v3.json: HTTP ' + r.status + ' (run make v4-data)'); return r.json(); }), fetch('data/onto-hover.json').then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; })]);
+  fetch('data/deep/gobbler3-receipt.json').then(function (r) { return r.json(); }).then(function (r) { var v = r.validator || {}; if (v.xsd_valid && v.commit) document.getElementById('gv4-valid').textContent = '\u2713 valid \u00b7 fork ' + v.commit; }).catch(function () {});
+  graphP.then(function (a) {
+    var G = a[0]; document.getElementById('gv4-counts').textContent = '3 Deep · ' + G.drawn.toLocaleString('en-US') + ' stars · ' + G.loops.length + ' loops';
+    document.getElementById('gv4-dots').innerHTML = Object.keys(Cards.FAMHEX).map(function (k) { return '<i style="--c:' + Cards.FAMHEX[k] + '" title="' + k + '"></i>'; }).join('');
+  });
+  PX.boot({
+    scene: 'data/deep/gobbler3.x3d', look: { toneMapping: 'KHR_PBR_NEUTRAL', exposure: 1.0 }, darkDefault: false, autoClean: 0,
+    viewpoints: [['Wide', 'Wide'], ['Colossus', 'Colossus'], ['EyeToEye', 'Eye'], ['Inside', 'Inside'], ['Flywheel', 'Flywheel'], ['Crown', 'Crown']],
+    tour: { vp: 'Wide', center: [5.2, -2.2, 0], r0: 26, r1: 9.5, e0: 34, e1: 6, duration: 44, spin: 0.05, loop: 'pingpong', fov: 0.95, delay: 900, auto: !deterministic },
+    onLoaded: function (el) {
+      graphP.then(function (a) {
+        window.gobbler = GobblerV4.start({ G: a[0], ONTO: a[1], el: el, stage: document.getElementById('stage'), root: document.getElementById('gv4'), level: ui, hover: hv === null ? null : +hv, hoverTier: +q.get('tier') || 3, glass: q.get('glass') === '1' });
+        if (view) { var b = document.querySelector('.vp[data-vp="' + view + '"]'); if (b) b.click(); }
+        document.body.dataset.v4 = '1';
+      }).catch(function (e) { document.getElementById('busy').hidden = false; document.getElementById('busy').textContent = String(e); console.error(e); });
+    }
+  });
+})();
+</script></body></html>

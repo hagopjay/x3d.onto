@@ -1,6 +1,8 @@
-# Gobbler v4: hover, guided mouse and corner UI (spec, draft 1)
+# Gobbler v4: hover, guided mouse and corner UI (spec, draft 2: step 1 is built)
 
-Draft, written 27 Oct 2026 for HagopJay's taste check. Nothing here spends money. Copies of the frames and the pack are also in `/mnt/project-files/ontology-extraction/v4-ui/`. Numbers are measured on the real Gobbler 3 Deep graph (`graph-v3.json`, 2,476 drawn stars) or computed from your two stills. The one thing I cannot measure in the cloud is real-GPU frame cost; it is flagged Suspected and has a test (section 9).
+Draft 1 was written 27 Oct 2026 for HagopJay's taste check; draft 2 (28 Oct) keeps it and adds what was built and measured on the live scene: section 12 and the amendments marked *draft 2* below. The viewer is in `gobbler-v4/` (see its README).
+
+Draft 1 text: Nothing here spends money. Copies of the frames and the pack are also in `/mnt/project-files/ontology-extraction/v4-ui/`. Numbers are measured on the real Gobbler 3 Deep graph (`graph-v3.json`, 2,476 drawn stars) or computed from your two stills. The one thing I cannot measure in the cloud is real-GPU frame cost; it is flagged Suspected and has a test (section 9).
 
 Your words this spec answers: "a toggle with none/minimal, guided mouse and optimal UI corner placements when UI and onHover goes live for the real time and deep ontological data", "stills: none is fine", "one scene in the browser, if it is not a trade-off in efficiency", "I don't want to lose anything".
 
@@ -83,7 +85,9 @@ hysteresis  = keep last slot unless another wins by more than 0.12 (the card doe
 fallback    = nothing feasible -> the corner farthest from the star
 ```
 
-`density(x, y)` is how much subject sits at a screen point. The mock reads it from your still's luminance. The live viewer builds it from the projected stars and edges (cells of 48 px, built when the card opens, not per frame), because reading pixels back from a WebGL canvas is slow.
+`density(x, y)` is how much subject sits at a screen point. The mock reads it from your still's luminance. *Draft 2:* the live viewer reads the frame itself: inside X_ITE's own end-of-frame callback it copies the canvas to a 192 px wide 2D canvas and reads luminance from that (valid there without `preserveDrawingBuffer`; one read while the dwell runs, again only after the camera moves). If a read ever fails three times it falls back to the projected stars and their tethers (the plan in draft 1). The fallback cannot see the bird, so in the Wide view it picks the pixel-best corner only 6 times in 14; in Flywheel and Crown it stays within 0.25 score of the best in 14 of 14. It is a safety net, not the normal path: every card in the live runs was placed from pixels.
+
+*Draft 2, narrow screens:* below 720 px the card is a sheet inset 22 px from the sides, on the bottom edge (nearest the thumb) or the top edge, whichever leaves the star its 96 px halo and clears the corner chips; if the room is smaller than the card it is cut and fades at the foot.
 
 Results on your stills (lower is better):
 
@@ -128,9 +132,9 @@ In the page, in memory, with no server call: the pointer drives live lookups int
 | Cost | Measured or planned | Grade |
 |---|---|---|
 | project 2,476 stars to screen | **about 10 us** per call (node 22, this machine; `bench/pick_timing.js`) | Confirmed |
-| rebuild the pick grid (project + bucket) | **about 19 us**; query **0.5 us** | Confirmed |
+| rebuild the pick grid (project + bucket) | **about 19 us**; query **0.5 us** (*draft 2:* the shipped `pick.js` with the crowding check measures about 50 us per update) | Confirmed |
 | per frame, if it ran every frame | about 0.02 ms of a 16.7 ms budget | Confirmed (arithmetic) |
-| extra data | +16 KB gzip (section 6) | Confirmed |
+| extra data | +16 KB gzip (section 6); *draft 2:* the shipped ontology block covers only the 104 drawn classes, 39 KB raw, 7.8 KB gzip | Confirmed |
 | extra JS | target 40 KB minified or less, no dependencies | Planned |
 | DOM overlay over the canvas | cards are DOM, created on dwell, removed on leave | Likely cheap |
 | `backdrop-filter` blur under a card | a blur behind a continuously redrawing canvas can cost GPU time | **Suspected**; fallback is a solid 92% panel, switched on when fps drops under 50 |
@@ -168,7 +172,7 @@ I chose these so work can continue; each is cheap to flip.
 ## 11. Open items (nothing blocks the taste check)
 
 - The Face camera is not among the Deep scene's Viewpoints that I could read, so pick statistics for it are unmeasured; your two stills are the only evidence so far.
-- Camera pose: the plan is that the page owns the camera (NavigationInfo NONE, overlay pose equal to the Probe pose) because X_ITE's public API exposes only the active viewpoint's position, orientation and field of view. To confirm in code.
-- Live density from projected stars and edges versus the mock's pixel density (acceptance test 4).
-- Real-GPU frame cost with the overlay on and off (acceptance test 5).
+- ~~Camera pose~~ *Draft 2, resolved:* the page does not own the camera. A `ProximitySensor` added to the in-memory scene at run time reports the real pose (it follows the user's orbit); the field of view comes from the active viewpoint. In UI none nothing is added.
+- ~~Live density from projected stars~~ *Draft 2, resolved:* the frame's own pixels are the primary source, stars are the fallback (section 4).
+- Real-GPU frame cost with the overlay on and off (acceptance test 5): still open, software GL only so far.
 - Where this lands in the layer stack: PLAN.md section 6 (add-only, new v4 folder, versioned).
