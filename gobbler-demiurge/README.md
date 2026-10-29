@@ -143,7 +143,7 @@ Grades: **Confirmed** = reproduced by a test or tool output in this folder; **Li
 | Tender file validates | `assets/tender/tender.x3d`: XSD valid, profile OK (HAnim 1, Shape 2), 0 semantic errors and 0 warnings (4 info), fork `2b696f5` | Confirmed |
 | Villager files validate | the three `assets/villager/villager_{a,b,c}.x3d` and the page's `data/bird/villagers.x3d`: XSD valid, profile OK (HAnim 1, Shape 2), 0 semantic errors and 0 warnings (4 to 7 info), fork `2b696f5` | Confirmed |
 | Deep scene unchanged | everything outside the three insertions (viewpoints, the HAnim component statement, the layers block) equals the Deep file byte for byte (`test/test_layers.py`) | Confirmed |
-| Bytes | BYTES_TBD | Confirmed |
+| Bytes | scene 1,663,991 raw, 354,684 gzipped with the Mashtots ring and the Armenian knot (the ring adds about 25 KB gzipped; the knot replaced the old shuttles for about 0.5 KB; Deep alone 685,470; the three tender copies add about 18 KB gzipped; the villagers and the khachkar are not in it, they load with the village); graph 1,638,991 raw, 265,588 gzipped. First frame needs the scene only: 355 KB on the wire (plus X_ITE) | Confirmed |
 | Boot, software GL | bird on screen in 4.0 to 5.5 s over the last four end-to-end runs (4.0, 4.3, 5.3 and 5.5 s; an earlier run under load took 9.7 s): X_ITE start plus fetch about 1.1 s, parse 2.5 to 2.9 s, first frame 0.4 to 1.5 s; graph 0.1 s later | Confirmed here, real GPU and real network Suspected |
 | Failure path | a 404 on the scene shows "Stage: fetching the bird / HTTP 404 ..." | Confirmed (e2e) |
 | Frame rate | not measured on a GPU (software GL is not a bench); the fps readout in the corner shows the viewer's own number | Suspected |
@@ -177,7 +177,7 @@ Grades: **Confirmed** = reproduced by a test or tool output in this folder; **Li
 | Mashtots ring: bytes | the composed scene grows from 1,545,431 to 1,657,998 bytes raw and from 328,745 to 354,143 gzipped (+25,398 B on the wire, in the boot payload); the e2e cap on the scene moved from 340 KB to 370 KB for it. 36 Shapes and 36 Billboards more to draw; what that costs in frame rate on a GPU is not measured | Confirmed |
 | Mashtots ring in the page | e2e: 36 letters, the ring's rotation changes over 3 s and the reading glow moves; the near side reads in order at the Face and in frame 16, the far side reads backwards from inside at the Heart stop (frames in `docs/frames/mashtots/`) | Confirmed (e2e, frames); how it reads on a real GPU Suspected |
 
-E2E_TBD
+`node test/e2e.js` runs 48 checks: all 48 passed with the ring, the khachkar and the knot together (X_ITE 16.5.1, software GL, machine load under 2; under heavy load from other browser runs the timing checks, a knee moving within 0.9 s or a flight arriving within 4.5 s, can fail). `python3 -I test/test_layers.py` runs 14 (all pass).
 
 ## What step 3 did with the planning notes
 

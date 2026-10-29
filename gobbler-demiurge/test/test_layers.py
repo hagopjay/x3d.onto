@@ -60,7 +60,7 @@ class T(unittest.TestCase):
         layers.MASHTOTS = False
         try: off = layers.build(EXP)
         finally: layers.MASHTOTS = True
-        self.assertNotIn('Mashtots', off['sway']); self.assertEqual(len(off['anchors']), 19)                              # the flag leaves the build as it was before the ring
+        self.assertNotIn('Mashtots', off['sway']); self.assertEqual(len(off['anchors']), 20)                              # the flag leaves the build as it was before the ring (19 tags plus the khachkar's)
     def test_villagers_file(self):
         v = layers.build(EXP)['villagers']
         self.assertEqual(len(re.findall(r"<Group DEF='VillagerBody\d'>", v)), 3); self.assertEqual(len(re.findall(r"<Group USE='VillagerBody\d'/>", v)), 9)   # three outfits, each with its own gait, shared by USE among twelve walkers
