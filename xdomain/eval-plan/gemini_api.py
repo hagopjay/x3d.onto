@@ -33,7 +33,15 @@ def call(model, parts, location=None, max_tokens=8192, temperature=1.0, json_out
     body = json.dumps({"contents": [{"role": "user", "parts": [_part(p) for p in parts]}], "generationConfig": cfg}).encode()
     req = urllib.request.Request(f"{API}/{model}:generateContent", body, {"content-type": "application/json", "x-goog-api-key": key})
     t0 = time.time()
-    with urllib.request.urlopen(req, timeout=400) as r: d = json.load(r)
+    for attempt in range(5):   # transient failures (connection reset, 429, 5xx) are retried with backoff; a 4xx is not
+        try:
+            with urllib.request.urlopen(req, timeout=400) as r: d = json.load(r)
+            break
+        except urllib.error.HTTPError as e:
+            if e.code not in (429, 500, 502, 503, 504) or attempt == 4: raise
+        except (urllib.error.URLError, ConnectionError, TimeoutError):
+            if attempt == 4: raise
+        time.sleep(2 ** (attempt + 1))
     u = d.get("usageMetadata", {}); tin = u.get("promptTokenCount", 0); tout = u.get("candidatesTokenCount", 0) + u.get("thoughtsTokenCount", 0)
     pi, po = price(model); usd = (tin * pi + tout * po) / 1e6
     c = (d.get("candidates") or [{}])[0]; text = "".join(p.get("text", "") for p in c.get("content", {}).get("parts", []) if not p.get("thought"))
