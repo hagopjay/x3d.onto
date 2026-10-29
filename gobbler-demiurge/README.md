@@ -136,7 +136,7 @@ Grades: **Confirmed** = reproduced by a test or tool output in this folder; **Li
 - **Scale.** The plan's note was to scale the Loom group so the ribcage radius 3.3 equals 2.4 AU. The page keeps the bird's own coordinates instead, puts Earth, the Moon and the village inside the Loom group at display sizes, and says so in the tags (see the ladder section). The 0.36 Sun stays one Sun; there is no second, true-radius Sun for a near LOD.
 - **The pivot.** The `Loom` group still sways about the scene's pivot (0.72, -0.76); rather than move the heart, the page pauses the sway while the camera is at stops 4 to 7.
 - **Lazy loading** is by ProximitySensor and `Inline`, as in the fan's unfurl (a ProximitySensor starting a TimeSensor); the 364 beads stay in the boot payload.
-- **Still open:** the nebula sky and the red and blue streaming trails of frame D (only the gold and orange Blender streams are drawn), the eclipse stop, the flywheel growing the village from its own validated scenes, a second Sun LOD, music (step 10) and the trailer (step 12).
+- **Still open:** the nebula sky and the red and blue streaming trails of frame D (only the gold and orange Blender streams are drawn), the eclipse stop, the flywheel growing the village from its own validated scenes, a second Sun LOD and the trailer (step 12). Music (step 10) is built, but no one has listened to it on a real device yet.
 
 ## Known rough edges
 
