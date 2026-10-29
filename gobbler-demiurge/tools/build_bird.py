@@ -49,7 +49,8 @@ def main():
     open(os.path.join(OUT, 'gobbler4-bird-gold.x3d'), 'wb').write(gold); open(os.path.join(OUT, 'gobbler4-bird-gold.x3d.gz'), 'wb').write(gz(gold))
     gj = open(os.path.join(DEEP, 'graph-v3.json'), 'rb').read(); open(os.path.join(OUT, 'graph-v3.json.gz'), 'wb').write(gz(gj))
     json.dump(L['anchors'], open(os.path.join(OUT, 'anchors.json'), 'w'), indent=1)
-    wfiles = world.build(OUT); json.dump(dict(L['world'], files=wfiles), open(os.path.join(OUT, 'world.json'), 'w'), indent=1)         # the lazy Inlines and the stops that reach them
+    wfiles = world.build(OUT); open(os.path.join(OUT, 'villagers.x3d'), 'w', encoding='utf-8').write(L['villagers']); wfiles['villagers.x3d'] = len(L['villagers'].encode('utf-8'))
+    json.dump(dict(L['world'], files=wfiles), open(os.path.join(OUT, 'world.json'), 'w'), indent=1)         # the lazy Inlines and the stops that reach them
     rec = dict(scene_bytes=len(sb), scene_gz_bytes=len(gz(sb)), deep_bytes=len(deep_b), layers_bytes=len(sb) - len(deep_b), graph_bytes=len(gj), graph_gz_bytes=len(gz(gj)),
                boot_gz_bytes=len(gz(sb)) + len(gz(gj)), counts=L['counts'], scene_sha256=sha(sb), gold_scene_gz_bytes=len(gz(gold)), gold_scene_sha256=sha(gold), deep_sha256=sha(deep_b), built_in_s=round(time.time() - t0, 2))
     if '--validate' in sys.argv:

@@ -6,6 +6,12 @@ Run with a Python that can `import bpy` (the PyPI wheel works, Blender 5.2 LTS):
 
 Writes assets/tender/tender.x3d (X3D 4.0, one HAnimHumanoid, 18 joints, skinned) and assets/tender/receipt.json.
 
+    python3 tools/blender_tender.py --look a|b|c --out assets/villager
+
+writes the same rig dressed as a villager instead of a gold tender (assets/villager/villager_<look>.x3d and receipt_<look>.json): skin, hair, shirt, trousers and boots each
+get their own colour, and every look carries one thing that shows in a silhouette (a mass of hair, a brimmed hat, a basket on the back). The joints, the skin's structure, the object
+names and so the DEF names are the same as the tender's, so tools/tender.py hands the villagers out the same way.
+
 Armature: the 18 joints of the lowest H-Anim 2.0 articulation level as I remember it (humanoid_root, sacroiliac, l_ and r_ hip, knee, ankle,
 vl5, vt6, vc4, skullbase, l_ and r_ shoulder, elbow, wrist). The joint list is from memory and has not been checked against ISO/IEC 19774-1.
 Skin: one faceted low-poly mesh (pelvis, abdomen, chest, neck, head, arms, legs, feet, joint caps), every part weighted 1.0 to its own joint,
@@ -72,8 +78,48 @@ def icosphere(bm, c, r):
     bmesh.ops.create_icosphere(bm, subdivisions=1, radius=r, matrix=__import__('mathutils').Matrix.Translation(Vector(c)))
 
 
-def build_parts():
+LOOKS = {                                                                                          # the villagers' outfits (display colours), one per walking lane
+    'a': dict(skin=(0.93, 0.74, 0.58), hair=(0.20, 0.13, 0.09), shirt=(0.80, 0.32, 0.25), trousers=(0.34, 0.26, 0.20), boots=(0.20, 0.15, 0.11), sleeves='long', extra='hair'),
+    'b': dict(skin=(0.76, 0.54, 0.38), hair=(0.62, 0.60, 0.56), shirt=(0.24, 0.50, 0.62), trousers=(0.40, 0.42, 0.28), boots=(0.25, 0.18, 0.12), sleeves='rolled', extra='hat'),
+    'c': dict(skin=(0.58, 0.38, 0.27), hair=(0.09, 0.08, 0.08), shirt=(0.90, 0.82, 0.62), trousers=(0.30, 0.34, 0.44), boots=(0.20, 0.15, 0.11), sleeves='rolled', extra='basket'),
+}
+
+
+def villager_parts(L):
+    """the same parts as the tender (same joints, same shapes), coloured as clothes and skin; joint caps stay as pads in the cloth; plus the look's own extra"""
+    sk, hr, sh, tr, bt = L['skin'], L['hair'], L['shirt'], L['trousers'], L['boots']
+    dk = lambda c, k=0.80: tuple(x * k for x in c)
+    arm = sh if L['sleeves'] == 'long' else sk
+    parts = [
+        ('sacroiliac', tr, lambda bm: box(bm, (0, 0, 0.53), (0.17, 0.10, 0.10), 0.95)),
+        ('vl5', sh, lambda bm: box(bm, (0, 0, 0.63), (0.15, 0.09, 0.13), 1.05)),
+        ('vt6', sh, lambda bm: box(bm, (0, 0, 0.77), (0.20, 0.105, 0.16), 1.0)),
+        ('vc4', sk, lambda bm: prism(bm, (0, 0, 0.84), (0, 0, 0.885), 0.026, 0.022)),
+        ('skullbase', sk, lambda bm: icosphere(bm, (0, 0, 0.94), 0.056)),
+    ]
+    if L['extra'] == 'hair': parts += [('skullbase', hr, lambda bm: box(bm, (0, 0.010, 0.975), (0.108, 0.112, 0.052), 0.88)), ('skullbase', hr, lambda bm: box(bm, (0, 0.050, 0.90), (0.09, 0.05, 0.10), 0.9))]      # a cap of hair and a fall of it down the back
+    else: parts.append(('skullbase', hr, lambda bm: box(bm, (0, 0.012, 0.978), (0.100, 0.104, 0.040), 0.85)))                                                                                                   # short hair
+    if L['extra'] == 'hat': parts += [('skullbase', (0.86, 0.72, 0.38), lambda bm: prism(bm, (0, 0, 0.985), (0, 0, 0.997), 0.135, 0.135, 8)), ('skullbase', (0.80, 0.64, 0.32), lambda bm: prism(bm, (0, 0, 0.997), (0, 0, 1.065), 0.064, 0.046, 8))]
+    if L['extra'] == 'basket': parts += [('vt6', (0.58, 0.40, 0.22), lambda bm: box(bm, (0, 0.100, 0.755), (0.15, 0.10, 0.17), 1.0)), ('vt6', (0.46, 0.30, 0.17), lambda bm: box(bm, (0, 0.100, 0.845), (0.165, 0.11, 0.025), 1.0))]
+    for s, sx in (('l', 1), ('r', -1)):
+        hip, knee, ank, shd, el, wr = (P(s + n) for n in ('_hip', '_knee', '_ankle', '_shoulder', '_elbow', '_wrist'))
+        parts += [
+            (s + '_hip', tr, lambda bm, hip=hip, knee=knee: prism(bm, hip, knee, 0.042, 0.032)),
+            (s + '_knee', dk(tr), lambda bm, knee=knee, ank=ank: prism(bm, knee, ank, 0.031, 0.024)),
+            (s + '_knee', dk(tr, 0.7), lambda bm, knee=knee: gem(bm, knee, 0.036)),
+            (s + '_ankle', bt, lambda bm, ank=ank, sx=sx: box(bm, (ank.x, ank.y - 0.03, 0.03), (0.05, 0.12, 0.04), 0.9)),
+            (s + '_shoulder', sh, lambda bm, shd=shd, el=el: prism(bm, shd, el, 0.03, 0.025)),
+            (s + '_shoulder', dk(sh, 0.85), lambda bm, shd=shd: gem(bm, shd, 0.04)),
+            (s + '_elbow', arm, lambda bm, el=el, wr=wr: prism(bm, el, wr, 0.024, 0.02)),
+            (s + '_elbow', dk(arm, 0.85), lambda bm, el=el: gem(bm, el, 0.03)),
+            (s + '_wrist', sk, lambda bm, wr=wr: box(bm, (wr.x, wr.y, wr.z - 0.03), (0.035, 0.03, 0.06), 0.9)),
+        ]
+    return parts
+
+
+def build_parts(look=None):
     """[(joint, colour, builder)]: every part is one object-space chunk weighted 1.0 to its joint"""
+    if look: return villager_parts(LOOKS[look])
     gold, pale, dark = (0.96, 0.68, 0.26), (1.0, 0.80, 0.48), (0.72, 0.46, 0.18)
     parts = [
         ('sacroiliac', gold, lambda bm: box(bm, (0, 0, 0.53), (0.17, 0.10, 0.10), 0.95)),
@@ -102,6 +148,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--blenderio', default='/home/user/x3d-blender-io/source')
     ap.add_argument('--out', default=os.path.join(HERE, '..', 'assets', 'tender'))
+    ap.add_argument('--look', choices=sorted(LOOKS), default=None, help='dress the rig as a villager (a, b or c) instead of a gold tender')
     a = ap.parse_args(sys.argv[sys.argv.index('--') + 1:] if '--' in sys.argv else sys.argv[1:])
     out = os.path.abspath(a.out); os.makedirs(out, exist_ok=True)
     spec = importlib.util.spec_from_file_location('x3dio', os.path.join(a.blenderio, '__init__.py'), submodule_search_locations=[a.blenderio])
@@ -127,7 +174,7 @@ def main():
 
     # skin: one mesh, one vertex group per joint, per-face colour from the fixed key light
     bm = bmesh.new(); face_part = []; part_verts = []
-    for joint, colour, build in build_parts():
+    for joint, colour, build in build_parts(a.look):
         n0 = len(bm.faces); v0 = len(bm.verts); build(bm); bm.faces.ensure_lookup_table(); bm.verts.ensure_lookup_table()
         for fc in bm.faces[n0:]: face_part.append((joint, colour))
         part_verts.append((joint, [v for v in bm.verts[v0:]]))
@@ -150,13 +197,14 @@ def main():
     bm.free()
 
     bpy.ops.object.select_all(action='DESELECT'); aob.select_set(True); sob.select_set(True)
-    path = os.path.join(out, 'tender.x3d')
+    name = 'tender' if not a.look else 'villager_' + a.look; path = os.path.join(out, name + '.x3d')
     bpy.ops.export_scene.x3d(filepath=path, x3d_version='X3D40', use_selection=True, use_mesh_modifiers=False, use_hierarchy=True,
-                             meta_creator='Gobbler demiurge', meta_title='Shell tender', meta_description='H-Anim humanoid, 18 joints, faceted skin, 1 unit tall; made in Blender')
+                             meta_creator='Gobbler demiurge', meta_title='Shell tender' if not a.look else 'Villager ' + a.look, meta_description='H-Anim humanoid, 18 joints, faceted skin, 1 unit tall; made in Blender')
     sha = lambda p: hashlib.sha256(open(p, 'rb').read()).hexdigest()
     rec = dict(blender=bpy.app.version_string, blenderio='x3d-blender-io ' + io_head, script_sha256=sha(__file__), joints=len(J), skin_faces=len(face_part),
-               file='tender.x3d', bytes=os.path.getsize(path), sha256=sha(path), joint_names='lowest-level H-Anim 2.0 set, from memory, not checked against the standard')
-    json.dump(rec, open(os.path.join(out, 'receipt.json'), 'w'), indent=1)
+               file=name + '.x3d', bytes=os.path.getsize(path), sha256=sha(path), joint_names='lowest-level H-Anim 2.0 set, from memory, not checked against the standard')
+    if a.look: rec['look'] = {k: v for k, v in LOOKS[a.look].items()}
+    json.dump(rec, open(os.path.join(out, 'receipt.json' if not a.look else 'receipt_%s.json' % a.look), 'w'), indent=1)
     print(json.dumps(rec))
 
 

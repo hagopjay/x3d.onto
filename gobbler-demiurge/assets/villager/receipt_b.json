@@ -1,0 +1,40 @@
+{
+ "blender": "5.2.2 LTS",
+ "blenderio": "x3d-blender-io d9bbf91",
+ "script_sha256": "3c452bd32ac1a7ed4b9999b72e4973fedeba5914eba68af84aa12fd54ac7c97d",
+ "joints": 18,
+ "skin_faces": 208,
+ "file": "villager_b.x3d",
+ "bytes": 68001,
+ "sha256": "8359c7398fdf7569cc367abb52ca380f54b8526b7616745480f96e001ef8a2f8",
+ "joint_names": "lowest-level H-Anim 2.0 set, from memory, not checked against the standard",
+ "look": {
+  "skin": [
+   0.76,
+   0.54,
+   0.38
+  ],
+  "hair": [
+   0.62,
+   0.6,
+   0.56
+  ],
+  "shirt": [
+   0.24,
+   0.5,
+   0.62
+  ],
+  "trousers": [
+   0.4,
+   0.42,
+   0.28
+  ],
+  "boots": [
+   0.25,
+   0.18,
+   0.12
+  ],
+  "sleeves": "rolled",
+  "extra": "hat"
+ }
+}

@@ -134,7 +134,7 @@
     return [LOOM_C[0] + R[0] * d[0] + R[1] * d[1] + R[2] * d[2], LOOM_C[1] + R[3] * d[0] + R[4] * d[1] + R[5] * d[2], LOOM_C[2] + R[6] * d[0] + R[7] * d[1] + R[8] * d[2]];
   }
   function dirToWorld(v) { if (!sway.paused) return v.slice(); var R = rot(sway.rot); return [R[0] * v[0] + R[1] * v[1] + R[2] * v[2], R[3] * v[0] + R[4] * v[1] + R[5] * v[2], R[6] * v[0] + R[7] * v[1] + R[8] * v[2]]; }
-  function setDepth(on) { try { if (ZONE.on !== on) { PX.el.browser.setBrowserOption('LogarithmicDepthBuffer', on); ZONE.on = on; } } catch (e) {} }
+  function setDepth(on) { try { if (ZONE.on !== on) { PX.el.browser.setBrowserOption('LogarithmicDepthBuffer', on); ZONE.on = on; var air = node('AirShader'); if (air) air.logDepth = on ? 1 : 0; } } catch (e) {} }
   function setClip(v, near, far) { try { v.nearDistance = near; v.farDistance = far; } catch (e) {} }
   function ease(k) { return k * k * (3 - 2 * k); }
   function span(k, c, leaving) {                  /* progress along the flight; geometric in the distance to the subject when the two ends differ in scale */

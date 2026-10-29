@@ -46,8 +46,9 @@ demiurge-data:    ## compose the bird scene (Deep scene + layers), gzip it and t
 feathers:         ## (needs a Python with bpy) model the feathers in Blender, bake golden-hour light, export through x3d-blender-io -> gobbler-demiurge/assets/feathers (committed)
 	python3 gobbler-demiurge/tools/blender_feather.py --blenderio $${BLENDERIO:-../x3d-blender-io/source}
 
-tender:           ## (needs a Python with bpy) model the shell tender in Blender as an H-Anim humanoid, export through x3d-blender-io -> gobbler-demiurge/assets/tender (committed)
+tender:           ## (needs a Python with bpy) model the shell tender in Blender as an H-Anim humanoid, export through x3d-blender-io -> gobbler-demiurge/assets/tender; and the three villager outfits -> assets/villager (committed)
 	python3 gobbler-demiurge/tools/blender_tender.py --blenderio $${BLENDERIO:-../x3d-blender-io/source}
+	for l in a b c; do python3 gobbler-demiurge/tools/blender_tender.py --blenderio $${BLENDERIO:-../x3d-blender-io/source} --look $$l --out gobbler-demiurge/assets/villager; done
 
 world:            ## (needs a Python with bpy) model Earth, clouds and Moon, and the village Aurelsbrunn in Blender, export through x3d-blender-io -> gobbler-demiurge/assets/earth and assets/village (committed)
 	python3 gobbler-demiurge/tools/blender_earth.py --blenderio $${BLENDERIO:-../x3d-blender-io/source}

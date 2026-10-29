@@ -4,7 +4,8 @@
 
 Writes assets/earth/earth.x3d (three objects: Earth, Clouds, Moon, each one unit in radius at the origin) and receipt.json. The planet is a faceted icosphere whose faces carry
 baked colour: the day side lit from the direction of the Sun (the village faces the Sun, so the home continent sits where village_spec.site_frame() says), a warm terminator,
-a night side with a scatter of gold city lights; the clouds are a second, thinner shell of translucent white lumps; the Moon is grey, cratered and lit the same way.
+a night side with a scatter of gold city lights; the clouds are a second, thinner shell of soft banks (per-corner alpha fades each bank out at its edge, and the sky over the
+village is left clear, because at village scale the shell hangs only 7 m over the roofs); the Moon is grey, cratered and lit the same way.
 Everything is drawn unlit by the page, with the colour baked here, in the same hand as the feathers, the tenders and the village.
 """
 import sys, os, math, json, hashlib, argparse, importlib.util, subprocess, random
@@ -85,12 +86,42 @@ def cloud_colour(n, rng):
     return (c[0], c[1], c[2] * (0.55 + 0.45 * lit))
 
 
+CLEAR_DEG = (25.0, 38.0)                                  # no cloud within 25 degrees of the village, fading in by 38
+
+
+def cloud_density(n):
+    """0 to 1: how thick the cloud is over this point of the sphere; soft at the edges, and zero over the village"""
+    f = fbm(n * 1.5, 31) + 0.35 * fbm(n * 4, 32)
+    ang = math.degrees(math.acos(max(-1, min(1, n.dot(SITE)))))
+    return smooth(0.14, 0.44, f) * smooth(CLEAR_DEG[0], CLEAR_DEG[1], ang)
+
+
+def build_clouds(name, sub, radius):
+    """a thin shell of soft cloud banks: every corner has its own alpha (the density there), the colour is flat per face, the bank swells a little where it is thickest"""
+    bm = bmesh.new(); bmesh.ops.create_icosphere(bm, subdivisions=sub, radius=1.0)
+    dens = {}
+    for v in bm.verts:
+        n = v.co.normalized(); dens[v.index] = cloud_density(n); v.co = n * (radius + 0.010 * dens[v.index])
+    bmesh.ops.delete(bm, geom=[f_ for f_ in bm.faces if max(dens[v.index] for v in f_.verts) < 0.02], context='FACES')
+    bm.faces.ensure_lookup_table(); rng = random.Random(41); cols = []
+    for f_ in bm.faces:
+        f_.normal_update(); c = cloud_colour(f_.calc_center_median().normalized(), rng)
+        cols.append((tuple(min(1.0, max(0.0, x)) for x in c), [dens[v.index] for v in f_.verts]))
+    me = bpy.data.meshes.new(name); bm.to_mesh(me); bm.free()
+    for p in me.polygons: p.use_smooth = False
+    attr = me.color_attributes.new(name='Col', type='FLOAT_COLOR', domain='CORNER'); me.color_attributes.active_color = attr; me.color_attributes.render_color_index = me.color_attributes.find('Col')
+    for poly, (c, ds) in zip(me.polygons, cols):
+        for li, d in zip(poly.loop_indices, ds): attr.data[li].color = (c[0], c[1], c[2], round(0.86 * d, 3))
+    return me
+
+
 def moon_colour(n, rng):
     lit, d = lit_of(n)
     g = 0.46 + 0.20 * fbm(n * 3, 21) + (0.0 if fbm(n * 5, 22) > -0.2 else -0.16)                  # maria and craters
     g = max(0.18, min(0.8, g)); base = (g * 1.0, g * 0.97, g * 0.92)
     c = tuple(x * (0.12 + 0.95 * lit) for x in base)
-    return mix((0.05, 0.06, 0.09), c, 0.15 + 0.85 * lit)                    # a little earthshine on the night side
+    shine = (g * 0.17, g * 0.20, g * 0.29)                                  # earthshine: blue light off the Earth keeps the craters and maria readable on the night side
+    return mix(shine, c, 0.12 + 0.88 * lit)
 
 
 def moon_radius(n): return 1.0 + 0.045 * fbm(n * 4, 23)
@@ -106,7 +137,7 @@ def main():
     except Exception: io_head = 'unknown'
     bpy.ops.wm.read_factory_settings(use_empty=True); coll = bpy.context.scene.collection
     earth = build_sphere('Earth', 5, 1.0, earth_colour, push=lambda n: 1.0 + 0.006 * fbm(n * 2, 3))
-    clouds = build_sphere('Clouds', 4, 1.028, cloud_colour, keep=lambda n: fbm(n * 1.5, 31) + 0.35 * fbm(n * 4, 32) > 0.10, alpha=0.72)
+    clouds = build_clouds('Clouds', 5, 1.028)
     moon = build_sphere('Moon', 4, 1.0, moon_colour, push=moon_radius)
     for nm, me in (('Earth', earth), ('Clouds', clouds), ('Moon', moon)): coll.objects.link(bpy.data.objects.new(nm, me))
     bpy.ops.object.select_all(action='SELECT')

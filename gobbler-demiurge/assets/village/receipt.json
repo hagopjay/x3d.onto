@@ -1,14 +1,75 @@
 {
  "blender": "5.2.2 LTS",
  "blenderio": "x3d-blender-io d9bbf91",
- "script_sha256": "c46449c0ac98dd1c9b665149cf2b4c6e7d2c7216cc22609988fa7972505af9ef",
+ "script_sha256": "be4261ca07898a6b42653b86543d8fc8949f24dfffaf20a666e96d3a0db39137",
  "village_spec_sha256": "4b754d626b5ffdaed1cc583a7a8583c630caca211d38725abefbe491a0be7ac5",
- "objects": 108,
+ "bake": {
+  "engine": "Cycles CPU",
+  "samples": 384,
+  "key": {
+   "azimuth": 220.0,
+   "elevation": 55.0,
+   "colour": [
+    1.0,
+    0.85,
+    0.62
+   ],
+   "strength": 5.0,
+   "disc_degrees": 6.0
+  },
+  "sky": {
+   "type": "multiple scattering, disc off",
+   "sun_elevation": 26.0,
+   "strength": 0.25
+  },
+  "passes": "direct + indirect, albedo-coloured bounce",
+  "exposure": 0.5186,
+  "exposure_rule": "70% ground corner -> 1.00",
+  "floor_linear": [
+   0.05,
+   0.07,
+   0.12
+  ],
+  "shoulder_from": 0.8,
+  "light_stats": {
+   "Ground": {
+    "light_p05": 0.0,
+    "light_p50": 0.963,
+    "light_p95": 1.16
+   },
+   "Buildings": {
+    "light_p05": 0.0,
+    "light_p50": 0.04,
+    "light_p95": 1.082
+   },
+   "Props": {
+    "light_p05": 0.0,
+    "light_p50": 0.508,
+    "light_p95": 1.156
+   },
+   "Trees": {
+    "light_p05": 0.0,
+    "light_p50": 0.385,
+    "light_p95": 1.165
+   }
+  }
+ },
+ "meshes": {
+  "Ground": 3288,
+  "Buildings": 2293,
+  "Props": 1328,
+  "Trees": 2881
+ },
+ "ground": {
+  "rings": 41,
+  "sectors_outer": 96
+ },
+ "objects": 4,
  "buildings": 17,
  "stalls": 6,
  "lamps": 12,
  "trees": 70,
  "file": "village.x3d",
- "bytes": 300325,
- "sha256": "c9ef0df6a60390e6b26930023864847f72078c1abeb3a36fa6034f937f2c6458"
+ "bytes": 2184666,
+ "sha256": "a1f52638f9d3fa7f75539ba3741dd96787f6c1f7952a755febfcc33bb509c682"
 }

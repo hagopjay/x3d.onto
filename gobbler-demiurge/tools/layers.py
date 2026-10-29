@@ -502,7 +502,7 @@ def build(explorer_path, seed=4):
     anchor('tenders', 'Shell tenders', 'they tend the ribcage · H-Anim humanoids made in Blender, their walk and their tending simulated', add(SUN, (-RIB_R * .2, RIB_R * 1.0, RIB_R * .3)), 'full')
 
     # ---- the world: Earth, clouds and Moon, the village Aurelsbrunn and its villagers, the tether to the heart (tools/world_layer.py; the Blender files load when the camera comes near)
-    wxml, winfo = WL.build(sys.modules[__name__], anchor); X.append(wxml)
+    wxml, winfo, villagers = WL.build(sys.modules[__name__], anchor); X.append(wxml)
 
     # ---- wing: 10 primaries on the upper back (orchestrator roles; role colour only while working, simulated)
     ROLES = [('planner', (0.25, 0.85, 0.85)), ('router', (0.30, 0.65, 1.0)), ('validator', (1.0, 0.93, 0.66)), ('repair', (0.30, 0.95, 0.55)), ('vision judge', (0.95, 0.35, 0.85)),
@@ -604,4 +604,4 @@ def build(explorer_path, seed=4):
     vp_xml = ''.join("<Viewpoint DEF='%s' description='%s' position='%s' orientation='%s' centerOfRotation='%s' fieldOfView='%s'/>" % (k, k, v3(d['position']), v3(d['orientation']), v3(d['center']), f(d['fov'])) for k, d in vps.items())
     vp_xml += "<Viewpoint DEF='TourCam' description='Tour' position='3 -1.8 13.2' fieldOfView='0.8'/>"
     routes = ''.join("<ROUTE fromNode='%s' fromField='bindTime' toNode='Intro' toField='set_startTime'/>" % k for k in vps)
-    return dict(world=winfo, sway=sway, viewpoints=vp_xml, component="<component name='HAnim' level='1'/>", routes=routes, anchors=anchors, counts=dict(beads=len(bp), tenders=NTEN, wing=len(ROLES), fan=18, streams=len(streams)))
+    return dict(world=winfo, villagers=villagers, sway=sway, viewpoints=vp_xml, component="<component name='HAnim' level='1'/>", routes=routes, anchors=anchors, counts=dict(beads=len(bp), tenders=NTEN, wing=len(ROLES), fan=18, streams=len(streams)))

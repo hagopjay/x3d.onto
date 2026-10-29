@@ -1,10 +1,10 @@
 """Read the Blender-made world (assets/earth/earth.x3d and assets/village/village.x3d, written by tools/blender_earth.py and tools/blender_village.py) and write the files the
 page loads lazily as Inlines: data/bird/earth-planet.x3d, earth-clouds.x3d, earth-moon.x3d and village.x3d.
 
-Per file the exporter's own nodes are kept as they came out (the Z-up to Y-up Transform around each object, the IndexedFaceSet with its ColorRGBA, the DEF/USE sharing of the
-linked-duplicate buildings and trees). Three things change: the PhysicalMaterial in every Appearance goes (the faces carry their baked colour and are drawn unlit, like the
-feathers and the tenders), long numbers are shortened to four decimals, and the head and the NavigationInfo go (an Inline's bindables are ignored anyway). Earth, Clouds and
-Moon are written as three files because the page animates them separately (the clouds turn, the Moon orbits).
+Per file the exporter's own nodes are kept as they came out (the Z-up to Y-up Transform around each object, the IndexedFaceSet with its per-corner colours). Four things change:
+the PhysicalMaterial in every Appearance goes (the faces carry their baked colour and are drawn unlit, like the feathers and the tenders), long numbers are shortened (positions
+to four decimals, three for the village, colours to three), a ColorRGBA whose alpha is 1 everywhere becomes a Color, and the head, the NavigationInfo and the Background go (an
+Inline's bindables are ignored anyway). Earth, Clouds and Moon are written as three files because the page animates them separately (the clouds turn, the Moon orbits).
 """
 import os, re
 import xml.etree.ElementTree as ET
@@ -13,19 +13,22 @@ HERE = os.path.dirname(os.path.abspath(__file__)); ASSETS = os.path.join(HERE, '
 _SHORT = ('point', 'color', 'center', 'translation', 'rotation', 'scale')
 
 
-def _num(t):
+def _num(t, places=4):
     x = float(t)
-    s = ('%.4f' % x).rstrip('0').rstrip('.')
+    s = ('%.*f' % (places, x)).rstrip('0').rstrip('.')
     return '0' if s in ('', '-0') else s
 
 
-def _clean(e):
+def _clean(e, points=4):
     for k in _SHORT:
         v = e.get(k)
-        if v is not None: e.set(k, ' '.join(_num(t) for t in v.split()))
+        if v is not None: e.set(k, ' '.join(_num(t, 3 if k == 'color' else points) for t in v.split()))
+    if e.tag == 'ColorRGBA':
+        v = e.get('color').split()
+        if all(float(a) == 1.0 for a in v[3::4]): e.tag = 'Color'; e.set('color', ' '.join(x for i, x in enumerate(e.get('color').split()) if i % 4 != 3))
     if e.tag == 'Appearance':
         for c in list(e): e.remove(c)
-    for c in e: _clean(c)
+    for c in e: _clean(c, points)
 
 
 def document(children):
@@ -37,7 +40,7 @@ def split(path, only=None):
     """-> {DEF of the top-level Transform: X3D document text}"""
     sc = ET.parse(path).getroot().find('Scene'); out = {}
     for c in sc:
-        if c.tag == 'NavigationInfo' or (only and c.get('DEF') not in only): continue
+        if c.tag in ('NavigationInfo', 'Background') or (only and c.get('DEF') not in only): continue
         _clean(c); out[c.get('DEF')] = c
     return out
 
@@ -50,8 +53,8 @@ def earth_files():
 def village_file():
     sc = ET.parse(os.path.join(ASSETS, 'village', 'village.x3d')).getroot().find('Scene'); kids = []
     for c in sc:
-        if c.tag == 'NavigationInfo': continue
-        _clean(c); kids.append(c)
+        if c.tag in ('NavigationInfo', 'Background'): continue
+        _clean(c, 3); kids.append(c)
     return {'village.x3d': document(kids)}
 
 

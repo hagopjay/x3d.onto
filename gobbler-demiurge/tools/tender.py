@@ -8,6 +8,7 @@ import os, re
 import xml.etree.ElementTree as ET
 
 ASSET = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'assets', 'tender', 'tender.x3d')
+VILLAGERS = {k: os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'assets', 'villager', 'villager_%s.x3d' % k) for k in 'abc'}      # the same rig dressed as villagers (tools/blender_tender.py --look)
 JOINTS = ('humanoid_root', 'sacroiliac', 'vl5', 'vt6', 'vc4', 'skullbase', 'l_shoulder', 'l_elbow', 'l_wrist', 'r_shoulder', 'r_elbow', 'r_wrist',
           'l_hip', 'l_knee', 'l_ankle', 'r_hip', 'r_knee', 'r_ankle')
 _SHORT = ('point', 'color', 'center', 'translation', 'rotation', 'scale', 'skinCoordWeight')      # numeric attributes worth shortening (index lists stay exact)
@@ -20,9 +21,10 @@ def _num(t):
     return '0' if s in ('', '-0') else s
 
 
-def _tree():
-    if 'root' not in _cache: _cache['root'] = ET.parse(ASSET).getroot()
-    return _cache['root']
+def _tree(asset=None):
+    asset = asset or ASSET
+    if asset not in _cache: _cache[asset] = ET.parse(asset).getroot()
+    return _cache[asset]
 
 
 def joints():
@@ -34,9 +36,9 @@ def joint_centers():
     return {j.get('name'): tuple(float(x) for x in j.get('center').split()) for j in _tree().iter('HAnimJoint') if j.get('DEF')}
 
 
-def humanoid(n):
-    """-> X3D text of copy n: the exporter's Z-up to Y-up Transform around one HAnimHumanoid; joint DEFs are hanim_T<n>_<joint>"""
-    root = ET.fromstring(ET.tostring(_tree()))                                        # a fresh copy to edit
+def humanoid(n, asset=None):
+    """-> X3D text of copy n: the exporter's Z-up to Y-up Transform around one HAnimHumanoid; joint DEFs are hanim_T<n>_<joint>. `asset` picks a villager file instead of the tender"""
+    root = ET.fromstring(ET.tostring(_tree(asset)))                                        # a fresh copy to edit
     tr = next(c for c in root.find('Scene') if c.tag == 'Transform')
     del tr.attrib['DEF']
     for e in tr.iter():

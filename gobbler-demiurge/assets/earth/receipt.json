@@ -1,14 +1,14 @@
 {
  "blender": "5.2.2 LTS",
  "blenderio": "x3d-blender-io d9bbf91",
- "script_sha256": "9a17aa85e4e8d37b6eab2d41b29f6263dcc6f73ddc39d13c9c50df9ce1b9e6ec",
+ "script_sha256": "652e2e2decd4c27723a3fc426971184e166900d2cc19b4b6a2964ba9a594b9f6",
  "village_spec_sha256": "4b754d626b5ffdaed1cc583a7a8583c630caca211d38725abefbe491a0be7ac5",
  "faces": {
   "earth": 5120,
-  "clouds": 489,
+  "clouds": 2267,
   "moon": 1280
  },
  "file": "earth.x3d",
- "bytes": 1178856,
- "sha256": "64b947f2ae109b1731ca702a047c153af3bbc93f028a1ccfcaccc0e9370bbc2b"
+ "bytes": 1364112,
+ "sha256": "16b0e225276ca83475480524c502fcf5893c9e3fdd3714519ca6b30dfd619b09"
 }

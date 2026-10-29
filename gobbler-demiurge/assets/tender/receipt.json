@@ -1,7 +1,7 @@
 {
  "blender": "5.2.2 LTS",
  "blenderio": "x3d-blender-io d9bbf91",
- "script_sha256": "d9d1666e2d23c5966dd177d9cfc963868ea3807dc9c1c67b18c12884d2c91826",
+ "script_sha256": "3c452bd32ac1a7ed4b9999b72e4973fedeba5914eba68af84aa12fd54ac7c97d",
  "joints": 18,
  "skin_faces": 182,
  "file": "tender.x3d",

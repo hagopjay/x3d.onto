@@ -35,7 +35,7 @@ async function open(b, q, vp) {
   await p.evaluate(() => window.gdApi.ready());
   check('rail: all eight stops live once world.json has arrived', await p.evaluate(() => [...document.querySelectorAll('#gd-rail button')].map(b => b.classList.contains('off') ? 0 : 1).join('') === '11111111'));
   check('world: Earth, Moon, village and villagers are in the scene but nothing heavy has loaded yet', await p.evaluate(() => { const sc = document.getElementById('x3d').browser.currentScene; const n = nm => { try { return !!sc.getNamedNode(nm); } catch (e) { return false; } };
-    return n('EarthWorld') && n('VillageInline') && n('Villager11') && n('MoonOrbit') && n('Climber3'); }) && !p.reqs.some(u => /earth-planet|village\.x3d/.test(u)), p.reqs.filter(u => /data\/bird/.test(u)).map(u => u.split('/').pop()).join(','));
+    return n('EarthWorld') && n('VillageInline') && n('VillagersInline') && n('MoonOrbit') && n('Climber3'); }) && !p.reqs.some(u => /earth-planet|village\.x3d|villagers\.x3d/.test(u)), p.reqs.filter(u => /data\/bird/.test(u)).map(u => u.split('/').pop()).join(','));
   await p.waitForTimeout(6000);
   // fly the ladder
   const pose = () => p.evaluate(() => window.gdApi.cam().pos && window.gdApi.cam().pos.map(x => +x.toFixed(2)));
@@ -55,14 +55,16 @@ async function open(b, q, vp) {
   await p.keyboard.press('5'); await arrived(4); await p.waitForTimeout(2500); const w5 = await p.evaluate(() => { const c = window.gdApi.cam(), W = window.gdApi.world(), S = window.gdApi.toWorld(W.site); return { d: Math.hypot(c.pos[0] - S[0], c.pos[1] - S[1], c.pos[2] - S[2]) }; });
   check('stop 5: the camera is about 0.13 from the village site and the village file has arrived', Math.abs(w5.d - 0.13) < 0.01 && p.fin.some(u => /data\/bird\/village\.x3d/.test(u)), JSON.stringify(w5));
   await p.keyboard.press('7'); await arrived(6); await p.waitForTimeout(2500);
-  const w7 = await p.evaluate(async () => { const c = window.gdApi.cam(), W = window.gdApi.world(), S = window.gdApi.toWorld(W.site), U = window.gdApi.dirToWorld(W.up), sc = document.getElementById('x3d').browser.currentScene, v = sc.getNamedNode('Villager0'), k = sc.getNamedNode('hanim_T0_l_knee');
+  const w7 = await p.evaluate(async () => { const c = window.gdApi.cam(), W = window.gdApi.world(), S = window.gdApi.toWorld(W.site), U = window.gdApi.dirToWorld(W.up), sc = document.getElementById('x3d').browser.currentScene, inl = sc.getNamedNode('VillagersInline').getValue().getInternalScene(), v = inl.getNamedNode('Villager0'), k = inl.getNamedNode('hanim_T3_l_knee');
     const a = v.rotation.toString() + k.rotation.toString(); await new Promise(r => setTimeout(r, 1500)); const b = v.rotation.toString() + k.rotation.toString();
-    const g = sc.getNamedNode('Villagers'); return { height: (c.pos[0] - S[0]) * U[0] + (c.pos[1] - S[1]) * U[1] + (c.pos[2] - S[2]) * U[2], moved: a !== b, shown: g.visible, bar: document.querySelector('#gd-scale b').textContent }; });
+    const g = sc.getNamedNode('Villagers'); return { air: sc.getNamedNode('AirShader').logDepth, height: (c.pos[0] - S[0]) * U[0] + (c.pos[1] - S[1]) * U[1] + (c.pos[2] - S[2]) * U[2], moved: a !== b, shown: g.visible, bar: document.querySelector('#gd-scale b').textContent }; });
   check('stop 7: about 1.5 m above the plaza (village scale), villagers shown and walking, bar in metres', Math.abs(w7.height / 4e-4 - 1.5) < 0.6 && w7.moved && w7.shown && /m · village scale/.test(w7.bar), JSON.stringify(w7));
+  check('stop 7: the atmosphere shader is told the logarithmic depth buffer is on (its depth matches the scene)', w7.air === 1, String(w7.air));
   const shot = await p.screenshot({ type: 'jpeg', quality: 80 }); check('stop 7: the frame is not black (software GL, X_ITE 16.5.1 unpatched)', shot.length > 80e3, shot.length + ' B');
   const onlyWorld = await p.evaluate(() => window.gdApi.tags().filter(t => t.shown).map(t => t.a.id)); check('stop 7: only the village tags show, not the bird\'s', onlyWorld.every(i => ['earth', 'village', 'tether', 'villagers'].includes(i)), onlyWorld.join(','));
   await p.click('#gd-face'); await arrived(0); await p.waitForTimeout(1500); const sC = await swayAt(); await p.waitForTimeout(900); const sD = await swayAt();
   check('flying back to the Face resumes the sway', sC !== sD && !(await p.evaluate(() => window.gdApi.swayPaused())), sC + ' -> ' + sD);
+  const airBack = await p.evaluate(() => document.getElementById('x3d').browser.currentScene.getNamedNode('AirShader').logDepth); check('back at the Face the atmosphere shader is told the logarithmic depth buffer is off', airBack === 0, String(airBack));
   // tour
   await p.click('#btn-tour'); await p.waitForTimeout(500); const lab = await p.evaluate(() => document.getElementById('btn-tour').textContent);
   await p.waitForTimeout(5000); const pt = await pose();

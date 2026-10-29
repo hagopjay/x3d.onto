@@ -16,16 +16,16 @@ class T(unittest.TestCase):
         self.assertEqual(len(re.findall(r"<LOD DEF='Fan\d+'", x)), 18)                 # tail fan: 18 plumes
         self.assertEqual(len(re.findall(r"<LOD DEF='Wing\d+'", x)), 10)                # 10 primaries
         self.assertEqual(len(re.findall(r"<Transform DEF='TenderOrbit\d+'", x)), 10)
-        self.assertEqual(len(re.findall(r"<Group DEF='TenderBody\d'>", x)), 3); self.assertEqual(len(re.findall(r"<Group USE='TenderBody\d'/>", x)), 7 + 12)   # three H-Anim copies, shared by USE among ten shell tenders and twelve villagers
-        self.assertEqual(x.count('<HAnimHumanoid'), 3); self.assertEqual(len(re.findall(r'<HAnimJoint DEF="hanim_T\d_\w+"', x)), 54)   # 18 joints each
+        self.assertEqual(len(re.findall(r"<Group DEF='TenderBody\d'>", x)), 3); self.assertEqual(len(re.findall(r"<Group USE='TenderBody\d'/>", x)), 7)   # three H-Anim copies, shared by USE among the ten shell tenders
+        self.assertEqual(x.count('<HAnimHumanoid'), 3); self.assertEqual(len(re.findall(r'<HAnimJoint DEF="hanim_T\d_\w+"', x)), 54)   # 18 joints each; the villagers' bodies are in their own lazy file
         ids = {a['id'] for a in L['anchors']}; self.assertEqual(len(L['anchors']), 19)
         for t in ('fan_gltf', 'fan_usd', 'fan_video', 'fan_o3de', 'fan_paraview', 'fan_3dslicer', 'fan_unity', 'fan_defold', 'fan_ifc'): self.assertIn(t, ids)
         self.assertEqual(sum(1 for a in L['anchors'] if a['id'].startswith('fan_') and 'mock' in a['tag']), 6)   # six mocks, tagged
         self.assertEqual(sum(1 for a in L['anchors'] if a['id'].startswith('fan_') and a['tag'].startswith('Blender export')), 3)
     def test_world_layer(self):
         L = layers.build(EXP); x = L['sway']; W = L['world']
-        self.assertEqual(len(re.findall(r"<Transform DEF='Villager\d+'>", x)), 12)                                     # twelve villagers on three lanes
-        self.assertEqual(re.findall(r"<Inline DEF='(\w+)' load='false'", x), ['EarthPlanet', 'EarthClouds', 'EarthMoon', 'VillageInline'])   # the big files wait for the camera
+        self.assertNotIn("DEF='Villager0'", x)                                                                           # the villagers are not in the boot payload ...
+        self.assertEqual(re.findall(r"<Inline DEF='(\w+)' load='false'", x), ['EarthPlanet', 'EarthClouds', 'EarthMoon', 'VillageInline', 'VillagersInline'])   # ... the big files wait for the camera
         self.assertEqual(sorted(W['stops']), ['earth', 'plaza', 'village', 'villager'])
         for k, st in W['stops'].items(): self.assertEqual((len(st['pos']), len(st['look']), len(st['up'])), (3, 3, 3), k)
         seen = set(re.findall(r"DEF='(\w+)'", x))                                                                       # every ROUTE names nodes that are defined (the world routes come after their nodes)
@@ -34,13 +34,22 @@ class T(unittest.TestCase):
                 if n.startswith(('Earth', 'Village', 'Villagers', 'Climb', 'Moon', 'Cloud')): self.assertIn(n, seen, n)
         self.assertLess(x.index("<Group DEF='EarthWorld'"), x.index("toNode='EarthWorld'"))
         tag = {a['id']: a for a in L['anchors']}; self.assertIn('1,700', tag['earth']['tag']); self.assertIn('25,000', tag['village']['tag'])   # the scale notes say what is not to scale
+    def test_villagers_file(self):
+        v = layers.build(EXP)['villagers']
+        self.assertEqual(len(re.findall(r"<Group DEF='VillagerBody\d'>", v)), 3); self.assertEqual(len(re.findall(r"<Group USE='VillagerBody\d'/>", v)), 9)   # three outfits, each with its own gait, shared by USE among twelve walkers
+        self.assertEqual(len(re.findall(r"<Transform DEF='Villager\d+'>", v)), 12); self.assertEqual(v.count('<HAnimHumanoid'), 3); self.assertEqual(len(re.findall(r'<HAnimJoint DEF="hanim_T[345]_\w+"', v)), 54)
+        self.assertIn("<component name='HAnim' level='1'/>", v)
+        for m in re.finditer(r"<ROUTE fromNode='(\w+)'[^>]*toNode='(\w+)'", v):                                           # a self-contained file: every ROUTE names nodes it defines, defined before it (the fork does not check the order)
+            for n in m.groups():
+                d = re.search(r"DEF=['\"]%s['\"]" % n, v); self.assertIsNotNone(d, n); self.assertLess(d.start(), m.start(), n)
+        self.assertEqual(v, layers.build(EXP)['villagers'])                                                              # deterministic
     def test_world_files_are_written_unlit_and_small(self):
         import world, tempfile
         with tempfile.TemporaryDirectory() as d:
             sizes = world.build(d); self.assertEqual(sorted(sizes), ['earth-clouds.x3d', 'earth-moon.x3d', 'earth-planet.x3d', 'village.x3d'])
             for n in sizes:
-                t = pathlib.Path(d, n).read_text(encoding='utf-8'); self.assertNotIn('PhysicalMaterial', t, n); self.assertNotIn('NavigationInfo', t, n); self.assertLess(sizes[n], 1.2e6, n)
-            v = pathlib.Path(d, 'village.x3d').read_text(encoding='utf-8'); self.assertGreater(v.count('USE='), 40)               # the linked duplicates are shared (DEF/USE), not copied
+                t = pathlib.Path(d, n).read_text(encoding='utf-8'); self.assertNotIn('PhysicalMaterial', t, n); self.assertNotIn('NavigationInfo', t, n); self.assertLess(sizes[n], 1.5e6, n)
+            v = pathlib.Path(d, 'village.x3d').read_text(encoding='utf-8'); self.assertEqual(v.count('<Shape'), 4)               # four merged meshes (four draw calls), the light baked into one colour per face corner, not one object per house
     def test_glow_shader_defined_once_per_build(self):
         x = layers.build(EXP)['sway']; self.assertEqual(x.count("<ComposedShader DEF='GlowShader'"), 1); self.assertGreater(x.count("<ComposedShader USE='GlowShader'/>"), 1)
     def test_point_sprite_alpha_encoding(self):
