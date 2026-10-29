@@ -37,7 +37,7 @@ v4:               ## serve the live viewer: http://127.0.0.1:$(PORT)/index.html 
 
 e2e-v4:           ## live-scene tests in Chromium (Playwright); serve with `make v4` first (same PORT), see gobbler-v4/README.md
 	cd gobbler-v4/e2e && GV4_BASE=http://127.0.0.1:$(PORT)/ node e2e.js
-.PHONY: v4-data test-v4 v4 e2e-v4 demiurge-data feathers tender world test-demiurge demiurge e2e-demiurge frames-demiurge artifact-demiurge
+.PHONY: v4-data test-v4 v4 e2e-v4 demiurge-data feathers tender world test-demiurge demiurge e2e-demiurge frames-demiurge artifact-demiurge loom-gate
 
 # Gobbler demiurge, step 2: the bird-first page (gobbler-demiurge/README.md). Needs make v4-data first (Deep build and X_ITE are fetched there, not committed).
 demiurge-data:    ## compose the bird scene (Deep scene + layers), gzip it and the graph, validate with the fork (X3D_MCP=/path/to/x3d_mcp, default /home/user/x3d_mcp)
@@ -54,8 +54,13 @@ world:            ## (needs a Python with bpy) model Earth, clouds and Moon, and
 	python3 gobbler-demiurge/tools/blender_earth.py --blenderio $${BLENDERIO:-../x3d-blender-io/source}
 	python3 gobbler-demiurge/tools/blender_village.py --blenderio $${BLENDERIO:-../x3d-blender-io/source}
 
-test-demiurge:    ## unit tests for the layers (node-free)
+test-demiurge:    ## unit tests for the layers and the Loom gate and receipt (node-free)
 	python3 -I gobbler-demiurge/test/test_layers.py
+	python3 -I gobbler-demiurge/test/test_loom_gate.py
+
+loom-gate:        ## the Loom gate over the committed Blender assets (fails on an error finding; add GATE_FLAGS=--fork for the fork validator too) and the receipts checked against the files
+	python3 -I gobbler-demiurge/tools/loom_gate.py $(GATE_FLAGS) gobbler-demiurge/assets/*/*.x3d
+	python3 -I gobbler-demiurge/tools/loom_receipt.py check
 
 demiurge:         ## serve the repo root: http://127.0.0.1:$(PORT)/gobbler-demiurge/index.html (?ui=none, ?view=establishing)
 	@echo "http://127.0.0.1:$(PORT)/gobbler-demiurge/index.html"
