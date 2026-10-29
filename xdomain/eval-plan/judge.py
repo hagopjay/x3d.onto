@@ -2,14 +2,15 @@
 """Gemini judge for fidelity ("does this document do what was asked?"), run on VALID documents only, blind to arm and to validator output.
 Complements the mechanical completeness check (H4). Calls go through tools/vertex.py (ledger, cap). Requires GO.json. Every verdict and reason is logged.
 usage: judge.py --domain D --model M --judge gemini-3.8-flash [--max N]  -> runs/judge-D-M.jsonl"""
-import argparse, json, random, re, sys, time
+import argparse, json, os, random, re, sys, time
 from pathlib import Path
 HERE = Path(__file__).resolve().parent; XD = HERE.parent
 sys.path.insert(0, str(HERE))
 import prompts as P
 ap = argparse.ArgumentParser(); ap.add_argument("--domain", required=True); ap.add_argument("--model", required=True); ap.add_argument("--judge", default="gemini-3.8-flash"); ap.add_argument("--max", type=int, default=0); ap.add_argument("--cap", type=float, default=2.0); ap.add_argument("--location", default="us-east4"); ap.add_argument("--workers", type=int, default=6); a = ap.parse_args()
 go = json.loads((HERE / "GO.json").read_text()); assert go.get("approved_by") == "user" and a.judge in go["models"] and a.cap <= go["cap_usd"]
-sys.path.insert(0, str(XD.parent.parent / "tools")); from vertex import call
+if os.environ.get("GEMINI_BACKEND") == "api": from gemini_api import call   # API key instead of Vertex; same ledger/cap contract
+else: sys.path.insert(0, str(XD.parent.parent / "tools")); from vertex import call
 runs = HERE / "runs"; rows = [json.loads(l) for l in (runs / f"{a.domain}-{a.model}.jsonl").read_text().splitlines()]
 raw = [json.loads(l) for l in (runs / f"raw-{a.domain}-{a.model}.jsonl").read_text().splitlines()]
 byp = {r["purpose"].replace("xdomain-eval ", ""): r["text"] for r in raw}

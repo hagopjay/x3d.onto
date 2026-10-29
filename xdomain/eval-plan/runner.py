@@ -78,7 +78,8 @@ def real_model(dom, model, cap, location="europe-west4", max_tokens=8192):
     go = HERE / "GO.json"
     if not go.exists(): raise SystemExit("REFUSED: no GO.json. Real calls need the user's explicit go; see PLAN.md.")
     g = json.loads(go.read_text()); assert g.get("approved_by") == "user" and model in g["models"] and dom in g["domains"] and cap <= g["cap_usd"], "GO.json does not cover this run"
-    sys.path.insert(0, str(XD.parent.parent / "tools")); from vertex import call, spent
+    if os.environ.get("GEMINI_BACKEND") == "api": from gemini_api import call, spent   # API key instead of Vertex; same ledger/cap contract
+    else: sys.path.insert(0, str(XD.parent.parent / "tools")); from vertex import call, spent
     import signal, threading
     def _h(*x): raise TimeoutError("per-call alarm")
     main_t = threading.current_thread()
