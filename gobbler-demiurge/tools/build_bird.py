@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Compose the bird-first scene: the Gobbler 3 Deep scene (untouched bytes) plus the layers from layers.py, spliced in.
-  python3 -I tools/build_bird.py [--validate]   ->  data/bird/gobbler4-bird.x3d, .x3d.gz, graph-v3.json.gz, anchors.json, receipt.json
+  python3 -I tools/build_bird.py [--validate] [--weave=0]   ->  data/bird/gobbler4-bird.x3d, .x3d.gz, graph-v3.json.gz, anchors.json, receipt.json
 Needs gobbler-v4/data/deep (make v4-data) and data/explorer.json. Outputs are fetched/built, not committed (see .gitignore)."""
 import gzip, hashlib, json, os, re, sys, subprocess, time
 HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.dirname(HERE); REPO = os.path.dirname(ROOT)
@@ -41,7 +41,7 @@ def compose(deep_text, L):
 def main():
     t0 = time.time(); os.makedirs(OUT, exist_ok=True)
     deep_b = open(os.path.join(DEEP, 'gobbler3.x3d'), 'rb').read(); deep = deep_b.decode('utf-8')
-    L = layers.build(os.path.join(REPO, 'data', 'explorer.json'))
+    L = layers.build(os.path.join(REPO, 'data', 'explorer.json'), weave='--weave=0' not in sys.argv)          # --weave=0: the earlier wandering shuttles instead of the Armenian knot
     scene = compose(deep, L); sb = scene.encode('utf-8')
     open(os.path.join(OUT, 'gobbler4-bird.x3d'), 'wb').write(sb)
     open(os.path.join(OUT, 'gobbler4-bird.x3d.gz'), 'wb').write(gz(sb))
@@ -53,7 +53,7 @@ def main():
     json.dump(dict(L['world'], files=wfiles), open(os.path.join(OUT, 'world.json'), 'w'), indent=1)         # the lazy Inlines and the stops that reach them
     json.dump(L['heart'], open(os.path.join(OUT, 'heart.json'), 'w'), separators=(',', ':'))                  # the beat tape, for the sound module (fetched only when sound is switched on)
     rec = dict(scene_bytes=len(sb), scene_gz_bytes=len(gz(sb)), deep_bytes=len(deep_b), layers_bytes=len(sb) - len(deep_b), graph_bytes=len(gj), graph_gz_bytes=len(gz(gj)),
-               boot_gz_bytes=len(gz(sb)) + len(gz(gj)), counts=L['counts'], scene_sha256=sha(sb), gold_scene_gz_bytes=len(gz(gold)), gold_scene_sha256=sha(gold), deep_sha256=sha(deep_b), built_in_s=round(time.time() - t0, 2))
+               boot_gz_bytes=len(gz(sb)) + len(gz(gj)), counts=L['counts'], knot=L.get('knot'), scene_sha256=sha(sb), gold_scene_gz_bytes=len(gz(gold)), gold_scene_sha256=sha(gold), deep_sha256=sha(deep_b), built_in_s=round(time.time() - t0, 2))
     if '--validate' in sys.argv:
         v = os.environ.get('X3D_VALIDATE', os.path.join(HERE, 'validate_fork.py'))
         r = subprocess.run([sys.executable, v, os.path.join(OUT, 'gobbler4-bird.x3d')], capture_output=True, text=True)

@@ -370,7 +370,7 @@ def heart_beats(seed=4):
         out.append((1.0 * (1 + hr.uniform(-.06, .06)), False))
     return out
 
-def build(explorer_path, seed=4):
+def build(explorer_path, seed=4, weave=True):
     rng = random.Random(seed); _glow_defined[0] = False; _defined.clear()
     D = json.load(open(explorer_path))
     maxd = D['stats']['max_depth']
@@ -575,12 +575,17 @@ def build(explorer_path, seed=4):
     X.append("<ProximitySensor DEF='FanSense' center='%s' size='30 30 56'/><TimeSensor DEF='FanClock' cycleInterval='4.2' loop='false'/><ROUTE fromNode='FanSense' fromField='enterTime' toNode='FanClock' toField='set_startTime'/>" % v3(add(ROOT, (8, 0, 0))))
     X += fold
 
-    # ---- shuttles: four agents weaving across the bird on smooth closed paths, each with a short fading trail (simulated; they stand for the orchestrator's work)
+    # ---- shuttles. weave=True (the default): the four shuttles weave the Armenian knot round the heart, a thread of each one's colour laid
+    # where it passes and kept, one ornament after another (tools/weave.py). weave=False: the earlier four agents on closed paths over the bird.
+    knot = None
+    if weave:
+        import weave as WV
+        wxml_, knot = WV.build(sys.modules[__name__], seed); X.append(wxml_)
     sr = random.Random(seed * 29 + 3)
     SHUT = [((11.5, -1.2, 1.2), (8.5, 2.4, 1.8), (0.0, 0.6, 1.0), 13.0, (0.25, 0.85, 0.85)), ((10.5, -3.2, -0.8), (7.5, 2.0, 2.2), (2.2, 1.7, 0.2), 17.0, (0.30, 0.65, 1.0)),
             ((13.0, 0.8, 2.4), (6.5, 3.0, 1.2), (4.0, 0.3, 2.5), 11.0, (0.30, 0.95, 0.55)), ((9.5, -2.0, -2.0), (8.8, 2.6, 1.6), (5.1, 2.4, 3.4), 19.0, (0.95, 0.35, 0.85))]
     NS, NT = 48, 5
-    for j, (C, A, ph, per, rc) in enumerate(SHUT):
+    for j, (C, A, ph, per, rc) in enumerate(SHUT if not weave else []):
         wob = [(sr.uniform(0, 6.28), sr.uniform(0, 6.28), sr.uniform(0, 6.28)) for _ in range(3)]
         def spos(s, C=C, A=A, ph=ph, wob=wob):
             x = C[0] + A[0] * math.cos(2 * math.pi * s + ph[0]) + 0.16 * math.sin(2 * math.pi * 7 * s + wob[0][0])
@@ -606,4 +611,4 @@ def build(explorer_path, seed=4):
     vp_xml = ''.join("<Viewpoint DEF='%s' description='%s' position='%s' orientation='%s' centerOfRotation='%s' fieldOfView='%s'/>" % (k, k, v3(d['position']), v3(d['orientation']), v3(d['center']), f(d['fov'])) for k, d in vps.items())
     vp_xml += "<Viewpoint DEF='TourCam' description='Tour' position='3 -1.8 13.2' fieldOfView='0.8'/>"
     routes = ''.join("<ROUTE fromNode='%s' fromField='bindTime' toNode='Intro' toField='set_startTime'/>" % k for k in vps)
-    return dict(world=winfo, villagers=villagers, heart=dict(cycle=round(T, 4), lub=HEART_LUB, dub=HEART_DUB, beats=[[round(d, 4), int(r)] for d, r in beats]), sway=sway, viewpoints=vp_xml, component="<component name='HAnim' level='1'/>", routes=routes, anchors=anchors, counts=dict(beads=len(bp), tenders=NTEN, wing=len(ROLES), fan=18, streams=len(streams)))
+    return dict(world=winfo, villagers=villagers, heart=dict(cycle=round(T, 4), lub=HEART_LUB, dub=HEART_DUB, beats=[[round(d, 4), int(r)] for d, r in beats]), sway=sway, viewpoints=vp_xml, component="<component name='HAnim' level='1'/>", routes=routes, anchors=anchors, counts=dict(beads=len(bp), tenders=NTEN, wing=len(ROLES), fan=18, streams=len(streams)), knot=knot)
