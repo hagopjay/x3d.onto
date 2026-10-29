@@ -12,18 +12,18 @@ A vision model looks at stills of the live page next to two of the owner's own s
 
 | Arm | Scene |
 |---|---|
-| A | the scene before any edit made from the judge's advice |
-| B | with the three edits the first round asked for: glowing nodes on the near feathers (the references put a node on every vertex), the ontology beads pulled toward gold (the full rainbow read as clutter next to the gold references), and the tour's Heart shot moved inside the shell (shell beads in front of the lens read as clutter) |
-| C | B plus a gold-only variant of the knowledge graph (`?look=gold`) |
+| A | the scene without the two scene edits below |
+| B | with the two scene edits that answer the first round's complaints: glowing nodes on the near feathers (the references put a node on every vertex) and the ontology beads pulled toward gold (the full rainbow read as clutter next to the gold references). The tour's Heart shot was also moved inside the shell (shell beads in front of the lens read as clutter), but that move is in the camera poses of all three arms, so the arms do not test it |
+| C | B plus a variant of the knowledge graph with its colours pulled 70 percent toward gold (`?look=gold`) |
 
 ## Results
 
 | Round | Scene | Mean score | Note |
 |---|---|---|---|
 | 1 | A | 3.56 | first capture |
-| 2 | B | 3.36 | capture flaw: a stale near-black face still (scored 2.33), so this round is not used |
+| 2 | B | 3.36 | capture flaw: an all-black face still (11.6 KB, scored 2.33), so this round is not used |
 | 2, judged again | the same 12 stills as round 2 | 3.45 | **the judge's own noise**: same images, +0.09 on the mean, 0.21 standard deviation per still |
-| 2, gold | C | 3.59 | this capture was fine; compared with the flawed round 2 it made the gold graph look better than it was (a claim made at the time and withdrawn) |
+| 2, gold | C | 3.59 | this capture was fine; compared with the flawed round 2 it made the gold graph look better than it was (an early reading, corrected before it was reported) |
 | **A** | A, clean capture | **3.67** | 34 of 36 calls landed (two upstream 502s) |
 | **B** | B | **3.56** | 36 of 36 |
 | **C** | C | **3.43** | 35 of 36 |
@@ -38,14 +38,14 @@ Only the last three rows share a capture method, so only they are compared. Pair
 
 Reading, with grades:
 
-- **The edits made from the judge's advice (B against A) are not detectable.** The difference is about one standard error, and the judge repeating itself on identical images moves the mean by as much. **Confirmed** as a null result at this size; a small real effect is not ruled out.
-- **The gold-only graph scored slightly lower** (-0.13 against B, ten of eleven stills down). **Likely** real and small. It does not show the gold graph looks worse to the owner.
-- **Noise.** The pooled spread of the three votes on one still is about 0.9 on the 1 to 10 scale (this includes the gap between the two models); the larger model scores about 1.5 to 2 points lower than the smaller one throughout. With 36 votes per arm the resolution is roughly 0.2 on the mean. The edits so far were smaller than that.
-- **What the judge keeps asking for.** In 87 of the 105 votes in arms A to C the top fix is to thin the scene out (reduce, simplify, density, clutter, sparse). What it asks to keep is the facets (74 votes), the gold (44), the low-poly look (35) and the head (31). The dense knowledge-graph constellation is what the bird is, and the owner has said he loves it, so this is a **disagreement between the judge and the owner**, and the owner's eye is the judge of record.
+- **The two scene edits made from the judge's advice (B against A) are not detectable.** The difference is about one standard error, and the judge repeating itself on identical images moves the mean by as much. **Confirmed** as a null result at this size; a small real effect is not ruled out.
+- **The gold-tinted graph scored slightly lower** (-0.13 against B, ten of eleven stills down). **Likely** real and small. It does not show the gold graph looks worse to the owner.
+- **Noise.** The pooled spread of the three votes on one still is about 0.9 on the 1 to 10 scale, almost all of it the fixed gap between the two models, which cancels when arms are compared; the larger model scores about 1.5 to 2 points lower than the smaller one throughout. The same 12 images judged twice moved the mean by 0.09 (standard error 0.06), and the paired differences between arms have a standard error of 0.11, so a difference smaller than about 0.2 (two standard errors) cannot be told from zero. The edits so far were smaller than that.
+- **What the judge keeps asking for.** In about 72 of the 105 votes in arms A to C the top fix is to thin the scene out (fewer or sparser lines and nodes, less clutter); a looser keyword count (reduce, simplify, density, clutter, sparse) gives 83, which includes 11 votes that only ask for less bloom on the feather and wing stills. What it asks to keep is the facets (74 votes), the gold (44), the low-poly look (35) and the head (31). The dense knowledge-graph constellation is what the bird is, and the owner has said he loves it, so this is a **disagreement between the judge and the owner**, and the owner's eye is the judge of record.
 
 ## What it was good for
 
-- It named three concrete edits (above) that were cheap to make, and it exposed a capture problem: a stale or near-black frame still gets a score (the near-black face still got 2.33), so a judge score is not a check that the picture exists. The capture now waits for the pose and retakes dark frames.
+- It named three problems whose cheap fixes are listed above, and it exposed a capture problem: a black frame still gets a score (the all-black face still got 2.33), so a judge score is not a check that the picture exists. The capture now waits for the pose and retakes dark frames.
 
 ## What to try next (not done)
 

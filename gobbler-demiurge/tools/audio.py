@@ -11,7 +11,7 @@ import argparse, hashlib, json, os, re, subprocess, sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 TARGET_LUFS = -26.0                       # a bed sits under the picture: quiet by design, the listener's own volume does the rest
 BITRATE = '96k'
-TRIM_S = 0.01                             # every source clip starts with the same four stray near-full-scale samples (an 80 microsecond click): cut them
+TRIM_S = 0.01                             # every source clip starts with the same click (the first 12 stereo frames are identical in all six clips, about 0.2 ms, peak -1.4 dBFS): cut it
 NEG = 'vocals, singing, voice, drums, percussion, beat, rhythmic pulse, bass drop, distortion, harsh, noisy, sudden changes, crescendo, climax, ending'
 ZONES = {
     'cosmos': dict(seed=101, plays='the bird, the Sun, the ribcage and out to the Earth',
