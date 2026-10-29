@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<X3D profile="Full" version="4.1">
+  <Scene>
+    <Anchor>
+      <PeriodicWave containerField="children"/>
+    </Anchor>
+  </Scene>
+</X3D>

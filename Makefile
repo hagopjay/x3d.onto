@@ -69,3 +69,16 @@ frames-demiurge:  ## the documentation frames in gobbler-demiurge/docs/frames
 
 artifact-demiurge: ## a flat copy for a private host: make artifact-demiurge OUT=/some/dir (needs test/requests.js output in gobbler-demiurge/out/runtime-files.json)
 	python3 -I gobbler-demiurge/tools/make_artifact.py $(OUT) gobbler-demiurge/out/runtime-files.json
+
+# Differential fuzzer for the validation stack (xdomain/fuzz/README.md). Needs the fork (X3D_MCP, default /home/user/x3d_mcp), lxml, node + playwright, and X_ITE from `make v4-data`.
+FUZZ_N ?= 2000
+FUZZ_SEED ?= 1
+fuzz:             ## generate FUZZ_N scenes, run XSD / semantic / profile / X3DUOM / X_ITE 16.5.1, bucket, minimise -> xdomain/fuzz/findings (about 7 min for 2,000 here)
+	python3 -I xdomain/fuzz/run.py --n $(FUZZ_N) --seed $(FUZZ_SEED)
+
+fuzz-residue:     ## adjudicate the 441 UOM-allows / XSD-rejects pairs -> xdomain/fuzz/findings/residue.json (about 30 s)
+	python3 -I xdomain/fuzz/residue.py
+
+test-fuzz:        ## generator, minimiser and classifier checks (X_ITE checks run when gobbler-v4/vendor/x_ite exists)
+	python3 -I xdomain/fuzz/test_fuzz.py
+.PHONY: fuzz fuzz-residue test-fuzz

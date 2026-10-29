@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<X3D profile="Full" version="4.1">
+  <Scene>
+    <HAnimHumanoid>
+      <IndexedFaceSet containerField="skin">
+        <MultiTextureCoordinate>
+          <TextureCoordinate3D/>
+        </MultiTextureCoordinate>
+      </IndexedFaceSet>
+    </HAnimHumanoid>
+  </Scene>
+</X3D>

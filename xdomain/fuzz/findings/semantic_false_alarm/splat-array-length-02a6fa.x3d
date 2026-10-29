@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<X3D profile="Full" version="4.1">
+  <Scene>
+    <GaussianSplats sphericalHarmonicsDegree0Coef0="-2.905 -3.673 -0.351, 2.299 -0.101 -4.518" sphericalHarmonicsDegree2Coef2="4.97 -0.786 3.09, 0.643 0.935 1.725, -4.384 4.052 1.838"/>
+  </Scene>
+</X3D>
