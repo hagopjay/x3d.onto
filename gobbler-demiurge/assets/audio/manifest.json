@@ -1,0 +1,54 @@
+{
+ "target_lufs": -26.0,
+ "trim_start_s": 0.01,
+ "codec": "AAC-LC 96k stereo 48 kHz",
+ "loop": "the page crossfades two overlapping copies (equal power, 4 s)",
+ "beds": {
+  "cosmos": {
+   "file": "cosmos.m4a",
+   "plays": "the bird, the Sun, the ribcage and out to the Earth",
+   "prompt": "Vast cinematic ambient music for a slow flight through a golden constellation: warm evolving synthesizer pads, a deep cello and low brass drone, soft glass bells and harp harmonics far away, a sense of awe and reverence, very slow, spacious reverb, no drums, no vocals, no melody hooks, a steady texture that can loop",
+   "negative_prompt": "vocals, singing, voice, drums, percussion, beat, rhythmic pulse, bass drop, distortion, harsh, noisy, sudden changes, crescendo, climax, ending",
+   "seed": 101,
+   "seconds": 32.758,
+   "source": {
+    "sha256": "a97f9f52731744e906731cb7ef9fc109854d9ede29426d552128eb04731cb6ab",
+    "lufs": -23.6,
+    "lra": 1.3,
+    "peak_dbfs": -1.4
+   },
+   "gain_db": -2.4,
+   "mastered": {
+    "lufs": -26.1,
+    "lra": 1.3,
+    "peak_dbfs": -15.8,
+    "seam_dlufs": 0.2
+   },
+   "bytes": 400677,
+   "sha256": "55d09b735072e29830498d5ebf13bab85f7ce1df764eb63025260af4c11e4f92"
+  },
+  "village": {
+   "file": "village.m4a",
+   "plays": "down in the village, from the orbit stop to a villager",
+   "prompt": "Gentle pastoral ambient music for a small village at golden hour: soft plucked harp, kalimba and music box playing a faint simple melody, a warm low string drone underneath, a little breathy wooden flute, intimate, calm and hopeful, slow, no drums, no vocals, a steady texture that can loop",
+   "negative_prompt": "vocals, singing, voice, drums, percussion, beat, rhythmic pulse, bass drop, distortion, harsh, noisy, sudden changes, crescendo, climax, ending",
+   "seed": 101,
+   "seconds": 32.758,
+   "source": {
+    "sha256": "e8295488dec37ab3e39db44a7b8059d7407d3fff27f1a783d9aab9741be57d27",
+    "lufs": -22.5,
+    "lra": 3.8,
+    "peak_dbfs": -1.4
+   },
+   "gain_db": -3.5,
+   "mastered": {
+    "lufs": -26.1,
+    "lra": 3.8,
+    "peak_dbfs": -14.2,
+    "seam_dlufs": 2.4
+   },
+   "bytes": 401133,
+   "sha256": "8555165a11ceba4d2b6da211137519dc96849fdcbf0a51a936a51c2bd4ab850e"
+  }
+ }
+}

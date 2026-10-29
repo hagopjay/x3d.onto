@@ -410,6 +410,6 @@
     new MutationObserver(function () { level = $('#gv4').dataset.ui === 'none' ? 'none' : 'min'; tagsDirty = true; }).observe($('#gv4'), { attributes: true, attributeFilter: ['data-ui'] });   /* the hover layer owns U and the UI chip */
   }
 
-  window.gdApi = { go: go, tour: tourToggle, cam: function () { return Cam; }, stops: STOPS, tags: function () { return tags; }, flyTo: flyTo, world: function () { return WORLD; }, swayPaused: function () { return sway.paused; }, toWorld: toWorld, dirToWorld: dirToWorld, stopWorld: function (i) { var t = STOPS[i]; return t ? (t[5] && t[5].loom ? toWorld(t[2]) : t[2]) : null; }, ready: function () { return worldP; } };
+  window.gdApi = { node: node, sun: SUN, go: go, tour: tourToggle, cam: function () { return Cam; }, stops: STOPS, tags: function () { return tags; }, flyTo: flyTo, world: function () { return WORLD; }, swayPaused: function () { return sway.paused; }, toWorld: toWorld, dirToWorld: dirToWorld, stopWorld: function (i) { var t = STOPS[i]; return t ? (t[5] && t[5].loom ? toWorld(t[2]) : t[2]) : null; }, ready: function () { return worldP; } };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', run); else run();
 })();

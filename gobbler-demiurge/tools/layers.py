@@ -356,6 +356,8 @@ def hash_name(s): return sum((i + 1) * ord(c) for i, c in enumerate(s)) * 265443
 FE_R = 0.125                      # the vane's full width over its length in the Blender asset (tools/blender_feather.py R)
 
 # ---------------------------------------------------------------- assembly
+HEART_LUB, HEART_DUB = 0.07, 0.30          # where in a beat the two swells peak (fractions of the beat); the sound module thumps at the same two moments
+
 def heart_beats(seed=4):
     """the heartbeat tape: one beat per validator verdict in data/heartbeat/xbench-run1.json. A scene that failed first shows a red beat
     (and one more red beat for every repair attempt that failed again), then a gold beat when it passes. returns [(seconds, is_red)]; the
@@ -403,7 +405,7 @@ def build(explorer_path, seed=4):
     t0 = 0.0
     for i, (d, red) in enumerate(beats):
         amp = 0.13 if red else 0.10
-        for off, val in ((0.0, 1.0), (0.07, 1 + amp), (0.17, 0.99), (0.30, 1 + 0.55 * amp), (0.52, 1.0)):
+        for off, val in ((0.0, 1.0), (HEART_LUB, 1 + amp), (0.17, 0.99), (HEART_DUB, 1 + 0.55 * amp), (0.52, 1.0)):
             kS.append((t0 + off * d) / T); vS.append(val)
         col = (1.0, 0.22, 0.16) if red else (1.0, 0.86, 0.42)
         for off, sc, fade in ((0.0, 0.45, 0.0), (0.75 * d, 2.7, 1.0), (d - eps, 2.7, 1.0)):
@@ -604,4 +606,4 @@ def build(explorer_path, seed=4):
     vp_xml = ''.join("<Viewpoint DEF='%s' description='%s' position='%s' orientation='%s' centerOfRotation='%s' fieldOfView='%s'/>" % (k, k, v3(d['position']), v3(d['orientation']), v3(d['center']), f(d['fov'])) for k, d in vps.items())
     vp_xml += "<Viewpoint DEF='TourCam' description='Tour' position='3 -1.8 13.2' fieldOfView='0.8'/>"
     routes = ''.join("<ROUTE fromNode='%s' fromField='bindTime' toNode='Intro' toField='set_startTime'/>" % k for k in vps)
-    return dict(world=winfo, villagers=villagers, sway=sway, viewpoints=vp_xml, component="<component name='HAnim' level='1'/>", routes=routes, anchors=anchors, counts=dict(beads=len(bp), tenders=NTEN, wing=len(ROLES), fan=18, streams=len(streams)))
+    return dict(world=winfo, villagers=villagers, heart=dict(cycle=round(T, 4), lub=HEART_LUB, dub=HEART_DUB, beats=[[round(d, 4), int(r)] for d, r in beats]), sway=sway, viewpoints=vp_xml, component="<component name='HAnim' level='1'/>", routes=routes, anchors=anchors, counts=dict(beads=len(bp), tenders=NTEN, wing=len(ROLES), fan=18, streams=len(streams)))

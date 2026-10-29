@@ -1,5 +1,5 @@
 """python3 -I test/test_layers.py : the layers are deterministic, match the plan's counts, and compose in the right place (needs make v4-data first)."""
-import os, re, sys, unittest, hashlib, pathlib
+import os, re, sys, json, unittest, hashlib, pathlib
 HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.dirname(HERE); REPO = os.path.dirname(ROOT)
 sys.path.insert(0, os.path.join(ROOT, 'tools'))
 import layers, build_bird
@@ -76,4 +76,18 @@ class T(unittest.TestCase):
         for m in re.finditer(r"(DEF|USE)='([^']+)'", out):
             if m.group(1) == 'DEF': seen.add(m.group(2))
             else: self.assertIn(m.group(2), seen, 'USE before DEF: ' + m.group(2))
+    def test_sound_beds_and_heart_tape(self):
+        man = json.loads(pathlib.Path(ROOT, 'assets', 'audio', 'manifest.json').read_text())
+        self.assertEqual(sorted(man['beds']), ['cosmos', 'village'])
+        for k, bed in man['beds'].items():
+            raw = pathlib.Path(ROOT, 'assets', 'audio', bed['file']).read_bytes()
+            self.assertEqual(hashlib.sha256(raw).hexdigest(), bed['sha256'], k + ': the file is the one the manifest describes'); self.assertEqual(len(raw), bed['bytes'])
+            self.assertAlmostEqual(bed['mastered']['lufs'], man['target_lufs'], delta=0.3)                                  # both beds sit at the same loudness
+            self.assertEqual(sorted(bed), sorted(('file', 'plays', 'prompt', 'negative_prompt', 'seed', 'seconds', 'source', 'gain_db', 'mastered', 'bytes', 'sha256')), 'only these fields: no model or service field')
+            self.assertNotIn('http', json.dumps(bed).lower())                                                              # and no link
+        L = layers.build(EXP); H = L['heart']; beats = layers.heart_beats()
+        self.assertEqual(len(H['beats']), len(beats)); self.assertEqual(sum(1 for _, r in H['beats'] if r), sum(1 for _, r in beats if r))
+        self.assertAlmostEqual(H['cycle'], sum(d for d, _ in beats), delta=0.01 * len(beats))                                # the tape the sound reads is the tape the swell is keyed on
+        self.assertIn("cycleInterval='%s'" % layers.f(H['cycle']), L['sway'])
+        self.assertEqual((H['lub'], H['dub']), (layers.HEART_LUB, layers.HEART_DUB))
 if __name__ == '__main__': unittest.main()

@@ -1,4 +1,4 @@
-// node test/requests.js > out/runtime-files.json : every file the page asks the server for while it boots, flies down the ladder to a villager, tours and opens a deep card (what a published copy must carry)
+// node test/requests.js > out/runtime-files.json : every file the page asks the server for while it boots, flies down the ladder to a villager, switches sound on, tours and opens a deep card (what a published copy must carry)
 const { chromium } = require('playwright');
 const BASE = process.env.GD_BASE || 'http://127.0.0.1:8791/gobbler-demiurge/index.html', O = new URL(BASE).origin;
 (async () => {
@@ -17,6 +17,7 @@ const BASE = process.env.GD_BASE || 'http://127.0.0.1:8791/gobbler-demiurge/inde
         await p.waitForFunction(i => { const c = window.gdApi.cam(), t = window.gdApi.stopWorld(i); return c.pos && t && Math.hypot(c.pos[0] - t[0], c.pos[1] - t[1], c.pos[2] - t[2]) < 1e-3; }, i, { timeout: 120000 });
         await p.waitForTimeout(6000);
       }
+      await p.keyboard.press('m'); await p.waitForFunction(() => { const s = window.gdApi.sound(); return s.on || s.error; }, null, { timeout: 60000 });      // sound: the two beds and the beat tape
     }
     await p.close();
   }

@@ -83,6 +83,29 @@ async function open(b, q, vp) {
   const tb = await p.evaluate(() => { const c = window.gdApi.cam(); return { dSun: Math.hypot(c.pos[0] - 6.5, c.pos[1] + 2.6, c.pos[2] - 0.4), label: document.getElementById('btn-tour').textContent }; });
   check('tour: comes back out to the Heart shot and carries on (sway running, tour still on)', tb.dSun < 8 && tb.label === 'Pause tour', JSON.stringify(tb));
   check('tour dive: no page errors', p.errs.length === 0, p.errs.slice(0, 3).join(' | ')); await p.close();
+  // sound: silent to begin with, M starts it, the mix follows the camera (equal power), the heart thumps on the tape, M mutes; a missing bed fails soft
+  p = await open(b, '?ui=min'); await p.evaluate(() => window.gdApi.ready());
+  const hint = await p.evaluate(() => document.getElementById('gv4-hint').textContent);
+  check('sound: silent to begin with (no context, no audio file requested) and the hint line names M', (await p.evaluate(() => window.gdApi.sound())).ctx === 'none' && !p.reqs.some(u => /assets\/audio|heart\.json/.test(u)) && /M for sound/.test(hint), hint);
+  await p.keyboard.press('m'); await p.waitForFunction(() => { const s = window.gdApi.sound(); return s.on || s.error; }, null, { timeout: 60000 });
+  let sn = await p.evaluate(() => window.gdApi.sound());
+  check('sound: M starts it (context running, both beds decoded, the beat tape read) and a toast says so', sn.on && sn.ctx === 'running' && sn.beds === 2 && sn.beats > 20 && await p.evaluate(() => document.querySelector('.gd-toast.on') !== null), JSON.stringify(sn));
+  await p.waitForTimeout(5000); sn = await p.evaluate(() => window.gdApi.sound());
+  check('sound: at the Face the cosmos bed plays alone and the heart thumps on the tape (about two thumps a second)', sn.gain.cosmos > 0.95 && sn.gain.village < 0.01 && sn.thumps >= 6 && sn.heart > 0.2, JSON.stringify(sn.gain) + ' thumps ' + sn.thumps);
+  const stopAt = i => p.waitForFunction(i => { const c = window.gdApi.cam(), t = window.gdApi.stopWorld(i); return c.pos && t && Math.hypot(c.pos[0] - t[0], c.pos[1] - t[1], c.pos[2] - t[2]) < 1e-3; }, i, { timeout: 120000 });
+  await p.evaluate(() => window.gdApi.go(4, 0)); await stopAt(4); await p.waitForTimeout(3500); sn = await p.evaluate(() => window.gdApi.sound());
+  check('sound: from orbit the two beds cross at equal power (cos squared plus sin squared is 1) and the heart is fading', Math.abs(sn.gain.cosmos ** 2 + sn.gain.village ** 2 - 1) < 0.03 && sn.gain.village > sn.gain.cosmos && sn.heart < 0.5, JSON.stringify(sn.gain));
+  await p.evaluate(() => window.gdApi.go(5, 0)); await stopAt(5); await p.waitForTimeout(3500); sn = await p.evaluate(() => window.gdApi.sound()); const th = sn.thumps; await p.waitForTimeout(2500);
+  check('sound: in the plaza only the village bed is heard and the heart is silent (no thump even scheduled)', sn.gain.village > 0.99 && sn.gain.cosmos < 0.02 && sn.gain.heart < 0.001 && (await p.evaluate(() => window.gdApi.sound())).thumps === th, JSON.stringify(sn.gain));
+  await p.keyboard.press('m'); await p.waitForTimeout(3000); sn = await p.evaluate(() => window.gdApi.sound());
+  check('sound: M again mutes it and the context is suspended', !sn.on && sn.ctx === 'suspended' && await p.evaluate(() => document.documentElement.dataset.sound === 'off'), JSON.stringify({ on: sn.on, ctx: sn.ctx }));
+  check('sound: no page errors', p.errs.length === 0, p.errs.slice(0, 3).join(' | ')); await p.close();
+  p = await b.newPage(); p.errs = []; p.on('pageerror', e => p.errs.push(String(e))); await p.route('**/assets/audio/village.m4a', r => r.fulfill({ status: 404, body: 'no' })); await p.goto(BASE + '?ui=min', { waitUntil: 'load' });
+  await p.waitForFunction(() => document.body.dataset.loaded === '1', null, { timeout: 170000 }); await p.keyboard.press('m'); await p.waitForFunction(() => { const s = window.gdApi.sound(); return s.on || s.error; }, null, { timeout: 60000 });
+  sn = await p.evaluate(() => window.gdApi.sound()); const tt = await p.evaluate(() => (document.querySelector('.gd-toast') || {}).textContent);
+  check('sound: a missing bed fails soft (stays silent, names the HTTP status in a toast, the page carries on)', !sn.on && /HTTP 404/.test(sn.error) && /Sound is off/.test(tt || '') && p.errs.length === 0, sn.error + ' | ' + tt); await p.close();
+  p = await open(b, '?ui=none'); await p.keyboard.press('m'); await p.waitForFunction(() => window.gdApi.sound().on, null, { timeout: 60000 });
+  check('sound: with ui=none it still plays but shows no toast (stills stay clean)', await p.evaluate(() => document.querySelector('.gd-toast') === null), ''); await p.close();
   // ui none: nothing visible on top of the scene, same boot
   p = await open(b, '?ui=none&view=establishing'); await p.waitForTimeout(3000);
   const vis = await p.evaluate(() => { const g = document.getElementById('gv4'); const shown = [...g.children].filter(c => getComputedStyle(c).display !== 'none' && !c.classList.contains('gv4-peek')); return { ui: g.dataset.ui, shown: shown.length }; });
