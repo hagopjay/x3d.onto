@@ -243,7 +243,7 @@ def run(provider="scripted", model=RUNNER_DEFAULTS["model"], optimize="gepa", n=
     prog = LawfulX3D(rounds=rounds, cap=cap); met = make_metric(False)
     ev = lambda p, d: dspy.Evaluate(devset=d, metric=met, num_threads=1, display_progress=False, provide_traceback=True)(p)
     base = ev(prog, data); res = dict(provider=provider, model=model, n=len(data), baseline=round(float(base.score), 2))
-    res["baseline_rows"] = [dict(pid=e.pid, score=r[2] if not hasattr(r[2], "score") else r[2].score, rounds=r[1].rounds) for e, r in zip(data, base.results)]
+    res["baseline_rows"] = [dict(pid=e.pid, score=r[2] if not hasattr(r[2], "score") else r[2].score, rounds=getattr(r[1], "rounds", None)) for e, r in zip(data, base.results)]
     if optimize != "none":
         opt, ckw = optimizer(optimize, reflection_lm=lm, budget=budget or (4 * len(train) + 2 * len(val) if optimize == "gepa" else 2))
         best = opt.compile(prog, trainset=train, valset=val, **ckw)
