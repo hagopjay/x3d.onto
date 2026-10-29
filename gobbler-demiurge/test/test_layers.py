@@ -18,7 +18,7 @@ class T(unittest.TestCase):
         self.assertEqual(len(re.findall(r"<Transform DEF='TenderOrbit\d+'", x)), 10)
         self.assertEqual(len(re.findall(r"<Group DEF='TenderBody\d'>", x)), 3); self.assertEqual(len(re.findall(r"<Group USE='TenderBody\d'/>", x)), 7)   # three H-Anim copies, shared by USE among the ten shell tenders
         self.assertEqual(x.count('<HAnimHumanoid'), 3); self.assertEqual(len(re.findall(r'<HAnimJoint DEF="hanim_T\d_\w+"', x)), 54)   # 18 joints each; the villagers' bodies are in their own lazy file
-        ids = {a['id'] for a in L['anchors']}; self.assertEqual(len(L['anchors']), 19)
+        ids = {a['id'] for a in L['anchors']}; self.assertEqual(len(L['anchors']), 20)
         for t in ('fan_gltf', 'fan_usd', 'fan_video', 'fan_o3de', 'fan_paraview', 'fan_3dslicer', 'fan_unity', 'fan_defold', 'fan_ifc'): self.assertIn(t, ids)
         self.assertEqual(sum(1 for a in L['anchors'] if a['id'].startswith('fan_') and 'mock' in a['tag']), 6)   # six mocks, tagged
         self.assertEqual(sum(1 for a in L['anchors'] if a['id'].startswith('fan_') and a['tag'].startswith('Blender export')), 3)
@@ -48,8 +48,9 @@ class T(unittest.TestCase):
         with tempfile.TemporaryDirectory() as d:
             sizes = world.build(d); self.assertEqual(sorted(sizes), ['earth-clouds.x3d', 'earth-moon.x3d', 'earth-planet.x3d', 'village.x3d'])
             for n in sizes:
-                t = pathlib.Path(d, n).read_text(encoding='utf-8'); self.assertNotIn('PhysicalMaterial', t, n); self.assertNotIn('NavigationInfo', t, n); self.assertLess(sizes[n], 1.5e6, n)
-            v = pathlib.Path(d, 'village.x3d').read_text(encoding='utf-8'); self.assertEqual(v.count('<Shape'), 4)               # four merged meshes (four draw calls), the light baked into one colour per face corner, not one object per house
+                t = pathlib.Path(d, n).read_text(encoding='utf-8'); self.assertNotIn('PhysicalMaterial', t, n); self.assertNotIn('NavigationInfo', t, n); self.assertLess(sizes[n], 1.6e6, n)   # 1.5e6 until the khachkar joined the village file (1.58 MB raw with it)
+            v = pathlib.Path(d, 'village.x3d').read_text(encoding='utf-8'); self.assertEqual(v.count('<Shape'), 5)               # four merged meshes and the khachkar (five draw calls), the light baked into one colour per face corner, not one object per house
+            self.assertEqual(len(re.findall(r"DEF=[\"']OB_Khachkar[\"']", v)), 1)                                                     # the khachkar stands in the plaza, in the village's own lazy file
     def test_glow_shader_defined_once_per_build(self):
         x = layers.build(EXP)['sway']; self.assertEqual(x.count("<ComposedShader DEF='GlowShader'"), 1); self.assertGreater(x.count("<ComposedShader USE='GlowShader'/>"), 1)
     def test_point_sprite_alpha_encoding(self):
