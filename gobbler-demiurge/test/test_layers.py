@@ -1,5 +1,5 @@
 """python3 -I test/test_layers.py : the layers are deterministic, match the plan's counts, and compose in the right place (needs make v4-data first)."""
-import os, re, sys, json, unittest, hashlib, pathlib
+import os, re, sys, json, math, unittest, hashlib, pathlib
 HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.dirname(HERE); REPO = os.path.dirname(ROOT)
 sys.path.insert(0, os.path.join(ROOT, 'tools'))
 import layers, build_bird
@@ -104,6 +104,34 @@ class T(unittest.TestCase):
         for m in re.finditer(r"(DEF|USE)='([^']+)'", out):
             if m.group(1) == 'DEF': seen.add(m.group(2))
             else: self.assertIn(m.group(2), seen, 'USE before DEF: ' + m.group(2))
+    def test_armenian_knot_strands(self):
+        import weave
+        orns = weave.ornaments(4); self.assertEqual([o['L'] for o in orns], [2, 5, 3])                         # eight-armed arevakhach, the plaited border ring, twelve arms
+        self.assertNotEqual(weave.ornaments(5)[0], orns[0])                                                     # the next seed changes the knot
+        for o in orns:
+            for k in range(4):
+                for t in (0.0, 0.137, 0.5, 0.91):
+                    a, b = weave.point(o, k, t), weave.point(o, k, t + 1.0); self.assertAlmostEqual(math.hypot(a[0] - b[0], a[1] - b[1]), 0, places=9)   # closed and periodic
+            P = [weave.point(o, 0, weave.tparam(o, i / weave.N)) for i in range(weave.N + 1)]; self.assertLess(math.hypot(P[0][0] - P[-1][0], P[0][1] - P[-1][1]), 1e-9)   # the strip as the shader bends it closes on itself
+            for a, b, c in zip(P, P[1:], P[2:]):                                                                 # and is smooth: short steps, gentle bends, also where it curls
+                self.assertLess(math.hypot(c[0] - b[0], c[1] - b[1]), 0.15, o['name'])
+                d = abs((math.atan2(c[1] - b[1], c[0] - b[0]) - math.atan2(b[1] - a[1], b[0] - a[0]) + math.pi) % (2 * math.pi) - math.pi); self.assertLess(math.degrees(d), 15, o['name'])
+            cs = weave.crossings(o); lift, flips, base = weave.lift_profile(o, cs)
+            self.assertGreater(len(base), 8)
+            for k in range(4):                                                                                  # along every strand the crossings go over, under, over ...
+                sk = weave.strand_crossings(cs, k); self.assertEqual(len(sk) % 2, 0)
+                for (t0, s0), (t1, s1) in zip(sk, sk[1:] + sk[:1]): self.assertEqual(s0, -s1, (o['name'], k, t0))
+            for t, s in base: self.assertAlmostEqual(lift(t), s, places=6, msg=(o['name'], t))                  # the lift the strip carries is fully up where the strand is over, down where under
+            self.assertAlmostEqual(lift(0.0), lift(1.0), places=9)                                              # the lift closes too
+    def test_armenian_knot_in_the_scene(self):
+        L = layers.build(EXP); x = L['sway']
+        self.assertEqual(x.count("<TriangleStripSet DEF='WeaveStrip'"), 1); self.assertEqual(x.count("<TriangleStripSet USE='WeaveStrip'/>"), 11); self.assertEqual(len(re.findall(r"<ComposedShader DEF='WeaveSh\d_\d'", x)), 12)
+        self.assertEqual(len(re.findall(r"<Transform DEF='Shuttle\d' ", x)), 4); self.assertNotIn("DEF='ShuttleClock0'", x); self.assertNotIn('<Script', x)
+        for m in re.finditer(r"<ROUTE fromNode='(\w+)'[^>]*toNode='(\w+)'", x):                                   # X_ITE drops a ROUTE that comes before its node
+            for n in m.groups():
+                if n.startswith(('Weave', 'Shuttle')): d = re.search(r"DEF='%s'" % n, x); self.assertIsNotNone(d, n); self.assertLess(d.start(), m.start(), n)
+        self.assertEqual(len(L['knot']['ornaments']), 3); self.assertIn("startTime='1e12'", x)                  # the page starts the clock; elsewhere the first knot shows complete
+        old = layers.build(EXP, weave=False)['sway']; self.assertNotIn("DEF='Weave'", old); self.assertIn("DEF='ShuttleClock3'", old)   # weave=False: the earlier wandering shuttles
     def test_sound_beds_and_heart_tape(self):
         man = json.loads(pathlib.Path(ROOT, 'assets', 'audio', 'manifest.json').read_text())
         self.assertEqual(sorted(man['beds']), ['cosmos', 'village'])

@@ -361,7 +361,7 @@
       Boot.done = true; clearInterval(beat); beat = 0; busy.hidden = true; stageEl.dataset.stage = 'bird';
       Boot.birdMs = Math.round(performance.now() - Boot.t0); Boot.log.push(secs(Boot.t0) + ' bird on screen (' + kb(Boot.bytes.bird || 0) + ' gzipped scene)');
       Boot.summary = 'bird ' + (Boot.birdMs / 1000).toFixed(1) + ' s · ' + kb(Boot.bytes.bird || 0);
-      installSensor(el); hud(el); buildRail(); wire(el);
+      installSensor(el); hud(el); buildRail(); wire(el); weave(el);
       if (q.get('mashtots') === '0') { var mr = node('MashtotsRing'); if (mr) mr.visible = false; }             /* ?mashtots=0: the bird without the ring of letters (its tag goes too, see buildTags) */
       document.body.dataset.loaded = '1';
       later(el);
@@ -392,6 +392,11 @@
     }).catch(function (e) { console.warn('[gobbler] graph', e); Boot.log.push('graph FAILED: ' + e.message); $('#gv4-counts').textContent = 'bird only · graph failed: ' + e.message; });
   }
 
+  function weave(el) {                           /* the Armenian knot (tools/weave.py): its clock waits in the scene until the page starts it here; ?weave=0 hides it, ?weaveat=N starts N seconds in (a test hook) */
+    var c = node('WeaveClock'), s = node('Weave'); if (!c || !s) return;
+    if (q.get('weave') === '0') { s.whichChoice = -1; return; }
+    c.startTime = Date.now() / 1000 - (+q.get('weaveat') || 0);              /* X_ITE's clock is the wall clock in seconds */
+  }
   function wire(el) {
     PX.tourStart = trStart; PX.tourStop = trStop; PX.tourHold = trHold; PX.tourRelease = trRelease; PX.tourHeld = function () { return tr.held; };      /* the spline tour replaces the engine's; the hover layer holds and releases it the same way */
     var ts = PX.tourStop, tb = PX.tourStart;                    /* the engine writes 'Resume tour' on its own button; the page owns the label */

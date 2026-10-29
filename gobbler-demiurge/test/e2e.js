@@ -30,6 +30,9 @@ async function open(b, q, vp) {
   const gait = await p.evaluate(async () => { const sc = document.getElementById('x3d').browser.currentScene; const k = sc.getNamedNode('hanim_T0_l_knee'), h = sc.getNamedNode('hanim_T2_r_hip');
     const a = k.rotation.toString() + h.rotation.toString(); await new Promise(r => setTimeout(r, 900)); const b = k.rotation.toString() + h.rotation.toString(); return { moved: a !== b, joints: sc.getNamedNode('hanim_T1').name }; });
   check('tenders: three H-Anim humanoids from Blender are in the scene and their joints are walking', gait.moved && gait.joints === 'Tender', JSON.stringify(gait));
+  const knot = await p.evaluate(async () => { const n = window.gdApi.node, w = () => +String(n('WeaveSh0_0').w).split(' ')[1], s = () => String(n('Shuttle0').translation);
+    const a = w(), sa = s(); await new Promise(r => setTimeout(r, 3000)); return { a, b: w(), moved: sa !== s(), tape: String(n('WeaveTape').value_changed) }; });
+  check('knot: the woven thread grows over time and the shuttle moves with its end (the Armenian knot, tools/weave.py)', knot.b > knot.a && knot.b - knot.a < 0.05 && knot.moved, JSON.stringify(knot));
   const tags = await p.evaluate(() => window.gdApi.tags().length); check('tags: 9 fan targets + heart, ribcage, flywheel, tenders, wing, blender + earth, village, tether, villagers, khachkar + the Mashtots ring = 21 anchors', tags === 21, String(tags));
   const ring = await p.evaluate(async () => { const sc = document.getElementById('x3d').browser.currentScene, n = nm => { try { return sc.getNamedNode(nm); } catch (e) { return null; } };
     const R = n('MashtotsRing'), G = n('MashtotsReader'), letters = Array.from({ length: 36 }, (_, i) => !!n('Mashtots' + String(i + 1).padStart(2, '0'))).filter(Boolean).length;
@@ -114,6 +117,10 @@ async function open(b, q, vp) {
   p = await open(b, '?ui=none&view=establishing'); await p.waitForTimeout(3000);
   const vis = await p.evaluate(() => { const g = document.getElementById('gv4'); const shown = [...g.children].filter(c => getComputedStyle(c).display !== 'none' && !c.classList.contains('gv4-peek')); return { ui: g.dataset.ui, shown: shown.length }; });
   check('ui=none: no overlay element is displayed', vis.ui === 'none' && vis.shown === 0, JSON.stringify(vis)); await p.close();
+  p = await open(b, '?ui=none&weaveat=100'); await p.waitForTimeout(1500);
+  const wa = await p.evaluate(() => { const n = window.gdApi.node; return { w: String(n('WeaveSh0_0').w), el: Date.now() / 1000 - n('WeaveClock').startTime, on: n('Weave').whichChoice }; }); await p.close();
+  p = await open(b, '?ui=none&weave=0'); const w0 = await p.evaluate(() => window.gdApi.node('Weave').whichChoice); await p.close();
+  check('knot: ?weaveat=100 starts the weave 100 s in (the share laid follows the clock: two thirds at 100 s) and ?weave=0 hides it', wa.el >= 100 && wa.el < 174 && Math.abs(+wa.w.split(' ')[1] - Math.min(1, wa.el / 150)) < 0.05 && wa.on === 0 && w0 === -1, JSON.stringify(wa) + ' weave=0 -> ' + w0);
   // the A/B variant: ?look=gold loads the additional file, not the default
   p = await open(b, '?ui=min&look=gold'); const gl = await p.evaluate(() => ({ failed: window.gdBoot.failed, stage: document.getElementById('stage').dataset.stage }));
   check('look=gold: the gold-graph variant file loads and the bird appears', !gl.failed && gl.stage === 'bird' && p.reqs.some(u => /gobbler4-bird-gold\.x3d\.gz/.test(u)) && !p.reqs.some(u => /gobbler4-bird\.x3d\.gz/.test(u)), gl.stage); await p.close();
