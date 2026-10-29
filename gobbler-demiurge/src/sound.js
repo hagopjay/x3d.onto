@@ -4,15 +4,15 @@
  *  - the heart: a synthesized lub-dub on the Sun's beat tape (data/bird/heart.json, the tape that drives the visual pulse), scheduled against the HeartClock's own phase so the thump lands
  *    with the swell. Loudest at the Heart, quieter out at the ribcage and the Face, gone in the village. A red beat (a defect found) carries a short tick.
  *  - soft failure: a missing file, no WebAudio or a refused context leaves the page silent and says why in a toast (only while the UI is on: stills with ui=none never show one).
- * Files: assets/audio/cosmos.m4a and village.m4a (manifest.json beside them: prompts, seeds, loudness, sha256), data/bird/heart.json. Config: window.GD_CFG.audio (folder) and .heart (tape).
+ * Files: assets/audio/cosmos.m4a and village.m4a (manifest.json beside them: prompts, seeds, loudness, sha256), data/bird/heart.json. Config: window.GD_CFG.audio (folder), .audioExt (m4a; a published copy may need mp4, the same container) and .heart (tape).
  * Hooks for the tests: window.GDSound and gdApi.sound() (the state, with the gains the mix has chosen).
  */
 (function () {
   'use strict';
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var api = window.gdApi; if (!api) return;
-  var CFG = Object.assign({ audio: 'assets/audio/', heart: 'data/bird/heart.json' }, window.GD_CFG || {});
-  var BEDS = { cosmos: 'cosmos.m4a', village: 'village.m4a' };
+  var CFG = Object.assign({ audio: 'assets/audio/', audioExt: 'm4a', heart: 'data/bird/heart.json' }, window.GD_CFG || {});
+  var BEDS = ['cosmos', 'village'];
   var XFADE = 4, AHEAD = 0.4, HEART_LEVEL = 0.2;       /* crossfade seconds; how far ahead (s) the thumps are scheduled; the heart bus at full strength (the beds are mastered at -26 LUFS, peaks near -15 dBFS) */
   var S = { on: false, busy: false, ctx: null, master: null, bed: null, heart: null, tick: 0, timer: 0, thumps: 0, v: 0, dV: 99, hg: 0, err: '' };
   var H = null;                                          /* the tape: { T, th: [[seconds in the cycle, strength, red]], cyc, lastF, done } */
@@ -91,22 +91,22 @@
   function getBytes(url) { return fetch(url).then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status + ' for ' + url); return r.arrayBuffer(); }); }
   function start() {
     var AC = window.AudioContext || window.webkitAudioContext; if (!AC) return fail('this browser has no WebAudio');
-    S.busy = true; say('Loading sound…', 6000);
-    var ctx = new AC({ latencyHint: 'playback' }), names = Object.keys(BEDS);
-    Promise.all(names.map(function (k) { return getBytes(CFG.audio + BEDS[k]).then(function (ab) { return decode(ctx, ab); }); }).concat([fetch(CFG.heart).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; })]))
+    S.busy = true; say('Loading sound\u2026', 6000);
+    var ctx = new AC({ latencyHint: 'playback' }), names = BEDS;
+    Promise.all(names.map(function (k) { return getBytes(CFG.audio + k + '.' + CFG.audioExt).then(function (ab) { return decode(ctx, ab); }); }).concat([fetch(CFG.heart).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; })]))
       .then(function (got) {
         S.ctx = ctx; S.master = ctx.createGain(); S.master.gain.value = 0; S.master.connect(ctx.destination); S.bed = {};
         names.forEach(function (k, i) { var g = ctx.createGain(); g.gain.value = 0; g.connect(S.master); S.bed[k] = { g: g, loop: loop(ctx, got[i], g) }; });
         var lp = ctx.createBiquadFilter(), bus = ctx.createGain(); lp.type = 'lowpass'; lp.frequency.value = 260; lp.Q.value = 0.5; bus.gain.value = 0; lp.connect(bus); bus.connect(S.master); S.heart = { tone: lp, tick: bus, bus: bus };
         S.noise = noiseBuffer(ctx); H = got[names.length] ? tape(got[names.length]) : null;     /* no tape, no heart: the beds still play */
         S.busy = false; S.on = true; mix(); S.timer = setInterval(mix, 100); S.tick = setInterval(beat, 60);
-        S.master.gain.setTargetAtTime(1, ctx.currentTime, 0.8); say('Sound on · M to mute'); document.documentElement.dataset.sound = 'on';
+        S.master.gain.setTargetAtTime(1, ctx.currentTime, 0.8); say('Sound on \u00b7 M to mute'); document.documentElement.dataset.sound = 'on';
       }).catch(function (e) { try { ctx.close(); } catch (x) {} fail((e && e.message) || 'could not load the beds'); });
   }
   function setOn(on) {
     if (!S.ctx) return; S.on = on; var t = S.ctx.currentTime;
-    if (on) { S.ctx.resume(); S.master.gain.cancelScheduledValues(t); S.master.gain.setTargetAtTime(1, t, 0.6); say('Sound on · M to mute'); }
-    else { S.master.gain.cancelScheduledValues(t); S.master.gain.setTargetAtTime(0, t, 0.35); setTimeout(function () { if (!S.on && S.ctx.state === 'running') S.ctx.suspend(); }, 1600); say('Sound off · M for sound'); }
+    if (on) { S.ctx.resume(); S.master.gain.cancelScheduledValues(t); S.master.gain.setTargetAtTime(1, t, 0.6); say('Sound on \u00b7 M to mute'); }
+    else { S.master.gain.cancelScheduledValues(t); S.master.gain.setTargetAtTime(0, t, 0.35); setTimeout(function () { if (!S.on && S.ctx.state === 'running') S.ctx.suspend(); }, 1600); say('Sound off \u00b7 M for sound'); }
     document.documentElement.dataset.sound = on ? 'on' : 'off';
   }
   function press() { if (S.busy) return; if (!S.ctx) start(); else setOn(!S.on); }
@@ -116,7 +116,7 @@
     press();
   });
   document.addEventListener('visibilitychange', function () { if (!S.ctx || !S.on) return; if (document.hidden) S.ctx.suspend(); else S.ctx.resume(); });
-  var hint = $('#gv4-hint'); if (hint) hint.textContent += ' · M for sound';
+  var hint = $('#gv4-hint'); if (hint) hint.textContent += ' \u00b7 M for sound';
 
   var GDSound = window.GDSound = {
     toggle: press, thump: thump,
