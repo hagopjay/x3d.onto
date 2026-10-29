@@ -30,7 +30,7 @@ async function open(b, q, vp) {
   const gait = await p.evaluate(async () => { const sc = document.getElementById('x3d').browser.currentScene; const k = sc.getNamedNode('hanim_T0_l_knee'), h = sc.getNamedNode('hanim_T2_r_hip');
     const a = k.rotation.toString() + h.rotation.toString(); await new Promise(r => setTimeout(r, 900)); const b = k.rotation.toString() + h.rotation.toString(); return { moved: a !== b, joints: sc.getNamedNode('hanim_T1').name }; });
   check('tenders: three H-Anim humanoids from Blender are in the scene and their joints are walking', gait.moved && gait.joints === 'Tender', JSON.stringify(gait));
-  const tags = await p.evaluate(() => window.gdApi.tags().length); check('tags: 9 fan targets + heart, ribcage, flywheel, tenders, wing, blender + earth, village, tether, villagers + the Mashtots ring = 20 anchors', tags === 20, String(tags));
+  const tags = await p.evaluate(() => window.gdApi.tags().length); check('tags: 9 fan targets + heart, ribcage, flywheel, tenders, wing, blender + earth, village, tether, villagers, khachkar + the Mashtots ring = 21 anchors', tags === 21, String(tags));
   const ring = await p.evaluate(async () => { const sc = document.getElementById('x3d').browser.currentScene, n = nm => { try { return sc.getNamedNode(nm); } catch (e) { return null; } };
     const R = n('MashtotsRing'), G = n('MashtotsReader'), letters = Array.from({ length: 36 }, (_, i) => !!n('Mashtots' + String(i + 1).padStart(2, '0'))).filter(Boolean).length;
     const a = R.rotation.angle, g = G.translation.toString(); await new Promise(r => setTimeout(r, 3000)); return { letters, a0: a, a1: R.rotation.angle, readerMoved: g !== G.translation.toString() }; });
@@ -65,7 +65,7 @@ async function open(b, q, vp) {
   check('stop 7: about 1.5 m above the plaza (village scale), villagers shown and walking, bar in metres', Math.abs(w7.height / 4e-4 - 1.5) < 0.6 && w7.moved && w7.shown && /m · village scale/.test(w7.bar), JSON.stringify(w7));
   check('stop 7: the atmosphere shader is told the logarithmic depth buffer is on (its depth matches the scene)', w7.air === 1, String(w7.air));
   const shot = await p.screenshot({ type: 'jpeg', quality: 80 }); check('stop 7: the frame is not black (software GL, X_ITE 16.5.1 unpatched)', shot.length > 80e3, shot.length + ' B');
-  const onlyWorld = await p.evaluate(() => window.gdApi.tags().filter(t => t.shown).map(t => t.a.id)); check('stop 7: only the village tags show, not the bird\'s', onlyWorld.every(i => ['earth', 'village', 'tether', 'villagers'].includes(i)), onlyWorld.join(','));
+  const onlyWorld = await p.evaluate(() => window.gdApi.tags().filter(t => t.shown).map(t => t.a.id)); check('stop 7: only the village tags show, not the bird\'s', onlyWorld.every(i => ['earth', 'village', 'tether', 'khachkar', 'villagers'].includes(i)), onlyWorld.join(','));
   await p.click('#gd-face'); await arrived(0); await p.waitForTimeout(1500); const sC = await swayAt(); await p.waitForTimeout(900); const sD = await swayAt();
   check('flying back to the Face resumes the sway', sC !== sD && !(await p.evaluate(() => window.gdApi.swayPaused())), sC + ' -> ' + sD);
   const airBack = await p.evaluate(() => document.getElementById('x3d').browser.currentScene.getNamedNode('AirShader').logDepth); check('back at the Face the atmosphere shader is told the logarithmic depth buffer is off', airBack === 0, String(airBack));

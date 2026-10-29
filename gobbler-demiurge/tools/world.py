@@ -1,5 +1,5 @@
 """Read the Blender-made world (assets/earth/earth.x3d and assets/village/village.x3d, written by tools/blender_earth.py and tools/blender_village.py) and write the files the
-page loads lazily as Inlines: data/bird/earth-planet.x3d, earth-clouds.x3d, earth-moon.x3d and village.x3d.
+page loads lazily as Inlines: data/bird/earth-planet.x3d, earth-clouds.x3d, earth-moon.x3d and village.x3d (the village with the khachkar in its plaza).
 
 Per file the exporter's own nodes are kept as they came out (the Z-up to Y-up Transform around each object, the IndexedFaceSet with its per-corner colours). Four things change:
 the PhysicalMaterial in every Appearance goes (the faces carry their baked colour and are drawn unlit, like the feathers and the tenders), long numbers are shortened (positions
@@ -51,10 +51,13 @@ def earth_files():
 
 
 def village_file():
-    sc = ET.parse(os.path.join(ASSETS, 'village', 'village.x3d')).getroot().find('Scene'); kids = []
-    for c in sc:
-        if c.tag in ('NavigationInfo', 'Background'): continue
-        _clean(c, 3); kids.append(c)
+    """the village and, in the same file (so the same Inline loads it), the khachkar in the plaza (assets/khachkar/khachkar.x3d, tools/blender_khachkar.py): both exports are in village metres, so its
+    Transform is kept as it came out, like the village's four"""
+    kids = []
+    for f_ in (('village', 'village.x3d'), ('khachkar', 'khachkar.x3d')):
+        for c in ET.parse(os.path.join(ASSETS, *f_)).getroot().find('Scene'):
+            if c.tag in ('NavigationInfo', 'Background'): continue
+            _clean(c, 3); kids.append(c)
     return {'village.x3d': document(kids)}
 
 
