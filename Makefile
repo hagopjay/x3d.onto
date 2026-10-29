@@ -74,3 +74,12 @@ frames-demiurge:  ## the documentation frames in gobbler-demiurge/docs/frames
 
 artifact-demiurge: ## a flat copy for a private host: make artifact-demiurge OUT=/some/dir (needs test/requests.js output in gobbler-demiurge/out/runtime-files.json)
 	python3 -I gobbler-demiurge/tools/make_artifact.py $(OUT) gobbler-demiurge/out/runtime-files.json
+
+# Lawful metric and its DSPy program (xdomain/lawful/README.md). Model-free. LAWFUL_PY = a python with lxml (+ dspy, optuna for the DSPy tests,
+# which are skipped without them); X3D_MCP = the fork checkout (default /home/user/x3d_mcp); X3D_ML = the x3d.ml checkout for the live corpus.
+LAWFUL_PY ?= python3
+lawful-test:      ## metric, adversarial set, live-corpus numbers, DSPy wiring (scripted LM, no network)
+	$(LAWFUL_PY) -I xdomain/lawful/test_lawful.py
+lawful-offline:   ## rewrite xdomain/lawful/results/ from the recorded corpus
+	$(LAWFUL_PY) -I xdomain/lawful/offline.py
+.PHONY: lawful-test lawful-offline

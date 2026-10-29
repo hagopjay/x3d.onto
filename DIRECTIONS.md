@@ -25,6 +25,7 @@ Tags: **[C-based]** rests on a measured result in this folder; **[S]** speculati
 
 ## D. Evals and DSPy
 16. **Lawful metric.** A DSPy metric that scores valid + lawful containment + use-type + parts/contact, with escape hatches (profile Full) closed, run on the 1,200 Polys trials. Needs: the DSPy thread. [S]
+    - Built 2026-10-29: `xdomain/lawful/` (metric, DSPy program, tests). Model-free: catches 16 of 16 hand-built failures (strict gate passes 13), AUC 0.997 vs strict validity on 383 recorded x3d.ml documents [C]; the 1,200 Polys trial files and per-document judge scores are not on this machine; model quality S until a Gemini run (README there).
 17. **Lookup before judge.** Give the judge model the verdict matrix and UOM ranges so it names the real error more than 73% of the time. [S]
 18. **Mine tighter rules.** Count real containment in the 3,058 spine scenes, compare with UOM ranges (OntoGuard pattern). Needs the spine converted to Turtle (DOC row 6). [S]
 
