@@ -18,7 +18,7 @@ class T(unittest.TestCase):
         self.assertEqual(len(re.findall(r"<Transform DEF='TenderOrbit\d+'", x)), 10)
         self.assertEqual(len(re.findall(r"<Group DEF='TenderBody\d'>", x)), 3); self.assertEqual(len(re.findall(r"<Group USE='TenderBody\d'/>", x)), 7)   # three H-Anim copies, shared by USE among the ten shell tenders
         self.assertEqual(x.count('<HAnimHumanoid'), 3); self.assertEqual(len(re.findall(r'<HAnimJoint DEF="hanim_T\d_\w+"', x)), 54)   # 18 joints each; the villagers' bodies are in their own lazy file
-        ids = {a['id'] for a in L['anchors']}; self.assertEqual(len(L['anchors']), 19)
+        ids = {a['id'] for a in L['anchors']}; self.assertEqual(len(L['anchors']), 20)            # 19, and the Mashtots ring
         for t in ('fan_gltf', 'fan_usd', 'fan_video', 'fan_o3de', 'fan_paraview', 'fan_3dslicer', 'fan_unity', 'fan_defold', 'fan_ifc'): self.assertIn(t, ids)
         self.assertEqual(sum(1 for a in L['anchors'] if a['id'].startswith('fan_') and 'mock' in a['tag']), 6)   # six mocks, tagged
         self.assertEqual(sum(1 for a in L['anchors'] if a['id'].startswith('fan_') and a['tag'].startswith('Blender export')), 3)
@@ -34,6 +34,33 @@ class T(unittest.TestCase):
                 if n.startswith(('Earth', 'Village', 'Villagers', 'Climb', 'Moon', 'Cloud')): self.assertIn(n, seen, n)
         self.assertLess(x.index("<Group DEF='EarthWorld'"), x.index("toNode='EarthWorld'"))
         tag = {a['id']: a for a in L['anchors']}; self.assertIn('1,700', tag['earth']['tag']); self.assertIn('25,000', tag['village']['tag'])   # the scale notes say what is not to scale
+    def test_mashtots_ring(self):
+        import mashtots as MS
+        L = layers.build(EXP); x = L['sway']
+        self.assertEqual(len(re.findall(r"<Transform DEF='Mashtots\d\d'", x)), 36)                                      # the 36 letters of Mashtots, Օ and Ֆ left out
+        self.assertEqual(x.count("<Color DEF='MashtotsShades'"), 1); self.assertEqual(x.count("<Color USE='MashtotsShades'/>"), 35)  # one shade palette, shared
+        self.assertEqual([c for c, _, _ in MS.LETTERS], list(range(0x531, 0x555)))
+        self.assertEqual([v for _, _, v in MS.LETTERS][::9], [1, 10, 100, 1000]); self.assertEqual(MS.LETTERS[-1][2], 9000)
+        letters = json.loads(pathlib.Path(ROOT, 'assets', 'mashtots', 'letters.json').read_text(encoding='utf-8'))['letters']
+        self.assertEqual([(l['glyph'], l['name'], l['value']) for l in letters], [(chr(c), n, v) for c, n, v in MS.LETTERS])
+        man = json.loads(pathlib.Path(ROOT, 'assets', 'mashtots', 'manifest.json').read_text())
+        self.assertEqual(hashlib.sha256(pathlib.Path(ROOT, 'assets', 'mashtots', man['file']).read_bytes()).hexdigest(), man['sha256'])      # the font is the one the manifest names
+        self.assertEqual(hashlib.sha256(pathlib.Path(ROOT, 'assets', 'mashtots', 'glyphs.json').read_bytes()).hexdigest(), man['glyphs_json_sha256'])
+        for nm in ('MashtotsClock', 'MashtotsSpin', 'MashtotsReadClock', 'MashtotsRead', 'MashtotsReader', 'MashtotsRing'):                   # every ROUTE of the ring after its nodes (X_ITE drops one that is not)
+            for m in re.finditer(r"<ROUTE [^>]*Node='%s'" % nm, x): self.assertLess(x.index("DEF='%s'" % nm), m.start(), nm)
+        G = MS.load_glyphs()
+        for cp, name, _ in MS.LETTERS:                                                                                   # the face of every letter covers its outline: triangles add up to the area
+            polys = MS.flatten(G['glyphs']['%04X' % cp]['ops']); tot = 0.0
+            for o, hs in MS.nest(polys):
+                P = {}; rings = []
+                for poly in [o] + hs: b = len(P); P.update({b + k: p for k, p in enumerate(poly)}); rings.append(list(range(b, b + len(poly))))
+                tris = MS.earclip(P, MS.bridge(P, rings[0], rings[1:])); self.assertTrue(all(MS._cross(P[a], P[b], P[c]) > 0 for a, b, c in tris), name)
+                tot += sum(MS._cross(P[a], P[b], P[c]) / 2 for a, b, c in tris) - MS.area(o) - sum(MS.area(h) for h in hs)
+            self.assertAlmostEqual(tot, 0.0, delta=1.0, msg=name)
+        layers.MASHTOTS = False
+        try: off = layers.build(EXP)
+        finally: layers.MASHTOTS = True
+        self.assertNotIn('Mashtots', off['sway']); self.assertEqual(len(off['anchors']), 19)                              # the flag leaves the build as it was before the ring
     def test_villagers_file(self):
         v = layers.build(EXP)['villagers']
         self.assertEqual(len(re.findall(r"<Group DEF='VillagerBody\d'>", v)), 3); self.assertEqual(len(re.findall(r"<Group USE='VillagerBody\d'/>", v)), 9)   # three outfits, each with its own gait, shared by USE among twelve walkers

@@ -18,7 +18,7 @@ async function open(b, q, vp) {
   const boot = await p.evaluate(() => ({ failed: window.gdBoot.failed, log: window.gdBoot.log, bytes: window.gdBoot.bytes, ms: window.gdBoot.birdMs, stage: document.getElementById('stage').dataset.stage }));
   check('boot: reaches the bird with no failure', !boot.failed && boot.stage === 'bird', 'stage ' + boot.stage);
   check('boot: stages name themselves in order', ['starting X_ITE', 'fetching the bird', 'parsing the scene', 'drawing the first frame', 'bird on screen'].every((s, i, a) => boot.log.findIndex(l => l.includes(s)) > (i ? boot.log.findIndex(l => l.includes(a[i - 1])) : -1)), boot.log.join(' | '));
-  check('boot: scene arrives gzipped and under 340 KB', boot.bytes.bird > 100e3 && boot.bytes.bird < 340e3, boot.bytes.bird + ' B gz, ' + boot.bytes.birdRaw + ' B raw');
+  check('boot: scene arrives gzipped and under 370 KB (329 KB before the Mashtots ring, which adds about 25 KB)', boot.bytes.bird > 100e3 && boot.bytes.bird < 370e3, boot.bytes.bird + ' B gz, ' + boot.bytes.birdRaw + ' B raw');
   const early = p.reqs.map(u => new URL(u).pathname);
   check('bird-first: the graph is requested after the scene', early.findIndex(u => /gobbler4-bird/.test(u)) >= 0 && early.findIndex(u => /graph-v3/.test(u)) > early.findIndex(u => /gobbler4-bird/.test(u)));
   await p.waitForFunction(() => document.body.dataset.v4 === '1', null, { timeout: 60000 });
@@ -30,7 +30,11 @@ async function open(b, q, vp) {
   const gait = await p.evaluate(async () => { const sc = document.getElementById('x3d').browser.currentScene; const k = sc.getNamedNode('hanim_T0_l_knee'), h = sc.getNamedNode('hanim_T2_r_hip');
     const a = k.rotation.toString() + h.rotation.toString(); await new Promise(r => setTimeout(r, 900)); const b = k.rotation.toString() + h.rotation.toString(); return { moved: a !== b, joints: sc.getNamedNode('hanim_T1').name }; });
   check('tenders: three H-Anim humanoids from Blender are in the scene and their joints are walking', gait.moved && gait.joints === 'Tender', JSON.stringify(gait));
-  const tags = await p.evaluate(() => window.gdApi.tags().length); check('tags: 9 fan targets + heart, ribcage, flywheel, tenders, wing, blender + earth, village, tether, villagers = 19 anchors', tags === 19, String(tags));
+  const tags = await p.evaluate(() => window.gdApi.tags().length); check('tags: 9 fan targets + heart, ribcage, flywheel, tenders, wing, blender + earth, village, tether, villagers + the Mashtots ring = 20 anchors', tags === 20, String(tags));
+  const ring = await p.evaluate(async () => { const sc = document.getElementById('x3d').browser.currentScene, n = nm => { try { return sc.getNamedNode(nm); } catch (e) { return null; } };
+    const R = n('MashtotsRing'), G = n('MashtotsReader'), letters = Array.from({ length: 36 }, (_, i) => !!n('Mashtots' + String(i + 1).padStart(2, '0'))).filter(Boolean).length;
+    const a = R.rotation.angle, g = G.translation.toString(); await new Promise(r => setTimeout(r, 3000)); return { letters, a0: a, a1: R.rotation.angle, readerMoved: g !== G.translation.toString() }; });
+  check('mashtots: the ring of 36 letters exists, turns (rotation changes over 3 s) and the reading glow walks', ring.letters === 36 && Math.abs(ring.a1 - ring.a0) > 1e-3 && ring.readerMoved, JSON.stringify(ring));
   check('controls: exactly four (UI, Face, Tour, rail)', await p.evaluate(() => document.querySelectorAll('.gv4-pills button').length === 3 && document.querySelectorAll('#gd-rail button').length === 8));
   await p.evaluate(() => window.gdApi.ready());
   check('rail: all eight stops live once world.json has arrived', await p.evaluate(() => [...document.querySelectorAll('#gd-rail button')].map(b => b.classList.contains('off') ? 0 : 1).join('') === '11111111'));

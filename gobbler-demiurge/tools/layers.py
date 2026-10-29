@@ -323,6 +323,7 @@ def plume_lod(name, root, u, v, n, L, W, style, rng, nb_near=22, nb_mid=8):
     return xml, tip
 
 FEATHER_NODES = True               # glowing nodes on the near feathers (picture judge round 1); False = the build before that fix
+MASHTOTS = True                    # the Mashtots ring of the 36 Armenian letters (tools/mashtots.py); False = the build before it
 BEAD_GOLD = 0.62                  # share of gold in an ontology bead's colour (the rest is its family hue)
 TENDER_H = 0.55                   # a tender stands this tall (the Blender figure is 1 unit)
 TENDER_GAITS = (1.2, 1.5, 1.8)    # seconds per walk cycle of the three humanoid copies
@@ -481,6 +482,10 @@ def build(explorer_path, seed=4):
     X.append("<TimeSensor DEF='FlywheelClock' cycleInterval='9' loop='true'/><OrientationInterpolator DEF='FlywheelSpin' key='0 0.5 1' keyValue='%s 0, %s 3.14159, %s 6.28318'/>"
              "<ROUTE fromNode='FlywheelClock' fromField='fraction_changed' toNode='FlywheelSpin' toField='set_fraction'/><ROUTE fromNode='FlywheelSpin' fromField='value_changed' toNode='FlywheelPulse' toField='set_rotation'/>" % ((v3(norm(lax)),) * 3))
     anchor('flywheel', 'The flywheel', 'write, validate, repair, render, around the heart · pulse is display only', st[2])
+
+    # ---- the Mashtots ring: the 36 letters of Mesrop Mashtots (405 AD) in faceted gold, turning about the heart outside the ribcage (tools/mashtots.py; MASHTOTS = False leaves it out)
+    if MASHTOTS:
+        import mashtots as MS; X.append(MS.build(sys.modules[__name__], anchor))
 
     # ---- shell tenders: H-Anim humanoids modelled in Blender (tools/blender_tender.py, exported through the blenderizer), walking the ribcage; points of light from far away.
     # Three copies of the humanoid with their own gait (1.2, 1.5 and 1.8 s a cycle), shared by USE among ten walkers. How they walk and what they tend is simulated.

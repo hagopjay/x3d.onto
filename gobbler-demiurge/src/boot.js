@@ -191,7 +191,8 @@
   function buildTags(anchors) {
     var host = $('#gd-tags'); host.innerHTML = '';
     var cols = { heart: '#ffe9a8', ribcage: '#d6b25c', flywheel: '#f2c35f', blender: '#f5851a', fan_gltf: '#40d9ff', fan_usd: '#ffeebb', fan_video: '#f24dd9', tenders: '#8cf0a8', wing: '#9ed7ff',
-      earth: '#7fc4ff', village: '#ffd27a', tether: '#ffe9a8', villagers: '#8cf0a8' };
+      earth: '#7fc4ff', village: '#ffd27a', tether: '#ffe9a8', villagers: '#8cf0a8', mashtots: '#ffcf6a' };
+    if (q.get('mashtots') === '0') anchors = anchors.filter(function (a) { return a.id !== 'mashtots'; });
     tags = anchors.map(function (a) {
       var mock = /mock/.test(a.tag), world = a.id in TAGR, d = document.createElement('div'); d.className = 'gd-tag' + (mock ? ' mock' : '') + (world ? ' world' : ''); d.style.setProperty('--c', cols[a.id] || '#e9cf8a');
       d.innerHTML = '<i></i><div><b></b><small></small></div>'; $('b', d).textContent = a.label + (/^fan_/.test(a.id) ? (mock ? ' · mock' : ' · simulated') : ''); $('small', d).textContent = world ? a.tag : '';
@@ -361,6 +362,7 @@
       Boot.birdMs = Math.round(performance.now() - Boot.t0); Boot.log.push(secs(Boot.t0) + ' bird on screen (' + kb(Boot.bytes.bird || 0) + ' gzipped scene)');
       Boot.summary = 'bird ' + (Boot.birdMs / 1000).toFixed(1) + ' s · ' + kb(Boot.bytes.bird || 0);
       installSensor(el); hud(el); buildRail(); wire(el);
+      if (q.get('mashtots') === '0') { var mr = node('MashtotsRing'); if (mr) mr.visible = false; }             /* ?mashtots=0: the bird without the ring of letters (its tag goes too, see buildTags) */
       document.body.dataset.loaded = '1';
       later(el);
       var v = q.get('view'); if (v && v in VIEWS) { if (VIEWS[v] > 2 && VIEWS[v] < 7) worldP.then(function () { go(VIEWS[v], 0); }); else go(VIEWS[v], 0); }
