@@ -81,6 +81,16 @@ class Gate(unittest.TestCase):
         self.assertEqual(rules(X(SHADER % ('', writes))), ['glsl-logdepth'])
         self.assertEqual(rules(X(SHADER % ("<field name='logDepth' type='SFFloat' accessType='inputOutput' value='0'/>", writes))), [])
         self.assertEqual(rules(X(SHADER % ('', 'x3d_FragColor = vec4(1.0);'))), [])
+    def test_shader_raw_source(self):
+        raw = SHADER.replace('data:x-shader/x-fragment,', '') % ('', 'x3d_FragColor = vec4(1.0);')                # the pocket-universe pages' form: white spheres in X_ITE 16.5.1
+        f = only(X(raw), 'shader-raw-source'); self.assertEqual(len(f), 1)
+        self.assertEqual((f[0]['severity'], f[0]['line'], f[0]['prefix']), ('error', 6, 'data:x-shader/x-fragment,'))
+        self.assertEqual(only(X(SHADER % ('', 'x3d_FragColor = vec4(1.0);')), 'shader-raw-source'), [])           # the prefixed form is silent
+        lead = "<ComposedShader language='GLSL'><ShaderPart type='VERTEX'><![CDATA[\n  precision highp float;\n  void main() { gl_Position = vec4(0.0); }\n]]></ShaderPart></ComposedShader>"
+        self.assertEqual([d['prefix'] for d in only(X("<Shape><Appearance>%s</Appearance><Box/></Shape>" % lead), 'shader-raw-source')], ['data:x-shader/x-vertex,'])
+        for body in ('shaders/glow.fs', '"glow.fs" "https://example.org/glow.fs"', 'https://example.org/glow.fs'):    # a body that is a url stays a url
+            part = "<ComposedShader language='GLSL'><ShaderPart type='FRAGMENT'><![CDATA[%s]]></ShaderPart></ComposedShader>" % body
+            self.assertEqual(only(X("<Shape><Appearance>%s</Appearance><Box/></Shape>" % part), 'shader-raw-source'), [], body)
     def test_the_page_shaders_are_clean(self):
         import re
         src = get(os.path.join(ROOT, 'tools', 'layers.py')) + get(os.path.join(ROOT, 'tools', 'world_layer.py'))
@@ -124,7 +134,7 @@ class Receipt(unittest.TestCase):
             st = loom_receipt.check_one(os.path.join(d, 'receipt.json')); self.assertIn('drift', [s for s, _ in st])
             self.assertEqual(json.loads(get(os.path.join(d, 'receipt.json'))), r)                                     # and the receipt is left as it was
     def test_committed_receipts(self):
-        ps = sorted(glob.glob(os.path.join(ROOT, 'assets', '*', 'receipt*.json'))); self.assertEqual(len(ps), 7)
+        ps = sorted(glob.glob(os.path.join(ROOT, 'assets', '*', 'receipt*.json'))); self.assertEqual(len(ps), 8)
         before = {p: get(p) for p in ps}
         res = {p: loom_receipt.check_one(p) for p in ps}
         for p, r in res.items():

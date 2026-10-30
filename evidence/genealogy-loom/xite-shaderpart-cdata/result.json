@@ -1,0 +1,46 @@
+{
+ "raw": {
+  "xite": "16.5.1",
+  "isValid": false,
+  "consoleErrors": [
+   "Failed to load resource: the server responded with a status of 404 (Not Found)",
+   "ShaderPart: Couldn't load URL 'http://127.0.0.1:32945/probe-raw.x3d#version 300 esprecision highp float;uniform mat4 x3d_ProjectionMatrix, x3d_ModelViewMatrix;i",
+   "ShaderPart: Couldn't load URL 'http://127.0.0.1:32945/probe-raw.x3d#version 300 esprecision highp float;in vec3 vN; out vec4 x3d_FragColor;void main(){ x3d_Frag"
+  ],
+  "requests": [
+   "probe-raw.html",
+   "probe-raw.x3d",
+   "probe-raw.x3d",
+   "probe-raw.x3d"
+  ]
+ },
+ "prefixed": {
+  "xite": "16.5.1",
+  "isValid": true,
+  "consoleErrors": [],
+  "requests": [
+   "probe-prefixed.html",
+   "probe-prefixed.x3d"
+  ]
+ },
+ "percent": {
+  "xite": "16.5.1",
+  "isValid": true,
+  "consoleErrors": [
+   "Failed to load resource: the server responded with a status of 404 (Not Found)"
+  ],
+  "requests": [
+   "probe-percent.html",
+   "probe-percent.x3d"
+  ]
+ },
+ "percent-escape": {
+  "xite": "16.5.1",
+  "isValid": true,
+  "consoleErrors": [],
+  "requests": [
+   "probe-percent-escape.html",
+   "probe-percent-escape.x3d"
+  ]
+ }
+}
