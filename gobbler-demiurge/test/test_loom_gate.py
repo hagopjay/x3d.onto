@@ -73,6 +73,10 @@ class Gate(unittest.TestCase):
         self.assertEqual(sorted(d['message'].split()[2] for d in f), ['0', '1', '2', '2', '3']); self.assertTrue(all(d['line'] == 15 for d in f), [d['line'] for d in f])
         good = SHADER % ('', 'float a = 1.0; vec3 b = v * 2.0; float c = pow(t, 2.0); float d = max(t, 0.0); int k = 3 * 2; x3d_FragColor = vec4(b * a + h[2], 1.0);')
         self.assertEqual(only(X(good), 'glsl-int-literal'), [])                                                        # indices, loops, int maths and vec3(1) are fine
+        cmp = SHADER % ('', 'int q = int(t); float a = smoothstep(q == 0 ? .57 : .5, .86, t) + step(.5, q > -1 ? t : 0.0); x3d_FragColor = vec4(a);')
+        self.assertEqual(only(X(cmp), 'glsl-int-literal'), [])                                                         # an int compared inside a float builtin: the hypersphere's sky, which compiles in X_ITE 16.5.1
+        mixed = SHADER % ('', 'float a = smoothstep(t == 0 ? .5 : .6, 1, t); x3d_FragColor = vec4(a);')
+        self.assertEqual(sorted(d['message'].split()[2] for d in only(X(mixed), 'glsl-int-literal')), ['0', '1'])         # a float compared with 0, and a bare 1 argument, are still flagged
     def test_glsl_url_data(self):
         part = "<ComposedShader language='GLSL'><ShaderPart type='FRAGMENT' url='\"data:x-shader/x-fragment,%23version%20300%20es%0Aprecision highp float;%0Auniform float t;%0Avoid main() { float a = t * 2; }\"'/></ComposedShader>"
         f = only(X("<Shape><Appearance>%s</Appearance><Box/></Shape>" % part), 'glsl-int-literal'); self.assertEqual(len(f), 1); self.assertEqual(f[0]['glsl_line'], 4)

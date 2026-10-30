@@ -157,6 +157,7 @@ FLOAT_ONLY = {'pow', 'mix', 'smoothstep', 'step', 'exp', 'exp2', 'log', 'log2', 
               'radians', 'degrees', 'length', 'distance', 'dot', 'cross', 'normalize', 'reflect', 'refract', 'faceforward'}
 MIXED = {'max', 'min', 'clamp', 'abs', 'sign'}
 BINOPS = {'+', '-', '*', '/', '<', '>', '<=', '>=', '==', '!='}
+CMPOPS = {'<', '>', '<=', '>=', '==', '!='}                                                       # a comparison yields a bool, so its int operand is not a float argument
 ASSIGN = {'=', '+=', '-=', '*=', '/='}
 FLOAT_BUILTINS = {'gl_FragCoord', 'gl_Position', 'gl_FragDepth', 'gl_PointSize', 'gl_PointCoord'}
 
@@ -235,7 +236,8 @@ def glsl_int_literals(src):
                     q -= 1
                 q -= 1
             if q >= 0 and t[q][0] == 'id' and t[q][1] in floats: why = 'assigned to float %s' % t[q][1]
-        if not why and stack and stack[-1][2] == '(':
+        cmp = p >= 0 and t[p][1] in CMPOPS or i + 1 < n and t[i + 1][1] in CMPOPS                # smoothstep(q == 0 ? .5 : .6, ...) with an int q: the 0 is compared, not passed
+        if not why and not cmp and stack and stack[-1][2] == '(':
             o, name, _ = stack[-1]
             if name in FLOAT_ONLY: why = 'argument of %s()' % name
             elif name in MIXED and any(fl(j) for j in range(o + 1, match.get(o, n))): why = 'argument of %s() beside a float' % name
