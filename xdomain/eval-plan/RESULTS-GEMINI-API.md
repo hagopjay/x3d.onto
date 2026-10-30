@@ -10,10 +10,10 @@ thinking billed as output), an upper bound that overstates Flash-Lite.
 
 | question | result | grade |
 |---|---|---|
-| Do the X3D definitions make an AI judge better? (fuzzer findings, with vs without XSD + X3DUOM excerpts) | Gemini 3.1 Pro: verdict right on **99 vs 87** of 115 (p 0.017), evidence invented **9 vs 29**; Gemini 3.8 Flash: **86 vs 75** (p 0.027). Grounded Flash matches bare Pro at about a third of the cost. | C (labels by blinded Claude reviewers; see caveats) |
+| Do the X3D definitions make an AI judge better? (fuzzer findings, with vs without XSD + X3DUOM excerpts) | Gemini 3.1 Pro: verdict right on **99 vs 87** of 115 (p 0.017), evidence invented **9 vs 29**; Gemini 3.8 Flash: **86 vs 75** (p 0.027). Grounded Flash matches bare Pro at under half the cost ($1.71 vs $3.97 per arm). | C (labels by blinded Claude reviewers; see caveats) |
 | Does the lawful metric give DSPy something to optimise? | GEPA on 2.5 Flash-Lite, trained on 20 eval prompts: on the **50 held-out live prompts** first-try mean **31.3 → 58.3** and **32.6 → 60.2** (two runs; 40 and 37 of 50 prompts improved, sign p < 0.001); with the 3-round lawful repair loop **39.6 → 70.3**, perfect scenes 2 → 13 | C |
 | Do exact-fix hints beat plain errors in the repair loop? | 2.5 Flash-Lite, 540 broken scenes: valid after the first repair **507 vs 489** (+31 / −13, McNemar p 0.0096); after two rounds 530 vs 524 (p 0.21). Stronger models are at ceiling without hints. | C |
-| Is a Gemini vision judge usable on X_ITE frames? | 3.8 Flash, 32 frames, every frame judged twice: noise floor sd 0.12 to 0.25 per frame vs a 4.7 to 6.7 spread across frames; Flash vs 3.1 Pro rank agreement Spearman **0.66** | C |
+| Is a Gemini vision judge usable on X_ITE frames? | 3.8 Flash, 35 frames, every frame judged twice: re-judging moves a frame's mean score by sd 0.12 to 0.25, against a 4.7 to 6.7 spread across frames; on the 32 frames 3.1 Pro also judged, rank agreement Spearman **0.66** | C |
 
 ## 1. Fuzzer adjudication: the thesis question asked of a model
 
@@ -35,8 +35,9 @@ C 54, L 60, S 1.
 | 3.8 Flash | bare | 75 (65%) | 55 | not graded | 3.05 |
 | 3.8 Flash | grounded | **86 (75%)** | 70 | not graded | |
 
-Paired, grounded vs bare: Pro 17 better / 5 worse (p 0.017), evidence 55 better / 8 worse (p < 0.0001); Flash 16 / 5
-(p 0.027). Flash is scored automatically against the reviewers' labels (`results-gemini-api/autoscore.py`); Pro's
+Paired, grounded vs bare: Pro 17 better / 5 worse (p 0.017, automatic score; 17 / 6, p 0.035 on the reviewers' grades, which
+give 3 bare answers half credit), evidence 55 better / 8 worse (p < 0.0001); Flash 16 / 5 (p 0.027). 5 of Flash's 230
+answers came back without a verdict (3 bare, 2 grounded) and count as wrong. Flash is scored automatically against the reviewers' labels (`results-gemini-api/autoscore.py`); Pro's
 reviewer grades and the automatic score agree (99 and 99, 88.5 and 87).
 
 Caveats (L): the reviewers had the same files the grounded arm was shown, so "evidence accurate" favours answers that quote
@@ -67,7 +68,7 @@ Per-finding labels: `results-gemini-api/fuzz-adjudicate-labels.json`. None of th
 
 | model | prompts | rounds | baseline | after GEPA | note | grade |
 |---|---|---:|---:|---:|---|---|
-| 3.8 Flash | 20 eval | 3 | 100% (20/20) | stopped | the refine loop alone already saturates | C |
+| 3.8 Flash | 20 eval | 3 | 100% (20/20) | stopped by me at 10 of 120 rollouts | the refine loop alone already saturates; GEPA's validation score was 0.9 only because a connection reset failed one example | C |
 | 3.8 Flash | 20 eval | 1 | 99.6% | stopped | nothing for GEPA to fix ("all subsample scores perfect") | C |
 | 3.8 Flash | 50 live | 1 | 93.2% | did not finish | some answers ramble instead of returning a document (DSPy parse failures score 0) | C |
 | **2.5 Flash-Lite** | 20 eval (train/val) | 1 | **49.4%** | **79.9%** | 456 calls, ledger $1.48 | C |
@@ -98,7 +99,7 @@ faster (C, one run). Reading (L): hints buy one repair round for a weaker model,
 Frames: gobbler-demiurge `docs/frames` (15), the `loom/armenian` sets `mashtots` (3), `khachkar` (4), `weave` (9), and the
 Mashtots X3D shots (alphabet loom, khachkar; 4). 3.8 Flash, 3 votes, every frame twice; 3.1 Pro, 3 votes, once.
 
-| set | frames | Flash mean | Pro mean | Flash re-judge sd |
+| set | frames | Flash mean (first judging) | Pro mean | sd of the change on re-judging |
 |---|---:|---:|---:|---:|
 | gobbler-demiurge | 15 | 5.25 | 5.09 | 0.13 |
 | Mashtots X3D shots | 4 | 6.31 | 5.52 | 0.14 |
@@ -108,7 +109,7 @@ Mashtots X3D shots (alphabet loom, khachkar; 4). 3.8 Flash, 3 votes, every frame
 
 Flash vs Pro on the 32 frames both judged: Pearson 0.665, Spearman 0.663 (C). Pro scores 0.3 lower on average. The fix both
 judges name most often is the same: thin out the dense line/particle network on the right of the gobbler frames. Highest:
-`alphabet-loom-1.png` 6.71 (Flash); lowest: `12-villager.jpg` 4.67. Reading (L): the judge is stable enough to rank frames
+`alphabet-loom-1.png` 6.71 (Flash, mean of both judgings); lowest: `12-villager.jpg` 4.67. Reading (L): the judge is stable enough to rank frames
 0.5 apart, and two models broadly agree, but it is not calibrated against people.
 
 ## Cost

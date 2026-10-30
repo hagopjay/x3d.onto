@@ -91,9 +91,9 @@ Tags: [27]=README (27).md, [28], [29], [30] likewise, [DOC]=DOC.md, [P24]=polys2
 - Per X3D component (data/components.json, containment fields): XSD-accepted share of the ontology's predictions ranges from 10.9% (Layering) to 73.3% (Sound); RigidBodyPhysics 25.3%. **C**
 
 ## P. Added 2026-10-30 (first Gemini API runs; see xdomain/eval-plan/RESULTS-GEMINI-API.md; all C unless marked)
-- Fuzzer adjudication, 115 findings, labels by blinded Claude reviewers with the XSD, X3DUOM, fork and X_ITE 16.5.1 source open: Gemini 3.1 Pro right on **99 of 115 with the XSD/X3DUOM excerpts vs 87 without** (p 0.017), invented evidence 9 vs 29; 3.8 Flash 86 vs 75 (p 0.027). L: the reviewers saw the same files the grounded arm saw; no ISO spec text.
+- Fuzzer adjudication, 115 findings, labels by blinded Claude reviewers with the XSD, X3DUOM, fork and X_ITE 16.5.1 source open: Gemini 3.1 Pro right on **99 of 115 with the XSD/X3DUOM excerpts vs 87 without** (p 0.017; 0.035 on the reviewers' half-credit grades), invented evidence 9 vs 29; 3.8 Flash 86 vs 75 (p 0.027). L: the reviewers saw the same files the grounded arm saw; no ISO spec text.
 - X_ITE 16.5.1 profile check is level-blind: `createNode` calls `hasComponent(name)` with no level (x_ite.js:52514), which explains 15 of the 21 profile_mismatch signatures. X3DUOM profile node lists omit PhysicalMaterial (Shape 2) where the profile grants Shape 2.
 - DSPy GEPA with the lawful metric, 2.5 Flash-Lite, trained on 20 eval prompts: held-out 50 live prompts first try 31.3 → 58.3 and 32.6 → 60.2 (two runs, sign p < 0.001); with the 3-round repair loop 39.6 → 70.3. 3.8 Flash is at 99.6% first try on the eval prompts (nothing to optimise).
 - Exact-fix hints, 2.5 Flash-Lite, 540 broken scenes: first repair valid 507 vs 489 (McNemar p 0.0096), after two rounds 530 vs 524 (p 0.21). 3.8 Flash and 3.1 Flash-Lite at ceiling on 60.
-- Vision judge (3.8 Flash): re-judge sd 0.12 to 0.25 per frame; Flash vs 3.1 Pro Spearman 0.66 over 32 frames.
+- Vision judge (3.8 Flash, 35 frames judged twice): re-judging moves a frame's mean by sd 0.12 to 0.25; Flash vs 3.1 Pro Spearman 0.66 over 32 frames.
 - Ledger about $36.2 for all of the above (upper-bound prices).
