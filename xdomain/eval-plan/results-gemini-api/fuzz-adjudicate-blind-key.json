@@ -1,0 +1,462 @@
+{
+ "profile_mismatch/fork-flags_xite-loads-CADInterchange-Grouping-58f401.x3d": {
+  "answer1": "bare",
+  "answer2": "grounded"
+ },
+ "profile_mismatch/fork-flags_xite-loads-CADInterchange-Lighting-32b89e.x3d": {
+  "answer1": "grounded",
+  "answer2": "bare"
+ },
+ "profile_mismatch/fork-flags_xite-loads-CADInterchange-Shape-9838df.x3d": {
+  "answer1": "bare",
+  "answer2": "grounded"
+ },
+ "profile_mismatch/fork-flags_xite-loads-Immersive-EnvironmentalEffects-6a60d8.x3d": {
+  "answer1": "bare",
+  "answer2": "grounded"
+ },
+ "profile_mismatch/fork-flags_xite-loads-Immersive-Grouping-c2f786.x3d": {
+  "answer1": "bare",
+  "answer2": "grounded"
+ },
+ "profile_mismatch/fork-flags_xite-loads-Immersive-Interpolation-f8d46c.x3d": {
+  "answer1": "bare",
+  "answer2": "grounded"
+ },
+ "profile_mismatch/fork-flags_xite-loads-Immersive-Navigation-5228f8.x3d": {
+  "answer1": "grounded",
+  "answer2": "bare"
+ },
+ "profile_mismatch/fork-flags_xite-loads-Immersive-Rendering-2f7134.x3d": {
+  "answer1": "bare",
+  "answer2": "grounded"
+ },
+ "profile_mismatch/fork-flags_xite-loads-Immersive-Shape-cbfb78.x3d": {
+  "answer1": "bare",
+  "answer2": "grounded"
+ },
+ "profile_mismatch/fork-flags_xite-loads-Immersive-Sound-75dac7.x3d": {
+  "answer1": "bare",
+  "answer2": "grounded"
+ },
+ "profile_mismatch/fork-flags_xite-loads-Immersive-Text-b14b07.x3d": {
+  "answer1": "bare",
+  "answer2": "grounded"
+ },
+ "profile_mismatch/fork-flags_xite-loads-Immersive-Texturing-ac4d58.x3d": {
+  "answer1": "bare",
+  "answer2": "grounded"
+ },
+ "profile_mismatch/fork-flags_xite-loads-Interactive-EnvironmentalEffects-d47aa7.x3d": {
+  "answer1": "bare",
+  "answer2": "grounded"
+ },
+ "profile_mismatch/fork-flags_xite-loads-Interactive-Interpolation-90b6a1.x3d": {
+  "answer1": "bare",
+  "answer2": "grounded"
+ },
+ "profile_mismatch/fork-flags_xite-loads-Interactive-Networking-25d33b.x3d": {
+  "answer1": "grounded",
+  "answer2": "bare"
+ },
+ "profile_mismatch/fork-flags_xite-loads-Interactive-Shape-77d781.x3d": {
+  "answer1": "bare",
+  "answer2": "grounded"
+ },
+ "profile_mismatch/fork-flags_xite-loads-Interchange-Grouping-75e2d1.x3d": {
+  "answer1": "grounded",
+  "answer2": "bare"
+ },
+ "profile_mismatch/fork-flags_xite-loads-Interchange-Navigation-3b8c21.x3d": {
+  "answer1": "grounded",
+  "answer2": "bare"
+ },
+ "profile_mismatch/fork-flags_xite-loads-Interchange-Shape-459149.x3d": {
+  "answer1": "bare",
+  "answer2": "grounded"
+ },
+ "profile_mismatch/fork-flags_xite-loads-MedicalInterchange-Interpolation-cb5f64.x3d": {
+  "answer1": "grounded",
+  "answer2": "bare"
+ },
+ "profile_mismatch/fork-flags_xite-loads-MedicalInterchange-Shape-773add.x3d": {
+  "answer1": "grounded",
+  "answer2": "bare"
+ },
+ "semantic_false_alarm/interpolator-key-length-99576d.x3d": {
+  "answer1": "bare",
+  "answer2": "grounded"
+ },
+ "semantic_false_alarm/splat-array-length-02a6fa.x3d": {
+  "answer1": "grounded",
+  "answer2": "bare"
+ },
+ "semantic_false_alarm/splat-scale-space-f728ec.x3d": {
+  "answer1": "grounded",
+  "answer2": "bare"
+ },
+ "semantic_silent_drop/exception-Failed_to_set_the___property_on___The_minDecibels_provided_--9990fa.x3d": {
+  "answer1": "grounded",
+  "answer2": "bare"
+ },
+ "semantic_silent_drop/exception-Failed_to_set_the___property_on___The_minDecibels_provided_i-f122cc.x3d": {
+  "answer1": "bare",
+  "answer2": "grounded"
+ },
+ "semantic_silent_drop/exception-scene_load_did_not_settle_in_ms-silent-e71a60.x3d": {
+  "answer1": "bare",
+  "answer2": "grounded"
+ },
+ "semantic_silent_drop/exception-t_.checkLoadState_is_not_a_function-silent-1403e9.x3d": {
+  "answer1": "grounded",
+  "answer2": "bare"
+ },
+ "semantic_silent_drop/route-XML_Parser_Bad_ROUTE_specification_destination_field___must_be_a-f9e7f6.x3d": {
+  "answer1": "grounded",
+  "answer2": "bare"
+ },
+ "semantic_silent_drop/route-XML_Parser_Bad_ROUTE_specification_source_field_type_must_match-3c0d9f.x3d": {
+  "answer1": "grounded",
+  "answer2": "bare"
+ },
+ "semantic_silent_drop/route-XML_Parser_Unknown_field___in_node_class_ListenerPointSource.-b180cb.x3d": {
+  "answer1": "bare",
+  "answer2": "grounded"
+ },
+ "semantic_silent_drop/route-XML_Parser_Unknown_field___in_node_class_Script.-12342a.x3d": {
+  "answer1": "grounded",
+  "answer2": "bare"
+ },
+ "semantic_silent_drop/route-XML_Parser_Unknown_named_or_imported_node___.-539b6b.x3d": {
+  "answer1": "bare",
+  "answer2": "grounded"
+ },
+ "uom_allows_xsd_rejects/attr-bboxSize-pattern-cf704e.x3d": {
+  "answer1": "bare",
+  "answer2": "grounded"
+ },
+ "uom_allows_xsd_rejects/attr-sizeUnits-enumeration-4b7d1a.x3d": {
+  "answer1": "grounded",
+  "answer2": "bare"
+ },
+ "uom_allows_xsd_rejects/attr-sourceCode-The_attribute___is_not_allowed.-4f0e8f.x3d": {
+  "answer1": "grounded",
+  "answer2": "bare"
+ },
+ "uom_allows_xsd_rejects/cf-enum-containerFieldChoicesGroupLODShapeTransformSwitch-pickTarget-ba81f9.x3d": {
+  "answer1": "grounded",
+  "answer2": "bare"
+ },
+ "uom_allows_xsd_rejects/cf-enum-containerFieldChoicesSoundSource-outputs-e97fdf.x3d": {
+  "answer1": "grounded",
+  "answer2": "bare"
+ },
+ "uom_allows_xsd_rejects/cf-enum-containerFieldChoicesX3DTexture2DNode-diffuseTexture-b4f10d.x3d": {
+  "answer1": "bare",
+  "answer2": "grounded"
+ },
+ "uom_allows_xsd_rejects/cf-enum-containerFieldChoicesX3DTexture2DNode-specularTexture-045347.x3d": {
+  "answer1": "grounded",
+  "answer2": "bare"
+ },
+ "uom_allows_xsd_rejects/cf-enum-containerFieldChoicesX3DTexture3DNode-transferFunction-39677d.x3d": {
+  "answer1": "grounded",
+  "answer2": "bare"
+ },
+ "uom_allows_xsd_rejects/cf-enum-containerFieldChoicesX3DUrlObject-pickTarget-6e3754.x3d": {
+  "answer1": "grounded",
+  "answer2": "bare"
+ },
+ "uom_allows_xsd_rejects/missing-child-GeoLOD-Missing_child_element_s_._Expected_is_one_of_Back-db8989.x3d": {
+  "answer1": "grounded",
+  "answer2": "bare"
+ },
+ "uom_allows_xsd_rejects/missing-child-NurbsSet-Missing_child_element_s_._Expected_is_NurbsSwep-fc09dc.x3d": {
+  "answer1": "grounded",
+  "answer2": "bare"
+ },
+ "uom_allows_xsd_rejects/missing-child-NurbsSet-Missing_child_element_s_._Expected_is_NurbsSwun-f55b9a.x3d": {
+  "answer1": "grounded",
+  "answer2": "bare"
+ },
+ "uom_allows_xsd_rejects/not-expected-Anchor-children-02c56c.x3d": {
+  "answer1": "bare",
+  "answer2": "grounded"
+ },
+ "uom_allows_xsd_rejects/not-expected-CADAssembly-children-5ffa27.x3d": {
+  "answer1": "grounded",
+  "answer2": "bare"
+ },
+ "uom_allows_xsd_rejects/not-expected-CADLayer-children-5208cd.x3d": {
+  "answer1": "bare",
+  "answer2": "grounded"
+ },
+ "uom_allows_xsd_rejects/not-expected-CADLayer-children-9661f5.x3d": {
+  "answer1": "grounded",
+  "answer2": "bare"
+ },
+ "uom_allows_xsd_rejects/not-expected-CADLayer-children-aa9697.x3d": {
+  "answer1": "grounded",
+  "answer2": "bare"
+ },
+ "uom_allows_xsd_rejects/not-expected-ComposedTexture3D-texture-6db90b.x3d": {
+  "answer1": "bare",
+  "answer2": "grounded"
+ },
+ "uom_allows_xsd_rejects/not-expected-GeoLOD-rootNode-25c883.x3d": {
+  "answer1": "grounded",
+  "answer2": "bare"
+ },
+ "uom_allows_xsd_rejects/not-expected-GeoLOD-rootNode-3f20f5.x3d": {
+  "answer1": "grounded",
+  "answer2": "bare"
+ },
+ "uom_allows_xsd_rejects/not-expected-GeoLocation-children-777ded.x3d": {
+  "answer1": "bare",
+  "answer2": "grounded"
+ },
+ "uom_allows_xsd_rejects/not-expected-GeoMetadata-data-54a05e.x3d": {
+  "answer1": "grounded",
+  "answer2": "bare"
+ },
+ "uom_allows_xsd_rejects/not-expected-GeoMetadata-data-94d583.x3d": {
+  "answer1": "bare",
+  "answer2": "grounded"
+ },
+ "uom_allows_xsd_rejects/not-expected-GeoMetadata-data-fb156a.x3d": {
+  "answer1": "bare",
+  "answer2": "grounded"
+ },
+ "uom_allows_xsd_rejects/not-expected-GeoTransform-children-1d0330.x3d": {
+  "answer1": "grounded",
+  "answer2": "bare"
+ },
+ "uom_allows_xsd_rejects/not-expected-GeoViewpoint-navigationInfo-a09f05.x3d": {
+  "answer1": "bare",
+  "answer2": "grounded"
+ },
+ "uom_allows_xsd_rejects/not-expected-HAnimSegment-children-2694ad.x3d": {
+  "answer1": "grounded",
+  "answer2": "bare"
+ },
+ "uom_allows_xsd_rejects/not-expected-HAnimSegment-children-82770f.x3d": {
+  "answer1": "bare",
+  "answer2": "grounded"
+ },
+ "uom_allows_xsd_rejects/not-expected-HAnimSegment-children-86a2bf.x3d": {
+  "answer1": "bare",
+  "answer2": "grounded"
+ },
+ "uom_allows_xsd_rejects/not-expected-HAnimSegment-children-b23e69.x3d": {
+  "answer1": "grounded",
+  "answer2": "bare"
+ },
+ "uom_allows_xsd_rejects/not-expected-HAnimSegment-children-e2666c.x3d": {
+  "answer1": "grounded",
+  "answer2": "bare"
+ },
+ "uom_allows_xsd_rejects/not-expected-HAnimSegment-coord-2dc105.x3d": {
+  "answer1": "grounded",
+  "answer2": "bare"
+ },
+ "uom_allows_xsd_rejects/not-expected-HAnimSite-children-17c360.x3d": {
+  "answer1": "grounded",
+  "answer2": "bare"
+ },
+ "uom_allows_xsd_rejects/not-expected-HAnimSite-children-a6fe37.x3d": {
+  "answer1": "grounded",
+  "answer2": "bare"
+ },
+ "uom_allows_xsd_rejects/not-expected-IndexedLineSet-fogCoord-5ddc13.x3d": {
+  "answer1": "bare",
+  "answer2": "grounded"
+ },
+ "uom_allows_xsd_rejects/not-expected-Layer-viewport-186abe.x3d": {
+  "answer1": "bare",
+  "answer2": "grounded"
+ },
+ "uom_allows_xsd_rejects/not-expected-LinePickSensor-pickingGeometry-9d4404.x3d": {
+  "answer1": "grounded",
+  "answer2": "bare"
+ },
+ "uom_allows_xsd_rejects/not-expected-LinePickSensor-pickingGeometry-b0b924.x3d": {
+  "answer1": "grounded",
+  "answer2": "bare"
+ },
+ "uom_allows_xsd_rejects/not-expected-LineSet-attrib-b218ec.x3d": {
+  "answer1": "bare",
+  "answer2": "grounded"
+ },
+ "uom_allows_xsd_rejects/not-expected-LoadSensor-children-e58cff.x3d": {
+  "answer1": "grounded",
+  "answer2": "bare"
+ },
+ "uom_allows_xsd_rejects/not-expected-MovieTexture-textureProperties-a2c52a.x3d": {
+  "answer1": "bare",
+  "answer2": "grounded"
+ },
+ "uom_allows_xsd_rejects/not-expected-NurbsSet-geometry-570b1c.x3d": {
+  "answer1": "bare",
+  "answer2": "grounded"
+ },
+ "uom_allows_xsd_rejects/not-expected-NurbsSet-geometry-cf4429.x3d": {
+  "answer1": "bare",
+  "answer2": "grounded"
+ },
+ "uom_allows_xsd_rejects/not-expected-NurbsTrimmedSurface-texCoord-6fd756.x3d": {
+  "answer1": "bare",
+  "answer2": "grounded"
+ },
+ "uom_allows_xsd_rejects/not-expected-ParticleSystem-appearance-e82ada.x3d": {
+  "answer1": "bare",
+  "answer2": "grounded"
+ },
+ "uom_allows_xsd_rejects/not-expected-ParticleSystem-color-324d92.x3d": {
+  "answer1": "grounded",
+  "answer2": "bare"
+ },
+ "uom_allows_xsd_rejects/not-expected-ParticleSystem-geometry-70cee3.x3d": {
+  "answer1": "bare",
+  "answer2": "grounded"
+ },
+ "uom_allows_xsd_rejects/not-expected-ParticleSystem-physics-35edb7.x3d": {
+  "answer1": "grounded",
+  "answer2": "bare"
+ },
+ "uom_allows_xsd_rejects/not-expected-PointPickSensor-pickingGeometry-464b2b.x3d": {
+  "answer1": "grounded",
+  "answer2": "bare"
+ },
+ "uom_allows_xsd_rejects/not-expected-PointPickSensor-pickingGeometry-7d088c.x3d": {
+  "answer1": "grounded",
+  "answer2": "bare"
+ },
+ "uom_allows_xsd_rejects/not-expected-PointPickSensor-pickingGeometry-9f90b9.x3d": {
+  "answer1": "bare",
+  "answer2": "grounded"
+ },
+ "uom_allows_xsd_rejects/not-expected-PrimitivePickSensor-pickTarget-93e928.x3d": {
+  "answer1": "bare",
+  "answer2": "grounded"
+ },
+ "uom_allows_xsd_rejects/not-expected-PrimitivePickSensor-pickingGeometry-a84f15.x3d": {
+  "answer1": "bare",
+  "answer2": "grounded"
+ },
+ "uom_allows_xsd_rejects/not-expected-PrimitivePickSensor-pickingGeometry-c39030.x3d": {
+  "answer1": "grounded",
+  "answer2": "bare"
+ },
+ "uom_allows_xsd_rejects/not-expected-PrimitivePickSensor-pickingGeometry-f347c8.x3d": {
+  "answer1": "bare",
+  "answer2": "grounded"
+ },
+ "uom_allows_xsd_rejects/not-expected-ScreenGroup-children-9f0702.x3d": {
+  "answer1": "bare",
+  "answer2": "grounded"
+ },
+ "uom_allows_xsd_rejects/not-expected-Switch-children-42ba52.x3d": {
+  "answer1": "bare",
+  "answer2": "grounded"
+ },
+ "uom_allows_xsd_rejects/not-expected-Transform-children-b62a59.x3d": {
+  "answer1": "bare",
+  "answer2": "grounded"
+ },
+ "uom_allows_xsd_rejects/not-expected-Transform-children-e27950.x3d": {
+  "answer1": "grounded",
+  "answer2": "bare"
+ },
+ "uom_allows_xsd_rejects/not-expected-Transform-children-f6aea5.x3d": {
+  "answer1": "bare",
+  "answer2": "grounded"
+ },
+ "uom_allows_xsd_rejects/not-expected-VolumePickSensor-pickTarget-c5c6ac.x3d": {
+  "answer1": "grounded",
+  "answer2": "bare"
+ },
+ "uom_denies_xsd_accepts/containment-HAnimHumanoid-children-c9882c.x3d": {
+  "answer1": "grounded",
+  "answer2": "bare"
+ },
+ "uom_denies_xsd_accepts/containment-LayoutLayer-children-c1d880.x3d": {
+  "answer1": "grounded",
+  "answer2": "bare"
+ },
+ "uom_denies_xsd_accepts/range-0ab556.x3d": {
+  "answer1": "grounded",
+  "answer2": "bare"
+ },
+ "uom_denies_xsd_accepts/range-1dea09.x3d": {
+  "answer1": "grounded",
+  "answer2": "bare"
+ },
+ "uom_denies_xsd_accepts/range-5206c8.x3d": {
+  "answer1": "grounded",
+  "answer2": "bare"
+ },
+ "uom_denies_xsd_accepts/range-9a7985.x3d": {
+  "answer1": "grounded",
+  "answer2": "bare"
+ },
+ "uom_denies_xsd_accepts/range-d0dad6.x3d": {
+  "answer1": "bare",
+  "answer2": "grounded"
+ },
+ "xsd_valid_xite_drops/exception-Failed_to_set_the___property_on___The_minDecibels_provided_--c17fb3.x3d": {
+  "answer1": "bare",
+  "answer2": "grounded"
+ },
+ "xsd_valid_xite_drops/exception-Failed_to_set_the___property_on___The_minDecibels_provided_i-89ecfe.x3d": {
+  "answer1": "grounded",
+  "answer2": "bare"
+ },
+ "xsd_valid_xite_drops/exception-scene_load_did_not_settle_in_ms-silent-1f865c.x3d": {
+  "answer1": "bare",
+  "answer2": "grounded"
+ },
+ "xsd_valid_xite_drops/exception-t_.checkLoadState_is_not_a_function-silent-a663f9.x3d": {
+  "answer1": "grounded",
+  "answer2": "bare"
+ },
+ "xsd_valid_xite_drops/exception-t_.checkLoadState_is_not_a_function-silent-d9b7ae.x3d": {
+  "answer1": "grounded",
+  "answer2": "bare"
+ },
+ "xsd_valid_xite_drops/route-XML_Parser_Bad_ROUTE_specification_destination_field___must_be_a-9cef92.x3d": {
+  "answer1": "bare",
+  "answer2": "grounded"
+ },
+ "xsd_valid_xite_drops/route-XML_Parser_Bad_ROUTE_specification_source_field_type_must_match-d4ee39.x3d": {
+  "answer1": "grounded",
+  "answer2": "bare"
+ },
+ "xsd_valid_xite_drops/route-XML_Parser_Unknown_field___in_node_class_ListenerPointSource.-se-fd9ec9.x3d": {
+  "answer1": "bare",
+  "answer2": "grounded"
+ },
+ "xsd_valid_xite_drops/route-XML_Parser_Unknown_field___in_node_class_Script.-sem-silent-56f1ac.x3d": {
+  "answer1": "bare",
+  "answer2": "grounded"
+ },
+ "xsd_valid_xite_drops/route-XML_Parser_Unknown_named_or_imported_node___.-sem-silent-1e98f2.x3d": {
+  "answer1": "bare",
+  "answer2": "grounded"
+ },
+ "xsd_valid_xite_warns/warn-TwoSidedMaterial_is_deprecated_please_use_Appearance_backMaterial-011212.x3d": {
+  "answer1": "grounded",
+  "answer2": "bare"
+ },
+ "xsd_valid_xite_warns/warn-Use_of_field_HAnimHumanoid.segments_is_deprecated._This_field_may-e6cb38.x3d": {
+  "answer1": "grounded",
+  "answer2": "bare"
+ },
+ "xsd_valid_xite_warns/warn-Use_of_field_HAnimHumanoid.sites_is_deprecated._This_field_may_be-5acc38.x3d": {
+  "answer1": "grounded",
+  "answer2": "bare"
+ },
+ "xsd_valid_xite_warns/warn-XML_Parser_Unknown_proto_or_externproto_type___.-f869ff.x3d": {
+  "answer1": "grounded",
+  "answer2": "bare"
+ }
+}

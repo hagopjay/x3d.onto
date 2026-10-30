@@ -1,0 +1,1362 @@
+{
+ "profile_mismatch/fork-flags_xite-loads-CADInterchange-Grouping-58f401.x3d": {
+  "id": 0,
+  "bucket": "profile_mismatch",
+  "final": "xite_bug",
+  "acceptable": [
+   "xite_bug"
+  ],
+  "grade": "C",
+  "verified": false,
+  "evidence": "StaticGroup is Grouping level 3 in both X3DUOM (X3dUnifiedObjectModel-4.1.xml:38059 ConcreteNode, componentInfo Grouping 3) and X_ITE (x_ite.js:80510 getStaticProperties(\"StaticGroup\",\"Grouping\",3)). X_ITE's own CADInterchange profile gives only Grouping 1 (x_ite.js:74177), and the X3DUOM CADInterchange list (line 4651) has Group/Transform but not StaticGroup. X_ITE stays silent because createNode calls `this .hasComponent (ConcreteNode .componentInfo .name)` with the name only (x_ite.js:52514), and hasComponent(name, level = 0) (x_ite.js:53832) then passes as soon as the component exists at any level. The fork is right."
+ },
+ "profile_mismatch/fork-flags_xite-loads-CADInterchange-Lighting-32b89e.x3d": {
+  "id": 1,
+  "bucket": "profile_mismatch",
+  "final": "uom_error",
+  "acceptable": [
+   "fork_validator_bug",
+   "spec_ambiguous",
+   "uom_error",
+   "xite_bug"
+  ],
+  "grade": "L",
+  "verified": true,
+  "evidence": "X3DUOM:17664 and XSD:10846ff (componentLevel fixed=\"1\") both put EnvironmentLight at Lighting 1. X_ITE puts it at Lighting 3 (x_ite.js:82111). I compared every getStaticProperties call in x_ite.js and assets/components/*.js with X3DUOM componentInfo, and only EnvironmentLight and HAnimPose differ. CADInterchange has Lighting 1 in X_ITE (x_ite.js:74178), and the X3DUOM list (4651) has DirectionalLight (Lighting 1) but not EnvironmentLight. If level 1 is right, the X3DUOM list is stale and the fork's flag is false. If level 3 is right, X3DUOM's componentInfo is wrong (the fork's message even suggests a Lighting 1 component, which would not be enough), and X_ITE's silence comes from its level-blind check: XML parser createNode(...,false) (x_ite.js:29741) -> hasComponent(name) with no level (52494), and level defaults to 0 (53832). Either way X3DUOM is wrong somewhere. Both answers' label xite_bug is acceptable, but both claim CADInterchange has no Lighting component, which the files contradict."
+ },
+ "profile_mismatch/fork-flags_xite-loads-CADInterchange-Shape-9838df.x3d": {
+  "id": 2,
+  "bucket": "profile_mismatch",
+  "final": "uom_error",
+  "acceptable": [
+   "fork_validator_bug",
+   "uom_error"
+  ],
+  "grade": "L",
+  "verified": true,
+  "evidence": "PhysicalMaterial is Shape 2 in X3DUOM (32173) and in X_ITE. X_ITE's CADInterchange has getComponent(\"Shape\", 2) (x_ite.js:74183). X3DUOM's own CADInterchange list (4651) includes LineProperties, which is Shape 2 (X3DUOM:27630), so by its own levels the profile reaches Shape 2. The list leaves out every X3D4 node whose level it already covers (my scan: CoordinateDouble, EnvironmentLight, PhysicalMaterial, TextureProperties, UnlitMaterial). profile.py builds membership only from that appinfo list plus declared components, so it flags the node by mistake. Both answers say CADInterchange is Shape 1, which the list's own LineProperties and X_ITE's table refute."
+ },
+ "profile_mismatch/fork-flags_xite-loads-Immersive-EnvironmentalEffects-6a60d8.x3d": {
+  "id": 3,
+  "bucket": "profile_mismatch",
+  "final": "xite_bug",
+  "acceptable": [
+   "xite_bug"
+  ],
+  "grade": "C",
+  "verified": false,
+  "evidence": "LocalFog is EnvironmentalEffects level 4 in X3DUOM (line 28050) and X_ITE (x_ite.js:75095). Immersive is EnvironmentalEffects 2 in X_ITE (x_ite.js:74246), and the X3DUOM Immersive list (line 4657) has Fog but not LocalFog. X_ITE's check passes only the component name (x_ite.js:52514), so a level-4 node passes under a level-2 profile. (The XSD's ChildContentModelImmersive group lists LocalFog, but that is a grouping, not the profile; the XSD's own Immersive appinfo at line 4813 omits it.)"
+ },
+ "profile_mismatch/fork-flags_xite-loads-Immersive-Grouping-c2f786.x3d": {
+  "id": 4,
+  "bucket": "profile_mismatch",
+  "final": "xite_bug",
+  "acceptable": [
+   "xite_bug"
+  ],
+  "grade": "C",
+  "verified": true,
+  "evidence": "StaticGroup is Grouping 3 in both X3DUOM (38059) and X_ITE. Immersive is Grouping 2 in X_ITE (x_ite.js:74251), and the X3DUOM Immersive list has Switch (Grouping 2) but no StaticGroup (MedicalInterchange, at Grouping 3, does list it). X_ITE's XML parser path createNode(...,false) (29741) calls hasComponent(componentInfo.name) without a level (52494), and hasComponent defaults level to 0 (53832), so the check ignores levels. The fork is right. Answer2's claim that StaticGroup is Grouping 1 contradicts both X3DUOM and X_ITE."
+ },
+ "profile_mismatch/fork-flags_xite-loads-Immersive-Interpolation-f8d46c.x3d": {
+  "id": 5,
+  "bucket": "profile_mismatch",
+  "final": "xite_bug",
+  "acceptable": [
+   "xite_bug"
+  ],
+  "grade": "C",
+  "verified": true,
+  "evidence": "PositionInterpolator2D is Interpolation 3 in X3DUOM (33966) and also in X_ITE, so the two agree. Immersive is Interpolation 2 (x_ite.js:74252, and also the level implied by the X3DUOM Immersive list), and the node is not on that list. X_ITE's check ignores levels (x_ite.js:52494/53832). Both answers say X3DUOM should put the node at level 2, which neither X3DUOM nor X_ITE supports."
+ },
+ "profile_mismatch/fork-flags_xite-loads-Immersive-Navigation-5228f8.x3d": {
+  "id": 6,
+  "bucket": "profile_mismatch",
+  "final": "xite_bug",
+  "acceptable": [
+   "xite_bug"
+  ],
+  "grade": "C",
+  "verified": true,
+  "evidence": "OrthoViewpoint is Navigation 3 in X3DUOM (31473) and in X_ITE. Immersive is Navigation 2 (x_ite.js:74255). OrthoViewpoint appears only in the X3DUOM MedicalInterchange list, whose level is Navigation 3. X_ITE's check ignores levels (52494/53832). Answer2's claim that X3D4 moved OrthoViewpoint to Navigation 2 contradicts the 4.1 X3DUOM and X_ITE. Answer1 wrongly says X_ITE drops the node, but its label is right."
+ },
+ "profile_mismatch/fork-flags_xite-loads-Immersive-Rendering-2f7134.x3d": {
+  "id": 7,
+  "bucket": "profile_mismatch",
+  "final": "xite_bug",
+  "acceptable": [
+   "xite_bug"
+  ],
+  "grade": "C",
+  "verified": false,
+  "evidence": "ClipPlane is Rendering 5 in X3DUOM (line 13563) and X_ITE (x_ite.js:85657). Immersive is Rendering 3 (x_ite.js:74258). X_ITE's createNode checks the component name only (x_ite.js:52514)."
+ },
+ "profile_mismatch/fork-flags_xite-loads-Immersive-Shape-cbfb78.x3d": {
+  "id": 8,
+  "bucket": "profile_mismatch",
+  "final": "uom_error",
+  "acceptable": [
+   "fork_validator_bug",
+   "uom_error"
+  ],
+  "grade": "L",
+  "verified": false,
+  "evidence": "PhysicalMaterial is Shape 2 (X3DUOM line 32173; x_ite.js:87531), and Immersive is Shape 2 (x_ite.js:74260). The X3DUOM Immersive list (line 4657) includes LineProperties (Shape 2) but omits PhysicalMaterial, so the list is stale for 4.0 nodes. The fork's flag is a false alarm that follows from that list, and X_ITE is right."
+ },
+ "profile_mismatch/fork-flags_xite-loads-Immersive-Sound-75dac7.x3d": {
+  "id": 9,
+  "bucket": "profile_mismatch",
+  "final": "xite_bug",
+  "acceptable": [
+   "xite_bug"
+  ],
+  "grade": "C",
+  "verified": false,
+  "evidence": "StreamAudioDestination is Sound 2 in X3DUOM (line 38144) and X_ITE (x_ite.js:91188). Immersive is Sound 1 (x_ite.js:74261), and the X3DUOM Immersive list has only AudioClip and Sound. X_ITE's profile check is level-blind (x_ite.js:52514)."
+ },
+ "profile_mismatch/fork-flags_xite-loads-Immersive-Text-b14b07.x3d": {
+  "id": 10,
+  "bucket": "profile_mismatch",
+  "final": "uom_error",
+  "acceptable": [
+   "fork_validator_bug",
+   "spec_ambiguous",
+   "uom_error",
+   "xite_bug"
+  ],
+  "grade": "S",
+  "verified": true,
+  "evidence": "FontLibrary is Text 2 in X3DUOM (18873) and X_ITE (TextComponent.js:1462). X_ITE puts Text 2 in Immersive (x_ite.js:74262), and also in MedicalInterchange and Full. The X3DUOM Immersive list implies Text 1 (only FontStyle and Text). But that list cannot be trusted for newer nodes: it lacks PhysicalMaterial (Shape 2) and TextureProperties (Texturing 2) although it reaches Shape 2 and Texturing 3. X_ITE's Immersive table matches the classic Immersive table except for Text 2, which could be a 4.1 update or a mechanical bump. No file here settles it, so the answers' xite_bug is acceptable. Both answers wrongly say X_ITE drops the node or has the wrong level."
+ },
+ "profile_mismatch/fork-flags_xite-loads-Immersive-Texturing-ac4d58.x3d": {
+  "id": 11,
+  "bucket": "profile_mismatch",
+  "final": "uom_error",
+  "acceptable": [
+   "fork_validator_bug",
+   "uom_error"
+  ],
+  "grade": "L",
+  "verified": true,
+  "evidence": "TextureProperties is Texturing 2 in both (X3DUOM:39813). Immersive is Texturing 3 in X_ITE (x_ite.js:74263), and the X3DUOM Immersive list itself has MovieTexture (Texturing 3, X3DUOM:29308) and MultiTexture/TextureCoordinateGenerator (Texturing 2). Yet it omits TextureProperties, which only the MedicalInterchange list carries. So the list is incomplete, and profile.py, which uses only that list, raises a false alarm. Answer1's claim that Immersive is Texturing 1 is refuted by the list itself. Answer2's label is acceptable, though its reasoning wavers."
+ },
+ "profile_mismatch/fork-flags_xite-loads-Interactive-EnvironmentalEffects-d47aa7.x3d": {
+  "id": 12,
+  "bucket": "profile_mismatch",
+  "final": "xite_bug",
+  "acceptable": [
+   "xite_bug"
+  ],
+  "grade": "C",
+  "verified": false,
+  "evidence": "LocalFog is EnvironmentalEffects 4 (X3DUOM line 28050; x_ite.js:75095), and Interactive is EnvironmentalEffects 1 (x_ite.js:74273). X_ITE's check is level-blind (x_ite.js:52514)."
+ },
+ "profile_mismatch/fork-flags_xite-loads-Interactive-Interpolation-90b6a1.x3d": {
+  "id": 13,
+  "bucket": "profile_mismatch",
+  "final": "xite_bug",
+  "acceptable": [
+   "xite_bug"
+  ],
+  "grade": "C",
+  "verified": false,
+  "evidence": "EaseInEaseOut is Interpolation 4 (X3DUOM line 17359; x_ite.js:39329), and Interactive is Interpolation 2 (x_ite.js:74278). X_ITE's createNode does not pass the level to hasComponent (x_ite.js:52514)."
+ },
+ "profile_mismatch/fork-flags_xite-loads-Interactive-Networking-25d33b.x3d": {
+  "id": 14,
+  "bucket": "profile_mismatch",
+  "final": "xite_bug",
+  "acceptable": [
+   "xite_bug"
+  ],
+  "grade": "C",
+  "verified": true,
+  "evidence": "LoadSensor is Networking 3 in X3DUOM (27954) and in X_ITE. Interactive is Networking 2 (x_ite.js:74282), and the X3DUOM Interactive list has Anchor and Inline (Networking 2) but no LoadSensor; the Immersive list, at Networking 3, does have it. The fork is right. X_ITE's check ignores levels (52494/53832). The generator emits smaller profiles with or without component statements on purpose (README), so a scene outside its profile is the test itself, not an unfair test. That rules out answer1's generator_artifact."
+ },
+ "profile_mismatch/fork-flags_xite-loads-Interactive-Shape-77d781.x3d": {
+  "id": 15,
+  "bucket": "profile_mismatch",
+  "final": "xite_bug",
+  "acceptable": [
+   "xite_bug"
+  ],
+  "grade": "C",
+  "verified": false,
+  "evidence": "PhysicalMaterial is Shape 2 (X3DUOM line 32173; x_ite.js:87531), and Interactive is Shape 1 (x_ite.js:74285). The X3DUOM Interactive list has no Shape 2 node. So the node is out of the profile, and X_ITE's name-only hasComponent call (x_ite.js:52514) misses it."
+ },
+ "profile_mismatch/fork-flags_xite-loads-Interchange-Grouping-75e2d1.x3d": {
+  "id": 16,
+  "bucket": "profile_mismatch",
+  "final": "xite_bug",
+  "acceptable": [
+   "xite_bug"
+  ],
+  "grade": "C",
+  "verified": true,
+  "evidence": "StaticGroup is Grouping 3 (X3DUOM:38059 and X_ITE). Interchange is Grouping 1 (x_ite.js:74298, and only Group is on the X3DUOM Interchange list at 4648). The fork's flag is correct, and X_ITE builds the node silently because hasComponent gets no level (52494/53832). An out-of-profile scene is exactly what the profile_mismatch bucket tests, so answer1's generator_artifact is wrong."
+ },
+ "profile_mismatch/fork-flags_xite-loads-Interchange-Navigation-3b8c21.x3d": {
+  "id": 17,
+  "bucket": "profile_mismatch",
+  "final": "xite_bug",
+  "acceptable": [
+   "spec_ambiguous",
+   "xite_bug"
+  ],
+  "grade": "L",
+  "verified": false,
+  "evidence": "X3DUOM:4648 Interchange node list has no OrthoViewpoint; OrthoViewpoint componentInfo Navigation level 3 (X3DUOM:31476); X_ITE's own Interchange table has getComponent(\"Navigation\", 1) (x_ite.js ~74300), but createNode calls `this .hasComponent (ConcreteNode .componentInfo .name)` with no level (x_ite.js:52494/52514), and hasComponent(name, level = 0) then passes any level (x_ite.js:53832-53842). X_ITE's check ignores levels, so it builds the node without a warning. The fork's verdict is right, but its wording 'X_ITE ... refuse to load it' is wrong."
+ },
+ "profile_mismatch/fork-flags_xite-loads-Interchange-Shape-459149.x3d": {
+  "id": 18,
+  "bucket": "profile_mismatch",
+  "final": "xite_bug",
+  "acceptable": [
+   "spec_ambiguous",
+   "xite_bug"
+  ],
+  "grade": "L",
+  "verified": false,
+  "evidence": "PhysicalMaterial componentInfo Shape level 2 (X3DUOM:32176; X_ITE agrees: getStaticProperties(\"PhysicalMaterial\", \"Shape\", 2, ...) at x_ite.js:87531). X_ITE's Interchange profile has getComponent(\"Shape\", 1), and the X3DUOM:4648 Interchange list lacks PhysicalMaterial. X_ITE's createNode checks only the component name (x_ite.js:52514), so a level-2 node passes silently."
+ },
+ "profile_mismatch/fork-flags_xite-loads-MedicalInterchange-Interpolation-cb5f64.x3d": {
+  "id": 19,
+  "bucket": "profile_mismatch",
+  "final": "xite_bug",
+  "acceptable": [
+   "spec_ambiguous",
+   "xite_bug"
+  ],
+  "grade": "L",
+  "verified": false,
+  "evidence": "PositionInterpolator2D componentInfo Interpolation level 3 (X3DUOM:33969), and it is missing from the MedicalInterchange list (X3DUOM:4660). X_ITE's MedicalInterchange profile has getComponent(\"Interpolation\", 2), but createNode passes only the component name to hasComponent (x_ite.js:52514, 53832), so no warning is given."
+ },
+ "profile_mismatch/fork-flags_xite-loads-MedicalInterchange-Shape-773add.x3d": {
+  "id": 20,
+  "bucket": "profile_mismatch",
+  "final": "uom_error",
+  "acceptable": [
+   "fork_validator_bug",
+   "uom_error"
+  ],
+  "grade": "L",
+  "verified": true,
+  "evidence": "The X3DUOM MedicalInterchange list (4660) includes FillProperties (Shape 3, X3DUOM:18519) and LineProperties (Shape 2), and X_ITE's MedicalInterchange has Shape 3. PhysicalMaterial (Shape 2, X3DUOM:32173) is therefore inside the profile by level, but the list omits it, as it omits UnlitMaterial (Shape 1) everywhere. profile.py trusts the list. I dropped spec_ambiguous: the levels make this clear-cut. Both answers say MedicalInterchange is Shape 1, which the list's own FillProperties refutes."
+ },
+ "semantic_false_alarm/interpolator-key-length-99576d.x3d": {
+  "id": 21,
+  "bucket": "semantic_false_alarm",
+  "final": "generator_artifact",
+  "acceptable": [
+   "generator_artifact"
+  ],
+  "grade": "L",
+  "verified": true,
+  "evidence": "The reproducer has ScalarInterpolator key=\"-4.055 2.56\" (2 values) and a keyValue of 3 values. The X3DUOM key field says 'corresponding to a value in the keyValue array', and keyValue says 'each corresponding to an input-fraction value in the key array' (X3DUOM ~35650). The fork's interpolator-key-length check (semantic.py:562-600) is therefore correct. The XSD cannot count, and nothing obliges X_ITE to report malformed animation data. README item 8 admits the generator produces these mismatches, so this is no false alarm. answer1's xite_bug is not supported."
+ },
+ "semantic_false_alarm/splat-array-length-02a6fa.x3d": {
+  "id": 22,
+  "bucket": "semantic_false_alarm",
+  "final": "generator_artifact",
+  "acceptable": [
+   "fork_validator_bug",
+   "generator_artifact"
+  ],
+  "grade": "L",
+  "verified": true,
+  "evidence": "The scene has sphericalHarmonicsDegree0Coef0 with 2 SFVec3f and Degree2Coef2 with 3, and no positions field. The arrays really disagree, and both are inconsistent with 0 splats. But semantic.py:715 `expected = counts.get(\"positions\", max(counts.values()))` makes the message claim 'positions holds 3' when positions is absent, and it misses that the 3-entry array is also wrong, so fork_validator_bug is a secondary label. X3DUOM:19335ff states no tie between the lengths (the SH fields say only 'spherical harmonics data.'). X_ITE sizes the node by positions.length (GaussianSplatsComponent.js:468) and quietly renders 0 splats, which is not a runtime defect, so answer2's xite_bug fails."
+ },
+ "semantic_false_alarm/splat-scale-space-f728ec.x3d": {
+  "id": 23,
+  "bucket": "semantic_false_alarm",
+  "final": "spec_ambiguous",
+  "acceptable": [
+   "fork_validator_bug",
+   "spec_ambiguous",
+   "uom_error"
+  ],
+  "grade": "L",
+  "verified": false,
+  "evidence": "X3DUOM GaussianSplats scales: type MFVec3f with no minInclusive, described as 'correspond to the spread of the Gaussian along its local principal axes'. The XSD has no bound either. X_ITE squares the scale in computeCov3D (Sigma = transpose(S*R)*(S*R), GaussianSplatsComponent.js:155), so a negative value renders like a positive one. The fork reports an error from a heuristic (ln-space values) that no definition here backs; whether X3D requires scales >= 0 is open in these files (opacities likewise has no 0..1 bound)."
+ },
+ "semantic_silent_drop/exception-Failed_to_set_the___property_on___The_minDecibels_provided_--9990fa.x3d": {
+  "id": 24,
+  "bucket": "semantic_silent_drop",
+  "final": "xite_bug",
+  "acceptable": [
+   "fork_validator_bug",
+   "spec_ambiguous",
+   "xite_bug"
+  ],
+  "grade": "C",
+  "verified": false,
+  "evidence": "x_ite.js:88030-88034: minDecibels = Math.min(4.323,0)=0 and maxDecibels = Math.min(-30,0)=-30, then `analyserNode.minDecibels = Math.min(min,max)` (-30) is assigned before maxDecibels, while the Web Audio node's max is still -30. The exception 'minDecibels provided (-30) is greater than or equal to the maximum bound (-30)' follows exactly. X_ITE means to normalise any pair, but its assignment order throws and fails the whole load. X3DUOM Analyser gives min/maxDecibels no bound or ordering."
+ },
+ "semantic_silent_drop/exception-Failed_to_set_the___property_on___The_minDecibels_provided_i-f122cc.x3d": {
+  "id": 25,
+  "bucket": "semantic_silent_drop",
+  "final": "xite_bug",
+  "acceptable": [
+   "fork_validator_bug",
+   "spec_ambiguous",
+   "xite_bug"
+  ],
+  "grade": "L",
+  "verified": false,
+  "evidence": "x_ite.js:88030-88034 clamps both values to <= 0, so min=Math.min(2.843,0)=0 and max=Math.min(0.419,0)=0. It then sets analyserNode.minDecibels=0 while the node's max is -30, which matches 'minDecibels provided (0) is greater than the maximum bound (-30)'. X_ITE's normalisation also leaves min==max, which Web Audio rejects. The scene's min>max is semantically odd, but X3DUOM states no ordering, and the runtime fails the whole load."
+ },
+ "semantic_silent_drop/exception-scene_load_did_not_settle_in_ms-silent-e71a60.x3d": {
+  "id": 26,
+  "bucket": "semantic_silent_drop",
+  "final": "generator_artifact",
+  "acceptable": [
+   "generator_artifact"
+  ],
+  "grade": "C",
+  "verified": true,
+  "evidence": "findings/TABLE.md:108 marks this signature's re-check 'NO'. The README says the 'scene load did not settle in 20 s' signature 'depends on what ran before it in the page'. The cases file shows X_ITE clean on the minimised scene (no warn, error or exc), the XSD valid, and the fork silent. The scene is a single HAnimJoint with scale=\"2 0.5 2\", inside UOM bounds. The finding comes from harness page state. Neither answer's claim (fork should restrict HAnimJoint parentage, or X_ITE drops the node) fits a scene that X_ITE builds cleanly."
+ },
+ "semantic_silent_drop/exception-t_.checkLoadState_is_not_a_function-silent-1403e9.x3d": {
+  "id": 27,
+  "bucket": "semantic_silent_drop",
+  "final": "xite_bug",
+  "acceptable": [
+   "xite_bug"
+  ],
+  "grade": "C",
+  "verified": true,
+  "evidence": "X3DUOM TextureBackground topTexture has acceptableNodeTypes=\"X3DTexture2DNode|MultiTexture\" and the description '...up to six image nodes (ImageTexture PixelTexture MovieTexture MultiTexture)', and the XSD accepts the scene. X_ITE's own TextureBackground.set_texture__ casts MultiTexture (x_ite.js:75155), then X3DBackgroundNode.set_loadState__ calls textureNode?.checkLoadState() (36968). checkLoadState is defined only on X3DUrlObject, PixelTexture and RenderedTexture (24500, 92279, 92550), not on MultiTexture or X3DTextureNode (91936ff), hence the TypeError. Answer2's claim that MultiTexture is forbidden contradicts X3DUOM and X_ITE's own cast."
+ },
+ "semantic_silent_drop/route-XML_Parser_Bad_ROUTE_specification_destination_field___must_be_a-f9e7f6.x3d": {
+  "id": 28,
+  "bucket": "semantic_silent_drop",
+  "final": "xite_bug",
+  "acceptable": [
+   "spec_ambiguous",
+   "uom_error",
+   "xite_bug"
+  ],
+  "grade": "L",
+  "verified": true,
+  "evidence": "X3DUOM AudioDestination (11051ff) gives maxChannelCount as SFInt32 inputOutput, default 2, minInclusive 0, and the XSD declares it as a settable attribute (x3d-4.1.xsd:26624). X_ITE declares outputOnly maxChannelCount '// skip test' and inputOutput channelCount '// skip test' (x_ite.js:88795, 88800), a deliberate swap to match Web Audio. Against the definitions here, X_ITE is the one that deviates. X3DUOM's description for the field is the placeholder \"[maxChannelCount.\", and X_ITE deviates knowingly, so the UOM or spec intent is not beyond doubt; uom_error is a weak alternative. Answer1's claim that X3DUOM omits the field is false, though its label is acceptable. Answer2 is wrong: the fork follows X3DUOM, which allows this ROUTE."
+ },
+ "semantic_silent_drop/route-XML_Parser_Bad_ROUTE_specification_source_field_type_must_match-3c0d9f.x3d": {
+  "id": 29,
+  "bucket": "semantic_silent_drop",
+  "final": "xite_bug",
+  "acceptable": [
+   "spec_ambiguous",
+   "uom_error",
+   "xite_bug"
+  ],
+  "grade": "L",
+  "verified": true,
+  "evidence": "X3DUOM BufferAudioSource loopStart is SFFloat inputOutput, default 0, minInclusive 0, and so is the XSD (x3d-4.1.xsd:26561). DynamicsCompressor gain is SFFloat in both, so the ROUTE is type-correct under these definitions. X_ITE declares loopStart and loopEnd as SFTime (x_ite.js:89128-89129), so it rejects the ROUTE. I grade L rather than C because X3DUOM types every other seconds-valued audio field as SFTime (bufferDuration, delayTime, attack, release, tailTime), so SFFloat for loopStart may be the error. Answer1's claim that X3DUOM's BufferAudioSource lacks all its fields is false, but its label is acceptable. Answer2 is wrong because the fork's check follows UOM types."
+ },
+ "semantic_silent_drop/route-XML_Parser_Unknown_field___in_node_class_ListenerPointSource.-b180cb.x3d": {
+  "id": 30,
+  "bucket": "semantic_silent_drop",
+  "final": "xite_bug",
+  "acceptable": [
+   "xite_bug"
+  ],
+  "grade": "C",
+  "verified": true,
+  "evidence": "X3DUOM ListenerPointSource (27812) has Inheritance baseType=\"X3DSoundSourceNode\" with fields gain, isPaused (outputOnly, inheritedFrom X3DTimeDependentNode), startTime, pauseTime and others. The XSD agrees (`<xs:extension base=\"X3DSoundSourceNode\">`, x3d-4.1.xsd ~26897). X_ITE's ListenerPointSource calls Sound_X3DSoundNode (x_ite.js:89999), and its fieldDefinitions (90091ff) omit isPaused, startTime and gain, hence 'Unknown field'. Both answers claim it inherits from X3DNode, which both definition files contradict."
+ },
+ "semantic_silent_drop/route-XML_Parser_Unknown_field___in_node_class_Script.-12342a.x3d": {
+  "id": 31,
+  "bucket": "semantic_silent_drop",
+  "final": "uom_error",
+  "acceptable": [
+   "fork_validator_bug",
+   "generator_artifact",
+   "uom_error"
+  ],
+  "grade": "L",
+  "verified": true,
+  "evidence": "X3DUOM Script (36002) lists sourceCode as a field (SFString, inputOutput), described as 'Embedded scripting source code can be contained within the parent node as a plain-text CDATA block'. The XSD puts sourceCode only inside xs:appinfo (x3d-4.1.xsd:13069), not as a real attribute, so it is the XML CDATA content, not a routable field. X_ITE rightly reports 'Unknown field'. The fuzzer's NOT_FIELDS (model.py:22) and the fork's ROUTE check both take the pseudo-field from UOM, so fork_validator_bug (which covers the fuzzer's reader) and generator_artifact are secondary labels."
+ },
+ "semantic_silent_drop/route-XML_Parser_Unknown_named_or_imported_node___.-539b6b.x3d": {
+  "id": 32,
+  "bucket": "semantic_silent_drop",
+  "final": "fork_validator_bug",
+  "acceptable": [
+   "fork_validator_bug",
+   "spec_ambiguous"
+  ],
+  "grade": "L",
+  "verified": true,
+  "evidence": "The ROUTE comes before <Group DEF=\"Classes\">. X_ITE warns 'Unknown named or imported node' and drops it. _check_route_validity builds def_map over the whole scene before it reads any ROUTE (semantic.py:315-330), so it never checks order. The fork does have the matching rule for USE (_check_use_before_def, semantic.py:519, citing ISO 19775-1). The XSD types fromNode/toNode as xs:IDREF (x3d-4.1.xsd:14287-14289), which ignores order, so the XSD's silence proves nothing. The define-before-ROUTE rule is my recollection of the spec, and the README rates it S, so spec_ambiguous stays acceptable; answer2's xite_bug does not."
+ },
+ "uom_allows_xsd_rejects/attr-bboxSize-pattern-cf704e.x3d": {
+  "id": 33,
+  "bucket": "uom_allows_xsd_rejects",
+  "final": "fork_validator_bug",
+  "acceptable": [
+   "fork_validator_bug",
+   "generator_artifact"
+  ],
+  "grade": "C",
+  "verified": true,
+  "evidence": "X3DUOM:79-84 defines <SimpleType name=\"bboxSizeType\" baseType=\"SFVec3f\" regex=\"...\" appinfo=\"bboxSizeType dimensions are non-negative values, default value (-1 -1 -1)...\"/>, and GeoTransform bboxSize carries baseType=\"bboxSizeType\". The fuzzer's reader (model.py:68-70) reads only min/max Inclusive/Exclusive and never resolves baseType or regex. So 'UOM allows' is the reader's mistake; X3DUOM states the rule completely, contrary to the README. Answer1's claim that X3DUOM lacks the constraint is false."
+ },
+ "uom_allows_xsd_rejects/attr-sizeUnits-enumeration-4b7d1a.x3d": {
+  "id": 34,
+  "bucket": "uom_allows_xsd_rejects",
+  "final": "fork_validator_bug",
+  "acceptable": [
+   "fork_validator_bug",
+   "generator_artifact"
+  ],
+  "grade": "C",
+  "verified": false,
+  "evidence": "UOM X3dUnifiedObjectModel-4.1.xml:27198-27215 has sizeUnits as MFString with additionalEnumerationValuesAllowed=\"false\" and nine two-value enumerations (layoutUnitsChoices appinfo: \"This list is bounded, no additional values are allowed\"), so the 4-value '\"FRACTION\" \"FRACTION\" \"WORLD\" \"PIXEL\"' breaks UOM too. The fuzzer's reader only checks enums when the type is SFString (oracles.py:85 `if fl.enum and not fl.enum_open and fl.type == \"SFString\"`), and gen.py:68 joins 1-2 enum choices, each already a pair. The XSD rejects this value correctly."
+ },
+ "uom_allows_xsd_rejects/attr-sourceCode-The_attribute___is_not_allowed.-4f0e8f.x3d": {
+  "id": 35,
+  "bucket": "uom_allows_xsd_rejects",
+  "final": "generator_artifact",
+  "acceptable": [
+   "fork_validator_bug",
+   "generator_artifact",
+   "uom_error"
+  ],
+  "grade": "L",
+  "verified": false,
+  "evidence": "UOM:36002 lists Script sourceCode as an SFString field described as \"Embedded scripting source code can be contained within the parent node as a plain-text CDATA block\". In the XSD, sourceCode appears only inside xs:appinfo (x3d-4.1.xsd:13069) and Script is `<xs:complexType mixed=\"true\">` (13079), so in the XML encoding it is element content, not an attribute. The fuzzer treats every UOM field as an XML attribute (model.py:22 NOT_FIELDS omits sourceCode), so writing sourceCode=\"fz32\" is not a fair test. X_ITE drops unknown attributes silently (x_ite.js nodeAttribute catch block)."
+ },
+ "uom_allows_xsd_rejects/cf-enum-containerFieldChoicesGroupLODShapeTransformSwitch-pickTarget-ba81f9.x3d": {
+  "id": 36,
+  "bucket": "uom_allows_xsd_rejects",
+  "final": "xsd_error",
+  "acceptable": [
+   "uom_error",
+   "xsd_error"
+  ],
+  "grade": "C",
+  "verified": false,
+  "evidence": "x3d-4.1.xsd:24232 PickSensorGroupingNodeContentModel says it holds \"an array of X3DGroupingNode, X3DShapeNode and Inline nodes as pickTarget\" and lists LOD (24241), yet LOD's containerField type containerFieldChoicesGroupLODShapeTransformSwitch (2511, used at 11981) is {children, proxy, rootNode, shape, skin} with no pickTarget. UOM:7824 pickTarget acceptableNodeTypes=\"X3DGroupingNode|X3DShapeNode|Inline\". The XSD accepts `<PrimitivePickSensor><LOD/></PrimitivePickSensor>` only with containerField=children, a field PrimitivePickSensor lacks. UOM's own choice type has the same gap."
+ },
+ "uom_allows_xsd_rejects/cf-enum-containerFieldChoicesSoundSource-outputs-e97fdf.x3d": {
+  "id": 37,
+  "bucket": "uom_allows_xsd_rejects",
+  "final": "xsd_error",
+  "acceptable": [
+   "spec_ambiguous",
+   "uom_error",
+   "xsd_error"
+  ],
+  "grade": "C",
+  "verified": true,
+  "evidence": "XSD ChannelSplitter (x3d-4.1.xsd ~26720) declares outputs as MFNode inputOutputField, default X3DSoundChannelNode|X3DSoundProcessingNode|X3DSoundSourceNode, with the appinfo 'affected nodes have containerField=\"outputs\" instead'. Yet containerFieldChoicesSoundSource (2425), the containerField type of BufferAudioSource, allows only {children, source}. In lxml, Gain with containerField=\"outputs\" is valid and BufferAudioSource is not, so the XSD contradicts itself. X3DUOM has the same contradiction (outputs is inputOutput at ~13380; the SimpleType at 408 is {children, source}). Answer2's claim that outputs is outputOnly is false."
+ },
+ "uom_allows_xsd_rejects/cf-enum-containerFieldChoicesX3DTexture2DNode-diffuseTexture-b4f10d.x3d": {
+  "id": 38,
+  "bucket": "uom_allows_xsd_rejects",
+  "final": "xsd_error",
+  "acceptable": [
+   "uom_error",
+   "xsd_error"
+  ],
+  "grade": "C",
+  "verified": false,
+  "evidence": "x3d-4.1.xsd:10859-10867 EnvironmentLight has `<xs:choice minOccurs=\"0\" maxOccurs=\"2\">` documented \"diffuseTexture|specularTexture\" and includes ImageCubeMapTexture, but ImageCubeMapTexture's containerField is typed containerFieldChoicesX3DTexture2DNode (a 2D-texture list, no diffuseTexture). Its siblings ComposedCubeMapTexture and GeneratedCubeMapTexture use xs:NMTOKEN, and lxml accepts ComposedCubeMapTexture containerField='diffuseTexture'. UOM diffuseTexture acceptableNodeTypes=\"X3DEnvironmentTextureNode\"."
+ },
+ "uom_allows_xsd_rejects/cf-enum-containerFieldChoicesX3DTexture2DNode-specularTexture-045347.x3d": {
+  "id": 39,
+  "bucket": "uom_allows_xsd_rejects",
+  "final": "xsd_error",
+  "acceptable": [
+   "uom_error",
+   "xsd_error"
+  ],
+  "grade": "C",
+  "verified": false,
+  "evidence": "Same as 38: x3d-4.1.xsd:10859-10867 allows ImageCubeMapTexture as diffuseTexture|specularTexture, while its containerField type containerFieldChoicesX3DTexture2DNode lacks specularTexture. UOM EnvironmentLight specularTexture acceptableNodeTypes=\"X3DEnvironmentTextureNode\"."
+ },
+ "uom_allows_xsd_rejects/cf-enum-containerFieldChoicesX3DTexture3DNode-transferFunction-39677d.x3d": {
+  "id": 40,
+  "bucket": "uom_allows_xsd_rejects",
+  "final": "xsd_error",
+  "acceptable": [
+   "uom_error",
+   "xsd_error"
+  ],
+  "grade": "C",
+  "verified": false,
+  "evidence": "x3d-4.1.xsd:25823 OpacityMapVolumeStyle content (transferFunction) is TextureContentModel, which includes ComposedTexture3D (25488), but containerFieldChoicesX3DTexture3DNode (~2909-2934) is {gradients, segmentIdentifiers, surfaceNormals, texture, voxels, children}, with no transferFunction. UOM:31173 transferFunction acceptableNodeTypes=\"X3DTexture2DNode|X3DTexture3DNode\"."
+ },
+ "uom_allows_xsd_rejects/cf-enum-containerFieldChoicesX3DUrlObject-pickTarget-6e3754.x3d": {
+  "id": 41,
+  "bucket": "uom_allows_xsd_rejects",
+  "final": "xsd_error",
+  "acceptable": [
+   "uom_error",
+   "xsd_error"
+  ],
+  "grade": "C",
+  "verified": false,
+  "evidence": "x3d-4.1.xsd:2941-2957 containerFieldChoicesX3DUrlObject enumerates 'children' twice and nothing else, yet Anchor (Inheritance X3DGroupingNode in UOM) is listed in PickSensorGroupingNodeContentModel (24236) for pickTarget. UOM's choice type has the same two-'children' list."
+ },
+ "uom_allows_xsd_rejects/missing-child-GeoLOD-Missing_child_element_s_._Expected_is_one_of_Back-db8989.x3d": {
+  "id": 42,
+  "bucket": "uom_allows_xsd_rejects",
+  "final": "xsd_error",
+  "acceptable": [
+   "uom_error",
+   "xsd_error"
+  ],
+  "grade": "C",
+  "verified": true,
+  "evidence": "XSD GeoLOD (x3d-4.1.xsd:15288ff) is a sequence of GroupingNodeChildContentModel, then <xs:element ref=\"GeoOrigin\"> with no minOccurs, then the group again. I checked with lxml: GeoLOD with GeoLocation is rejected with or without containerField=\"rootNode\", and adding GeoOrigin makes it valid. X3DUOM geoOrigin says 'Optional single contained GeoOrigin node', but X3DUOM's own GeoLOD ContentModel also lists NodeContentModel GeoOrigin without minOccurs, so UOM contradicts itself. The minimised child goes to the outputOnly children field by default, but the XSD error does not depend on that, so the scene is a fair test."
+ },
+ "uom_allows_xsd_rejects/missing-child-NurbsSet-Missing_child_element_s_._Expected_is_NurbsSwep-fc09dc.x3d": {
+  "id": 43,
+  "bucket": "uom_allows_xsd_rejects",
+  "final": "xsd_error",
+  "acceptable": [
+   "xsd_error"
+  ],
+  "grade": "C",
+  "verified": false,
+  "evidence": "x3d-4.1.xsd:21160ff NurbsSet uses `<xs:sequence minOccurs=\"0\" maxOccurs=\"unbounded\">` of NurbsPatchSurface, NurbsSweptSurface, NurbsSwungSurface, NurbsTrimmedSurface, ProtoInstance, each required. lxml rejects even all four surfaces in order (\"Expected is ( ProtoInstance )\"). UOM (30518) geometry is MFNode acceptableNodeTypes=\"X3DParametricGeometryNode\"."
+ },
+ "uom_allows_xsd_rejects/missing-child-NurbsSet-Missing_child_element_s_._Expected_is_NurbsSwun-f55b9a.x3d": {
+  "id": 44,
+  "bucket": "uom_allows_xsd_rejects",
+  "final": "xsd_error",
+  "acceptable": [
+   "xsd_error"
+  ],
+  "grade": "C",
+  "verified": false,
+  "evidence": "Same xs:sequence as 43 (x3d-4.1.xsd:21160ff): after NurbsPatchSurface and NurbsSweptSurface the XSD requires NurbsSwungSurface next, so any set that is not a full ordered run is rejected."
+ },
+ "uom_allows_xsd_rejects/not-expected-Anchor-children-02c56c.x3d": {
+  "id": 45,
+  "bucket": "uom_allows_xsd_rejects",
+  "final": "xsd_error",
+  "acceptable": [
+   "spec_ambiguous",
+   "uom_error",
+   "xsd_error"
+  ],
+  "grade": "L",
+  "verified": true,
+  "evidence": "X3DUOM:32076 gives PeriodicWave Inheritance X3DSoundNode, and X3DSoundNode inherits X3DChildNode (8783). The XSD extends X3DSoundNode (26978), and X_ITE's PeriodicWave calls Sound_X3DSoundNode, so all three sources agree. Anchor children accepts X3DChildNode, but lxml rejects PeriodicWave in both Group and Anchor (the ChildContentModel omits it) and accepts it only under OscillatorSource. X3DUOM's Anchor ContentModel points at that same group, so UOM contradicts itself. Whether the XSD restriction is deliberate (PeriodicWave means nothing as a scene child) is my reading. Answer1's claim that PeriodicWave inherits from X3DNode is contradicted by all three sources, though its label is acceptable."
+ },
+ "uom_allows_xsd_rejects/not-expected-CADAssembly-children-5ffa27.x3d": {
+  "id": 46,
+  "bucket": "uom_allows_xsd_rejects",
+  "final": "xsd_error",
+  "acceptable": [
+   "spec_ambiguous",
+   "uom_error",
+   "xsd_error"
+  ],
+  "grade": "L",
+  "verified": true,
+  "evidence": "X3DUOM:12731 gives CADFace Inheritance X3DProductStructureChildNode, described as 'Base type marking nodes that are valid product structure children' and inheriting X3DChildNode (7947). CADAssembly children accepts X3DChildNode. In lxml, CADFace is rejected under CADAssembly, Group and CADLayer and accepted only under CADPart (XSD ref at 21576). X3DUOM CADPart children is acceptableNodeTypes=\"CADFace\", and CADFace's appinfo says '...one face in a ... CADPart', so a deliberate restriction is a fair reading; hence spec_ambiguous and uom_error are acceptable. Answer2's claim that CADAssembly.children is limited to CADAssembly|CADPart is false: the XSD accepts Group and Transform there."
+ },
+ "uom_allows_xsd_rejects/not-expected-CADLayer-children-5208cd.x3d": {
+  "id": 47,
+  "bucket": "uom_allows_xsd_rejects",
+  "final": "xsd_error",
+  "acceptable": [
+   "spec_ambiguous",
+   "uom_error",
+   "xsd_error"
+  ],
+  "grade": "L",
+  "verified": false,
+  "evidence": "UOM:16775 DISEntityTypeMapping has Inheritance X3DInfoNode, which inherits X3DChildNode (UOM:6606). CADLayer children acceptableNodeTypes=\"X3DChildNode\". The XSD ChildContentModel groups omit DISEntityTypeMapping, which the XSD places only in DISEntityManager and LoadSensor."
+ },
+ "uom_allows_xsd_rejects/not-expected-CADLayer-children-9661f5.x3d": {
+  "id": 48,
+  "bucket": "uom_allows_xsd_rejects",
+  "final": "xsd_error",
+  "acceptable": [
+   "spec_ambiguous",
+   "uom_error",
+   "xsd_error"
+  ],
+  "grade": "L",
+  "verified": false,
+  "evidence": "UOM:13963 CollisionCollection has Inheritance X3DChildNode. CADLayer children acceptableNodeTypes=\"X3DChildNode\". The XSD ChildContentModel groups omit CollisionCollection, which the XSD places only in CollisionSensor and RigidBodyCollection."
+ },
+ "uom_allows_xsd_rejects/not-expected-CADLayer-children-aa9697.x3d": {
+  "id": 49,
+  "bucket": "uom_allows_xsd_rejects",
+  "final": "xsd_error",
+  "acceptable": [
+   "spec_ambiguous",
+   "uom_error",
+   "xsd_error"
+  ],
+  "grade": "L",
+  "verified": false,
+  "evidence": "UOM:13628 CollidableOffset has Inheritance X3DNBodyCollidableNode, which inherits X3DChildNode (UOM:7033). Its sibling CollidableShape is in ChildContentModelFull (x3d-4.1.xsd:7725), and lxml accepts CADLayer>CollidableShape but rejects CADLayer>CollidableOffset, so the XSD is inconsistent within one abstract type."
+ },
+ "uom_allows_xsd_rejects/not-expected-ComposedTexture3D-texture-6db90b.x3d": {
+  "id": 50,
+  "bucket": "uom_allows_xsd_rejects",
+  "final": "xsd_error",
+  "acceptable": [
+   "xsd_error"
+  ],
+  "grade": "C",
+  "verified": false,
+  "evidence": "x3d-4.1.xsd:22166ff ComposedTexture3D content is `<xs:sequence minOccurs=\"0\" maxOccurs=\"unbounded\">` of ImageTexture, MovieTexture, PixelTexture, RenderedTexture, ProtoInstance, each required, so PixelTexture alone is not expected (lxml: ImageTexture alone gives \"Expected is ( MovieTexture )\"). UOM (14919) texture is MFNode acceptableNodeTypes=\"X3DTexture2DNode\"."
+ },
+ "uom_allows_xsd_rejects/not-expected-GeoLOD-rootNode-25c883.x3d": {
+  "id": 51,
+  "bucket": "uom_allows_xsd_rejects",
+  "final": "xsd_error",
+  "acceptable": [
+   "spec_ambiguous",
+   "xsd_error"
+  ],
+  "grade": "L",
+  "verified": false,
+  "evidence": "UOM 20046: GeoLOD.rootNode MFNode acceptableNodeTypes=\"X3DChildNode\". CollisionCollection extends X3DChildNode in UOM 13967, in the XSD at 23436 and in X_ITE (RigidBodyPhysicsComponent.js:1291). The XSD's own X3DChildNode appinfo (6147) says 'A node that implements X3DChildNode is one of the legal children for a X3DGroupingNode parent', yet ChildContentModel (7577-7811) leaves CollisionCollection out. Validated: still rejected with a GeoOrigin added. Separate XSD bug: the GeoLOD sequence (15270ff) makes GeoOrigin mandatory once any child is present."
+ },
+ "uom_allows_xsd_rejects/not-expected-GeoLOD-rootNode-3f20f5.x3d": {
+  "id": 52,
+  "bucket": "uom_allows_xsd_rejects",
+  "final": "xsd_error",
+  "acceptable": [
+   "spec_ambiguous",
+   "xsd_error"
+  ],
+  "grade": "L",
+  "verified": true,
+  "evidence": "Layout is an X3DChildNode in all three definitions: XSD 22590-22601 (X3DLayoutNode extends X3DChildNode), UOM 6846-6850 (Inheritance X3DChildNode), and X_ITE LayoutComponent.js:165,170. My transitive expansion of the XSD ChildContentModel does not contain Layout. The comment at XSD 22603 says Layout and Viewport are kept out to avoid a nondeterministic content model, which is a technical limit, not a rule of the language. I re-validated: <GeoLOD><GeoOrigin/><Layout containerField=rootNode/> is still rejected. There is a second XSD defect that answer1 found: in the GeoLOD sequence (XSD ~15296-15314) GeoOrigin is required, so <GeoLOD><Group containerField=rootNode/></GeoLOD> fails with 'Missing child'. This is also why the detail scene says 'Expected is ( GeoOrigin )'. Both defects are in the XSD."
+ },
+ "uom_allows_xsd_rejects/not-expected-GeoLocation-children-777ded.x3d": {
+  "id": 53,
+  "bucket": "uom_allows_xsd_rejects",
+  "final": "xsd_error",
+  "acceptable": [
+   "spec_ambiguous",
+   "xsd_error"
+  ],
+  "grade": "L",
+  "verified": false,
+  "evidence": "CADFace extends X3DProductStructureChildNode, which extends X3DChildNode: UOM 12731 and 7943, XSD 21490 and 6705, and X_ITE agrees. GeoLocation.children is [X3DChildNode] (UOM 19861). ChildContentModelFull lists CADAssembly, CADLayer and CADPart (7704-7706) but not CADFace. Validated: rejected in GeoLocation, accepted in CADPart."
+ },
+ "uom_allows_xsd_rejects/not-expected-GeoMetadata-data-54a05e.x3d": {
+  "id": 54,
+  "bucket": "uom_allows_xsd_rejects",
+  "final": "xsd_error",
+  "acceptable": [
+   "spec_ambiguous",
+   "xsd_error"
+  ],
+  "grade": "L",
+  "verified": false,
+  "evidence": "UOM 20120: GeoMetadata.data MFNode acceptableNodeTypes=\"X3DNode\". The XSD's own appinfo (15375) says name=\"data\" type=\"MFNode\" default=\"X3DNode\", but its content choice admits only Geo nodes plus ProtoInstance (comment 15435: 'data field is MFNode reference array to pertinent GeoSpatial nodes'). NurbsOrientationInterpolator is an X3DNode. Validated: even Group is rejected as data."
+ },
+ "uom_allows_xsd_rejects/not-expected-GeoMetadata-data-94d583.x3d": {
+  "id": 55,
+  "bucket": "uom_allows_xsd_rejects",
+  "final": "xsd_error",
+  "acceptable": [
+   "spec_ambiguous",
+   "xsd_error"
+  ],
+  "grade": "L",
+  "verified": false,
+  "evidence": "Same as case 54: UOM 20120 data acceptableNodeTypes=\"X3DNode\" and XSD appinfo 15375 default=\"X3DNode\", against the XSD's Geo-only choice (15384ff, comment 15435). SingleAxisHingeJoint extends X3DRigidJointNode, which extends X3DNode (XSD 22859)."
+ },
+ "uom_allows_xsd_rejects/not-expected-GeoMetadata-data-fb156a.x3d": {
+  "id": 56,
+  "bucket": "uom_allows_xsd_rejects",
+  "final": "xsd_error",
+  "acceptable": [
+   "spec_ambiguous",
+   "xsd_error"
+  ],
+  "grade": "L",
+  "verified": false,
+  "evidence": "Same as case 54: GeoMetadata.data is [X3DNode] (UOM 20120, XSD appinfo 15375), while the XSD's content choice admits only Geo nodes. ReceiverPdu extends X3DNetworkSensorNode, an X3DChildNode (XSD 14639, 6510)."
+ },
+ "uom_allows_xsd_rejects/not-expected-GeoTransform-children-1d0330.x3d": {
+  "id": 57,
+  "bucket": "uom_allows_xsd_rejects",
+  "final": "xsd_error",
+  "acceptable": [
+   "spec_ambiguous",
+   "xsd_error"
+  ],
+  "grade": "L",
+  "verified": false,
+  "evidence": "CollidableOffset and CollidableShape both extend X3DNBodyCollidableNode, which extends X3DChildNode: XSD 23371, 23406 and 22801, UOM 13632 and 7029, and X_ITE agrees. ChildContentModelFull lists CollidableShape (7725) but not CollidableOffset. Validated: CollidableShape is accepted in GeoTransform and CollidableOffset is rejected."
+ },
+ "uom_allows_xsd_rejects/not-expected-GeoViewpoint-navigationInfo-a09f05.x3d": {
+  "id": 58,
+  "bucket": "uom_allows_xsd_rejects",
+  "final": "xsd_error",
+  "acceptable": [
+   "spec_ambiguous",
+   "xsd_error"
+  ],
+  "grade": "L",
+  "verified": true,
+  "evidence": "Re-validated: NavigationInfo followed by GeoOrigin is VALID, and GeoOrigin followed by NavigationInfo is INVALID ('NavigationInfo not expected'). The base type adds NavigationInfo and the GeoViewpoint extension appends GeoOrigin, so xs:extension forces that order. UOM's GeoViewpoint ContentModel (UOM 20887-20890) lists ChildContentModelCore?, GeoOrigin, NavigationInfo, which is the reproducer's order. XSD 15253 ('allow GeoOrigin at beginning, middle or end') shows the order is not meant to matter. Answer1's evidence ('XSD lacks NavigationInfo') is wrong, but its label is right."
+ },
+ "uom_allows_xsd_rejects/not-expected-HAnimSegment-children-2694ad.x3d": {
+  "id": 59,
+  "bucket": "uom_allows_xsd_rejects",
+  "final": "xsd_error",
+  "acceptable": [
+   "spec_ambiguous",
+   "xsd_error"
+  ],
+  "grade": "L",
+  "verified": false,
+  "evidence": "XSD HAnimSegment (20787) extends X3DGroupingNode and appends a sequence of HAnimDisplacer (20802-20808), so every child must come before the displacers. Validated: ChannelSplitter then HAnimDisplacer is valid, HAnimDisplacer then ChannelSplitter is rejected. ChannelSplitter is in ChildContentModelFull (7740). The pair label hides that the dispute is about order."
+ },
+ "uom_allows_xsd_rejects/not-expected-HAnimSegment-children-82770f.x3d": {
+  "id": 60,
+  "bucket": "uom_allows_xsd_rejects",
+  "final": "xsd_error",
+  "acceptable": [
+   "spec_ambiguous",
+   "xsd_error"
+  ],
+  "grade": "L",
+  "verified": false,
+  "evidence": "Same as case 59: HAnimSegment's appended HAnimDisplacer sequence (XSD 20802-20808). LocalFog is in ChildContentModelImmersive (7672). Validated: LocalFog then HAnimDisplacer is valid, the reverse is rejected."
+ },
+ "uom_allows_xsd_rejects/not-expected-HAnimSegment-children-86a2bf.x3d": {
+  "id": 61,
+  "bucket": "uom_allows_xsd_rejects",
+  "final": "xsd_error",
+  "acceptable": [
+   "spec_ambiguous",
+   "xsd_error"
+  ],
+  "grade": "L",
+  "verified": false,
+  "evidence": "Same as case 59: XSD 20802-20808. ListenerPointSource is in ChildContentModelFull (7745). Validated: ListenerPointSource then HAnimDisplacer is valid, the reverse is rejected."
+ },
+ "uom_allows_xsd_rejects/not-expected-HAnimSegment-children-b23e69.x3d": {
+  "id": 62,
+  "bucket": "uom_allows_xsd_rejects",
+  "final": "xsd_error",
+  "acceptable": [
+   "spec_ambiguous",
+   "xsd_error"
+  ],
+  "grade": "L",
+  "verified": false,
+  "evidence": "Same as case 59: XSD 20802-20808. CoordinateDamper is in ChildContentModelFull (7713). Validated: CoordinateDamper then HAnimDisplacer is valid, the reverse is rejected."
+ },
+ "uom_allows_xsd_rejects/not-expected-HAnimSegment-children-e2666c.x3d": {
+  "id": 63,
+  "bucket": "uom_allows_xsd_rejects",
+  "final": "xsd_error",
+  "acceptable": [
+   "spec_ambiguous",
+   "xsd_error"
+  ],
+  "grade": "L",
+  "verified": true,
+  "evidence": "PeriodicWave inherits from X3DSoundNode, which inherits from X3DChildNode, in every file: UOM 32076 and 8783, XSD 26978 (extension base X3DSoundNode), X_ITE x_ite.js:71927 and 71901. HAnimSegment.children accepts X3DChildNode (UOM). Expanding the XSD ChildContentModel transitively, PeriodicWave is absent. Re-validated: it is rejected in Group too, and accepted in OscillatorSource. Answer2's claim that the spec says X3DNode has no support in any file, and X_ITE's independent implementation contradicts it, so uom_error is refuted."
+ },
+ "uom_allows_xsd_rejects/not-expected-HAnimSegment-coord-2dc105.x3d": {
+  "id": 64,
+  "bucket": "uom_allows_xsd_rejects",
+  "final": "xsd_error",
+  "acceptable": [
+   "xsd_error"
+  ],
+  "grade": "C",
+  "verified": false,
+  "evidence": "XSD 20806 in HAnimSegment: '<!-- TODO add child Coordinate SFNode? -->'. The element's own appinfo (20791) declares coord SFNode 'Coordinate|CoordinateDouble', and UOM 23411 agrees, yet the content model has no slot for any coordinate node. Validated: Coordinate and CoordinateDouble are each rejected alone."
+ },
+ "uom_allows_xsd_rejects/not-expected-HAnimSite-children-17c360.x3d": {
+  "id": 65,
+  "bucket": "uom_allows_xsd_rejects",
+  "final": "xsd_error",
+  "acceptable": [
+   "spec_ambiguous",
+   "xsd_error"
+  ],
+  "grade": "L",
+  "verified": false,
+  "evidence": "Viewport extends X3DViewportNode, which extends X3DGroupingNode and in turn X3DChildNode: UOM 42240 and 9932, XSD 22564 and 22463, and X_ITE agrees. HAnimSite.children is [X3DChildNode] (UOM 24337). The XSD keeps Viewport out of ChildContentModel for determinism reasons (comments 22460, 22603). Validated: also rejected in Group."
+ },
+ "uom_allows_xsd_rejects/not-expected-HAnimSite-children-a6fe37.x3d": {
+  "id": 66,
+  "bucket": "uom_allows_xsd_rejects",
+  "final": "uom_error",
+  "acceptable": [
+   "fork_validator_bug",
+   "uom_error"
+  ],
+  "grade": "L",
+  "verified": true,
+  "evidence": "UOM 35093 gives RigidBody Inheritance X3DChildNode. X_ITE RigidBodyPhysicsComponent.js:2208,2241 builds it on X3DNode plus X3DBoundedObject. UOM's own inline containerField enumeration (UOM 35277-35281: body1, body2, bodies) and the XSD's (attribute enumeration near XSD 24059) both exclude 'children', and no XSD content model places it as a child. So the UOM inheritance is the defect, and the XSD's rejection is correct, which is why I drop xsd_error from also_acceptable. The fuzzer's reader also misjudges: model.py cf_choices only resolves named SimpleTypes ('t not in self.enums' returns None), so it ignores RigidBody's inline enumeration. A full UOM reading would have produced a cf-choice violation and kept this scene out of the bucket. That makes fork_validator_bug acceptable, although answer2's stated mechanism (the reader not enforcing inheritance) is wrong."
+ },
+ "uom_allows_xsd_rejects/not-expected-IndexedLineSet-fogCoord-5ddc13.x3d": {
+  "id": 67,
+  "bucket": "uom_allows_xsd_rejects",
+  "final": "xsd_error",
+  "acceptable": [
+   "xsd_error"
+  ],
+  "grade": "C",
+  "verified": true,
+  "evidence": "XSD IndexedLineSet appinfo (XSD 11460) declares fogCoord as SFNode FogCoordinate, and UOM 25730 has a fogCoord field with acceptableNodeTypes FogCoordinate. The XSD content model is only ColorCoordinateContentModel (XSD 11470). Re-validated: rejected with a Coordinate present ('Expected is one of ( Color, ColorRGBA, ProtoInstance )'), while IndexedFaceSet with FogCoordinate is valid. The XSD contradicts its own field declaration. Answer1's claim that IndexedLineSet has no fogCoord field is contradicted by both files."
+ },
+ "uom_allows_xsd_rejects/not-expected-Layer-viewport-186abe.x3d": {
+  "id": 68,
+  "bucket": "uom_allows_xsd_rejects",
+  "final": "xsd_error",
+  "acceptable": [
+   "spec_ambiguous",
+   "xsd_error"
+  ],
+  "grade": "L",
+  "verified": true,
+  "evidence": "XSD 22490-22507 accepts Viewport only as the 1st child or after exactly one child. Re-validated: Billboard, Viewport, BooleanFilter is VALID, and Billboard, BooleanFilter, Viewport is INVALID. Because the XSD itself accepts Viewport after a child node, it does not enforce any rule that non-children fields come first, which refutes answer1's claim about a 19776-1 ordering rule. UOM 27026-27031 (ChildContentModel*, then Viewport) matches the reproducer. Viewport is not in ChildContentModel, so a deterministic model with Viewport after any number of children was possible."
+ },
+ "uom_allows_xsd_rejects/not-expected-LinePickSensor-pickingGeometry-9d4404.x3d": {
+  "id": 69,
+  "bucket": "uom_allows_xsd_rejects",
+  "final": "uom_error",
+  "acceptable": [
+   "fork_validator_bug",
+   "uom_error"
+  ],
+  "grade": "L",
+  "verified": false,
+  "evidence": "X3DUOM:27559-27565 LinePickSensor.pickingGeometry has acceptableNodeTypes=\"X3DGeometryNode\" inheritedFrom X3DPickSensorNode, but the same node's ContentModel (UOM ~27619-27626) admits only LineSet and IndexedLineSet as geometry. The XSD agrees with the ContentModel (x3d-4.1.xsd:24304ff), and its comment at 24299-24300 says the content model is \"customized for each of the nodes\" because of \"different pickingGeometry constraints\". The field-level acceptableNodeTypes is too broad. The fuzzer's reader (model.py uom_allows) ignores ContentModel."
+ },
+ "uom_allows_xsd_rejects/not-expected-LinePickSensor-pickingGeometry-b0b924.x3d": {
+  "id": 70,
+  "bucket": "uom_allows_xsd_rejects",
+  "final": "uom_error",
+  "acceptable": [
+   "fork_validator_bug",
+   "uom_error"
+  ],
+  "grade": "L",
+  "verified": false,
+  "evidence": "The reproducer is Polypoint2D (an X3DGeometryNode) as LinePickSensor pickingGeometry. The detail pair (IndexedLineSet) comes from a different scene with the same signature. X3DUOM:27559-27565 has acceptableNodeTypes=\"X3DGeometryNode\", while the LinePickSensor ContentModel lists only LineSet and IndexedLineSet, as does the XSD at 24319-24327 (choice LineSet|IndexedLineSet). XSD:24299-24300 says each pick sensor has different pickingGeometry constraints."
+ },
+ "uom_allows_xsd_rejects/not-expected-LineSet-attrib-b218ec.x3d": {
+  "id": 71,
+  "bucket": "uom_allows_xsd_rejects",
+  "final": "xsd_error",
+  "acceptable": [
+   "xsd_error"
+  ],
+  "grade": "C",
+  "verified": false,
+  "evidence": "x3d-4.1.xsd:11868 LineSet appinfo declares <xs:element name=\"attrib\" type=\"MFNode\" ... default=\"X3DVertexAttributeNode\"/> (as well as fogCoord and normal), but the content model at 11881 is only ColorCoordinateContentModel (7842ff: Color/ColorRGBA and Coordinate/CoordinateDouble/GeoCoordinate). X3DUOM LineSet (27724ff) has the attrib field with \"Optional single contained FloatVertexAttribute node\". The XSD contradicts its own field list. The UOM ContentModel copies the same omission."
+ },
+ "uom_allows_xsd_rejects/not-expected-LoadSensor-children-e58cff.x3d": {
+  "id": 72,
+  "bucket": "uom_allows_xsd_rejects",
+  "final": "xsd_error",
+  "acceptable": [
+   "xsd_error"
+  ],
+  "grade": "C",
+  "verified": false,
+  "evidence": "x3d-4.1.xsd:11895ff declares LoadSensor children default=\"X3DUrlObject\" (synonym watchList), but LoadSensorChildContentModel (9846ff) lists 14 nodes and omits FontLibrary (and BufferAudioSource). The XSD's own FontLibrary element declares additionalInterface default=\"X3DUrlObject\", and X3DUOM:18878 FontLibrary has AdditionalInheritance X3DUrlObject. The XSD's list is missing a 4.1 node."
+ },
+ "uom_allows_xsd_rejects/not-expected-MovieTexture-textureProperties-a2c52a.x3d": {
+  "id": 73,
+  "bucket": "uom_allows_xsd_rejects",
+  "final": "xsd_error",
+  "acceptable": [
+   "xsd_error"
+  ],
+  "grade": "C",
+  "verified": false,
+  "evidence": "x3d-4.1.xsd:12307-12323 MovieTexture appinfo declares textureProperties SFNode default=\"TextureProperties\" and additionalInterface X3DTexture2DNode, but the type extends X3DSoundSourceNode and adds no child content, so it allows only metadata/IS. X3DTexture2DNode (the XSD base for ImageTexture) does include the TextureProperties choice. UOM:29312-29314 gives MovieTexture an X3DTexture2DNode inheritance and a textureProperties field. The UOM ContentModel shares the omission."
+ },
+ "uom_allows_xsd_rejects/not-expected-NurbsSet-geometry-570b1c.x3d": {
+  "id": 74,
+  "bucket": "uom_allows_xsd_rejects",
+  "final": "xsd_error",
+  "acceptable": [
+   "xsd_error"
+  ],
+  "grade": "C",
+  "verified": false,
+  "evidence": "x3d-4.1.xsd:21175 NurbsSet uses <xs:sequence minOccurs=\"0\" maxOccurs=\"unbounded\"> over NurbsPatchSurface, NurbsSweptSurface, NurbsSwungSurface, NurbsTrimmedSurface, ProtoInstance. Each repetition must contain all five in order, so NurbsTrimmedSurface alone fails (\"Expected ... NurbsPatchSurface\"). The XSD's own appinfo calls geometry MFNode X3DParametricGeometryNode, which is a set."
+ },
+ "uom_allows_xsd_rejects/not-expected-NurbsSet-geometry-cf4429.x3d": {
+  "id": 75,
+  "bucket": "uom_allows_xsd_rejects",
+  "final": "spec_ambiguous",
+  "acceptable": [
+   "spec_ambiguous",
+   "uom_error",
+   "xsd_error"
+  ],
+  "grade": "L",
+  "verified": true,
+  "evidence": "The reproducer is NurbsCurve inside NurbsSet. The reviewer's premise that UOM is the odd one out does not hold: the XSD's own appinfo (XSD 21163-21165) types addGeometry, removeGeometry and geometry as MFNode X3DParametricGeometryNode, exactly like UOM 30550. Both files contradict themselves in the same way. Their field signatures admit NurbsCurve, while their appinfo prose (UOM 30520, 'collects a set of NurbsSurface nodes') and content models (UOM 30613-30617, XSD 21175-21188) list only the four surfaces. X_ITE (NURBSComponent.js:3340) keeps only X3DNurbsSurfaceGeometryNode, which even drops Swept and Swung. Whether the signature or the prose governs is open, hence spec_ambiguous. Both one-sided readings are acceptable. Separately, the XSD's xs:sequence (all four required in order) is definitely wrong, which is what the NurbsSweptSurface detail scene shows."
+ },
+ "uom_allows_xsd_rejects/not-expected-NurbsTrimmedSurface-texCoord-6fd756.x3d": {
+  "id": 76,
+  "bucket": "uom_allows_xsd_rejects",
+  "final": "xsd_error",
+  "acceptable": [
+   "spec_ambiguous",
+   "xsd_error"
+  ],
+  "grade": "L",
+  "verified": false,
+  "evidence": "x3d-4.1.xsd:6624 (X3DNurbsSurfaceGeometryNode appinfo) declares texCoord default=\"X3DSingleTextureCoordinateNode|NurbsTextureCoordinate\", and TextureCoordinate4D extends X3DSingleTextureCoordinateNode (XSD:22277ff; UOM:39332). Yet NurbsTrimmedSurface's choice (21400ff) lists only TextureCoordinate, TextureCoordinateGenerator and NurbsTextureCoordinate. ComposedGeometryContentModel and ElevationGrid do include TextureCoordinate3D/4D."
+ },
+ "uom_allows_xsd_rejects/not-expected-ParticleSystem-appearance-e82ada.x3d": {
+  "id": 77,
+  "bucket": "uom_allows_xsd_rejects",
+  "final": "xsd_error",
+  "acceptable": [
+   "spec_ambiguous",
+   "xsd_error"
+  ],
+  "grade": "L",
+  "verified": false,
+  "evidence": "ParticleSystem (x3d-4.1.xsd:25221ff) extends X3DShapeNode, whose ShapeChildContentModel (6891, 9923ff) comes first. The extension then appends a sequence of Color?, emitter?, physics*, texCoord?, so Appearance cannot follow Color. The XSD's own ShapeChildContentModel appinfo (9925) says appearance and geometry come \"in any order\", and both placements are UOM-legal. The ordering is an artifact of XSD extension."
+ },
+ "uom_allows_xsd_rejects/not-expected-ParticleSystem-color-324d92.x3d": {
+  "id": 78,
+  "bucket": "uom_allows_xsd_rejects",
+  "final": "xsd_error",
+  "acceptable": [
+   "spec_ambiguous",
+   "xsd_error"
+  ],
+  "grade": "L",
+  "verified": false,
+  "evidence": "x3d-4.1.xsd:25221ff ParticleSystem's extension is an xs:sequence of (Color|ColorRGBA)?, then emitter?, then physics, then texCoord. After PointEmitter only physics and texCoord are expected (\"Expected is one of (BoundedPhysicsModel, TextureCoordinate, TextureCoordinateGenerator)\"), so Color after the emitter is rejected for order alone."
+ },
+ "uom_allows_xsd_rejects/not-expected-ParticleSystem-geometry-70cee3.x3d": {
+  "id": 79,
+  "bucket": "uom_allows_xsd_rejects",
+  "final": "xsd_error",
+  "acceptable": [
+   "spec_ambiguous",
+   "xsd_error"
+  ],
+  "grade": "L",
+  "verified": false,
+  "evidence": "x3d-4.1.xsd:6891 shows X3DShapeNode's ShapeChildContentModel (appearance/geometry) as the base content, which must precede ParticleSystem's appended Color/emitter/physics/texCoord sequence (25221ff). PointSet after Color is therefore rejected for order alone; PointSet is a legal geometry if placed first."
+ },
+ "uom_allows_xsd_rejects/not-expected-ParticleSystem-physics-35edb7.x3d": {
+  "id": 80,
+  "bucket": "uom_allows_xsd_rejects",
+  "final": "xsd_error",
+  "acceptable": [
+   "xsd_error"
+  ],
+  "grade": "C",
+  "verified": true,
+  "evidence": "XSD 25312-25335 models physics as <xs:sequence minOccurs=0 maxOccurs=unbounded> of BoundedPhysicsModel, ForcePhysicsModel, WindPhysicsModel and ProtoInstance, each required within a repetition. The XSD's own appinfo (25243) types physics as MFNode X3DParticlePhysicsModelNode. Re-validated: a lone ForcePhysicsModel is rejected, and even Bounded, Force, Wind in order is rejected ('Missing child element(s). Expected is ( ProtoInstance )')."
+ },
+ "uom_allows_xsd_rejects/not-expected-PointPickSensor-pickingGeometry-464b2b.x3d": {
+  "id": 81,
+  "bucket": "uom_allows_xsd_rejects",
+  "final": "uom_error",
+  "acceptable": [
+   "fork_validator_bug",
+   "uom_error"
+  ],
+  "grade": "L",
+  "verified": false,
+  "evidence": "X3DUOM:33062-33068 PointPickSensor.pickingGeometry acceptableNodeTypes=\"X3DGeometryNode\" inheritedFrom X3DPickSensorNode, while the same node's ContentModel (33121-33129) and the XSD (24383ff, choice PointSet only) admit only PointSet. XSD:24299-24300 says the content models encode per-node pickingGeometry constraints. NurbsPatchSurface passes only the field-level UOM reading."
+ },
+ "uom_allows_xsd_rejects/not-expected-PointPickSensor-pickingGeometry-7d088c.x3d": {
+  "id": 82,
+  "bucket": "uom_allows_xsd_rejects",
+  "final": "uom_error",
+  "acceptable": [
+   "fork_validator_bug",
+   "uom_error"
+  ],
+  "grade": "L",
+  "verified": false,
+  "evidence": "The reproducer is Cylinder as PointPickSensor pickingGeometry; the detail's PointSet comes from another scene in the signature. UOM:33062-33068 has acceptableNodeTypes=\"X3DGeometryNode\", while the UOM ContentModel (33126: PointSet) and XSD 24383ff (choice: PointSet) restrict it. XSD:24299-24300 says the constraints are per node."
+ },
+ "uom_allows_xsd_rejects/not-expected-PointPickSensor-pickingGeometry-9f90b9.x3d": {
+  "id": 83,
+  "bucket": "uom_allows_xsd_rejects",
+  "final": "uom_error",
+  "acceptable": [
+   "fork_validator_bug",
+   "uom_error"
+  ],
+  "grade": "L",
+  "verified": false,
+  "evidence": "UOM:33062-33068 has PointPickSensor.pickingGeometry acceptableNodeTypes=\"X3DGeometryNode\", which admits IndexedTriangleStripSet. The UOM ContentModel (33126) and the XSD (24383ff) admit only PointSet. XSD:24299-24300 explains the per-node pickingGeometry constraints."
+ },
+ "uom_allows_xsd_rejects/not-expected-PrimitivePickSensor-pickTarget-93e928.x3d": {
+  "id": 84,
+  "bucket": "uom_allows_xsd_rejects",
+  "final": "xsd_error",
+  "acceptable": [
+   "xsd_error"
+  ],
+  "grade": "C",
+  "verified": true,
+  "evidence": "XSD 24230-24257 PickSensorGroupingNodeContentModel lists 24 grouping nodes but not PickableGroup, although its appinfo promises 'an array of X3DGroupingNode, X3DShapeNode and Inline nodes as pickTarget'. UOM PickableGroup has Inheritance X3DGroupingNode and an open containerField, and UOM pickTarget is X3DGroupingNode|X3DShapeNode|Inline. Re-validated with Box as pickingGeometry: PickableGroup is still 'not expected'. Answer1's mechanism (the pickTarget group is missing) is inaccurate; the group exists and only PickableGroup is missing from it. Its label is right."
+ },
+ "uom_allows_xsd_rejects/not-expected-PrimitivePickSensor-pickingGeometry-a84f15.x3d": {
+  "id": 85,
+  "bucket": "uom_allows_xsd_rejects",
+  "final": "uom_error",
+  "acceptable": [
+   "fork_validator_bug",
+   "uom_error"
+  ],
+  "grade": "C",
+  "verified": false,
+  "evidence": "UOM PrimitivePickSensor field pickingGeometry acceptableNodeTypes=\"X3DGeometryNode\" (inherited, X3dUnifiedObjectModel-4.1.xml ~34122), but the same node's ContentModel (~34183) lists only Box, Cone, Cylinder, Sphere (+Shape/ProtoInstance); XSD x3d-4.1.xsd:24422-24446 pickingGeometry choice = Box|Cone|Cylinder|Sphere; X_ITE PickingComponent.js:1501-1506 keeps pickingGeometryNode only for Box/Cone/Cylinder/Sphere and silently ignores Arc2D. The UOM field-level type is too broad; the fuzzer's reader reads only acceptableNodeTypes."
+ },
+ "uom_allows_xsd_rejects/not-expected-PrimitivePickSensor-pickingGeometry-c39030.x3d": {
+  "id": 86,
+  "bucket": "uom_allows_xsd_rejects",
+  "final": "uom_error",
+  "acceptable": [
+   "fork_validator_bug",
+   "uom_error"
+  ],
+  "grade": "C",
+  "verified": false,
+  "evidence": "Same as 85: UOM pickingGeometry acceptableNodeTypes=\"X3DGeometryNode\" vs the UOM ContentModel and XSD (x3d-4.1.xsd:24436-24445) restricting to Box|Cone|Cylinder|Sphere; X_ITE PickingComponent.js:1501-1506 ignores IndexedQuadSet."
+ },
+ "uom_allows_xsd_rejects/not-expected-PrimitivePickSensor-pickingGeometry-f347c8.x3d": {
+  "id": 87,
+  "bucket": "uom_allows_xsd_rejects",
+  "final": "uom_error",
+  "acceptable": [
+   "fork_validator_bug",
+   "uom_error"
+  ],
+  "grade": "C",
+  "verified": false,
+  "evidence": "Same as 85: x3d-4.1.xsd:24436-24445 PrimitivePickSensor pickingGeometry choice is Box|Cone|Cylinder|Sphere, UOM ContentModel agrees, UOM field says X3DGeometryNode; X_ITE ignores NurbsPatchSurface (PickingComponent.js:1501-1506)."
+ },
+ "uom_allows_xsd_rejects/not-expected-ScreenGroup-children-9f0702.x3d": {
+  "id": 88,
+  "bucket": "uom_allows_xsd_rejects",
+  "final": "xsd_error",
+  "acceptable": [
+   "spec_ambiguous",
+   "xsd_error"
+  ],
+  "grade": "L",
+  "verified": false,
+  "evidence": "UOM Viewport Inheritance X3DViewportNode, and X3DViewportNode Inheritance X3DGroupingNode (an X3DChildNode); UOM appinfo 'Viewport is a Grouping node that can contain most nodes'; ScreenGroup.children acceptableNodeTypes=X3DChildNode. XSD ChildContentModel (x3d-4.1.xsd:7577) omits Viewport, yet the XSD's own PickSensorGroupingNodeContentModel (24257) lists Viewport as a grouping node. X_ITE x_ite.js:59362 (X3DViewportNode derives from X3DGroupingNode) and addChild at 34240 accepts any X3DChildNode."
+ },
+ "uom_allows_xsd_rejects/not-expected-Switch-children-42ba52.x3d": {
+  "id": 89,
+  "bucket": "uom_allows_xsd_rejects",
+  "final": "xsd_error",
+  "acceptable": [
+   "spec_ambiguous",
+   "xsd_error"
+  ],
+  "grade": "L",
+  "verified": false,
+  "evidence": "XSD PeriodicWave <xs:extension base=\"X3DSoundNode\">, X3DSoundNode (x3d-4.1.xsd:6950) extends X3DChildNode; ChildContentModelFull (7679-7754) has the comment 'X3D4 Sound Component nodes can also appear with other children nodes to facilitate audio graph construction' and lists every audio node except PeriodicWave; UOM PeriodicWave Inheritance X3DSoundNode -> X3DChildNode; X_ITE x_ite.js:71917/71894 the same."
+ },
+ "uom_allows_xsd_rejects/not-expected-Transform-children-b62a59.x3d": {
+  "id": 90,
+  "bucket": "uom_allows_xsd_rejects",
+  "final": "xsd_error",
+  "acceptable": [
+   "spec_ambiguous",
+   "xsd_error"
+  ],
+  "grade": "L",
+  "verified": true,
+  "evidence": "Same root cause as 63. PeriodicWave inherits from X3DSoundNode, which inherits from X3DChildNode, in UOM (32076, 8783), the XSD (26978) and X_ITE (x_ite.js:71927, 71901). Transform.children accepts X3DChildNode, and PeriodicWave is absent from the expanded XSD ChildContentModel. Answer1's claim that the spec says X3DNode has no support in any file."
+ },
+ "uom_allows_xsd_rejects/not-expected-Transform-children-e27950.x3d": {
+  "id": 91,
+  "bucket": "uom_allows_xsd_rejects",
+  "final": "xsd_error",
+  "acceptable": [
+   "spec_ambiguous",
+   "xsd_error"
+  ],
+  "grade": "L",
+  "verified": false,
+  "evidence": "UOM MovieTexture Inheritance X3DSoundSourceNode; X3DSoundSourceNode Inheritance X3DTimeDependentNode; X3DTimeDependentNode Inheritance X3DChildNode (XSD likewise extends X3DChildNode); ChildContentModelFull admits the other sound sources but not MovieTexture. Intent is muddied by UOM containerFieldChoicesX3dUrlObjectTexture (UOM:510), whose 'children' value is annotated 'parent node is LoadSensor'."
+ },
+ "uom_allows_xsd_rejects/not-expected-Transform-children-f6aea5.x3d": {
+  "id": 92,
+  "bucket": "uom_allows_xsd_rejects",
+  "final": "xsd_error",
+  "acceptable": [
+   "spec_ambiguous",
+   "xsd_error"
+  ],
+  "grade": "L",
+  "verified": false,
+  "evidence": "x3d-4.1.xsd X3DLayoutNode <xs:extension base=\"X3DChildNode\"/> and Layout extends X3DLayoutNode, but Layout is referenced only in the LayoutGroup/LayoutLayer models (22611, 22629), not in ChildContentModel; UOM X3DLayoutNode Inheritance X3DChildNode; X_ITE LayoutComponent.js:170 derives X3DLayoutNode from X3DChildNode."
+ },
+ "uom_allows_xsd_rejects/not-expected-VolumePickSensor-pickTarget-c5c6ac.x3d": {
+  "id": 93,
+  "bucket": "uom_allows_xsd_rejects",
+  "final": "xsd_error",
+  "acceptable": [
+   "xsd_error"
+  ],
+  "grade": "C",
+  "verified": false,
+  "evidence": "x3d-4.1.xsd:24232 PickSensorGroupingNodeContentModel appinfo says pickTarget is 'an array of X3DGroupingNode, X3DShapeNode and Inline nodes', yet the VolumePickSensor pickTarget choice lists only that group, Shape and ProtoInstance; ParticleSystem <xs:extension base=\"X3DShapeNode\"> (x3d-4.1.xsd:25258); UOM pickTarget acceptableNodeTypes=\"X3DGroupingNode|X3DShapeNode|Inline\"."
+ },
+ "uom_denies_xsd_accepts/containment-HAnimHumanoid-children-c9882c.x3d": {
+  "id": 94,
+  "bucket": "uom_denies_xsd_accepts",
+  "final": "xsd_error",
+  "acceptable": [
+   "xsd_error"
+  ],
+  "grade": "C",
+  "verified": false,
+  "evidence": "UOM HAnimHumanoid children acceptableNodeTypes=\"HAnimPose\", and the XSD's own appinfo has <xs:element name=\"children\" type=\"MFNode\" ... default=\"HAnimPose\"/>; HAnimSegment <containerField default=\"children\">; the XSD HAnimHumanoid sequence accepts <xs:element ref=\"HAnimSegment\"> (documented 'MFNode segments (USE nodes)') whatever its containerField, so it accepts a segment that lands in children. This is a limit of XSD 1.0; the fork's semantic check catches it correctly."
+ },
+ "uom_denies_xsd_accepts/containment-LayoutLayer-children-c1d880.x3d": {
+  "id": 95,
+  "bucket": "uom_denies_xsd_accepts",
+  "final": "xsd_error",
+  "acceptable": [
+   "xsd_error"
+  ],
+  "grade": "C",
+  "verified": true,
+  "evidence": "XSD ChildContentModelFull includes <xs:element ref=InlineGeometry/> (XSD 7690), but InlineGeometry is <xs:extension base=X3DGeometryNode> (XSD 11641) with containerField default geometry. UOM gives Inheritance X3DGeometryNode, and X_ITE x_ite.js:84100 also makes it X3DGeometryNode. The XSD accepts a geometry node as a child, and the fork's semantic check and the UOM reader correctly deny it."
+ },
+ "uom_denies_xsd_accepts/range-0ab556.x3d": {
+  "id": 96,
+  "bucket": "uom_denies_xsd_accepts",
+  "final": "xsd_error",
+  "acceptable": [
+   "xsd_error"
+  ],
+  "grade": "C",
+  "verified": false,
+  "evidence": "x3d-4.1.xsd:20602 HAnimJoint <xs:attribute name=\"scale\" type=\"SFVec3f\" default=\"1 1 1\"> carries <xs:minExclusive value=\"0\"/> only inside xs:appinfo, which is not enforced; UOM HAnimJoint scale minExclusive=\"0\" (Transform scale has no bound in either file)."
+ },
+ "uom_denies_xsd_accepts/range-1dea09.x3d": {
+  "id": 97,
+  "bucket": "uom_denies_xsd_accepts",
+  "final": "xsd_error",
+  "acceptable": [
+   "xsd_error"
+  ],
+  "grade": "C",
+  "verified": false,
+  "evidence": "x3d-4.1.xsd NavigationInfo <xs:attribute name=\"avatarSize\" type=\"MFFloat\" default=\"0.25 1.6 0.75\"> with <xs:minInclusive value=\"0\"/> only in xs:appinfo; UOM avatarSize minInclusive=\"0\"."
+ },
+ "uom_denies_xsd_accepts/range-5206c8.x3d": {
+  "id": 98,
+  "bucket": "uom_denies_xsd_accepts",
+  "final": "xsd_error",
+  "acceptable": [
+   "xsd_error"
+  ],
+  "grade": "C",
+  "verified": false,
+  "evidence": "x3d-4.1.xsd:20519 HAnimHumanoid scale type SFVec3f with <xs:minExclusive value=\"0\"/> only in xs:appinfo; UOM HAnimHumanoid scale minExclusive=\"0\"."
+ },
+ "uom_denies_xsd_accepts/range-9a7985.x3d": {
+  "id": 99,
+  "bucket": "uom_denies_xsd_accepts",
+  "final": "xsd_error",
+  "acceptable": [
+   "xsd_error"
+  ],
+  "grade": "C",
+  "verified": false,
+  "evidence": "x3d-4.1.xsd:20630-20637 HAnimJoint stiffness type MFFloat whose appinfo holds minInclusive 0 / maxInclusive 1 and 'This field shall contain three values or else be an empty array', none of it enforced; UOM stiffness minInclusive=\"0\" maxInclusive=\"1\"."
+ },
+ "uom_denies_xsd_accepts/range-d0dad6.x3d": {
+  "id": 100,
+  "bucket": "uom_denies_xsd_accepts",
+  "final": "xsd_error",
+  "acceptable": [
+   "xsd_error"
+  ],
+  "grade": "C",
+  "verified": false,
+  "evidence": "x3d-4.1.xsd:233 MFColorRGBA pattern '[+-]?((0(\\.[0-9]*)?|\\.[0-9]+)|1(\\.0*)?)' admits '-1', while SFColor (181) uses '[+]?'; UOM ColorRGBA.color minInclusive=\"0\" maxInclusive=\"1\"."
+ },
+ "xsd_valid_xite_drops/exception-Failed_to_set_the___property_on___The_minDecibels_provided_--c17fb3.x3d": {
+  "id": 101,
+  "bucket": "xsd_valid_xite_drops",
+  "final": "xite_bug",
+  "acceptable": [
+   "spec_ambiguous",
+   "xite_bug"
+  ],
+  "grade": "L",
+  "verified": true,
+  "evidence": "x_ite.js:88028-88034 clamps both values to <=0, then intends to swap (writes min=Math.min(...) and max=Math.max(...)). It writes analyserNode.minDecibels first, while the Web Audio node's max is still -30. With min=4.323 clamped to 0 and max -30, it writes min=-30 against the current max -30, which gives exactly the reported exception. Writing max first would have succeeded. The same order throws for an ordered pair such as -20/-10, which the XSD accepts (re-validated VALID). UOM and the XSD give no bound or ordering for either field. Both answers rely on a 'min < max' spec rule that is not in any file and miss the runtime's write-order defect. spec_ambiguous is acceptable only because spec text on min/max ordering is not available here."
+ },
+ "xsd_valid_xite_drops/exception-Failed_to_set_the___property_on___The_minDecibels_provided_i-89ecfe.x3d": {
+  "id": 102,
+  "bucket": "xsd_valid_xite_drops",
+  "final": "xite_bug",
+  "acceptable": [
+   "spec_ambiguous",
+   "xite_bug"
+  ],
+  "grade": "L",
+  "verified": true,
+  "evidence": "Same code, x_ite.js:88028-88034. 2.843 and 0.419 are both clamped to 0 by X_ITE's own Math.min(v,0), a bound UOM and the XSD do not have. min=0 is then written against the default max -30, which matches the exception. With equal clamped values, Web Audio would reject the pair in either order, so the failure is X_ITE's clamp plus write order, applied to a pair X_ITE's swap logic means to accept. I drop the reviewer's uom_error: UOM cannot be faulted for a constraint no file states. Both answers cite an unverified spec 'min < max' rule."
+ },
+ "xsd_valid_xite_drops/exception-scene_load_did_not_settle_in_ms-silent-1f865c.x3d": {
+  "id": 103,
+  "bucket": "xsd_valid_xite_drops",
+  "final": "generator_artifact",
+  "acceptable": [
+   "generator_artifact"
+  ],
+  "grade": "C",
+  "verified": true,
+  "evidence": "The message is the harness's own 20 s timeout (xite_worker.js:38: 'scene load did not settle in ' + ms + ' ms'), not an X_ITE error. findings/TABLE.md:91 marks this signature's re-check as NO. The README says it 'depends on what ran before it in the page'. The case record shows X_ITE exc null for the minimised HAnimJoint scene. Neither the scene nor X_ITE's handling of it is shown faulty. Both answers attribute a hang to HAnimJoint without evidence."
+ },
+ "xsd_valid_xite_drops/exception-t_.checkLoadState_is_not_a_function-silent-a663f9.x3d": {
+  "id": 104,
+  "bucket": "xsd_valid_xite_drops",
+  "final": "xite_bug",
+  "acceptable": [
+   "xite_bug"
+  ],
+  "grade": "C",
+  "verified": true,
+  "evidence": "x_ite.js:75150-75154 TextureBackground.set_texture__ explicitly casts X3DTexture2DNode ?? MultiTexture. x_ite.js:36966-36969 then calls textureNode?.checkLoadState(). MultiTexture (x_ite.js:91957) extends X3DTextureNode, and checkLoadState is defined only on X3DUrlObject (24500), PixelTexture (92279) and the class at 92550, so the call throws a TypeError. UOM topTexture acceptableNodeTypes is 'X3DTexture2DNode|MultiTexture', with a description naming MultiTexture. Answer2's claim that the spec forbids MultiTexture contradicts UOM and X_ITE's own cast."
+ },
+ "xsd_valid_xite_drops/exception-t_.checkLoadState_is_not_a_function-silent-d9b7ae.x3d": {
+  "id": 105,
+  "bucket": "xsd_valid_xite_drops",
+  "final": "xite_bug",
+  "acceptable": [
+   "xite_bug"
+  ],
+  "grade": "C",
+  "verified": true,
+  "evidence": "Same failure as 104, with MultiTexture as rightTexture going through x_ite.js:36968. The dangling ROUTE to N2 was kept by the minimiser to preserve the signature. X_ITE only warns 'Unknown named or imported node' and skips it; the exception comes from the texture path. Answer2's label is right, but it blames the ROUTE, which is the wrong mechanism."
+ },
+ "xsd_valid_xite_drops/route-XML_Parser_Bad_ROUTE_specification_destination_field___must_be_a-9cef92.x3d": {
+  "id": 106,
+  "bucket": "xsd_valid_xite_drops",
+  "final": "xite_bug",
+  "acceptable": [
+   "spec_ambiguous",
+   "xite_bug"
+  ],
+  "grade": "L",
+  "verified": true,
+  "evidence": "x_ite.js:88800 declares AudioDestination maxChannelCount outputOnly, marked '// skip test'. UOM 4.1 and UOM 4.0 both give maxChannelCount accessType inputOutput, default 2, minInclusive 0, and the XSD makes it a settable attribute with default 2. Every definition file disagrees with X_ITE. Web Audio's read-only maxChannelCount makes the spec's choice debatable (spec_ambiguous), but nothing here shows UOM departing from the spec, so I drop uom_error. Answer1 finds the right field and access mismatch but blames UOM on an unverified spec claim. Answer2 says UOM lacks the field, which is false (UOM 4.1 has it)."
+ },
+ "xsd_valid_xite_drops/route-XML_Parser_Bad_ROUTE_specification_source_field_type_must_match-d4ee39.x3d": {
+  "id": 107,
+  "bucket": "xsd_valid_xite_drops",
+  "final": "xite_bug",
+  "acceptable": [
+   "xite_bug"
+  ],
+  "grade": "C",
+  "verified": true,
+  "evidence": "x_ite.js:89128-89129 types BufferAudioSource loopStart and loopEnd as SFTime. UOM 4.1 and 4.0 both give loopStart type SFFloat (minInclusive 0), and the XSD restricts it from base SFFloat. DynamicsCompressor.gain is SFFloat in UOM and in X_ITE. So the ROUTE is SFFloat to SFFloat and type-correct under every definition file. Answer1's 'spec says SFTime' is unsupported. Answer2's exact-match rule is already satisfied, so the fork is right to stay silent."
+ },
+ "xsd_valid_xite_drops/route-XML_Parser_Unknown_field___in_node_class_ListenerPointSource.-se-fd9ec9.x3d": {
+  "id": 108,
+  "bucket": "xsd_valid_xite_drops",
+  "final": "xite_bug",
+  "acceptable": [
+   "xite_bug"
+  ],
+  "grade": "C",
+  "verified": true,
+  "evidence": "UOM 4.1 (27816) and UOM 4.0 (26971) both give ListenerPointSource Inheritance X3DSoundSourceNode, with gain, isPaused and startTime listed. x3d-4.1.xsd and x3d-4.0.xsd both extend X3DSoundSourceNode. X_ITE builds it on X3DSoundNode (x_ite.js:89999, 90011), and its fieldDefinitions have no gain, isPaused or startTime. Both answers claim the spec says X3DNode, which is contradicted by all four definition files."
+ },
+ "xsd_valid_xite_drops/route-XML_Parser_Unknown_field___in_node_class_Script.-sem-silent-56f1ac.x3d": {
+  "id": 109,
+  "bucket": "xsd_valid_xite_drops",
+  "final": "fork_validator_bug",
+  "acceptable": [
+   "fork_validator_bug",
+   "generator_artifact",
+   "uom_error"
+  ],
+  "grade": "L",
+  "verified": true,
+  "evidence": "UOM 36002-36006 lists Script sourceCode as an SFString inputOutput 'field' whose description says it is a CDATA block of embedded source, i.e. an encoding construct, not a routable field. The fork's semantic.py _endpoint_fields (300-312) takes every UOM field, so a ROUTE into sourceCode passes silently. The fuzzer's NOT_FIELDS (model.py:22) filters DEF, USE and the like but not sourceCode, which is how the generator chose it. X_ITE correctly reports 'Unknown field'. Answer1's claim that sourceCode is a spec Script field is wrong."
+ },
+ "xsd_valid_xite_drops/route-XML_Parser_Unknown_named_or_imported_node___.-sem-silent-1e98f2.x3d": {
+  "id": 110,
+  "bucket": "xsd_valid_xite_drops",
+  "final": "fork_validator_bug",
+  "acceptable": [
+   "fork_validator_bug",
+   "spec_ambiguous"
+  ],
+  "grade": "L",
+  "verified": true,
+  "evidence": "semantic.py:321-325 builds def_map from the whole scene before checking ROUTEs, so document order is ignored, while semantic.py:519-535 enforces DEF-before-USE ordering, citing ISO 19775-1. The XSD types fromNode and toNode as xs:IDREF (XSD ~14287-14289), which is order-free at the schema level, so XSD validity says nothing about X3D ordering. That refutes answer2's argument that IDREF permits forward ROUTE references. X_ITE resolves names in document order and drops the ROUTE. No ordering text exists in the XSD or UOM, hence spec_ambiguous is also acceptable."
+ },
+ "xsd_valid_xite_warns/warn-TwoSidedMaterial_is_deprecated_please_use_Appearance_backMaterial-011212.x3d": {
+  "id": 111,
+  "bucket": "xsd_valid_xite_warns",
+  "final": "generator_artifact",
+  "acceptable": [
+   "generator_artifact"
+  ],
+  "grade": "C",
+  "verified": false,
+  "evidence": "XSD:12081 TwoSidedMaterial documentation says 'Deprecated in X3D version 4', and UOM:10652 says 'TwoSidedMaterial (deprecated)'. X_ITE's warning (x_ite.js:87579) agrees and it builds the node, so the bucket counted an advisory warning on which every oracle agrees."
+ },
+ "xsd_valid_xite_warns/warn-Use_of_field_HAnimHumanoid.segments_is_deprecated._This_field_may-e6cb38.x3d": {
+  "id": 112,
+  "bucket": "xsd_valid_xite_warns",
+  "final": "spec_ambiguous",
+  "acceptable": [
+   "spec_ambiguous",
+   "uom_error",
+   "xite_bug"
+  ],
+  "grade": "L",
+  "verified": true,
+  "evidence": "HAnimComponent.js:352-368 warns about segments and sites only when the spec version is >= '4.1', and builds everything. UOM 4.1 segments and sites have no deprecation note, although UOM and the XSD do mark other deprecations (XSD 12081 TwoSidedMaterial 'Deprecated in X3D version 4'; UOM 10652). UOM 21994 calls the HAnim 2.1 / X3D 4.1 draft 'work in progress'. Either X_ITE is ahead of a lagging UOM, or it warns without basis, so it is open. I drop generator_artifact: the scene is valid under UOM and the XSD, and the warning fires on any non-empty segments field, so the scene's construction is not what triggers it. Answer2's quoted 4.0 deprecation text is in no file."
+ },
+ "xsd_valid_xite_warns/warn-Use_of_field_HAnimHumanoid.sites_is_deprecated._This_field_may_be-5acc38.x3d": {
+  "id": 113,
+  "bucket": "xsd_valid_xite_warns",
+  "final": "spec_ambiguous",
+  "acceptable": [
+   "spec_ambiguous",
+   "uom_error",
+   "xite_bug"
+  ],
+  "grade": "L",
+  "verified": true,
+  "evidence": "Same as 112: HAnimComponent.js:355,358 gate the sites warning on version >= 4.1. UOM 4.1 and 4.0 describe sites as 'list of USE references for all HAnimSite node instances' with no deprecation, and the XSD declares sites with no note, while both files mark other deprecated items. UOM 21994 says HAnim 2.1 is work in progress. Answer2's claim that HAnim 2.0 removed sites is in no file, and generator_artifact does not fit a scene that is valid under UOM and the XSD."
+ },
+ "xsd_valid_xite_warns/warn-XML_Parser_Unknown_proto_or_externproto_type___.-f869ff.x3d": {
+  "id": 114,
+  "bucket": "xsd_valid_xite_warns",
+  "final": "generator_artifact",
+  "acceptable": [
+   "fork_validator_bug",
+   "generator_artifact"
+  ],
+  "grade": "C",
+  "verified": false,
+  "evidence": "gen.py:61 fills any free SFString with 'fz'+randint, so ProtoInstance name='fz24' was generated with no ProtoDeclare. README:70 counts 'ProtoInstance without name or declaration; accepted once declared' as a harness artifact. The XSD cannot check name references; that the fork's semantic check is silent is a separate, real gap."
+ }
+}
