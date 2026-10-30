@@ -1,0 +1,18 @@
+<!doctype html><html><head><meta charset="utf-8"><script src="../../gobbler-v4/vendor/x_ite/x_ite.min.js"></script>
+<style>html,body{margin:0;height:100%;background:#000}x3d-canvas{width:100%;height:100%;display:block}</style></head><body>
+<x3d-canvas id="c" contextMenu="false" splashScreen="false"></x3d-canvas>
+<script>
+// a world file alone, for debugging: ?w=giza/giza-nest.x3d&pos=x,y,z&look=x,y,z&fov=0.8
+const q=new URLSearchParams(location.search), P=s=>s.split(',').map(Number);
+(async()=>{const B=document.getElementById('c').browser; await new Promise(r=>setTimeout(r,50));
+ const pos=P(q.get('pos')||'950,520,980'), look=P(q.get('look')||'-160,0,300');
+ const xml=`<X3D profile='Full' version='4.0'><Scene><NavigationInfo headlight='false' type='"NONE"'/><Background skyColor='0.02 0.02 0.05'/>
+ <Viewpoint DEF='V' position='${pos.join(' ')}' fieldOfView='${q.get('fov')||0.8}'/><Inline DEF='W' url='"../data/worlds/${q.get('w')||'giza/giza-nest.x3d'}"'/></Scene></X3D>`;
+ const sc=await B.createX3DFromString(xml); await B.replaceWorld(sc);
+ const V=sc.getNamedNode('V'); const d=look.map((x,i)=>x-pos[i]); const L=Math.hypot(...d);
+ // orientation: look along d (rotate -z to d)
+ const f=d.map(x=>x/L), ax=[f[1]*0- -1*0, 0, 0]; const a=[ -f[1]*1*0 + 0, 0, 0];
+ const zx=0,zy=0,zz=-1, cx=zy*f[2]-zz*f[1], cy=zz*f[0]-zx*f[2], cz=zx*f[1]-zy*f[0], s=Math.hypot(cx,cy,cz), c=-f[2];
+ V.orientation=new X3D.SFRotation(cx/(s||1),cy/(s||1),cz/(s||1),Math.atan2(s,c));
+ document.body.dataset.ready='1';})();
+</script></body></html>
