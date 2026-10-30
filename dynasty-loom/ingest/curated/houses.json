@@ -1,0 +1,51 @@
+{
+  "_about": "Houses (where a person's thread runs) and dyes for loom-view/1 (proto/contracts/loom-view.md). Written from memory by the merge analyst, not looked up (no web lookups in this stage): seat coordinates are standard city or house values, grade Likely, prov model_recall, the same convention as places.json; which branch label names which house is the merge analyst's reading of the harvesters' labels, grade Likely; colours are Illustrative. `labels` are the branch strings the sources use for the house; `family_labels` are branch strings that name a family, not a house (the fact-check Darwin-Wedgwood file puts the birth family in `branch`), so they never place anyone. opened/closed are not written here: loomview.py computes them from the data (first birth and last death of the house's core members; closed is null while a core member is presumed living).",
+  "grade": {"coordinates": "Likely", "label_mapping": "Likely", "colors": "Illustrative", "prov": "model_recall"},
+  "families": {
+    "rothschild": {
+      "name": "Rothschild",
+      "dyes": {"rothschild": {"founders": ["Q76988", "Q1557224"], "founder_names": ["Mayer Amschel Rothschild", "Gutle Schnapper"], "color": "#9e1b1b"}},
+      "family_labels": [],
+      "houses": [
+        {"key": "frankfurt", "name": "Frankfurt", "seat": "Frankfurt am Main", "lat": 50.1109, "lon": 8.6821, "labels": ["Frankfurt"], "note": "Mayer Amschel's parent house"},
+        {"key": "goldschmidt", "name": "Goldschmidt-Rothschild", "seat": "Frankfurt am Main", "lat": 50.1109, "lon": 8.6821, "labels": ["Goldschmidt-Rothschild"], "note": "the line of Minna Caroline and Maximilian von Goldschmidt-Rothschild, labelled apart by the Frankfurt harvest"},
+        {"key": "vienna", "name": "Vienna", "seat": "Vienna", "lat": 48.2082, "lon": 16.3738, "labels": ["Vienna"], "note": "Salomon's house"},
+        {"key": "london", "name": "London", "seat": "London", "lat": 51.5074, "lon": -0.1278, "labels": ["London"], "note": "Nathan's house"},
+        {"key": "naples", "name": "Naples", "seat": "Naples", "lat": 40.8518, "lon": 14.2681, "labels": ["Naples"], "note": "Carl's house; no harvest partition covered it"},
+        {"key": "paris", "name": "Paris", "seat": "Paris", "lat": 48.8566, "lon": 2.3522, "labels": ["Paris", "Mouton"], "note": "James's house; the Mouton line is kept inside it"}
+      ]
+    },
+    "habsburg": {
+      "name": "Habsburg",
+      "dyes": {"habsburg": {"founders": ["Q76956", "Q454769"], "founder_names": ["Rudolf I of Germany", "Gertrude of Hohenberg"], "color": "#b8860b"}},
+      "family_labels": [],
+      "houses": [
+        {"key": "habsburg", "name": "Habsburg main line", "seat": "Habsburg Castle (Aargau)", "lat": 47.4625, "lon": 8.1878, "labels": ["Habsburg (main line)"], "note": "the counts of Habsburg before the Austrian duchy"},
+        {"key": "austria", "name": "Austria", "seat": "Vienna", "lat": 48.2082, "lon": 16.3738, "labels": ["Austria"], "note": "dukes of Austria from 1282, then the Austrian (imperial) line"},
+        {"key": "albertine", "name": "Albertine line", "seat": "Vienna", "lat": 48.2082, "lon": 16.3738, "labels": ["Albertine"], "note": "Albert III's line after the 1379 partition"},
+        {"key": "styria", "name": "Leopoldine (Styrian) line", "seat": "Graz", "lat": 47.0707, "lon": 15.4395, "labels": ["Leopoldine", "Leopoldine (Styrian)"], "note": "Leopold III's line; the undivided Leopoldine label is seated with its Inner Austrian successor"},
+        {"key": "tyrol", "name": "Leopoldine (Tyrolean) line", "seat": "Innsbruck", "lat": 47.2692, "lon": 11.4041, "labels": ["Leopoldine (Tyrolean)"], "note": "Frederick IV's line in Tyrol"},
+        {"key": "burgundy", "name": "Burgundian line", "seat": "Brussels", "lat": 50.8503, "lon": 4.3517, "labels": ["Burgundian-Spanish"], "note": "Philip the Handsome's Burgundian court"},
+        {"key": "spain", "name": "Spain", "seat": "Madrid", "lat": 40.4168, "lon": -3.7038, "labels": ["Spain"], "note": "the Spanish line, Charles V to Charles II"}
+      ]
+    },
+    "darwin_wedgwood": {
+      "name": "Darwin–Wedgwood",
+      "dyes": {
+        "darwin": {"founders": ["Q234050", "x:mary-howard-1740"], "founder_names": ["Erasmus Darwin", "Mary Howard"], "color": "#2f6b3a"},
+        "wedgwood": {"founders": ["Q319331", "Q47905425"], "founder_names": ["Josiah Wedgwood", "Sarah Wedgwood"], "color": "#3f74a8"}
+      },
+      "family_labels": ["Darwin", "Wedgwood"],
+      "houses": [
+        {"key": "lichfield", "name": "Erasmus Darwin's household", "seat": "Lichfield", "lat": 52.6816, "lon": -1.8317, "labels": ["Erasmus line", "Erasmus line (Parker)", "Erasmus line (Galton)"], "note": "Erasmus Darwin's household; the Parker and Galton sub-lines are kept inside it"},
+        {"key": "etruria-maer", "name": "Etruria / Maer", "seat": "Etruria Hall, Stoke-on-Trent", "lat": 53.0270, "lon": -2.2010, "labels": ["Etruria (founder)", "Maer"], "note": "Josiah Wedgwood's Etruria and Josiah II's Maer Hall, one household thread"},
+        {"key": "shrewsbury", "name": "Shrewsbury (The Mount)", "seat": "Shrewsbury", "lat": 52.7073, "lon": -2.7553, "labels": ["Shrewsbury"], "note": "Robert Waring Darwin's household"},
+        {"key": "down", "name": "Down House", "seat": "Downe, Kent", "lat": 51.3313, "lon": 0.0533, "labels": ["Down House"], "note": "Charles and Emma Darwin's household"},
+        {"key": "cambridge", "name": "Cambridge", "seat": "Cambridge", "lat": 52.2053, "lon": 0.1218, "labels": ["Cambridge"], "note": "the households of Charles's sons in Cambridge"},
+        {"key": "leith-hill", "name": "Leith Hill Place", "seat": "Leith Hill Place, Surrey", "lat": 51.1760, "lon": -0.3720, "labels": ["Leith Hill Place"], "note": "Josiah III and Caroline Darwin's household"},
+        {"key": "barlaston", "name": "Barlaston", "seat": "Barlaston, Staffordshire", "lat": 52.9430, "lon": -2.1690, "labels": ["Barlaston (Frank)"], "note": "Francis Wedgwood's line"},
+        {"key": "hensleigh", "name": "Hensleigh Wedgwood's household", "seat": "London", "lat": 51.5074, "lon": -0.1278, "labels": ["Hensleigh (London)"], "note": "Hensleigh and Fanny Wedgwood in London"}
+      ]
+    }
+  }
+}

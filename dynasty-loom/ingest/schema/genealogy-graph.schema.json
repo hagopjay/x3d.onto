@@ -1,0 +1,134 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://polyxandria.example/genealogy/schema/genealogy-graph-0.1.json",
+  "title": "Loom genealogy graph 0.1",
+  "description": "Canonical graph: Person, Union, Branch and Place nodes; typed edges; every fact backed by claims with source, locator, verbatim quote, grade and provenance. Grades: Confirmed / Likely / Suspected, plus Illustrative for display-only values.",
+  "type": "object",
+  "required": ["schema", "build", "datasets", "sources", "nodes", "edges", "claims", "meta"],
+  "additionalProperties": false,
+  "properties": {
+    "schema": {"type": "object", "required": ["name", "version"], "properties": {"name": {"const": "loom-genealogy"}, "version": {"type": "string"}}},
+    "build": {"type": "object", "required": ["kind", "as_of", "generator"], "properties": {"kind": {"enum": ["private", "public-candidate"]}, "as_of": {"type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$"}}},
+    "datasets": {"type": "object", "additionalProperties": {"type": "object", "required": ["name"]}},
+    "sources": {"type": "array", "items": {"$ref": "#/$defs/source"}},
+    "nodes": {"type": "array", "items": {"$ref": "#/$defs/node"}},
+    "edges": {"type": "array", "items": {"$ref": "#/$defs/edge"}},
+    "claims": {"type": "array", "items": {"$ref": "#/$defs/claim"}},
+    "conflicts": {"type": "array"},
+    "meta": {"type": "object"}
+  },
+  "$defs": {
+    "grade": {"enum": ["Confirmed", "Likely", "Suspected", "Illustrative"]},
+    "prov": {"enum": ["doc", "data", "model_recall", "simulated", "computed"]},
+    "id": {"type": "string", "pattern": "^(person|union|branch|place|source):[^\\s]+$"},
+    "date": {
+      "type": "object",
+      "required": ["kind", "calendar", "precision", "earliest", "latest", "gedcom", "edtf", "gedcomx"],
+      "properties": {
+        "kind": {"enum": ["exact", "approx", "before", "after", "between", "period", "phrase"]},
+        "qualifier": {"enum": [null, "ABT", "CAL", "EST"]},
+        "calendar": {"enum": ["GREGORIAN", "JULIAN", "HEBREW", "FRENCH_R"]},
+        "precision": {"enum": [null, "year", "month", "day"]},
+        "earliest": {"type": ["string", "null"]},
+        "latest": {"type": ["string", "null"]}
+      }
+    },
+    "fact": {
+      "type": "object",
+      "required": ["date", "claims", "status", "grade"],
+      "properties": {
+        "date": {"oneOf": [{"$ref": "#/$defs/date"}, {"type": "null"}]},
+        "claims": {"type": "array", "items": {"type": "string", "pattern": "^c:[0-9a-f]{12}$"}, "minItems": 1},
+        "status": {"enum": ["single", "agreed", "contested", "occurred"]},
+        "grade": {"$ref": "#/$defs/grade"},
+        "alternatives": {"type": "array", "items": {"type": "object", "required": ["date", "claims", "sources"]}},
+        "place": {"$ref": "#/$defs/id"}
+      }
+    },
+    "source": {
+      "type": "object",
+      "required": ["id", "title", "sha256", "bytes", "parser", "dataset", "family", "rank", "default_grade", "grade_reason"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "default_grade": {"$ref": "#/$defs/grade"},
+        "rank": {"type": "integer", "minimum": 0}
+      }
+    },
+    "node": {
+      "type": "object",
+      "required": ["id", "cls", "label", "grade", "prov"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "cls": {"enum": ["Person", "Union", "Branch", "Place"]},
+        "grade": {"$ref": "#/$defs/grade"},
+        "prov": {"$ref": "#/$defs/prov"}
+      },
+      "allOf": [
+        {"if": {"properties": {"cls": {"const": "Person"}}}, "then": {"$ref": "#/$defs/person"}},
+        {"if": {"properties": {"cls": {"const": "Union"}}}, "then": {"$ref": "#/$defs/union"}},
+        {"if": {"properties": {"cls": {"const": "Place"}}}, "then": {"$ref": "#/$defs/place"}}
+      ]
+    },
+    "person": {
+      "required": ["dataset", "local", "names", "facts", "generation", "ids", "notes", "media", "living", "vis"],
+      "properties": {
+        "names": {"type": "array", "items": {"type": "object", "required": ["value", "type", "claims"], "properties": {"type": {"enum": ["preferred", "variant"]}}}},
+        "facts": {"type": "object", "properties": {"birth": {"$ref": "#/$defs/fact"}, "death": {"$ref": "#/$defs/fact"}}, "additionalProperties": false},
+        "generation": {"type": "object", "properties": {
+          "stored": {"type": "object", "additionalProperties": {"type": "integer"}},
+          "descent": {"type": "object", "required": ["min", "max", "method"], "properties": {"min": {"type": "integer"}, "max": {"type": "integer"}, "method": {"enum": ["founder", "descent", "partner-aligned", "isolated"]}}},
+          "layout": {"type": "integer"},
+          "layout_grade": {"const": "Illustrative"}
+        }},
+        "ids": {"type": "object", "properties": {"wikidata": {"type": ["string", "null"], "pattern": "^Q[1-9][0-9]*$"}, "enwiki": {"type": ["string", "null"]}}},
+        "media": {"type": "array", "items": {"type": "object", "required": ["url", "kind", "grade"], "properties": {"kind": {"enum": ["placeholder", "image"]}}}},
+        "living": {"type": "object", "required": ["value", "rule"], "properties": {"value": {"type": ["boolean", "null"]}}},
+        "vis": {"enum": ["public", "redacted"]},
+        "metrics": {"oneOf": [
+          {"type": "object", "required": ["inbreeding_F", "F_is_lower_bound", "pedigree", "prov"], "properties": {"prov": {"const": "computed"}}},
+          {"type": "object", "required": ["withheld", "prov"], "additionalProperties": false, "properties": {"withheld": {"type": "string"}, "prov": {"const": "computed"}}}
+        ]}
+      }
+    },
+    "union": {
+      "required": ["partners", "partner_unknown", "children", "type", "claims", "evidence"],
+      "properties": {
+        "partners": {"type": "array", "items": {"$ref": "#/$defs/id"}, "maxItems": 2},
+        "children": {"type": "array", "items": {"$ref": "#/$defs/id"}},
+        "type": {"enum": ["marriage", "unknown", "open"]},
+        "consanguinity": {"type": "object", "required": ["related", "phi", "prov"], "properties": {"prov": {"const": "computed"}}}
+      }
+    },
+    "place": {
+      "properties": {
+        "geo": {"type": "object", "required": ["lat", "lon", "grade", "prov"], "properties": {"lat": {"type": "number", "minimum": -90, "maximum": 90}, "lon": {"type": "number", "minimum": -180, "maximum": 180}}}
+      }
+    },
+    "edge": {
+      "type": "object",
+      "required": ["s", "p", "t", "grade", "prov", "claims"],
+      "properties": {
+        "s": {"$ref": "#/$defs/id"},
+        "t": {"$ref": "#/$defs/id"},
+        "p": {"enum": ["partner_in", "child_of", "alt_parent", "member_of", "seated_at", "born_in", "died_in"]},
+        "grade": {"$ref": "#/$defs/grade"},
+        "prov": {"$ref": "#/$defs/prov"},
+        "status": {"enum": ["single", "agreed", "contested"]},
+        "pedigree": {"enum": ["BIRTH", "ADOPTED", "FOSTER", "SEALING", "OTHER"]}
+      }
+    },
+    "claim": {
+      "type": "object",
+      "required": ["id", "source", "kind", "subject", "predicate", "value", "locator", "quote", "grade", "prov"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^c:[0-9a-f]{12}$"},
+        "source": {"$ref": "#/$defs/id"},
+        "kind": {"enum": ["person", "union", "source"]},
+        "grade": {"$ref": "#/$defs/grade"},
+        "prov": {"$ref": "#/$defs/prov"},
+        "quote": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

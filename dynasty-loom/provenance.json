@@ -1,0 +1,394 @@
+{
+ "what": "files copied into dynasty-loom/ from the original workspace (paths relative to it), with the sha256 of the source at copy time; edited = changed on the way in (repo-relative paths, or redaction of absolute workspace paths and model names); see README",
+ "copied_utc": "2026-10-30",
+ "files": {
+  "data/data-issues.json": {
+   "source": "proto/scene2/out/data-issues.json",
+   "source_sha256": "0cfd57a9b210e645248d208e3b0111afebdb42948034d7054c7c1f5e59745809"
+  },
+  "data/loom-view.json": {
+   "source": "proto/merged/loom-view.json",
+   "source_sha256": "2aef8ce474a1be1127f20473f2d0866cb15a145db69562ca4996f09ba01ea953"
+  },
+  "data/loom-view.md": {
+   "source": "proto/contracts/loom-view.md",
+   "source_sha256": "6713e02271f0cb0542ce6d6c3da71dc84bab40ebce075ab26de837138f52cad0"
+  },
+  "data/loom-view.receipt.json": {
+   "source": "proto/merged/receipt.json",
+   "source_sha256": "0c02ad857cf54af1bee0bb99785d91cac298a9e7ad7d56d1098e2e719d0d914b"
+  },
+  "gates/datagates.py": {
+   "source": "proto/gates/datagates.py",
+   "source_sha256": "e021c0ac29440aad88e6259b4801f422ef6ad1f92e8d6a5c60ec46e6bdea1fcf"
+  },
+  "gates/jsobj.py": {
+   "source": "proto/gates/jsobj.py",
+   "source_sha256": "e774f7a037af3ecc5fc6a6f29fd1a6e06695bf9d5ec758fe1ec8246f486c0320"
+  },
+  "gates/lookgates.py": {
+   "source": "proto/gates/lookgates.py",
+   "source_sha256": "58d6e78ca36cc63271de7214ad9c8387f81ce03eccd60df23a54c99470106063"
+  },
+  "gates/run_gates.py": {
+   "source": "proto/gates/run_gates.py",
+   "source_sha256": "d7054de6171ddabc62df5c3a869b8a7a3975ab4cd6fd076747a4f5b2624b90b6"
+  },
+  "gates/scenegates.py": {
+   "source": "proto/gates/scenegates.py",
+   "source_sha256": "943de0dc4c17f5684ef39c47f84d0e79b63c925ee686b6e3f4faaa07dcfd284e"
+  },
+  "gates/sources.py": {
+   "source": "proto/gates/sources.py",
+   "source_sha256": "a6ac5c22f28a722ce03aa424f7a05f5b4c18f006bcdb01b40af667728387eb1d"
+  },
+  "gates/test_gates.py": {
+   "source": "proto/gates/test_gates.py",
+   "source_sha256": "50e3e3d911fc54499ab223d7cd8a705a987ab9c8ebf3627331bf5a293349ecbf"
+  },
+  "gates/test_scene_look.py": {
+   "source": "proto/gates/test_scene_look.py",
+   "source_sha256": "7e5b28be1f9cfe37fd371394ab81410f4632a8a7f0c7718acc0dd07967049082"
+  },
+  "hyper/build_hypersphere.py": {
+   "source": "proto/hyper/build_hypersphere.py",
+   "source_sha256": "d322ff5dd87686a5e155999d9b4f95383a2ed4f22a53b43776cbf4ba75d88d1c",
+   "edited": "paths",
+   "sha256": "9a9896d070fd2bb4fcc0079e5f2e91baaeec520bd45234791a129e700548ca70"
+  },
+  "hyper/docs/camera-grammar.md": {
+   "source": "proto/hyper/docs/camera-grammar.md",
+   "source_sha256": "f056ef49ead9b15a471ffdb128e49ac5e833f1526cb2f2fc3b9f82332bcd8c95"
+  },
+  "hyper/docs/look-bible.md": {
+   "source": "proto/hyper/docs/look-bible.md",
+   "source_sha256": "7f748eb63f915968acf73c50a6d46bd42ee3e42495e10e59513e00cb78aa8809"
+  },
+  "hyper/hero/hero_finish.py": {
+   "source": "proto/hyper/hero/hero_finish.py",
+   "source_sha256": "f09f03a8cf2a9acdac1ec92bc650fa16eed5d50d0bd643e55b6281530f169e16",
+   "edited": "paths",
+   "sha256": "ce58b4239d8a8acf1b3c07fead4fcfaa70fa1420852ec6d223b3939e11042b97"
+  },
+  "hyper/hero/hero_render.py": {
+   "source": "proto/hyper/hero/hero_render.py",
+   "source_sha256": "14d04a13509bf8fa34c6cc111298f00c2506fc062949da9dfd72cd88e0446411"
+  },
+  "hyper/hero/plates/hero-receipt.json": {
+   "source": "proto/hyper/out/hero-receipt.json",
+   "source_sha256": "88bd9937f442af8f27cec018aee74fcf65fb7823d7d194ddd2e16470e46ac37d",
+   "edited": "redaction",
+   "sha256": "90e40698b39b80da4e1e44052f636348f0ccdca5cbafd5cdcfaf9b4d2dd2c855"
+  },
+  "hyper/hero/plates/poster-tall-plate.webp": {
+   "source": "proto/hyper/out/poster-tall-plate.webp",
+   "source_sha256": "2f7af247fe3b518201012a1570b74cb90e6ad52a8d902a48e1984e6b1254a73f"
+  },
+  "hyper/hero/plates/poster-wide-plate.webp": {
+   "source": "proto/hyper/out/poster-wide-plate.webp",
+   "source_sha256": "1e6ff1d09e3dbea8764e9344458e15ce1912f01e697909c40e53f6e5363d388a"
+  },
+  "hyper/page/index.html": {
+   "source": "proto/hyper/page/index.html",
+   "source_sha256": "0d28fa0d8e938139a017090729fb50310f9edbe6f4fae317cd12f2b24115bf4e"
+  },
+  "hyper/src/common.glsl": {
+   "source": "proto/hyper/src/common.glsl",
+   "source_sha256": "29004e0825e9a2412a961ed178bd55e7efac8cd3377aaec4d103171cade9f7c8"
+  },
+  "hyper/src/fiber.frag.glsl": {
+   "source": "proto/hyper/src/fiber.frag.glsl",
+   "source_sha256": "02de8a80af2fe13db1b19b6373bb8858834040508028ca17f8d57f0e52af23f3"
+  },
+  "hyper/src/fiber.vert.glsl": {
+   "source": "proto/hyper/src/fiber.vert.glsl",
+   "source_sha256": "c15cc78ac6454e2a5dd38ba875ef71598bd8970504c4e06c1264d46b6a4b9a2a"
+  },
+  "hyper/src/ray.vert.glsl": {
+   "source": "proto/hyper/src/ray.vert.glsl",
+   "source_sha256": "8ea8bd6c5f258527e2a8ee07e534bcdeb3db835a51438bef6bb179d538779b72"
+  },
+  "hyper/src/ring.frag.glsl": {
+   "source": "proto/hyper/src/ring.frag.glsl",
+   "source_sha256": "780f9f6dab4a5f7c15d3898972cfc0874a90a4b998c2daf80ac17052d216340a"
+  },
+  "hyper/src/ring.vert.glsl": {
+   "source": "proto/hyper/src/ring.vert.glsl",
+   "source_sha256": "76e407169949939632d84b9b03411adcc97f5427e77f5182e3d0eb0f16b1d2b8"
+  },
+  "hyper/src/seed.frag.glsl": {
+   "source": "proto/hyper/src/seed.frag.glsl",
+   "source_sha256": "8d35407da08b71b8fd38ac686ce294dde47702b487f41b6cba4768b207db8913"
+  },
+  "hyper/src/seedcore.frag.glsl": {
+   "source": "proto/hyper/src/seedcore.frag.glsl",
+   "source_sha256": "b989f924b3158fea76f7e84fc59d14475b34196d3167b668dd9ccd82c27b1a90"
+  },
+  "hyper/src/shell.frag.glsl": {
+   "source": "proto/hyper/src/shell.frag.glsl",
+   "source_sha256": "d034e458853cde21722b31119883b7b980c597d64817ae8a48e9ae12822d2482"
+  },
+  "hyper/src/sky.frag.glsl": {
+   "source": "proto/hyper/src/sky.frag.glsl",
+   "source_sha256": "fea601b35885658005bf8ac9e5c04a69ef5e46ce98d2e4ffbb74e548c3098fe9"
+  },
+  "hyper/src/sky.glsl": {
+   "source": "proto/hyper/src/sky.glsl",
+   "source_sha256": "40ca583127d15daefd3f494cab92dbefb8f847d4c0d8a7aec9992ee16fad2eb3"
+  },
+  "hyper/tools/build_camera_proof.py": {
+   "source": "proto/hyper/tools/build_camera_proof.py",
+   "source_sha256": "5bc2cb4c5bde3bdc65efd10bee0494d3553b884d04b21599b2dca0d7b0844a29",
+   "edited": "paths",
+   "sha256": "c53b31919282aa4aa4002b351c36c86d68aa6fbb3da196e1150cd3f617214f10"
+  },
+  "hyper/tools/debug_bind.js": {
+   "source": "proto/hyper/tools/debug_bind.js",
+   "source_sha256": "2c6ccaf8cac7eaa0677534f3e3dd9938a08a8b6341463ff79f51b8d3e5d9dedf"
+  },
+  "hyper/tools/debug_frame.js": {
+   "source": "proto/hyper/tools/debug_frame.js",
+   "source_sha256": "0e2abca6b27deea64f7ad6d047e7aec3948fa9e92eb8f4a6684b9fddbc0af427"
+  },
+  "hyper/tools/debug_hyper.js": {
+   "source": "proto/hyper/tools/debug_hyper.js",
+   "source_sha256": "96778dad9478e14ef1a7c3eb88a11b9a7e1666d76984c79bd54b9eccb5ac6856"
+  },
+  "hyper/tools/debug_roll.js": {
+   "source": "proto/hyper/tools/debug_roll.js",
+   "source_sha256": "9209ed156240afbc5f675badc20fdae7c124f55f0e1992d0e08d45d4647becfe"
+  },
+  "hyper/tools/drive_camera.js": {
+   "source": "proto/hyper/tools/drive_camera.js",
+   "source_sha256": "4707913a759d27922945152d108758d51a7f18cfeae6a857a99473c41bccd8aa"
+  },
+  "hyper/tools/finish_receipt.py": {
+   "source": "proto/hyper/tools/finish_receipt.py",
+   "source_sha256": "699ad099b80088e5530c85ec6b4fbd19f31d94ae85b0eee377f08c16d35906b6",
+   "edited": "paths",
+   "sha256": "f8568bcaa3d2f735a1bf38356fe3f28d4f73670cc5b9eb6a6764261006861d6b"
+  },
+  "hyper/tools/gate_hyper.js": {
+   "source": "proto/hyper/tools/gate_hyper.js",
+   "source_sha256": "af894431aa1bef733b2fb76c013f6827dda799434cc3017aed11a3cfcd497fde",
+   "edited": "paths",
+   "sha256": "154dabbbd2fffc44588624b6cb50fbfee94c566a84e7ef3e48a831f4823fff67"
+  },
+  "hyper/tools/hyper_csp_gate.js": {
+   "source": "proto/hyper/tools/hyper_csp_gate.js",
+   "source_sha256": "0319cbac0b803532613a5334da44766d377ed5df953fbdf9ee87fd865dcf637d"
+  },
+  "hyper/tools/probe_look.js": {
+   "source": "proto/hyper/tools/probe_look.js",
+   "source_sha256": "cf2dbf65414bc2ea4d115f6fbd294d7596dc2c1788ddd6fd1b37596e61d8ac38",
+   "edited": "paths",
+   "sha256": "a0783c4a09d34d373bac29c75a5196fa7954df8a72616a66e8e715e43db83094"
+  },
+  "hyper/tools/scene_stats.py": {
+   "source": "proto/hyper/tools/scene_stats.py",
+   "source_sha256": "4c704e12194661bcee3853ef695753aeae3bd7126895c7ddf58dba9ab7969c8b"
+  },
+  "hyper/tools/xite_probe.js": {
+   "source": "proto/hyper/tools/xite_probe.js",
+   "source_sha256": "fd0c553c482d5e3899730ccfda44beb52074dcab7572c8101b4a33ce87533db0"
+  },
+  "ingest/build.py": {
+   "source": "proto/ingest/build.py",
+   "source_sha256": "e1941b3d6dd2343069cce239b55a4ba401f79f8e3fd7539987daf669e0e7fff8"
+  },
+  "ingest/check_jsonld.py": {
+   "source": "proto/ingest/check_jsonld.py",
+   "source_sha256": "852f806283cc632435afbc88b34bacdda36b82323fbfa9e6d222c4bbbba9ee1e"
+  },
+  "ingest/config/fixture.json": {
+   "source": "proto/ingest/config/fixture.json",
+   "source_sha256": "e99bc362d47ab6b990807a5ac5c31ea3ac9fe7ccaf4986388426a98587bfd2f5"
+  },
+  "ingest/config/merge.json": {
+   "source": "proto/ingest/config/merge.json",
+   "source_sha256": "c56c96bbad40e0f0cf9428a838646c977b604801fccc3c82a75a87db8d000827"
+  },
+  "ingest/config/sources.json": {
+   "source": "proto/ingest/config/sources.json",
+   "source_sha256": "b2738d960b203c3461ce3bd933758ac19f34f0950ddb0b3d8cba0b48440f63ca"
+  },
+  "ingest/curated/decisions.json": {
+   "source": "proto/ingest/curated/decisions.json",
+   "source_sha256": "332fe432ad2754a403ccc96556677ebcba0cecd336f48a1e884e5226774f15bc"
+  },
+  "ingest/curated/houses.json": {
+   "source": "proto/ingest/curated/houses.json",
+   "source_sha256": "62baa970a8c101401e2337a99f89e728c0df1980875172b0ff1ef19eecf67f93"
+  },
+  "ingest/curated/places.json": {
+   "source": "proto/ingest/curated/places.json",
+   "source_sha256": "888f1d45cd7fc31cdbb13b097f48857ef7024d296bb81b01e36975142919f656"
+  },
+  "ingest/exports.py": {
+   "source": "proto/ingest/exports.py",
+   "source_sha256": "87f4d1b8b5aa413490649f596b3b91063363208e8dbda29c742e3c4391d3862d"
+  },
+  "ingest/fixtures/synthetic-family.ged": {
+   "source": "proto/ingest/fixtures/synthetic-family.ged",
+   "source_sha256": "eb354b4468778199fc8a88455051a3926e86cd35a3df0ee33a0969bb5158873b"
+  },
+  "ingest/gates.py": {
+   "source": "proto/ingest/gates.py",
+   "source_sha256": "3e1eb93ee995179330d3e5143f7a6110438b5c848c9782a002bbbe7c34a10bb5"
+  },
+  "ingest/gdates.py": {
+   "source": "proto/ingest/gdates.py",
+   "source_sha256": "d68eff07096e2e778d8121b2508112a904d593f2cffd6951538470cd8448fc38"
+  },
+  "ingest/gedcom7.py": {
+   "source": "proto/ingest/gedcom7.py",
+   "source_sha256": "4f56c7ed692ce367985c5dd71a1b1244d2bd8a353a7eace342e768ac2a61998f"
+  },
+  "ingest/identity.py": {
+   "source": "proto/ingest/identity.py",
+   "source_sha256": "f3f10d4890534aed7e461b9f5f9cf4606e2b13a846a9b49523a62763b996549d"
+  },
+  "ingest/ingest.py": {
+   "source": "proto/ingest/ingest.py",
+   "source_sha256": "60f4087a66d183c7672b4cf32a5572c9282ff61262bb89891b01164123f00ad9"
+  },
+  "ingest/jsobj.py": {
+   "source": "proto/ingest/jsobj.py",
+   "source_sha256": "3e01fb850a6858936e244bff50c6254e05a684396b99a95eaa2a3a979bf98312"
+  },
+  "ingest/kinship.py": {
+   "source": "proto/ingest/kinship.py",
+   "source_sha256": "e6aedc08261c62ba0a83fdb77f55534ca0b771e58d3d5860a85bf73e330d63f8"
+  },
+  "ingest/loaders.py": {
+   "source": "proto/ingest/loaders.py",
+   "source_sha256": "38863602d50b210dcb3f7cc3b3ce34574a05e258f364ac7e15cd24d1bb806943"
+  },
+  "ingest/loomview.py": {
+   "source": "proto/ingest/loomview.py",
+   "source_sha256": "e1a6d12ea2838755b3457c58e0469bb9812820a76aeb96b351d792a1ae32cbf6"
+  },
+  "ingest/merge.py": {
+   "source": "proto/ingest/merge.py",
+   "source_sha256": "d3d4e2c3fe1e9cd501d27b459433ba4e43160c343821f8b1bbca4f9f04dd4626"
+  },
+  "ingest/resolve_wikidata.py": {
+   "source": "proto/ingest/resolve_wikidata.py",
+   "source_sha256": "cb612880dbcba8abcdf05c63aaee1091245ca66560d56c1f0abd94561880a38e"
+  },
+  "ingest/schema/genealogy-graph.schema.json": {
+   "source": "proto/ingest/schema/genealogy-graph.schema.json",
+   "source_sha256": "efdfc1a23167ebd1a2c8943986cf3f6749a5027621a795a061be07ca56ad696b"
+  },
+  "ingest/tests/test_proto.py": {
+   "source": "proto/ingest/tests/test_proto.py",
+   "source_sha256": "ed77590728119f034a6983a58d3b06db1569d101424fd5ad19261a2a9f031c80"
+  },
+  "reports/01-audit.md": {
+   "source": "reports/01-audit.md",
+   "source_sha256": "5e4708ca11640964888c23f7c262f61b221344be42851d1e393fda4e1acacf99",
+   "edited": "redaction",
+   "sha256": "97851e44a62a80812615434c22e5a8a5d234a42a6f6bcccbc986f4e9da9424e6"
+  },
+  "reports/02-data-model.md": {
+   "source": "reports/02-data-model.md",
+   "source_sha256": "af96cdf42d9e58852063fd4194f3ecc08adf526dc946fbfb00718485b159656d",
+   "edited": "redaction",
+   "sha256": "1ab3218a38318da77cee1559e3e89ee3c7176efd654ef5232cab59ba48d35428"
+  },
+  "reports/03-facts.md": {
+   "source": "reports/03-facts.md",
+   "source_sha256": "2af01662e3983f17c3fea53bdf8722f590af09d74b0bbbed505a4e292ce16563",
+   "edited": "redaction",
+   "sha256": "98e99406a3487b4fdc82be61fdc0b004d7175c150568512a74fe1f3b3060da9f"
+  },
+  "reports/04-x3d-scene.md": {
+   "source": "reports/04-x3d-scene.md",
+   "source_sha256": "3961607691f33d9e980542eacb8aef9b5150a8b2348b165cac7b36a6404b27b6",
+   "edited": "redaction",
+   "sha256": "9fcb8283bc9012cc9a0ccd805cb361137a79bb5f2e2282e84c5278b001f83c20"
+  },
+  "reports/05-gates-flywheel.md": {
+   "source": "reports/05-gates-flywheel.md",
+   "source_sha256": "5ca6814e38bf7c5b7fcb63125d099b32082e98917a54cef4e30e820fb2d4e1d8",
+   "edited": "redaction",
+   "sha256": "c9a66c0e2e9e5eaea3413b05a12a0114cd0a4ac8239426d5a36ae9a7f40f39ed"
+  },
+  "reports/06-bake.md": {
+   "source": "reports/06-bake.md",
+   "source_sha256": "21f5e84cc88543fd9c2953ddd6d276b591f8eb1f5d11eb508facdd3519941cfb"
+  },
+  "reports/07-narrative-ux.md": {
+   "source": "reports/07-narrative-ux.md",
+   "source_sha256": "9f9a21ea8cdf181dc9aef4841bad1c1833f20aded914a046255bcf587009ea73",
+   "edited": "redaction",
+   "sha256": "0468d6eb4a5a611f19f3575f8bb711db10921872184176982b848a91a3d384d7"
+  },
+  "reports/08-merge.md": {
+   "source": "reports/08-merge.md",
+   "source_sha256": "e4a2d9adab3b5cc1b26c6bf6d414835d516f2eed3687e87b30303582493427f5"
+  },
+  "reports/09-scene.md": {
+   "source": "reports/09-scene.md",
+   "source_sha256": "b2340ca3c48c5e6bae7deb1f3874f66ffc3233493658879e0729ad83f1583921"
+  },
+  "reports/10-hypersphere.md": {
+   "source": "reports/10-hypersphere.md",
+   "source_sha256": "1f9b717ca194c70a67608cff7c289e30c582abad9c522ae77a8822af09daaca3"
+  },
+  "tapestry/build_loom_scene.py": {
+   "source": "proto/scene2/build_loom_scene.py",
+   "source_sha256": "2584c7d3420e724ffd098b2589bcdf3c140ab009e19a8ac5ffc30d72ffc89b38",
+   "edited": "paths; build date as an input (--date, SOURCE_DATE_EPOCH)",
+   "sha256": "34b852484f0069e96d6a5c73e2110fab916495f3bc286fe91d63e75ca98c8a2f"
+  },
+  "tapestry/page/loom.html": {
+   "source": "proto/scene2/page/loom.html",
+   "source_sha256": "418cf115f1eb9f1b1224663a23243e124df5e46c44923a881f1b4b74b4b4b718"
+  },
+  "tapestry/tools/artifact_csp_gate.js": {
+   "source": "proto/scene2/tools/artifact_csp_gate.js",
+   "source_sha256": "8a968a822467c6718a7b090394d5fd520c99cebe6c8760725508910813918607"
+  },
+  "tapestry/tools/gate_loom.js": {
+   "source": "proto/scene2/tools/gate_loom.js",
+   "source_sha256": "851d55e70682a015a8283fcdd7cf7a49f3a64eb530cf4658726e5ba14e9070fd",
+   "edited": "paths",
+   "sha256": "02a18663553a25671f8646b17900f8685bad27a15cb8f5136845054dfb391d4d"
+  },
+  "tapestry/tools/make_artifact.py": {
+   "source": "proto/scene2/tools/make_artifact.py",
+   "source_sha256": "49db4a7553676806f4e793530e935d7318692648d61a9ea2b90ce8e015303b68"
+  },
+  "tapestry/tools/merge_views.py": {
+   "source": "proto/scene2/tools/merge_views.py",
+   "source_sha256": "cda983680fbf30bad35a3ed31f3bbac051be7e99e67d7db08c5a3bad5d82d580"
+  },
+  "tapestry/tools/write_receipt.py": {
+   "source": "proto/scene2/tools/write_receipt.py",
+   "source_sha256": "e6df54fe2d3e2a69c83a80833b92edf18dde0a947bbd68430f6b8b2596a34c9a",
+   "edited": "paths",
+   "sha256": "011263b6ad0e66b2b3ebf06b42b0e74361778b4360c57be301863952abb70414"
+  },
+  "tools/validate_x3d.py": {
+   "source": "validate_x3d.py",
+   "source_sha256": "49c37ee81e3ee66f2375ad35bb3d87df98196058a6ce95d2c9c3ce56b0a6b814",
+   "edited": "paths",
+   "sha256": "e2705a831ad75f351af0d912e6c1841069b3899f8751098e8e94327e9716a60f"
+  },
+  "x3d/build_genealogy_x3d.py": {
+   "source": "proto/x3d/build_genealogy_x3d.py",
+   "source_sha256": "7ca314121297f33c0ee2d1aad9c79b92873fa9f7dee5f9d1203812b2c641d18d",
+   "edited": "build date as an input (--date, SOURCE_DATE_EPOCH)",
+   "sha256": "caba1b45ac0fd9be5a254392858f04973af855c4a38c5d85f5489bb90e6709f2"
+  },
+  "x3d/vendor/fonts/UBUNTU-FONT-LICENCE.txt": {
+   "source": "proto/x3d/vendor/fonts/UBUNTU-FONT-LICENCE.txt",
+   "source_sha256": "2f0015108d68627bd788d313f529c21ff4da2c2c42a5e1f3883acc83480f9002"
+  },
+  "x3d/vendor/fonts/UbuntuMono-R.ttf": {
+   "source": "proto/x3d/vendor/fonts/UbuntuMono-R.ttf",
+   "source_sha256": "4828d016e010938208340721dd53b9eaedca39c8cd62e38d6fbc11cd943c35cc"
+  }
+ }
+}

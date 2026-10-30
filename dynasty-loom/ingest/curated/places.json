@@ -1,0 +1,8 @@
+{
+  "_about": "Seats of the branches named in the `branch` field. Written from memory, not looked up (wikidata.org and geonames were not reachable from this session): coordinates are standard city-centre values, grade Likely and prov model_recall (x3d.onto V2-README: 'L likely (standard values from memory, models)'); the identifiers are recalled exact strings, so Suspected until tools/resolve_wikidata.py or a GeoNames lookup confirms them. Habsburg, Darwin and Wedgwood are house names, not places, and get no seat.",
+  "Frankfurt": {"label": "Frankfurt am Main", "lat": 50.1109, "lon": 8.6821, "wikidata": "Q1794", "geonames": "2925533", "grade": "Likely", "ids_grade": "Suspected", "prov": "model_recall", "note": "Judengasse, the family's first house"},
+  "Vienna": {"label": "Vienna", "lat": 48.2082, "lon": 16.3738, "wikidata": "Q1741", "geonames": "2761369", "grade": "Likely", "ids_grade": "Suspected", "prov": "model_recall"},
+  "London": {"label": "London", "lat": 51.5074, "lon": -0.1278, "wikidata": "Q84", "geonames": "2643743", "grade": "Likely", "ids_grade": "Suspected", "prov": "model_recall"},
+  "Naples": {"label": "Naples", "lat": 40.8518, "lon": 14.2681, "wikidata": "Q2634", "geonames": "3172394", "grade": "Likely", "ids_grade": "Suspected", "prov": "model_recall"},
+  "Paris": {"label": "Paris", "lat": 48.8566, "lon": 2.3522, "wikidata": "Q90", "geonames": "2988507", "grade": "Likely", "ids_grade": "Suspected", "prov": "model_recall"}
+}

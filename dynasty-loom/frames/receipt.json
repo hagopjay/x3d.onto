@@ -1,0 +1,113 @@
+{
+ "what": "curated stills of Dynasty Loom v3, shot by the live gates (hyper/tools/gate_hyper.js, tapestry/tools/gate_loom.js) on the merged two-view page in X_ITE 16.5.1 on SwiftShader, and the Blender Cycles posters; PNGs re-encoded as WebP (Pillow 12.3.0, quality 86, method 6); posters copied as made",
+ "frames": [
+  {
+   "file": "01-poster-wide.webp",
+   "caption": "Cycles hero still, wide, with the scale caption (hyper/hero/hero_finish.py)",
+   "source": "proto/hyper/out/poster-wide.webp",
+   "source_sha256": "83b3f70da95415801675b0e3bce5f684d419893a39a83b9f7293f219afa56150",
+   "source_mtime_utc": "2026-10-30T11:49Z",
+   "sha256": "83b3f70da95415801675b0e3bce5f684d419893a39a83b9f7293f219afa56150",
+   "bytes": 104334
+  },
+  {
+   "file": "02-poster-tall.webp",
+   "caption": "Cycles hero still, tall, with the scale caption",
+   "source": "proto/hyper/out/poster-tall.webp",
+   "source_sha256": "2efae35a78a539b6abb8aad3448d86b589e4efccd9ce9bec3e97eab50fba8418",
+   "source_mtime_utc": "2026-10-30T11:49Z",
+   "sha256": "2efae35a78a539b6abb8aad3448d86b589e4efccd9ce9bec3e97eab50fba8418",
+   "bytes": 111084
+  },
+  {
+   "file": "03-rothschild-hyper-wide.webp",
+   "caption": "Hypersphere, Rothschild, tour stop 12 (Wide), desktop",
+   "source": "proto/hyper/frames/merged/rothschild-S11-Wide.png",
+   "source_sha256": "4a56d33dfef36a37c1b62f0de9b555c6b0f643d923f318c8f83dbb2677cfde86",
+   "source_mtime_utc": "2026-10-30T17:12Z",
+   "sha256": "740670265715d955420b073e68921c06f794e0a341fef18c00b01783e1627383",
+   "bytes": 131136
+  },
+  {
+   "file": "04-rothschild-hyper-close.webp",
+   "caption": "Hypersphere, Rothschild, tour stop 5 (EyeToEye close shot), desktop",
+   "source": "proto/hyper/frames/merged/rothschild-S04-EyeToEye.png",
+   "source_sha256": "b67c9e721479faaf24e823c62d873d24e9582cbb27731c862d83b2a7bb67f55a",
+   "source_mtime_utc": "2026-10-30T17:07Z",
+   "sha256": "6028e42aa60f2a7c7efc56c9ebee50111ad7b6fea6b1781827f3cb94443b499d",
+   "bytes": 95732
+  },
+  {
+   "file": "05-habsburg-hyper-wide.webp",
+   "caption": "Hypersphere, Habsburg, tour stop 8 (Wide), desktop",
+   "source": "proto/hyper/frames/merged/habsburg-S07-Wide.png",
+   "source_sha256": "833a2c8d1964eeedb559a0bd7138fca82d083da69e58c77f22a4b93c04fe922e",
+   "source_mtime_utc": "2026-10-30T16:50Z",
+   "sha256": "0d652f3e5b3dc3895876e640443a9e28bab9c0ea0d1774d2f11470f7e547725c",
+   "bytes": 130828
+  },
+  {
+   "file": "06-habsburg-hyper-close.webp",
+   "caption": "Hypersphere, Habsburg, tour stop 5 (EyeToEye close shot), desktop",
+   "source": "proto/hyper/frames/merged/habsburg-S04-EyeToEye.png",
+   "source_sha256": "7298328d414df326944bd83d8cc7fc15728192636186eaad17d7e8d88644604a",
+   "source_mtime_utc": "2026-10-30T17:29Z",
+   "sha256": "14c9da1c7152908a4188f535aa9c550b3edfa8cbebe0a471f0d5b30cf99fa07c",
+   "bytes": 81972
+  },
+  {
+   "file": "07-darwin_wedgwood-hyper-wide.webp",
+   "caption": "Hypersphere, Darwin-Wedgwood, tour stop 8 (Wide), desktop",
+   "source": "proto/hyper/frames/merged/darwin_wedgwood-S07-Wide.png",
+   "source_sha256": "dd48a2f984522868edf718ad4dcbde11e8e08f323fa77f4cbf75ab2c808a75eb",
+   "source_mtime_utc": "2026-10-30T16:55Z",
+   "sha256": "dcf145dc63dd4e20e91e2336d539385150657f0963b449a2df9794b0cda16041",
+   "bytes": 113874
+  },
+  {
+   "file": "08-darwin_wedgwood-hyper-close.webp",
+   "caption": "Hypersphere, Darwin-Wedgwood, tour stop 5 (EyeToEye close shot), desktop",
+   "source": "proto/hyper/frames/merged/darwin_wedgwood-S04-EyeToEye.png",
+   "source_sha256": "0ac60a152bcb6dde0d79740eb73819870b29f3b77d3207de487012c5e40b23a0",
+   "source_mtime_utc": "2026-10-30T16:53Z",
+   "sha256": "b7530fe21d77ebe3ffd791e0032398ecd0244132f526415c8cc599a0bcbf7824",
+   "bytes": 85672
+  },
+  {
+   "file": "09-phone-rothschild-hyper.webp",
+   "caption": "Hypersphere, Rothschild, opening (Host), phone 390x844",
+   "source": "proto/hyper/frames/merged/phone-rothschild-S00-Host.png",
+   "source_sha256": "1019c7e005e21019efb79002087f84e5435ae59def8d89d3dbff6b7218a2f8f0",
+   "source_mtime_utc": "2026-10-30T16:57Z",
+   "sha256": "182b1b78e42cc6260f176d63d52c72d83817586fbdba8acf1b6c9b4451148c84",
+   "bytes": 34546
+  },
+  {
+   "file": "10-rothschild-loom-wide.webp",
+   "caption": "Loom tapestry, Rothschild, stop 13 (wide), desktop",
+   "source": "proto/scene2/frames/merged/rothschild-13-wide.png",
+   "source_sha256": "c5962c094da6e9a061ed48ce39966c84f67a4f626cec60063f682881d1e4ef7d",
+   "source_mtime_utc": "2026-10-30T15:38Z",
+   "sha256": "1c9f45fd3492c9c81ccbfd82b73db40a07118cf12033564f70da4e8b482691a5",
+   "bytes": 85312
+  },
+  {
+   "file": "11-rothschild-loom-doubles.webp",
+   "caption": "Loom tapestry, Rothschild, stop 6 (the weft doubles back), desktop",
+   "source": "proto/scene2/frames/merged/rothschild-6-doubles.png",
+   "source_sha256": "4a294bc654fcd67df91f44afcac80690b0fdb83fbc9a12f1f498bee4a6cf2c94",
+   "source_mtime_utc": "2026-10-30T15:38Z",
+   "sha256": "2a14b2e4b11085fbc8dd9847f5aa95e4489891d9f8714ed5f950371b3d818aac",
+   "bytes": 72056
+  },
+  {
+   "file": "12-phone-rothschild-loom.webp",
+   "caption": "Loom tapestry, Rothschild, stop 1 (cloth), phone 390x844",
+   "source": "proto/scene2/frames/merged/phone-rothschild-1-cloth.png",
+   "source_sha256": "4d98d97002ca68eac6e624f2115eed856c9cd6f73836ce4a4dc150d52d1b035b",
+   "source_mtime_utc": "2026-10-30T15:40Z",
+   "sha256": "a44e95d501b8c411822bfbf000d0caeb0347ca66c09fd676c7ccb2725bdcbf49",
+   "bytes": 33602
+  }
+ ]
+}
