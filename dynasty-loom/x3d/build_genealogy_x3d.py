@@ -2,7 +2,9 @@
 """Genealogy loom (prototype): family-tree JSON (the roths/data/trees/*.json schema) -> one X3D 4.0 scene for X_ITE, its anchors and a receipt.
 Generated, seeded by nothing (fully deterministic), standard library only. Never hand-edit the .x3d: change this file and rebuild.
 
-    python3 -I build_genealogy_x3d.py TREE.json [TREE.json ...] [--out DIR] [--name genealogy] [--validate] [--x3d-mcp DIR]
+    python3 -I build_genealogy_x3d.py TREE.json [TREE.json ...] [--out DIR] [--name genealogy] [--validate] [--x3d-mcp DIR] [--date YYYY-MM-DD]
+
+The build date stamped into the scene (generator and created metas) is --date, else SOURCE_DATE_EPOCH (UTC), else today: build_date().
 
 Trees that share an `id` are merged: the first file wins for a member it already has, later files only add members (every field that
 disagrees is listed in the receipt under data.conflicts). Trees with other ids become further bolts on the same time axis.
@@ -33,6 +35,16 @@ from xml.etree import ElementTree as ET
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 PI = math.pi
+
+
+def build_date(argv=None):
+    """The date a generator stamps into its scenes: --date YYYY-MM-DD, else SOURCE_DATE_EPOCH (UTC), else today. A rebuild that passes the
+    release's date is byte-identical on any day (tools/rebuild.py does)."""
+    a = sys.argv[1:] if argv is None else argv
+    if '--date' in a: return datetime.date.fromisoformat(a[a.index('--date') + 1])
+    sde = os.environ.get('SOURCE_DATE_EPOCH', '').strip()
+    if sde: return datetime.datetime.fromtimestamp(int(sde), datetime.timezone.utc).date()
+    return datetime.date.today()
 
 # ---------------------------------------------------------------- parameters (scene units; one unit is nothing physical)
 TS = 0.07                  # units per year along +X
@@ -472,7 +484,7 @@ def morph_keys():
 def build(datasets, title):
     order, L = layout(datasets)
     S = Scene(); A = dict(persons={}, viewpoints={}, loops=[], datasets={})
-    stamp = datetime.date.today().isoformat()
+    stamp = build_date().isoformat()
     n_people = sum(len(L[d['id']]['ids']) for d in order)
 
     # ---------- the people, the lifts, the wefts, the loops: geometry for both layouts
@@ -835,7 +847,7 @@ def main():
     open(path, 'wb').write(raw); gz = gzip.compress(raw, 9, mtime=0); open(path + '.gz', 'wb').write(gz)
     json.dump(A, open(os.path.join(out_dir, name + '-anchors.json'), 'w', encoding='utf-8'), indent=1, ensure_ascii=False)
     stats = count_scene(root)
-    rec = dict(file=name + '.x3d', bytes=len(raw), gz_bytes=len(gz), sha256=hashlib.sha256(raw).hexdigest(), generated=datetime.date.today().isoformat(),
+    rec = dict(file=name + '.x3d', bytes=len(raw), gz_bytes=len(gz), sha256=hashlib.sha256(raw).hexdigest(), generated=build_date().isoformat(),
                generator=dict(file=os.path.basename(__file__), sha256=hashlib.sha256(open(__file__, 'rb').read()).hexdigest()), **stats,
                static_checks=dict(ok=not errs, errors=errs[:20], checks=['well-formed (ElementTree)', 'DEF unique per namespace', 'USE after DEF', 'ROUTE after both nodes']),
                data=dict(datasets={d['id']: dict(name=d['name'], people=len(d['members']), sources=d['sources'], added_per_source=d['added'],

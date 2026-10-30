@@ -339,8 +339,8 @@
   "tapestry/build_loom_scene.py": {
    "source": "proto/scene2/build_loom_scene.py",
    "source_sha256": "2584c7d3420e724ffd098b2589bcdf3c140ab009e19a8ac5ffc30d72ffc89b38",
-   "edited": "paths",
-   "sha256": "0d39cc99b131634a7c139b7193412636e275089df39d379445322bdf06ab099f"
+   "edited": "paths; build date as an input (--date, SOURCE_DATE_EPOCH)",
+   "sha256": "34b852484f0069e96d6a5c73e2110fab916495f3bc286fe91d63e75ca98c8a2f"
   },
   "tapestry/page/loom.html": {
    "source": "proto/scene2/page/loom.html",
@@ -378,7 +378,9 @@
   },
   "x3d/build_genealogy_x3d.py": {
    "source": "proto/x3d/build_genealogy_x3d.py",
-   "source_sha256": "7ca314121297f33c0ee2d1aad9c79b92873fa9f7dee5f9d1203812b2c641d18d"
+   "source_sha256": "7ca314121297f33c0ee2d1aad9c79b92873fa9f7dee5f9d1203812b2c641d18d",
+   "edited": "build date as an input (--date, SOURCE_DATE_EPOCH)",
+   "sha256": "caba1b45ac0fd9be5a254392858f04973af855c4a38c5d85f5489bb90e6709f2"
   },
   "x3d/vendor/fonts/UBUNTU-FONT-LICENCE.txt": {
    "source": "proto/x3d/vendor/fonts/UBUNTU-FONT-LICENCE.txt",

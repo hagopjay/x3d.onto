@@ -48,13 +48,13 @@ Both views have:
 | Folder | What it holds | Original workspace path |
 |---|---|---|
 | `data/` | the build's only input, its contract, its ingest receipt, the data issues | `proto/merged/`, `proto/contracts/` |
-| `ingest/` | the pipeline that wrote the data, with its config, curated decisions, schema, tests and the GEDCOM 7 prototype (`gedcom7.py`, with a fictional fixture in `fixtures/`) | `proto/ingest/` |
+| `ingest/` | the pipeline that wrote the data, with its config, curated decisions, schema, tests and the GEDCOM 7 prototype (`gedcom7.py`, with a fictional fixture in `fixtures/`). Every person in `fixtures/synthetic-family.ged` is invented. Two of them, `@I10@` Kit /Example/ (born 1962) and `@I12@` Lee /Example/ (born 1995), have no death on purpose: they are the living-filter cases that `tests/test_proto.py` (`test_fixture_privacy`) checks are withheld | `proto/ingest/` |
 | `tapestry/` | the loom generator, the loom page, the page merge, the publish stage and the live gates | `proto/scene2/` |
 | `hyper/` | the hypersphere generator, its GLSL (`src/`), its page, its tools and gates, its docs (look bible, camera grammar), the Cycles hero-still scripts and the two plates the page shows while loading (`hero/plates/`) | `proto/hyper/` |
 | `x3d/` | `build_genealogy_x3d.py` (the first, drum generator; the loom imports its helpers), the Ubuntu Mono TTF label font and its licence; `vendor/x_ite/` is fetched, not committed | `proto/x3d/` |
 | `gates/` | `lookgates.py` (frame gates), `datagates.py` (used by ingest), the source gates | `proto/gates/` |
 | `release/v3/` | the published file set without `x_ite/`; `SHA256SUMS` for all 87 published files, `x_ite/` included; `publish.json` (the Artifact files map, with relative paths); `receipt.json` (the publish stage's receipt, as published) | the published file set |
-| `tools/` | `vendor_xite.py`, `rebuild.py`, `validate_x3d.py` (the x3d_mcp fork validator wrapper) | new; `validate_x3d.py` from the workspace |
+| `tools/` | `vendor_xite.py`, `rebuild.py`, `serve_local.py` (view a release locally), `validate_x3d.py` (the x3d_mcp fork validator wrapper) | new; `validate_x3d.py` from the workspace |
 | `frames/` | 12 curated stills (WebP) with `receipt.json` (source and sha256 of each) | gate frames, Cycles posters |
 | `reports/` | the project reports 01 to 10 | the workspace reports |
 | `provenance.json` | every file copied from the workspace: its source path, its sha256 at copy time, and whether it was edited for repo paths | new |
@@ -76,6 +76,8 @@ python3 -I dynasty-loom/tools/vendor_xite.py   # X_ITE 16.5.1 from the npm tarba
 python3 -I dynasty-loom/tools/rebuild.py       # merge -> loom -> hypersphere -> publish stage into dynasty-loom/build/, then compares with release/v3
 ```
 
+`rebuild.py` also takes `--out DIR`, `--release DIR`, `--validate` and `--date YYYY-MM-DD` (see the build date below).
+
 `vendor_xite.py` does three things:
 
 - It fetches X_ITE and checks the tarball against its pinned sha256 (`f93bc35f…71be5`).
@@ -85,7 +87,7 @@ python3 -I dynasty-loom/tools/rebuild.py       # merge -> loom -> hypersphere ->
 `rebuild.py` runs the stages in order, each as its own `python3 -I` process:
 
 1. `tapestry/tools/merge_views.py` builds `tapestry/page/index.html` from `tapestry/page/loom.html` and `hyper/page/index.html`.
-2. `tapestry/build_loom_scene.py data/loom-view.json --out build/tapestry`.
+2. `tapestry/build_loom_scene.py data/loom-view.json --out build/tapestry --date 2026-10-30`.
 3. `hyper/build_hypersphere.py --cards build/tapestry --out build/hyper`.
 4. It copies the two Blender plates in.
 5. `tapestry/tools/make_artifact.py --out build/tapestry --hyper build/hyper --artifact build/artifact`.
@@ -94,14 +96,34 @@ It then compares every published path by sha256, and compares `receipt.json` fie
 
 Generated files are git-ignored and never edited by hand: `tapestry/page/index.html`, `*/out/`, `build/`. Change a generator, `hyper/src/`, a page source or the data, then rebuild. The two loading plates come from `hyper/hero/` (Blender 5.2.3 Cycles, `hero_render.py`, then `hero_finish.py`). They are committed rather than re-rendered.
 
-**Reproducibility caveat:** the loom scenes carry the build date (`<meta name='created'>` and the `generator` meta). A rebuild on another day differs in those two lines of the three loom `.x3d` files and nowhere else.
+**Build date.** The three loom scenes (`rothschild.x3d`, `habsburg.x3d`, `darwin_wedgwood.x3d`) carry a build date in two lines: `<meta name='created'>` and the `generator` meta. The date is an input:
+
+- `build_loom_scene.py` (and the drum generator `x3d/build_genealogy_x3d.py`) take `--date YYYY-MM-DD`. Without it they use `SOURCE_DATE_EPOCH` (UTC), and without that, today.
+- `rebuild.py` reads the date from the release's loom scenes (2026-10-30 for v3) and passes it on, so the rebuild is byte-identical on any day. `--date` overrides it.
+
+If you run `build_loom_scene.py` by hand on another day without `--date`, those two lines differ in the three loom scenes. Then the publish stage's `receipt.json` also differs in three more fields: `files/rothschild.x3d/sha256`, `files/habsburg.x3d/sha256` and `files/darwin_wedgwood.x3d/sha256`.
+
+## View locally
+
+```sh
+python3 -I dynasty-loom/tools/serve_local.py     # after vendor_xite.py; then open http://127.0.0.1:8000/  (--port N, --release DIR)
+```
+
+`release/v3/index.html` is an Artifact page fragment, with no doctype and no charset, because the host wraps it in its own document. A plain static server such as `python3 -m http.server` sends it bare. The page still loads, but the browser renders it in quirks mode and reads its UTF-8 text as windows-1252, so the bullets and dashes come out garbled. `serve_local.py` does what the host does:
+
+- It wraps the page in a standards-mode skeleton with `<meta charset="utf-8">`, the same skeleton as `artifact_csp_gate.js`, without the CSP.
+- It serves only the paths in `publish.json`, with the content types listed there.
+- It binds 127.0.0.1 only.
+
+It never changes the files on disk.
 
 ## Gate
 
 ```sh
 cd dynasty-loom
+export X3D_MCP=/path/to/x3d_mcp      # the x3d_mcp checkout: its XSD and its validator
 xmllint --noout --schema "$X3D_MCP/src/validation/schemas/x3d-4.0.xsd" release/v3/*.x3d
-X3D_MCP=/path/to/x3d_mcp  /path/to/python-with-lxml -I tools/validate_x3d.py release/v3/*.x3d
+/path/to/python-with-lxml -I tools/validate_x3d.py release/v3/*.x3d
 python3 -I ../gobbler-demiurge/tools/loom_gate.py release/v3/*.x3d
 NODE_PATH=/opt/node-tools/node_modules node tapestry/tools/artifact_csp_gate.js --artifact=release/v3   # Chromium path: GEN_CHROME
 ```
@@ -130,12 +152,14 @@ The page is `release/v3/index.html`. The files map is `release/v3/publish.json`:
 |---|---|---|
 | `release/v3/` plus the vendored `x_ite/` is byte-identical to the published v3: all 87 files match `SHA256SUMS`, which was written from the frozen v3 set. That set also matches the per-file sha256 in `receipt.json`. | Confirmed | sha256 (Python hashlib) |
 | A clean export of this folder rebuilds all 87 published files byte-identically. `receipt.json` differs only in `source` and `hyper_source`, the output paths. `make_artifact.py` is byte-identical to the v3 script, and its sha256 matches the receipt's `script` field. | Confirmed | `tools/rebuild.py` on a `git checkout-index` export, with `vendor_xite.py` |
+| The rebuild holds on any day. With the clock faked to 2026-11-02 in `rebuild.py` and in every stage it starts, it still matched all 87 files, because it passed the release's date (2026-10-30). The control run without `--date` stamped 2026-11-02 and changed the three loom scenes. `SOURCE_DATE_EPOCH` gives the same result as `--date`. | Confirmed | `tools/rebuild.py` and `build_loom_scene.py` under a `datetime.date.today()` patch, compared by sha256 |
+| Served by `tools/serve_local.py`, `release/v3` renders in standards mode with UTF-8 text on desktop (1527×923, light) and phone (400×860, dark). Both views load all 3 families from the same-origin X_ITE, and all 8 hypersphere shaders compile. The console is empty and no request fails. | Confirmed | Playwright, Chromium 153.0.8010.12, SwiftShader |
 | The 9 `.x3d` files validate against x3d-4.0.xsd. | Confirmed | xmllint (libxml 20914) |
 | The 9 `.x3d` files have 0 errors and 0 warnings from the fork validator, with XSD and profile ok. Info lines are 16 to 112 per file. | Confirmed | x3d_mcp fork `acdf5c4`, `tools/validate_x3d.py` |
 | The x3d.onto Loom gate finds 0 errors in the 9 files. It reports 6 `glsl-logdepth` warnings and 59 precision infos; the warnings are the SeedGlow and ShellShader in each pocket, which write `gl_FragDepth`. | Confirmed | `gobbler-demiurge/tools/loom_gate.py` at x3d.onto `77ae473` (PR #4 branch, sha256 `ec08ef75…`) |
 | The same gate at this branch's base (`2fed4ee`) also finds 0 errors. It adds 6 `glsl-int-literal` warnings on `smoothstep(0, …)` in SkyFS and ShellFS, a false alarm that PR #4 fixes. | Confirmed | `gobbler-demiurge/tools/loom_gate.py` at `2fed4ee` |
 | The Artifact CSP gate passes on desktop light 1527×923 and phone dark: 19 of 19 checks each. The console is clean apart from three known-harmless entries:<br>• X_ITE's PT Sans UI font, refused by `font-src`;<br>• mikktspace `wasm-eval`;<br>• the local server's `favicon.ico` 404. | Confirmed (local strict-CSP copy); Likely on the real host | `artifact_csp_gate.js`, Chromium 153.0.8010.12, Playwright 1.63.0, node 22.22.0, SwiftShader |
-| No possibly-living person is in `data/`, the cards, `.hyper.json` or any committed JSON. | Confirmed | make_artifact's rule, re-run over every committed JSON |
+| No possibly-living real person is in any committed file. `data/`, the cards, `.hyper.json` and every other committed JSON hold none. The only people in the repo born within 110 years with no death are the two invented living-filter cases in `ingest/fixtures/synthetic-family.ged` (`@I10@` and `@I12@`; see Layout). | Confirmed | make_artifact's rule, re-run over every committed JSON; the fixture parsed; `python3 -I ingest/tests/test_proto.py EndToEnd.test_fixture_privacy` passes in a clean export |
 | No secrets: no key-shaped strings, private keys or assigned API keys. | Confirmed | regex scan of every committed text file |
 | No AI model names are in the committed files. | Confirmed | regex scan of every committed text file |
 | The hypersphere's live gate on the merged page passed 175 of 175 checks with a clean console (run 3). | Confirmed | `hyper/tools/gate_hyper.js --artifact` (report 10) |
@@ -147,6 +171,7 @@ The page is `release/v3/index.html`. The files map is `release/v3/publish.json`:
 
 - The opening caption still describes the tapestry's "upright threads".
 - The caption panel is too tall.
+- At 1280×800 and 1366×768 the hypersphere's stop rail overlaps the header. The header wraps to two rows and ends at y = 88, while the first stop ('1 Cloth') starts at y = 70 and covers the corner of the Darwin–Wedgwood button. At 1527×923 the header is one row and there is no overlap. The CSP gate runs only 1527×923 and 400×860, so it does not catch this. The fix is to place the rail below the header's measured height and to add both sizes to the gate. Both change the published page, so they wait for the next version. (Confirmed: Playwright measuring the header and the first stop.)
 - The landing inside the glass is muddy.
 - The camera-smoothness checks can flake on the software renderer (see above).
 - Once both views have been opened, two WebGL contexts stay alive. Phone memory is untested.
@@ -162,7 +187,8 @@ The page is `release/v3/index.html`. The files map is `release/v3/publish.json`:
   - `LOOM_FORK_PYTHON` and `LOOM_GATE_PYTHON` for the validator's and gates' Python;
   - `LOOM_BPY_VENV`, used only as a label.
 
-  The edited files are `tapestry/build_loom_scene.py`, `hyper/build_hypersphere.py` (two defaults), `hyper/hero/hero_finish.py`, `hyper/tools/{finish_receipt.py, build_camera_proof.py, gate_hyper.js, probe_look.js}`, `tapestry/tools/{gate_loom.js, write_receipt.py}` and `tools/validate_x3d.py`. `provenance.json` lists each one with its original sha256. Every other script is byte-identical to the one that built v3.
+  The edited files are `tapestry/build_loom_scene.py`, `hyper/build_hypersphere.py` (two defaults), `hyper/hero/hero_finish.py`, `hyper/tools/{finish_receipt.py, build_camera_proof.py, gate_hyper.js, probe_look.js}`, `tapestry/tools/{gate_loom.js, write_receipt.py}` and `tools/validate_x3d.py`. `provenance.json` lists each one with its original sha256. Every other script is byte-identical to the one that built v3, except for the build-date change below.
+- **Build date as an input** (after review). `tapestry/build_loom_scene.py` and `x3d/build_genealogy_x3d.py` read `--date` or `SOURCE_DATE_EPOCH` instead of always using today. The default is still today, and the published bytes do not change: the rebuild above matches all 87 files. The tapestry stage's own receipt records both dates, `generated` (the day it ran) and `build_date` (the date stamped into the scenes).
 - **Reports and the hero receipt.** Absolute workspace paths were shortened to `scratchpad/…`. In reports 01 and 07, the names of the AI models behind some of the original upload's documents were replaced with `[model]`.
 - **Left out:**
   - the uploaded zip and anything copied from it;

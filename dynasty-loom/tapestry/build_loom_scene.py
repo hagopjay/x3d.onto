@@ -3,7 +3,10 @@
 a manifest the page reads, the page itself (copied from page/index.html after a check) and a receipt. Deterministic, standard library only.
 Never hand-edit an output: change this script (or the data) and rebuild.
 
-    python3 -I build_loom_scene.py [LOOM_VIEW.json] [--out DIR] [--validate] [--frame-url URL]
+    python3 -I build_loom_scene.py [LOOM_VIEW.json] [--out DIR] [--validate] [--frame-url URL] [--date YYYY-MM-DD]
+
+The build date in each scene's generator and created metas is --date, else SOURCE_DATE_EPOCH (UTC), else today (drum.build_date);
+tools/rebuild.py passes the release's date, so a rebuild matches the release on any day.
 
 LOOM_VIEW defaults to data/loom-view.json when it exists, else the development adapter's dev/loom-view.json (adapt_harvest.py).
 The merged file is read unchanged.
@@ -1057,7 +1060,7 @@ def build_family(F, view, asof, frame_url=None):
             pc = L['T'][x]['pieces'][0]; c0 = (pc['x'], Y(P[x]['born']), pc['z'] + 0.02); r = size_for(13.0, c0, cam)
             st['rings'].append([(c0[0] + r * math.cos(2 * math.pi * k / 24), c0[1] + r * math.sin(2 * math.pi * k / 24), c0[2]) for k in range(25)])
     # ---- write
-    stamp = datetime.date.today().isoformat()
+    stamp = drum.build_date().isoformat()
     S = []
     w = lambda s, ind=4: S.append(' ' * ind + s)
     head = ["<?xml version='1.0' encoding='UTF-8'?>",
@@ -1357,8 +1360,8 @@ def main():
     view, raw, errs, warns = load_view(src)
     if errs: raise SystemExit('loom-view contract errors:\n  ' + '\n  '.join(errs[:30]))
     view['_path'], view['_sha'] = src, sha(raw)
-    asof = int(view.get('asof') or datetime.date.today().year)
-    rec = dict(generated=datetime.date.today().isoformat(), contract='proto/contracts/loom-view.md (loom-view/1)',
+    asof = int(view.get('asof') or drum.build_date().year)
+    rec = dict(generated=datetime.date.today().isoformat(), build_date=drum.build_date().isoformat(), contract='proto/contracts/loom-view.md (loom-view/1)',
                inputs={os.path.relpath(src, PROTO): sha(raw)}, scripts={'build_loom_scene.py': sha(open(__file__, 'rb').read()),
                                                                          'x3d/build_genealogy_x3d.py (helpers imported)': sha(open(drum.__file__, 'rb').read())},
                contract_warnings=warns[:40], families={}, outputs={}, tools=tool_versions())
