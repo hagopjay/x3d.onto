@@ -14,7 +14,7 @@ import xml.parsers.expat
 
 HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.dirname(HERE)
 # the receipts the Blender scripts wrote do not name their script; this is which script wrote each folder's receipt (a receipt written by `write` names it under "script")
-SCRIPTS = {'earth': 'blender_earth.py', 'feathers': 'blender_feather.py', 'tender': 'blender_tender.py', 'villager': 'blender_tender.py', 'village': 'blender_village.py'}
+SCRIPTS = {'earth': 'blender_earth.py', 'feathers': 'blender_feather.py', 'khachkar': 'blender_khachkar.py', 'tender': 'blender_tender.py', 'villager': 'blender_tender.py', 'village': 'blender_village.py'}
 
 
 def sha_file(p):

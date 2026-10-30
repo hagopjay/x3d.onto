@@ -89,3 +89,26 @@ Tags: [27]=README (27).md, [28], [29], [30] likewise, [DOC]=DOC.md, [P24]=polys2
 - URDF: own rules (L). 6 clean robots 0 errors 0 warnings; 135 mutants from 24 operators; caught at parse 6, structure 36, semantics 81, warning-only 6, contact-only 6; 0 missed (by construction); repairs 17 of 17 end clean. **L** (oracle not independent).
 - MCP kit over stdio: 7 tools; median call 1.9 to 7.6 ms except `gltf_validate` 93 ms (node spawned per call); chain verdicts ok / stale / broken-chain as designed. **C**
 - Per X3D component (data/components.json, containment fields): XSD-accepted share of the ontology's predictions ranges from 10.9% (Layering) to 73.3% (Sound); RigidBodyPhysics 25.3%. **C**
+
+## P. Added 2026-10-30 (genealogy loom thread, "Dynasty Loom"; X_ITE 16.5.1 from the npm tarball, Chromium 153 with SwiftShader, Playwright 1.63)
+Tags: [GL-S] = `evidence/genealogy-loom/xite-shaderpart-cdata/` (in this repo); [GL] = the genealogy project's files (`genealogy-loom/scene/`, `genealogy-loom/x3d-techniques/`; hypersphere camera proof `proto/hyper/tools/drive_camera.js`), not in this repo.
+- Raw GLSL in a ShaderPart's CDATA fails in X_ITE 16.5.1. X_ITE reads the body as the `url` field, so `#version 300 es …` resolves as a fragment of the world URL. The world file is fetched three times, `isValid` is false and the shape draws unlit white. With `data:x-shader/x-vertex,` (or `x-fragment,`) in front, `isValid` is true with no request. Both files pass xmllint (x3d-4.0.xsd) and fork `acdf5c4` with 0 errors: another valid-but-invisible case (item 26). **C** [GL-S]
+- HagopJay's three pocket-universe pages as shared (6 ShaderParts, raw CDATA) draw white spheres; with the prefix all three render. New Loom gate rule `shader-raw-source`: 6 of 6 raw parts and 2 of 2 in the probe flagged; 0 hits on 798 X3D files from x3d.onto (less `xdomain/fuzz`), x3d.ml, x3d-blender-io and the genealogy builds, 26 of them with ShaderParts, all prefixed. **C** [GL-S, GL]
+- A `%` in a prefixed CDATA body is harmless: a bare `% 2` and a `%20` both compile, so the body is not percent-decoded. (A `data:` URL in the `url` attribute is decoded, as `loom_gate.shader_sources` reads it: **L**, not re-run here.) **C** [GL-S]
+- Under a strict copy of the claude.ai Artifact CSP (`default-src 'none'`; scripts from self and five CDNs; no `unsafe-eval`; `connect-src 'self'`):
+  - X_ITE's own WOFF2 fonts are decoded through `new Function`, which the CSP refuses, so Text draws nothing.
+  - A TTF named first in `FontStyle.family` (`'"fonts/UbuntuMono-R.ttf" "TYPEWRITER"'`) draws.
+  - X_ITE must ship beside the page: x_ite.css, `assets/components/*`, `assets/images/*`, linetypes.png and the mikktspace wasm.
+  - The host refuses `.x3d` as `model/x3d+xml` and serves it as `application/xml`.
+  - X_ITE's PT Sans UI font and the wasm compile are refused harmlessly.
+  - Grade: **C** under the copy (2 runs: desktop light and phone dark, 3 scenes each, all labels drawn); **L** on the real host. [GL]
+- X_ITE's EXAMINE straightens the horizon to the Viewpoint's local +Y, both on bind and on the first drag. A rolled Viewpoint at the scene root snapped from 59.9° of roll to 0 on the first drag. Rolled shots therefore need a parent Transform as an up frame, with the Viewpoint bound at zero roll inside it. Over 29 driver checks, every flight lands within 0.001 units and 0.001°. **C** [GL]
+- A page-moved rig (a Transform holding the Viewpoint, the pocket-universe pattern) keeps `centerOfRotation` fixed. After a plunge, a drag orbits a point 22 host units behind the subject (983 px drift). Setting `centerOfRotation = -rig.translation` every frame gives 0 px drift. **C** [GL]
+- Navigation and nesting:
+  - `Viewpoint.navigationInfo` (X3D 4.0) binds its NavigationInfo together with the Viewpoint. The transition into that Viewpoint uses the transitionTime of the NavigationInfo bound before it (1.6 s), not its own (2.4 s).
+  - IMPORTed Viewpoints and ProximitySensors work through an Inline scaled 0.5 and report positions in the Inline's own units.
+  - A scriptless orbit (TimeSensor → OrientationInterpolator → Transform around a Viewpoint) turns at a constant 0.05236 rad/s.
+  - Grade: **C** [GL]
+- X_ITE's Text bounds are about 0.62 of `FontStyle.size` in height (Ubuntu Mono): labels sized by the nominal size drew at 8.4 px. Size labels from measured `textBounds`. **L** (one font, measured in the live gate) [GL]
+- A PhysicalMaterial with metallic 1.0 renders black in a scene without an environment light; metallic 0.6 with roughness 0.35 reads as gold. **C** (frames) [GL]
+- SwiftShader frame hitches of up to 254 ms fail a per-frame step check on a smooth camera move. Measure speed against the requestAnimationFrame clock instead: on the 9-stop tour, peak over mean was at most 3.4 (linear) and 5.3 (angular). **C** [GL]

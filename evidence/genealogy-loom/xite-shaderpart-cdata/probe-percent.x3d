@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.0//EN" "https://www.web3d.org/specifications/x3d-4.0.dtd">
+<X3D profile='Interchange' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <component name='Shaders' level='1'/>
+    <meta name='title' content='ShaderPart CDATA with a data: prefix'/>
+    <meta name='description' content='Minimal reproducer: X_ITE 16.5.1 reads ShaderPart CDATA as its url field. Raw GLSL starting with #version resolves as a fragment of the world URL and the shader fails; a data:x-shader prefix decodes in place.'/>
+  </head>
+  <Scene>
+    <Viewpoint description='Front' position='0 0 4'/>
+    <NavigationInfo headlight='false'/>
+    <Background skyColor='0.05 0.05 0.08'/>
+    <Shape>
+      <Appearance>
+        <ComposedShader DEF='Probe' language='GLSL'>
+          <ShaderPart type='VERTEX'><![CDATA[data:x-shader/x-vertex,#version 300 es
+precision highp float;
+uniform mat4 x3d_ProjectionMatrix, x3d_ModelViewMatrix;
+in vec4 x3d_Vertex; in vec3 x3d_Normal; out vec3 vN;
+void main(){ vN = x3d_Normal; gl_Position = x3d_ProjectionMatrix * x3d_ModelViewMatrix * x3d_Vertex; }
+]]></ShaderPart>
+          <ShaderPart type='FRAGMENT'><![CDATA[data:x-shader/x-fragment,#version 300 es
+precision highp float;
+in vec3 vN; out vec4 x3d_FragColor;
+void main(){ int k = int(gl_FragCoord.x) % 2; x3d_FragColor = vec4(0.5 + 0.5 * normalize(vN), 1.0) * (k == 0 ? 1.0 : 0.8); }
+]]></ShaderPart>
+        </ComposedShader>
+      </Appearance>
+      <Sphere/>
+    </Shape>
+  </Scene>
+</X3D>

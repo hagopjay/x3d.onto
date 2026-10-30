@@ -13,6 +13,8 @@ Rules:
   xite-component    error    an X_ITE-only node (DepthMode, BlendMode, InstancedShape) in a scene without <component name='X_ITE'>
   glsl-int-literal  warning  an integer literal where GLSL ES wants a float (heuristic: next to a float operand, assigned to a float, or in a float-only builtin)
   glsl-logdepth     warning  a shader writes gl_FragDepth or uses X_ITE's log depth uniform, and its ComposedShader has no logDepth field
+  shader-raw-source error    a ShaderPart or ShaderProgram whose CDATA is GLSL with no data:x-shader/... prefix: X_ITE 16.5.1 reads the body as its url, resolves
+                             '#version 300 es ...' against the world URL, the shader is invalid and the shape draws unlit (white); XSD and the fork pass it
   fork-*            error    --fork: XSD invalid, semantic errors or profile not OK; fork-skipped (info) when X3D_MCP has no checkout
 """
 import os, re, sys, json, subprocess, urllib.parse, base64
@@ -280,6 +282,22 @@ def check_glsl(root):
     return out
 
 
+_SCHEME = re.compile(r'^[A-Za-z][A-Za-z0-9+.-]*:')
+_GLSL_HINT = re.compile(r'^\s*#\s*(version|define|extension)\b|\b(void|uniform|precision|attribute|varying|gl_\w+|x3d_\w+)\b|;')
+
+def check_shader_body(root):
+    """An inline body is the node's url (as X_ITE reads it), so GLSL there needs a data: scheme; a quoted list or a bare relative path (no ';', no GLSL words) is a url and is left alone."""
+    out = []
+    for n in root.iter():
+        if n.tag not in ('ShaderPart', 'ShaderProgram'): continue
+        body = ''.join(n.text).strip()
+        if not body or body.startswith('"') or _SCHEME.match(body) or not _GLSL_HINT.search(body): continue
+        kind = 'fragment' if n.a.get('type', 'VERTEX').upper() == 'FRAGMENT' else 'vertex'
+        out.append(F('shader-raw-source', 'error', n, "CDATA is raw GLSL: X_ITE reads it as the url field, resolves '%s' against the world URL and the shader fails (isValid false, "
+                     "the shape draws unlit); start the CDATA with data:x-shader/x-%s," % (re.sub(r'\s+', ' ', body)[:24], kind), line=n.text_line or n.line, prefix='data:x-shader/x-%s,' % kind))
+    return out
+
+
 # ---- the fork --------------------------------------------------------------------------------------
 def run_fork(path):
     mcp = os.environ.get('X3D_MCP', '/home/user/x3d_mcp')
@@ -311,7 +329,7 @@ def gate(text, asset=None):
     try: root = parse(text)
     except xml.parsers.expat.ExpatError as e:
         return [{'rule': 'parse-error', 'severity': 'error', 'line': e.lineno, 'node': '', 'message': str(e)}]
-    out = check_routes(root) + check_colours(root) + check_xite(root) + check_glsl(root)
+    out = check_routes(root) + check_colours(root) + check_xite(root) + check_glsl(root) + check_shader_body(root)
     strip = asset if asset is not None else is_asset_export(root)
     if strip: out += check_asset_nodes(root)
     out += [d for d in check_precision(root) if not (strip and d['node'].split()[0] in ASSET_ONLY_NOT)]   # no byte count for a node that is to be stripped anyway
