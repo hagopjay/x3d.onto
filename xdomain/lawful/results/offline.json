@@ -1,0 +1,675 @@
+{
+ "metric_weights": {
+  "well_formed": 0.1,
+  "valid": 0.2,
+  "lawful": 0.2,
+  "use_type": 0.25,
+  "spatial": 0.15,
+  "hatches": 0.1
+ },
+ "tolerance": 0.05,
+ "live": {
+  "n_docs": 383,
+  "by_model": {
+   "gemini-3.1-pro-preview": 76,
+   "gemini-3.8-flash": 92,
+   "gpt-6.1-sol": 53,
+   "nvidia_nemotron-3-super-120b-a12b": 98,
+   "z-ai_glm-5.3": 64
+  },
+  "prompts": 50,
+  "sha_matches_event": 383,
+  "well_formed": 319,
+  "xsd_valid": 208,
+  "strict_valid": 178,
+  "strict_agrees_with_run_record": 383,
+  "run_record_n": 383,
+  "auc_metric_vs_strict": 0.9966,
+  "auc_metric_vs_xsd": 1.0,
+  "paired_attempts_valid_ranked_higher": {
+   "higher": 110,
+   "lower": 1,
+   "tie": 0
+  },
+  "metric_mean": {
+   "strict_valid": 0.9916,
+   "xsd_only": 0.8851,
+   "xsd_invalid": 0.2303
+  },
+  "strict_valid_metric_1": 152,
+  "strict_valid_part_below_1": {
+   "well_formed": 0,
+   "valid": 0,
+   "lawful": 1,
+   "use_type": 1,
+   "spatial": 11,
+   "hatches": 16
+  },
+  "strict_valid_unlawful_docs": 1,
+  "xsd_valid_unlawful_docs": 2,
+  "larger_profile_than_needed_strict_valid": 164,
+  "profiles": {
+   "Immersive": 317,
+   "null": 64,
+   "Full": 2
+  },
+  "minimal_profiles_strict_valid": {
+   "Interchange": 123,
+   "Interactive": 41,
+   "Immersive": 14
+  },
+  "use_type_vs_constraints_ok": {
+   "constraints_True_use_type_full_True": 304,
+   "constraints_True_use_type_full_False": 1,
+   "constraints_False_use_type_full_True": 0,
+   "constraints_False_use_type_full_False": 14
+  },
+  "render_record_xsd_valid": 208,
+  "render_draws_nothing_xsd_valid": 10,
+  "auc_metric_vs_draws_among_xsd_valid": 0.629,
+  "blank_renders": [
+   {
+    "doc": "gemini-3.1-pro-preview/geo-02_a1",
+    "score": 1.0,
+    "strict": true,
+    "parts": {
+     "well_formed": 1.0,
+     "valid": 1.0,
+     "lawful": 1.0,
+     "use_type": 1.0,
+     "spatial": null,
+     "hatches": 1.0
+    }
+   },
+   {
+    "doc": "gemini-3.1-pro-preview/geo-04_a2",
+    "score": 1.0,
+    "strict": true,
+    "parts": {
+     "well_formed": 1.0,
+     "valid": 1.0,
+     "lawful": 1.0,
+     "use_type": 1.0,
+     "spatial": null,
+     "hatches": 1.0
+    }
+   },
+   {
+    "doc": "gemini-3.8-flash/geo-02_a2",
+    "score": 0.9941,
+    "strict": true,
+    "parts": {
+     "well_formed": 1.0,
+     "valid": 1.0,
+     "lawful": 1.0,
+     "use_type": 1.0,
+     "spatial": null,
+     "hatches": 0.95
+    }
+   },
+   {
+    "doc": "gemini-3.8-flash/geo-03_a2",
+    "score": 1.0,
+    "strict": true,
+    "parts": {
+     "well_formed": 1.0,
+     "valid": 1.0,
+     "lawful": 1.0,
+     "use_type": 1.0,
+     "spatial": null,
+     "hatches": 1.0
+    }
+   },
+   {
+    "doc": "gemini-3.8-flash/int-05_a1",
+    "score": 0.9059,
+    "strict": false,
+    "parts": {
+     "well_formed": 1.0,
+     "valid": 0.6,
+     "lawful": 1.0,
+     "use_type": 1.0,
+     "spatial": null,
+     "hatches": 1.0
+    }
+   },
+   {
+    "doc": "gemini-3.8-flash/int-05_a2",
+    "score": 1.0,
+    "strict": true,
+    "parts": {
+     "well_formed": 1.0,
+     "valid": 1.0,
+     "lawful": 1.0,
+     "use_type": 1.0,
+     "spatial": null,
+     "hatches": 1.0
+    }
+   },
+   {
+    "doc": "gpt-6.1-sol/int-05_a1",
+    "score": 0.9706,
+    "strict": true,
+    "parts": {
+     "well_formed": 1.0,
+     "valid": 1.0,
+     "lawful": 1.0,
+     "use_type": 1.0,
+     "spatial": null,
+     "hatches": 0.75
+    }
+   },
+   {
+    "doc": "nvidia_nemotron-3-super-120b-a12b/geo-04_a1",
+    "score": 0.8431,
+    "strict": false,
+    "parts": {
+     "well_formed": 1.0,
+     "valid": 0.3333,
+     "lawful": 1.0,
+     "use_type": 1.0,
+     "spatial": null,
+     "hatches": 1.0
+    }
+   },
+   {
+    "doc": "nvidia_nemotron-3-super-120b-a12b/hanim-01_a3",
+    "score": 1.0,
+    "strict": true,
+    "parts": {
+     "well_formed": 1.0,
+     "valid": 1.0,
+     "lawful": 1.0,
+     "use_type": 1.0,
+     "spatial": null,
+     "hatches": 1.0
+    }
+   },
+   {
+    "doc": "nvidia_nemotron-3-super-120b-a12b/hanim-02_a1",
+    "score": 0.7308,
+    "strict": false,
+    "parts": {
+     "well_formed": 1.0,
+     "valid": 0.375,
+     "lawful": 0.4808,
+     "use_type": 1.0,
+     "spatial": null,
+     "hatches": 1.0
+    }
+   }
+  ],
+  "spatial_judged_strict_valid": 68,
+  "spatial_full": 57,
+  "finals": {
+   "n": 218,
+   "strict": 178,
+   "metric_1": 152
+  },
+  "strict_valid_lowest_metric": [
+   {
+    "doc": "gemini-3.8-flash/obj-03_a2",
+    "score": 0.675,
+    "parts": {
+     "well_formed": 1.0,
+     "valid": 1.0,
+     "lawful": 1.0,
+     "use_type": 0.0,
+     "spatial": 0.5,
+     "hatches": 1.0
+    },
+    "feedback": [
+     "[use_type] the request needs a Cone; the document has none.",
+     "[spatial] cannot judge: on_top(Cone, Box): no measurable Cone"
+    ]
+   },
+   {
+    "doc": "gemini-3.8-flash/sp-10_a2",
+    "score": 0.7639,
+    "parts": {
+     "well_formed": 1.0,
+     "valid": 1.0,
+     "lawful": 0.4966,
+     "use_type": 1.0,
+     "spatial": null,
+     "hatches": 0.0
+    },
+    "feedback": [
+     "[lawful] <Group USE='StoneLantern'> but DEF 'StoneLantern' is a Transform (wrong-type USE, inside Transform)",
+     "[hatches] profile='Full' admits every node and hides what the scene needs; 'Interactive' (plus component statements for anything outside it) is enough."
+    ]
+   },
+   {
+    "doc": "gemini-3.1-pro-preview/obj-04_a2",
+    "score": 0.8824,
+    "parts": {
+     "well_formed": 1.0,
+     "valid": 1.0,
+     "lawful": 1.0,
+     "use_type": 1.0,
+     "spatial": null,
+     "hatches": 0.0
+    },
+    "feedback": [
+     "[hatches] profile='Full' admits every node and hides what the scene needs; 'Interchange' (plus component statements for anything outside it) is enough."
+    ]
+   },
+   {
+    "doc": "nvidia_nemotron-3-super-120b-a12b/sp-16_a2",
+    "score": 0.8859,
+    "parts": {
+     "well_formed": 1.0,
+     "valid": 1.0,
+     "lawful": 1.0,
+     "use_type": 1.0,
+     "spatial": 0.2727,
+     "hatches": 0.95
+    },
+    "feedback": [
+     "[spatial] 8 of 11 parts float free of the main assembly: Box at y=-0.5, Box at y=0, Box at y=0, Box at y=0",
+     "[hatches] <component name='Shape' level='2'/> repeats what profile 'Immersive' already includes."
+    ]
+   },
+   {
+    "doc": "nvidia_nemotron-3-super-120b-a12b/asm-05_a3",
+    "score": 0.9,
+    "parts": {
+     "well_formed": 1.0,
+     "valid": 1.0,
+     "lawful": 1.0,
+     "use_type": 1.0,
+     "spatial": 0.3333,
+     "hatches": 1.0
+    },
+    "feedback": [
+     "[spatial] 12 of 18 parts float free of the main assembly: Box at y=2, Box at y=4.2, Box at y=4.2, Box at y=4.2"
+    ]
+   },
+   {
+    "doc": "gemini-3.8-flash/sp-04_a1",
+    "score": 0.9226,
+    "parts": {
+     "well_formed": 1.0,
+     "valid": 1.0,
+     "lawful": 1.0,
+     "use_type": 1.0,
+     "spatial": 0.4839,
+     "hatches": 1.0
+    },
+    "feedback": [
+     "[spatial] 48 of 93 parts float free of the main assembly: Box(Column) at y=1.3, Cylinder(Column) at y=4.3, Cylinder(Column) at y=7.2, Box(Column) at y=7.4"
+    ]
+   },
+   {
+    "doc": "nvidia_nemotron-3-super-120b-a12b/asm-04_a2",
+    "score": 0.925,
+    "parts": {
+     "well_formed": 1.0,
+     "valid": 1.0,
+     "lawful": 1.0,
+     "use_type": 1.0,
+     "spatial": 0.5,
+     "hatches": 1.0
+    },
+    "feedback": [
+     "[spatial] 1 of 2 parts float free of the main assembly: Sphere at y=5"
+    ]
+   },
+   {
+    "doc": "nvidia_nemotron-3-super-120b-a12b/sp-11_a3",
+    "score": 0.9529,
+    "parts": {
+     "well_formed": 1.0,
+     "valid": 1.0,
+     "lawful": 1.0,
+     "use_type": 1.0,
+     "spatial": null,
+     "hatches": 0.6
+    },
+    "feedback": [
+     "[hatches] <component name='Time' level='1'/> repeats what profile 'Immersive' already includes.",
+     "[hatches] <component name='Interpolation' level='1'/> repeats what profile 'Immersive' already includes.",
+     "[hatches] <component name='Grouping' level='1'/> repeats what profile 'Immersive' already includes.",
+     "[hatches] <component name='Navigation' level='1'/> repeats what profile 'Immersive' already includes."
+    ]
+   }
+  ],
+  "strict_invalid_highest_metric": [
+   {
+    "doc": "gemini-3.1-pro-preview/obj-01_a1",
+    "score": 0.92,
+    "parts": {
+     "well_formed": 1.0,
+     "valid": 0.6,
+     "lawful": 1.0,
+     "use_type": 1.0,
+     "spatial": 1.0,
+     "hatches": 1.0
+    },
+    "feedback": [
+     "[valid] profile-component: PhysicalMaterial (component Shape level 2, not declared) is outside profile 'Immersive'. Browsers that enforce the header (X_ITE, x3d-tidy) refuse to load it."
+    ]
+   },
+   {
+    "doc": "gemini-3.1-pro-preview/sp-05_a1",
+    "score": 0.92,
+    "parts": {
+     "well_formed": 1.0,
+     "valid": 0.6,
+     "lawful": 1.0,
+     "use_type": 1.0,
+     "spatial": 1.0,
+     "hatches": 1.0
+    },
+    "feedback": [
+     "[valid] profile-component: PhysicalMaterial (component Shape level 2, not declared) is outside profile 'Immersive'. Browsers that enforce the header (X_ITE, x3d-tidy) refuse to load it."
+    ]
+   },
+   {
+    "doc": "gemini-3.1-pro-preview/sp-16_a1",
+    "score": 0.92,
+    "parts": {
+     "well_formed": 1.0,
+     "valid": 0.6,
+     "lawful": 1.0,
+     "use_type": 1.0,
+     "spatial": 1.0,
+     "hatches": 1.0
+    },
+    "feedback": [
+     "[valid] profile-component: PhysicalMaterial (component Shape level 2, not declared) is outside profile 'Immersive'. Browsers that enforce the header (X_ITE, x3d-tidy) refuse to load it."
+    ]
+   },
+   {
+    "doc": "gemini-3.8-flash/obj-01_a1",
+    "score": 0.92,
+    "parts": {
+     "well_formed": 1.0,
+     "valid": 0.6,
+     "lawful": 1.0,
+     "use_type": 1.0,
+     "spatial": 1.0,
+     "hatches": 1.0
+    },
+    "feedback": [
+     "[valid] profile-component: PhysicalMaterial (component Shape level 2, not declared) is outside profile 'Immersive'. Browsers that enforce the header (X_ITE, x3d-tidy) refuse to load it."
+    ]
+   },
+   {
+    "doc": "gemini-3.8-flash/sp-03_a1",
+    "score": 0.92,
+    "parts": {
+     "well_formed": 1.0,
+     "valid": 0.6,
+     "lawful": 1.0,
+     "use_type": 1.0,
+     "spatial": 1.0,
+     "hatches": 1.0
+    },
+    "feedback": [
+     "[valid] profile-component: PhysicalMaterial (component Shape level 2, not declared) is outside profile 'Immersive'. Browsers that enforce the header (X_ITE, x3d-tidy) refuse to load it."
+    ]
+   }
+  ],
+  "strict_valid_failure_lines": {
+   "component repeats the profile": 18,
+   "floating parts": 10,
+   "unrequested Script": 8,
+   "profile Full": 2,
+   "requested kind missing": 1,
+   "component widens, unused": 1,
+   "wrong-type USE": 1
+  }
+ },
+ "eval_plan_judge": {
+  "runs_dir_exists": false,
+  "judge_files": [],
+  "note": "xdomain/eval-plan/runs/ is gitignored and absent from this checkout and from every other checkout on this machine; only RESULTS.md aggregates are committed (x3d: 118 valid documents judged, every one 2/2, judge vs count check 118/118). A judge with no variance on valid documents cannot be ranked against; per-document agreement needs the runs/ files."
+ },
+ "adversarial": {
+  "controls": {
+   "X-A3": {
+    "score": 1.0,
+    "parts": {
+     "well_formed": 1.0,
+     "valid": 1.0,
+     "lawful": 1.0,
+     "use_type": 1.0,
+     "spatial": 1.0,
+     "hatches": 1.0
+    }
+   },
+   "X-C1": {
+    "score": 1.0,
+    "parts": {
+     "well_formed": 1.0,
+     "valid": 1.0,
+     "lawful": 1.0,
+     "use_type": 1.0,
+     "spatial": null,
+     "hatches": 1.0
+    }
+   },
+   "X-B1": {
+    "score": 1.0,
+    "parts": {
+     "well_formed": 1.0,
+     "valid": 1.0,
+     "lawful": 1.0,
+     "use_type": 1.0,
+     "spatial": 1.0,
+     "hatches": 1.0
+    }
+   },
+   "X-A5": {
+    "score": 1.0,
+    "parts": {
+     "well_formed": 1.0,
+     "valid": 1.0,
+     "lawful": 1.0,
+     "use_type": 1.0,
+     "spatial": 1.0,
+     "hatches": 1.0
+    }
+   }
+  },
+  "cases": [
+   {
+    "case": "unlawful/wrong-type-USE",
+    "spec": "X-A3",
+    "target": "lawful",
+    "score": 0.8933,
+    "control": 1.0,
+    "part": 0.4667,
+    "xsd": true,
+    "strict": true,
+    "caught": true,
+    "feedback": "[lawful] <Transform USE='BaseShape'> but DEF 'BaseShape' is a Shape (wrong-type USE, inside Transform)"
+   },
+   {
+    "case": "unlawful/geometry-USE-of-other-kind",
+    "spec": "X-A3",
+    "target": "lawful",
+    "score": 0.8938,
+    "control": 1.0,
+    "part": 0.4688,
+    "xsd": true,
+    "strict": true,
+    "caught": true,
+    "feedback": "[lawful] <Cylinder USE='BaseBox'> but DEF 'BaseBox' is a Box (wrong-type USE, inside Shape)"
+   },
+   {
+    "case": "unlawful/material-as-geometry",
+    "spec": "X-A3",
+    "target": "lawful",
+    "score": 0.8117,
+    "control": 1.0,
+    "part": 0.4583,
+    "xsd": true,
+    "strict": false,
+    "caught": true,
+    "feedback": "[valid] containerfield-unknown: Material containerField='geometry' but Appearance has no field named 'geometry'. Use containerField='backMaterial' (or material) to place a Material here."
+   },
+   {
+    "case": "unlawful/box-in-appearance-field",
+    "spec": "X-A3",
+    "target": "lawful",
+    "score": 0.3669,
+    "control": 1.0,
+    "part": 0.4688,
+    "xsd": false,
+    "strict": false,
+    "caught": true,
+    "feedback": "[valid] XSD: Line 3: Element 'Box': This element is not expected. Expected is one of ( Appearance, ProtoInstance )."
+   },
+   {
+    "case": "unlawful/texture-default-field-in-PhysicalMaterial",
+    "spec": "X-A3",
+    "target": "lawful",
+    "score": 0.7673,
+    "control": 1.0,
+    "part": 0.4615,
+    "xsd": true,
+    "strict": false,
+    "caught": true,
+    "feedback": "[valid] profile-component: PhysicalMaterial (component Shape level 2, not declared) is outside profile 'Immersive'. Browsers that enforce the header (X_ITE, x3d-tidy) refuse to load it."
+   },
+   {
+    "case": "wrong-request/sphere-not-cylinder",
+    "spec": "X-A3",
+    "target": "use_type",
+    "score": 0.7667,
+    "control": 1.0,
+    "part": 0.6667,
+    "xsd": true,
+    "strict": true,
+    "caught": true,
+    "feedback": "[use_type] the request needs a Cylinder; the document has none."
+   },
+   {
+    "case": "wrong-request/cylinder-sinks-into-box",
+    "spec": "X-A3",
+    "target": "spatial",
+    "score": 0.85,
+    "control": 1.0,
+    "part": 0.0,
+    "xsd": true,
+    "strict": true,
+    "caught": true,
+    "feedback": "[spatial] FAIL: Cylinder bottom at y=0.1, Box top at y=0.5: sinks 0.4 (tolerance 0.05)"
+   },
+   {
+    "case": "wrong-request/cylinder-floats-above-box",
+    "spec": "X-A3",
+    "target": "spatial",
+    "score": 0.85,
+    "control": 1.0,
+    "part": 0.0,
+    "xsd": true,
+    "strict": true,
+    "caught": true,
+    "feedback": "[spatial] FAIL: Cylinder bottom at y=1.1, Box top at y=0.5: gap 0.6 (tolerance 0.05)"
+   },
+   {
+    "case": "wrong-request/cylinder-beside-box",
+    "spec": "X-A3",
+    "target": "spatial",
+    "score": 0.85,
+    "control": 1.0,
+    "part": 0.0,
+    "xsd": true,
+    "strict": true,
+    "caught": true,
+    "feedback": "[spatial] FAIL: Cylinder bottom at y=0.5, Box top at y=0.5: in contact; not over its footprint"
+   },
+   {
+    "case": "wrong-request/interpolator-not-driven",
+    "spec": "X-C1",
+    "target": "use_type",
+    "score": 0.951,
+    "control": 1.0,
+    "part": 0.8333,
+    "xsd": true,
+    "strict": true,
+    "caught": true,
+    "feedback": "[use_type] OrientationInterpolator is never driven: ROUTE a TimeSensor fraction_changed to its set_fraction."
+   },
+   {
+    "case": "wrong-request/table-legs-float",
+    "spec": "X-B1",
+    "target": "spatial",
+    "score": 0.88,
+    "control": 1.0,
+    "part": 0.2,
+    "xsd": true,
+    "strict": true,
+    "caught": true,
+    "feedback": "[spatial] 4 of 5 parts float free of the main assembly: Cylinder(Leg) at y=-1.5, Cylinder(Leg) at y=-1.5, Cylinder(Leg) at y=-1.5, Cylinder(Leg) at y=-1.5"
+   },
+   {
+    "case": "wrong-request/cone-points-up",
+    "spec": "X-A5",
+    "target": "spatial",
+    "score": 0.85,
+    "control": 1.0,
+    "part": 0.0,
+    "xsd": true,
+    "strict": true,
+    "caught": true,
+    "feedback": "[spatial] FAIL: Cone apex direction y = [1.0] (negative = down)"
+   },
+   {
+    "case": "hatch/profile-Full",
+    "spec": "X-A3",
+    "target": "hatches",
+    "score": 0.9,
+    "control": 1.0,
+    "part": 0.0,
+    "xsd": true,
+    "strict": true,
+    "caught": true,
+    "feedback": "[hatches] profile='Full' admits every node and hides what the scene needs; 'Interchange' (plus component statements for anything outside it) is enough."
+   },
+   {
+    "case": "hatch/no-profile-needed-component",
+    "spec": "X-A3",
+    "target": "hatches",
+    "score": 0.975,
+    "control": 1.0,
+    "part": 0.75,
+    "xsd": true,
+    "strict": true,
+    "caught": true,
+    "feedback": "[hatches] <component name='NURBS' level='1'/> widens the profile but nothing in the scene needs it."
+   },
+   {
+    "case": "hatch/unrequested-Script",
+    "spec": "X-A3",
+    "target": "hatches",
+    "score": 0.95,
+    "control": 1.0,
+    "part": 0.5,
+    "xsd": true,
+    "strict": true,
+    "caught": true,
+    "feedback": "[hatches] profile 'Immersive' is larger than needed; 'Interchange' is enough."
+   },
+   {
+    "case": "hatch/looser-profile",
+    "spec": "X-A3",
+    "target": "hatches",
+    "score": 0.975,
+    "control": 1.0,
+    "part": 0.75,
+    "xsd": true,
+    "strict": true,
+    "caught": true,
+    "feedback": "[hatches] profile 'Immersive' is larger than needed; 'Interchange' is enough."
+   }
+  ],
+  "caught": 16,
+  "n": 16,
+  "xsd_passes": 15,
+  "strict_passes": 13
+ }
+}

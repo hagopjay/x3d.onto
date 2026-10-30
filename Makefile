@@ -37,7 +37,7 @@ v4:               ## serve the live viewer: http://127.0.0.1:$(PORT)/index.html 
 
 e2e-v4:           ## live-scene tests in Chromium (Playwright); serve with `make v4` first (same PORT), see gobbler-v4/README.md
 	cd gobbler-v4/e2e && GV4_BASE=http://127.0.0.1:$(PORT)/ node e2e.js
-.PHONY: v4-data test-v4 v4 e2e-v4 demiurge-data feathers tender world test-demiurge demiurge e2e-demiurge frames-demiurge artifact-demiurge
+.PHONY: v4-data test-v4 v4 e2e-v4 demiurge-data feathers tender world test-demiurge demiurge e2e-demiurge frames-demiurge artifact-demiurge loom-gate
 
 # Gobbler demiurge, step 2: the bird-first page (gobbler-demiurge/README.md). Needs make v4-data first (Deep build and X_ITE are fetched there, not committed).
 demiurge-data:    ## compose the bird scene (Deep scene + layers), gzip it and the graph, validate with the fork (X3D_MCP=/path/to/x3d_mcp, default /home/user/x3d_mcp)
@@ -54,8 +54,13 @@ world:            ## (needs a Python with bpy) model Earth, clouds and Moon, and
 	python3 gobbler-demiurge/tools/blender_earth.py --blenderio $${BLENDERIO:-../x3d-blender-io/source}
 	python3 gobbler-demiurge/tools/blender_village.py --blenderio $${BLENDERIO:-../x3d-blender-io/source}
 
-test-demiurge:    ## unit tests for the layers (node-free)
+test-demiurge:    ## unit tests for the layers and the Loom gate and receipt (node-free)
 	python3 -I gobbler-demiurge/test/test_layers.py
+	python3 -I gobbler-demiurge/test/test_loom_gate.py
+
+loom-gate:        ## the Loom gate over the committed Blender assets (fails on an error finding; add GATE_FLAGS=--fork for the fork validator too) and the receipts checked against the files
+	python3 -I gobbler-demiurge/tools/loom_gate.py $(GATE_FLAGS) gobbler-demiurge/assets/*/*.x3d
+	python3 -I gobbler-demiurge/tools/loom_receipt.py check
 
 demiurge:         ## serve the repo root: http://127.0.0.1:$(PORT)/gobbler-demiurge/index.html (?ui=none, ?view=establishing)
 	@echo "http://127.0.0.1:$(PORT)/gobbler-demiurge/index.html"
@@ -69,3 +74,25 @@ frames-demiurge:  ## the documentation frames in gobbler-demiurge/docs/frames
 
 artifact-demiurge: ## a flat copy for a private host: make artifact-demiurge OUT=/some/dir (needs test/requests.js output in gobbler-demiurge/out/runtime-files.json)
 	python3 -I gobbler-demiurge/tools/make_artifact.py $(OUT) gobbler-demiurge/out/runtime-files.json
+
+# Lawful metric and its DSPy program (xdomain/lawful/README.md). Model-free. LAWFUL_PY = a python with lxml (+ dspy, optuna for the DSPy tests,
+# which are skipped without them); X3D_MCP = the fork checkout (default /home/user/x3d_mcp); X3D_ML = the x3d.ml checkout for the live corpus.
+LAWFUL_PY ?= python3
+lawful-test:      ## metric, adversarial set, live-corpus numbers, DSPy wiring (scripted LM, no network)
+	$(LAWFUL_PY) -I xdomain/lawful/test_lawful.py
+lawful-offline:   ## rewrite xdomain/lawful/results/ from the recorded corpus
+	$(LAWFUL_PY) -I xdomain/lawful/offline.py
+.PHONY: lawful-test lawful-offline
+
+# Differential fuzzer for the validation stack (xdomain/fuzz/README.md). Needs the fork (X3D_MCP, default /home/user/x3d_mcp), lxml, node + playwright, and X_ITE from `make v4-data`.
+FUZZ_N ?= 2000
+FUZZ_SEED ?= 1
+fuzz:             ## generate FUZZ_N scenes, run XSD / semantic / profile / X3DUOM / X_ITE 16.5.1, bucket, minimise -> xdomain/fuzz/findings (about 7 min for 2,000 here)
+	python3 -I xdomain/fuzz/run.py --n $(FUZZ_N) --seed $(FUZZ_SEED)
+
+fuzz-residue:     ## adjudicate the 441 UOM-allows / XSD-rejects pairs -> xdomain/fuzz/findings/residue.json (about 30 s)
+	python3 -I xdomain/fuzz/residue.py
+
+test-fuzz:        ## generator, minimiser and classifier checks (X_ITE checks run when gobbler-v4/vendor/x_ite exists)
+	python3 -I xdomain/fuzz/test_fuzz.py
+.PHONY: fuzz fuzz-residue test-fuzz

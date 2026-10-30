@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<X3D profile="CADInterchange" version="4.1">
+  <Scene>
+    <Shape>
+      <Appearance>
+        <PhysicalMaterial/>
+      </Appearance>
+    </Shape>
+  </Scene>
+</X3D>

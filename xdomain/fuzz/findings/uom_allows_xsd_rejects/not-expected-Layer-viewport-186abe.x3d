@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<X3D profile="Full" version="4.1">
+  <Scene>
+    <LayerSet>
+      <Layer>
+        <Billboard/>
+        <BooleanFilter/>
+        <Viewport/>
+      </Layer>
+    </LayerSet>
+  </Scene>
+</X3D>
