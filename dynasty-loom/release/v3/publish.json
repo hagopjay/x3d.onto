@@ -1,0 +1,346 @@
+{
+ "darwin_wedgwood.cards.json": {
+  "from": "darwin_wedgwood.cards.json",
+  "contentType": "application/json"
+ },
+ "darwin_wedgwood.hyper.json": {
+  "from": "darwin_wedgwood.hyper.json",
+  "contentType": "application/json"
+ },
+ "darwin_wedgwood.x3d": {
+  "from": "darwin_wedgwood.x3d",
+  "contentType": "application/xml"
+ },
+ "fonts/UBUNTU-FONT-LICENCE.txt": {
+  "from": "fonts/UBUNTU-FONT-LICENCE.txt",
+  "contentType": "text/plain"
+ },
+ "fonts/UbuntuMono-R.ttf": {
+  "from": "fonts/UbuntuMono-R.ttf",
+  "contentType": "font/ttf"
+ },
+ "habsburg.cards.json": {
+  "from": "habsburg.cards.json",
+  "contentType": "application/json"
+ },
+ "habsburg.hyper.json": {
+  "from": "habsburg.hyper.json",
+  "contentType": "application/json"
+ },
+ "habsburg.x3d": {
+  "from": "habsburg.x3d",
+  "contentType": "application/xml"
+ },
+ "hyper-darwin_wedgwood.x3d": {
+  "from": "hyper-darwin_wedgwood.x3d",
+  "contentType": "application/xml"
+ },
+ "hyper-habsburg.x3d": {
+  "from": "hyper-habsburg.x3d",
+  "contentType": "application/xml"
+ },
+ "hyper-manifest.json": {
+  "from": "hyper-manifest.json",
+  "contentType": "application/json"
+ },
+ "hyper-rothschild.x3d": {
+  "from": "hyper-rothschild.x3d",
+  "contentType": "application/xml"
+ },
+ "loom-manifest.json": {
+  "from": "loom-manifest.json",
+  "contentType": "application/json"
+ },
+ "pocket-darwin_wedgwood.x3d": {
+  "from": "pocket-darwin_wedgwood.x3d",
+  "contentType": "application/xml"
+ },
+ "pocket-habsburg.x3d": {
+  "from": "pocket-habsburg.x3d",
+  "contentType": "application/xml"
+ },
+ "pocket-rothschild.x3d": {
+  "from": "pocket-rothschild.x3d",
+  "contentType": "application/xml"
+ },
+ "poster-tall-plate.webp": {
+  "from": "poster-tall-plate.webp",
+  "contentType": "image/webp"
+ },
+ "poster-wide-plate.webp": {
+  "from": "poster-wide-plate.webp",
+  "contentType": "image/webp"
+ },
+ "rothschild.cards.json": {
+  "from": "rothschild.cards.json",
+  "contentType": "application/json"
+ },
+ "rothschild.hyper.json": {
+  "from": "rothschild.hyper.json",
+  "contentType": "application/json"
+ },
+ "rothschild.x3d": {
+  "from": "rothschild.x3d",
+  "contentType": "application/xml"
+ },
+ "x_ite/LICENSE.md": {
+  "from": "x_ite/LICENSE.md",
+  "contentType": "text/markdown"
+ },
+ "x_ite/assets/components/AnnotationComponent.min.js": {
+  "from": "x_ite/assets/components/AnnotationComponent.min.js",
+  "contentType": "text/javascript"
+ },
+ "x_ite/assets/components/CADGeometryComponent.min.js": {
+  "from": "x_ite/assets/components/CADGeometryComponent.min.js",
+  "contentType": "text/javascript"
+ },
+ "x_ite/assets/components/CubeMapTexturingComponent.min.js": {
+  "from": "x_ite/assets/components/CubeMapTexturingComponent.min.js",
+  "contentType": "text/javascript"
+ },
+ "x_ite/assets/components/DISComponent.min.js": {
+  "from": "x_ite/assets/components/DISComponent.min.js",
+  "contentType": "text/javascript"
+ },
+ "x_ite/assets/components/EventUtilitiesComponent.min.js": {
+  "from": "x_ite/assets/components/EventUtilitiesComponent.min.js",
+  "contentType": "text/javascript"
+ },
+ "x_ite/assets/components/GaussianSplatsComponent.min.js": {
+  "from": "x_ite/assets/components/GaussianSplatsComponent.min.js",
+  "contentType": "text/javascript"
+ },
+ "x_ite/assets/components/Geometry2DComponent.min.js": {
+  "from": "x_ite/assets/components/Geometry2DComponent.min.js",
+  "contentType": "text/javascript"
+ },
+ "x_ite/assets/components/Geometry3DComponent.min.js": {
+  "from": "x_ite/assets/components/Geometry3DComponent.min.js",
+  "contentType": "text/javascript"
+ },
+ "x_ite/assets/components/GeospatialComponent.min.js": {
+  "from": "x_ite/assets/components/GeospatialComponent.min.js",
+  "contentType": "text/javascript"
+ },
+ "x_ite/assets/components/HAnimComponent.min.js": {
+  "from": "x_ite/assets/components/HAnimComponent.min.js",
+  "contentType": "text/javascript"
+ },
+ "x_ite/assets/components/KeyDeviceSensorComponent.min.js": {
+  "from": "x_ite/assets/components/KeyDeviceSensorComponent.min.js",
+  "contentType": "text/javascript"
+ },
+ "x_ite/assets/components/LayoutComponent.min.js": {
+  "from": "x_ite/assets/components/LayoutComponent.min.js",
+  "contentType": "text/javascript"
+ },
+ "x_ite/assets/components/NURBSComponent.min.js": {
+  "from": "x_ite/assets/components/NURBSComponent.min.js",
+  "contentType": "text/javascript"
+ },
+ "x_ite/assets/components/ParticleSystemsComponent.min.js": {
+  "from": "x_ite/assets/components/ParticleSystemsComponent.min.js",
+  "contentType": "text/javascript"
+ },
+ "x_ite/assets/components/PickingComponent.min.js": {
+  "from": "x_ite/assets/components/PickingComponent.min.js",
+  "contentType": "text/javascript"
+ },
+ "x_ite/assets/components/RigidBodyPhysicsComponent.min.js": {
+  "from": "x_ite/assets/components/RigidBodyPhysicsComponent.min.js",
+  "contentType": "text/javascript"
+ },
+ "x_ite/assets/components/ScriptingComponent.min.js": {
+  "from": "x_ite/assets/components/ScriptingComponent.min.js",
+  "contentType": "text/javascript"
+ },
+ "x_ite/assets/components/TextComponent.min.js": {
+  "from": "x_ite/assets/components/TextComponent.min.js",
+  "contentType": "text/javascript"
+ },
+ "x_ite/assets/components/TextureProjectionComponent.min.js": {
+  "from": "x_ite/assets/components/TextureProjectionComponent.min.js",
+  "contentType": "text/javascript"
+ },
+ "x_ite/assets/components/Texturing3DComponent.min.js": {
+  "from": "x_ite/assets/components/Texturing3DComponent.min.js",
+  "contentType": "text/javascript"
+ },
+ "x_ite/assets/components/VolumeRenderingComponent.min.js": {
+  "from": "x_ite/assets/components/VolumeRenderingComponent.min.js",
+  "contentType": "text/javascript"
+ },
+ "x_ite/assets/components/WebXRComponent.min.js": {
+  "from": "x_ite/assets/components/WebXRComponent.min.js",
+  "contentType": "text/javascript"
+ },
+ "x_ite/assets/components/X_ITEComponent.min.js": {
+  "from": "x_ite/assets/components/X_ITEComponent.min.js",
+  "contentType": "text/javascript"
+ },
+ "x_ite/assets/fonts/PT_Sans/OFL.txt": {
+  "from": "x_ite/assets/fonts/PT_Sans/OFL.txt",
+  "contentType": "text/plain"
+ },
+ "x_ite/assets/fonts/PT_Sans/PTSans-Bold.woff2": {
+  "from": "x_ite/assets/fonts/PT_Sans/PTSans-Bold.woff2",
+  "contentType": "font/woff2"
+ },
+ "x_ite/assets/fonts/PT_Sans/PTSans-BoldItalic.woff2": {
+  "from": "x_ite/assets/fonts/PT_Sans/PTSans-BoldItalic.woff2",
+  "contentType": "font/woff2"
+ },
+ "x_ite/assets/fonts/PT_Sans/PTSans-Italic.woff2": {
+  "from": "x_ite/assets/fonts/PT_Sans/PTSans-Italic.woff2",
+  "contentType": "font/woff2"
+ },
+ "x_ite/assets/fonts/PT_Sans/PTSans-Regular.woff2": {
+  "from": "x_ite/assets/fonts/PT_Sans/PTSans-Regular.woff2",
+  "contentType": "font/woff2"
+ },
+ "x_ite/assets/images/animation.svg": {
+  "from": "x_ite/assets/images/animation.svg",
+  "contentType": "image/svg+xml"
+ },
+ "x_ite/assets/images/background-dark.svg": {
+  "from": "x_ite/assets/images/background-dark.svg",
+  "contentType": "image/svg+xml"
+ },
+ "x_ite/assets/images/background-light.svg": {
+  "from": "x_ite/assets/images/background-light.svg",
+  "contentType": "image/svg+xml"
+ },
+ "x_ite/assets/images/block.svg": {
+  "from": "x_ite/assets/images/block.svg",
+  "contentType": "image/svg+xml"
+ },
+ "x_ite/assets/images/border_all.svg": {
+  "from": "x_ite/assets/images/border_all.svg",
+  "contentType": "image/svg+xml"
+ },
+ "x_ite/assets/images/check_circle.svg": {
+  "from": "x_ite/assets/images/check_circle.svg",
+  "contentType": "image/svg+xml"
+ },
+ "x_ite/assets/images/directions_run.svg": {
+  "from": "x_ite/assets/images/directions_run.svg",
+  "contentType": "image/svg+xml"
+ },
+ "x_ite/assets/images/done_all.svg": {
+  "from": "x_ite/assets/images/done_all.svg",
+  "contentType": "image/svg+xml"
+ },
+ "x_ite/assets/images/eye_tracking.svg": {
+  "from": "x_ite/assets/images/eye_tracking.svg",
+  "contentType": "image/svg+xml"
+ },
+ "x_ite/assets/images/fullscreen.svg": {
+  "from": "x_ite/assets/images/fullscreen.svg",
+  "contentType": "image/svg+xml"
+ },
+ "x_ite/assets/images/fullscreen_exit.svg": {
+  "from": "x_ite/assets/images/fullscreen_exit.svg",
+  "contentType": "image/svg+xml"
+ },
+ "x_ite/assets/images/globe.svg": {
+  "from": "x_ite/assets/images/globe.svg",
+  "contentType": "image/svg+xml"
+ },
+ "x_ite/assets/images/head_mounted_device.svg": {
+  "from": "x_ite/assets/images/head_mounted_device.svg",
+  "contentType": "image/svg+xml"
+ },
+ "x_ite/assets/images/hexagon.svg": {
+  "from": "x_ite/assets/images/hexagon.svg",
+  "contentType": "image/svg+xml"
+ },
+ "x_ite/assets/images/info.svg": {
+  "from": "x_ite/assets/images/info.svg",
+  "contentType": "image/svg+xml"
+ },
+ "x_ite/assets/images/language.svg": {
+  "from": "x_ite/assets/images/language.svg",
+  "contentType": "image/svg+xml"
+ },
+ "x_ite/assets/images/logo.svg": {
+  "from": "x_ite/assets/images/logo.svg",
+  "contentType": "image/svg+xml"
+ },
+ "x_ite/assets/images/no_sound.svg": {
+  "from": "x_ite/assets/images/no_sound.svg",
+  "contentType": "image/svg+xml"
+ },
+ "x_ite/assets/images/play_circle.svg": {
+  "from": "x_ite/assets/images/play_circle.svg",
+  "contentType": "image/svg+xml"
+ },
+ "x_ite/assets/images/point_scan.svg": {
+  "from": "x_ite/assets/images/point_scan.svg",
+  "contentType": "image/svg+xml"
+ },
+ "x_ite/assets/images/radio_button_checked.svg": {
+  "from": "x_ite/assets/images/radio_button_checked.svg",
+  "contentType": "image/svg+xml"
+ },
+ "x_ite/assets/images/radio_button_unchecked.svg": {
+  "from": "x_ite/assets/images/radio_button_unchecked.svg",
+  "contentType": "image/svg+xml"
+ },
+ "x_ite/assets/images/schedule.svg": {
+  "from": "x_ite/assets/images/schedule.svg",
+  "contentType": "image/svg+xml"
+ },
+ "x_ite/assets/images/stadia_controller.svg": {
+  "from": "x_ite/assets/images/stadia_controller.svg",
+  "contentType": "image/svg+xml"
+ },
+ "x_ite/assets/images/stop_circle.svg": {
+  "from": "x_ite/assets/images/stop_circle.svg",
+  "contentType": "image/svg+xml"
+ },
+ "x_ite/assets/images/stroke_partial.svg": {
+  "from": "x_ite/assets/images/stroke_partial.svg",
+  "contentType": "image/svg+xml"
+ },
+ "x_ite/assets/images/texture.svg": {
+  "from": "x_ite/assets/images/texture.svg",
+  "contentType": "image/svg+xml"
+ },
+ "x_ite/assets/images/travel.svg": {
+  "from": "x_ite/assets/images/travel.svg",
+  "contentType": "image/svg+xml"
+ },
+ "x_ite/assets/images/visibility.svg": {
+  "from": "x_ite/assets/images/visibility.svg",
+  "contentType": "image/svg+xml"
+ },
+ "x_ite/assets/lib/lut_charlie.png": {
+  "from": "x_ite/assets/lib/lut_charlie.png",
+  "contentType": "image/png"
+ },
+ "x_ite/assets/lib/lut_ggx.png": {
+  "from": "x_ite/assets/lib/lut_ggx.png",
+  "contentType": "image/png"
+ },
+ "x_ite/assets/lib/lut_sheen_E.png": {
+  "from": "x_ite/assets/lib/lut_sheen_E.png",
+  "contentType": "image/png"
+ },
+ "x_ite/assets/lib/mikktspace_bg.wasm": {
+  "from": "x_ite/assets/lib/mikktspace_bg.wasm",
+  "contentType": "application/wasm"
+ },
+ "x_ite/assets/linetype/linetypes.png": {
+  "from": "x_ite/assets/linetype/linetypes.png",
+  "contentType": "image/png"
+ },
+ "x_ite/x_ite.css": {
+  "from": "x_ite/x_ite.css",
+  "contentType": "text/css"
+ },
+ "x_ite/x_ite.min.js": {
+  "from": "x_ite/x_ite.min.js",
+  "contentType": "text/javascript"
+ }
+}

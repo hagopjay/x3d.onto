@@ -1,0 +1,25 @@
+# Fetched: python3 -I tools/vendor_xite.py
+x3d/vendor/x_ite/
+x3d/vendor/*.tgz
+release/*/x_ite/
+*.part
+# Generated: python3 -I tools/rebuild.py (or the stages one by one, see README)
+build/
+tapestry/page/index.html
+tapestry/page/merge-receipt.json
+tapestry/out/
+tapestry/artifact/
+hyper/out/
+# Gate and probe runs
+/hyper/frames/
+/hyper/proof/
+/hyper/work/
+/hyper/*.json
+/hyper/*.log
+/tapestry/frames/
+/tapestry/*.json
+/tapestry/*.log
+gates/out/
+ingest/out/
+__pycache__/
+*.pyc

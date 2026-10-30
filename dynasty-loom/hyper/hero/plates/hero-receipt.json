@@ -1,0 +1,522 @@
+{
+ "blender": "5.2.3 LTS (bpy module, scratchpad/venv-bpy)",
+ "caption_lines": [
+  "DYNASTY HYPERSPHERE  \u00b7  ROTHSCHILD",
+  "120 lives, 43 marriages (counted from the build's geometry of loom-view.json). Red = Rothschild descent, ecru = in-law; a dashed, dimmer thread is an estimated year (5 threads).",
+  "Radius = time: 1725 at the core, 2026 at the glass, 313.5 years per pocket unit, shells every 50 years. Azimuth: houses west to east, angle = 2 + people. Elevation: order of descent (layout only). Each life a fiber, each marriage an arc on the shell of its year.",
+  "Rendered in Blender Cycles from the Wide shot. The gold rings and the nebula are decoration and carry no data."
+ ],
+ "claims": [
+  {
+   "claim": "both plates rendered from the build geometry unedited: 550 fiber objects (cores + glow sheaths), 7468 polyline segments, 139 dash pieces for estimated years; 395224 triangles after curve evaluation; 64 samples, adaptive 0.015, OpenImageDenoise; AgX \"AgX - Punchy\"; Bloom + Fog Glow in the compositor (CPU device)",
+   "grade": "Confirmed",
+   "tool": "Blender 5.2.3 LTS Cycles CPU (hero_render.py stats)"
+  },
+  {
+   "claim": "wide 1600x900: 115.4 s wall, 437.8 s CPU user; tall 1080x1350: 126.7 s wall, 476.3 s CPU user (target: under about 10 minutes of CPU each)",
+   "grade": "Confirmed",
+   "tool": "bash time around the bpy process (4 threads)"
+  },
+  {
+   "claim": "neither plate is black: lit share 0.318 / 0.364, p99 luma 0.831 / 0.838 (wide / tall)",
+   "grade": "Confirmed",
+   "tool": "proto/gates/lookgates.py nonblack()"
+  },
+  {
+   "claim": "life recall at the gate threshold 0.15: 120/120 (wide), 120/120 (tall), but random points in the glass score 0.88 / 0.86 there (the haze is lit); at luma 0.50 recall is 1.00 / 1.00 against a control of 0.38 / 0.35, so the lives are drawn where the data puts them; luma recall cannot tell one thread from a neighbour",
+   "grade": "Likely",
+   "tool": "proto/gates/lookgates.py node_recall() with each life mid-point projected through the Wide camera; control = 400 random points in the glass disc"
+  },
+  {
+   "claim": "reads as the Wide shot of the page: dye-coloured threads with hot cores around the founders' glow, a clear glass with a blue rim and faint 50-year time shells, the gold armillary, a dark violet nebula; depth of field softens the near threads and turns stars into small bokeh discs",
+   "grade": "Likely",
+   "tool": "Read of both PNGs (my eye)"
+  },
+  {
+   "claim": "still-only departures from the page look, stated: thin glass as Fresnel(1.45) between pass-through and a mirror on the outside only; rim (0.55, 0.68, 1.0) x (0.9 F^7 + 0.012 F^2); shell limbs raised to 0.3 exp(-cos^2/0.006); gold tubes drawn 2x thick; a glossy-only warm dome and a light-linked softbox so the gold reads; caption strip states the scales",
+   "grade": "Confirmed",
+   "tool": "hero_render.py source"
+  },
+  {
+   "claim": "an estimated year's dashes (4-5 px on at 1600 px) are hard to see at poster size; the caption says what dashing means",
+   "grade": "Suspected",
+   "tool": "Read at full size"
+  }
+ ],
+ "gates": {
+  "tall": {
+   "control_random_in_glass": {
+    "n": 400,
+    "recall": 0.8575
+   },
+   "glass_disc_px": {
+    "centre": [
+     540.0,
+     590.4
+    ],
+    "radius": 396.7
+   },
+   "node_recall": {
+    "missed": [],
+    "onscreen": 120,
+    "recall": 1.0,
+    "seen": 120
+   },
+   "nonblack": {
+    "h": 1350,
+    "lit": 0.3638257887517147,
+    "mean": 0.13792204856872559,
+    "ok": true,
+    "p99": 0.838129460811615,
+    "p999": 0.9208784103393555,
+    "std": 0.20686672627925873,
+    "w": 1080,
+    "why": []
+   },
+   "poster_nonblack": {
+    "h": 1350,
+    "lit": 0.37329423868312755,
+    "mean": 0.1444982886314392,
+    "ok": true,
+    "p99": 0.8413097858428955,
+    "p999": 0.9208784103393555,
+    "std": 0.21130093932151794,
+    "w": 1080,
+    "why": []
+   },
+   "strict": {
+    "control": 0.3475,
+    "recall": 1.0,
+    "seen": 120,
+    "thr": 0.5
+   }
+  },
+  "wide": {
+   "control_random_in_glass": {
+    "n": 400,
+    "recall": 0.8825
+   },
+   "glass_disc_px": {
+    "centre": [
+     800.0,
+     372.7
+    ],
+    "radius": 362.5
+   },
+   "node_recall": {
+    "missed": [],
+    "onscreen": 120,
+    "recall": 1.0,
+    "seen": 120
+   },
+   "nonblack": {
+    "h": 900,
+    "lit": 0.318475,
+    "mean": 0.12152886390686035,
+    "ok": true,
+    "p99": 0.8314235210418701,
+    "p999": 0.9127318263053894,
+    "std": 0.19419655203819275,
+    "w": 1600,
+    "why": []
+   },
+   "poster_nonblack": {
+    "h": 900,
+    "lit": 0.3265548611111111,
+    "mean": 0.1265953779220581,
+    "ok": true,
+    "p99": 0.8351341485977173,
+    "p999": 0.9110486507415771,
+    "std": 0.19810527563095093,
+    "w": 1600,
+    "why": []
+   },
+   "strict": {
+    "control": 0.375,
+    "recall": 1.0,
+    "seen": 120,
+    "thr": 0.5
+   }
+  }
+ },
+ "generator": {
+  "finish": "scratchpad/proto/hyper/hero/hero_finish.py",
+  "render": "scratchpad/proto/hyper/hero/hero_render.py"
+ },
+ "inputs": {
+  "scratchpad/proto/gates/lookgates.py": "58d6e78ca36cc63271de7214ad9c8387f81ce03eccd60df23a54c99470106063",
+  "scratchpad/proto/hyper/hero/final/plate-tall.png": "4a552f955bf8533de88768444f75da7f730e73390b649c37be869c06e73d695e",
+  "scratchpad/proto/hyper/hero/final/plate-wide.png": "ba64e35fec34f80ac407a1c35e489b5ee4905ceb97fb33bc0424188662b6fcc8",
+  "scratchpad/proto/hyper/hero/final/stats-tall.json": "18c10ec2403035a3712ea5fb34bacf4c482fe05587101696ebc3b745ef8e550f",
+  "scratchpad/proto/hyper/hero/final/stats-wide.json": "715b1a4daaaa6a83ef565e4c81707aec570b5969131df2c081968385aa03d6de",
+  "scratchpad/proto/hyper/hero/hero_finish.py": "f09f03a8cf2a9acdac1ec92bc650fa16eed5d50d0bd643e55b6281530f169e16",
+  "scratchpad/proto/hyper/hero/hero_render.py": "14d04a13509bf8fa34c6cc111298f00c2506fc062949da9dfd72cd88e0446411",
+  "scratchpad/proto/hyper/out/pocket-rothschild.x3d": "e4eec0d26efbdb928e22f466dca65a7cf01dadc8c29838f1a312251510278321",
+  "scratchpad/proto/hyper/out/rothschild.geometry.json": "8ec314afc5f9459621001b6221ef2ab1327ba44afdbafe188d00cb6fc9fbac25",
+  "scratchpad/proto/x3d/vendor/fonts/UbuntuMono-R.ttf": "4828d016e010938208340721dd53b9eaedca39c8cd62e38d6fbc11cd943c35cc"
+ },
+ "outputs": {
+  "scratchpad/proto/hyper/out/poster-tall-plate.png": {
+   "bytes": 1228472,
+   "sha256": "e43b61780a0d4830c5b78c91845cdfa8d2250f86f2fedab27cadbdae6a0ce585",
+   "size": [
+    1080,
+    1350
+   ]
+  },
+  "scratchpad/proto/hyper/out/poster-tall-plate.webp": {
+   "bytes": 81246,
+   "sha256": "2f7af247fe3b518201012a1570b74cb90e6ad52a8d902a48e1984e6b1254a73f",
+   "size": [
+    1080,
+    1350
+   ]
+  },
+  "scratchpad/proto/hyper/out/poster-tall.png": {
+   "bytes": 1177175,
+   "sha256": "359dcba0ab4358c69e5b9a7b24a90ad61f69cbcbc935156e44a2b8f40f3e0a6e",
+   "size": [
+    1080,
+    1350
+   ]
+  },
+  "scratchpad/proto/hyper/out/poster-tall.webp": {
+   "bytes": 111084,
+   "sha256": "2efae35a78a539b6abb8aad3448d86b589e4efccd9ce9bec3e97eab50fba8418",
+   "size": [
+    1080,
+    1350
+   ]
+  },
+  "scratchpad/proto/hyper/out/poster-wide-plate.png": {
+   "bytes": 1209162,
+   "sha256": "bcb82da9843dd05d01653929f86fd4fa49415e8901598049e555ac305cbacc2c",
+   "size": [
+    1600,
+    900
+   ]
+  },
+  "scratchpad/proto/hyper/out/poster-wide-plate.webp": {
+   "bytes": 78820,
+   "sha256": "1e6ff1d09e3dbea8764e9344458e15ce1912f01e697909c40e53f6e5363d388a",
+   "size": [
+    1600,
+    900
+   ]
+  },
+  "scratchpad/proto/hyper/out/poster-wide.png": {
+   "bytes": 1129780,
+   "sha256": "ef4ac833599183bf92581be506406e41b067ec819c722fe9ee072590233b2d2c",
+   "size": [
+    1600,
+    900
+   ]
+  },
+  "scratchpad/proto/hyper/out/poster-wide.webp": {
+   "bytes": 104334,
+   "sha256": "83b3f70da95415801675b0e3bce5f684d419893a39a83b9f7293f219afa56150",
+   "size": [
+    1600,
+    900
+   ]
+  }
+ },
+ "pillow": "12.3.0",
+ "renders": {
+  "tall": {
+   "adaptive_threshold": 0.014999999664723873,
+   "blender": "5.2.3 LTS",
+   "bounces": {
+    "diffuse": 1,
+    "glossy": 4,
+    "max": 16,
+    "transmission": 12,
+    "transparent": 96
+   },
+   "caption": {
+    "font_px": 15,
+    "lines": 5,
+    "strip_px": 181,
+    "title_px": 21
+   },
+   "clamp_indirect": 8.0,
+   "compositor": {
+    "bloom": {
+     "Size": 0.82,
+     "Smoothness": 0.25,
+     "Strength": 0.75,
+     "Threshold": 0.9
+    },
+    "fog": {
+     "Size": 0.9,
+     "Smoothness": 0.4,
+     "Strength": 0.22,
+     "Threshold": 3.0
+    }
+   },
+   "core_strength": 1.6,
+   "dash": [
+    0.016,
+    0.012
+   ],
+   "dash_pieces": 139,
+   "denoiser": "OpenImageDenoise (albedo+normal, accurate prefilter)",
+   "exposure": 0.0,
+   "family": "rothschild",
+   "fiber_objects": 550,
+   "fiber_segments": 7468,
+   "filter_glossy": 0.0,
+   "focus_distance": 3.7088,
+   "fov": 0.8,
+   "fstop": 0.75,
+   "glass_ior": 1.45,
+   "glow_sheaths": true,
+   "glow_strength": 1.6,
+   "haze": 0.035,
+   "kinds": {
+    "close": [
+     0.0025,
+     1.5,
+     0.011
+    ],
+    "life": [
+     0.0032,
+     1.0,
+     0.012
+    ],
+    "root": [
+     0.0018,
+     0.45,
+     0.006
+    ],
+    "spawn": [
+     0.0023,
+     0.75,
+     0.009
+    ],
+    "union": [
+     0.0025,
+     1.2,
+     0.01
+    ]
+   },
+   "look": "AgX - Punchy",
+   "mesh_triangles": {
+    "glass": 36480,
+    "haze": 9024,
+    "ring_0": 8960,
+    "ring_1": 8960,
+    "ring_2": 8960,
+    "seed": 960,
+    "seed_glow": 3968,
+    "seed_halo": 2208,
+    "shell_1750": 16128,
+    "shell_1800": 16128,
+    "shell_1850": 16128,
+    "shell_1900": 16128,
+    "shell_1950": 16128,
+    "shell_2000": 16128
+   },
+   "nebula_gain": 0.8,
+   "render_wall_s": 125.2,
+   "resolution": [
+    1080,
+    1350
+   ],
+   "rim_gain": 2.6,
+   "ring_tube_x": 2.0,
+   "samples": 64,
+   "scene_build_s": 0.53,
+   "scene_triangles": 395224,
+   "seed": 7,
+   "seed_glow": 4.0,
+   "sensor_fit": "HORIZONTAL",
+   "shell_limb": [
+    0.3,
+    0.0006,
+    0.006
+   ],
+   "shot": "tall",
+   "softbox_w": 220.0,
+   "studio": [
+    0.22,
+    0.012
+   ],
+   "threads": 4,
+   "timing": {
+    "cpu_sys_s": 7.1,
+    "cpu_user_s": 476.3,
+    "wall_s": 126.7
+   },
+   "view_transform": "AgX",
+   "viewpoint": "Wide",
+   "viewpoint_pose": {
+    "centerOfRotation": [
+     0.0,
+     -0.2551,
+     0.0
+    ],
+    "fieldOfView": 0.8,
+    "orientation": [
+     -1.0,
+     0.0,
+     0.0,
+     0.279253
+    ],
+    "position": [
+     0.0,
+     0.78434,
+     3.62496
+    ]
+   }
+  },
+  "wide": {
+   "adaptive_threshold": 0.014999999664723873,
+   "blender": "5.2.3 LTS",
+   "bounces": {
+    "diffuse": 1,
+    "glossy": 4,
+    "max": 16,
+    "transmission": 12,
+    "transparent": 96
+   },
+   "caption": {
+    "font_px": 15,
+    "lines": 4,
+    "strip_px": 160,
+    "title_px": 21
+   },
+   "clamp_indirect": 8.0,
+   "compositor": {
+    "bloom": {
+     "Size": 0.82,
+     "Smoothness": 0.25,
+     "Strength": 0.75,
+     "Threshold": 0.9
+    },
+    "fog": {
+     "Size": 0.9,
+     "Smoothness": 0.4,
+     "Strength": 0.22,
+     "Threshold": 3.0
+    }
+   },
+   "core_strength": 1.6,
+   "dash": [
+    0.016,
+    0.012
+   ],
+   "dash_pieces": 139,
+   "denoiser": "OpenImageDenoise (albedo+normal, accurate prefilter)",
+   "exposure": 0.0,
+   "family": "rothschild",
+   "fiber_objects": 550,
+   "fiber_segments": 7468,
+   "filter_glossy": 0.0,
+   "focus_distance": 3.7088,
+   "fov": 0.736,
+   "fstop": 0.75,
+   "glass_ior": 1.45,
+   "glow_sheaths": true,
+   "glow_strength": 1.6,
+   "haze": 0.035,
+   "kinds": {
+    "close": [
+     0.0025,
+     1.5,
+     0.011
+    ],
+    "life": [
+     0.0032,
+     1.0,
+     0.012
+    ],
+    "root": [
+     0.0018,
+     0.45,
+     0.006
+    ],
+    "spawn": [
+     0.0023,
+     0.75,
+     0.009
+    ],
+    "union": [
+     0.0025,
+     1.2,
+     0.01
+    ]
+   },
+   "look": "AgX - Punchy",
+   "mesh_triangles": {
+    "glass": 36480,
+    "haze": 9024,
+    "ring_0": 8960,
+    "ring_1": 8960,
+    "ring_2": 8960,
+    "seed": 960,
+    "seed_glow": 3968,
+    "seed_halo": 2208,
+    "shell_1750": 16128,
+    "shell_1800": 16128,
+    "shell_1850": 16128,
+    "shell_1900": 16128,
+    "shell_1950": 16128,
+    "shell_2000": 16128
+   },
+   "nebula_gain": 0.8,
+   "render_wall_s": 114.0,
+   "resolution": [
+    1600,
+    900
+   ],
+   "rim_gain": 2.6,
+   "ring_tube_x": 2.0,
+   "samples": 64,
+   "scene_build_s": 0.48,
+   "scene_triangles": 395224,
+   "seed": 7,
+   "seed_glow": 4.0,
+   "sensor_fit": "VERTICAL",
+   "shell_limb": [
+    0.3,
+    0.0006,
+    0.006
+   ],
+   "shot": "wide",
+   "softbox_w": 220.0,
+   "studio": [
+    0.22,
+    0.012
+   ],
+   "threads": 4,
+   "timing": {
+    "cpu_sys_s": 7.6,
+    "cpu_user_s": 437.8,
+    "wall_s": 115.4
+   },
+   "view_transform": "AgX",
+   "viewpoint": "Wide",
+   "viewpoint_pose": {
+    "centerOfRotation": [
+     0.0,
+     -0.2551,
+     0.0
+    ],
+    "fieldOfView": 0.8,
+    "orientation": [
+     -1.0,
+     0.0,
+     0.0,
+     0.279253
+    ],
+    "position": [
+     0.0,
+     0.78434,
+     3.62496
+    ]
+   }
+  }
+ },
+ "what": "Cycles hero still of the dynasty hypersphere (Rothschild): poster, docs and sharing"
+}

@@ -1,0 +1,11 @@
+{
+  "about": "The synthetic GEDCOM 7 fixture (fictional people) through the same generator: date qualifiers, a Julian date, places with coordinates, remarriage, adoption, a first-cousin marriage, a restricted record and living people.",
+  "as_of": "2026-10-29",
+  "datasets": {"fixture": {"name": "Synthetic Example family (fictional)"}},
+  "policy": {"living_years": 110, "min_parent_age": 12, "warn_parent_age_below": 18, "warn_parent_age_above": 60, "max_lifespan": 110, "identity_conflict_years": 10},
+  "grade_reason": "Fictional test data; grades come from the file's own QUAY where given, otherwise Suspected.",
+  "sources": [
+    {"path": "fixtures/synthetic-family.ged", "base": "proto", "parser": "gedcom7", "dataset": "fixture", "family": "fixture", "default_grade": "Suspected", "role": "test fixture"}
+  ],
+  "curated": []
+}

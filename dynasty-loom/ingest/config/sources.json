@@ -1,0 +1,115 @@
+{
+  "about": "Inputs of the Cosmos genealogy ingest. Paths are relative to --src (the unpacked upload). Order is precedence: on a contested single-valued fact the first source's value is accepted and every other value is kept as an alternative. family.ts leads because roths/cline_docs/systemPatterns.md names it the source of truth and roths3 (the latest build, 6 Jan 2026) loads it. The four Rothschild files are one source family (successive copies of one hand-made compilation, 5 Jan 2026 19:17 to 6 Jan 02:02 by mtime), so their agreement is not corroboration. curated/decisions.json comes first: it holds graded analyst decisions (model recall) that resolve error gates, and every value it overrides is kept.",
+  "as_of": "2026-10-29",
+  "datasets": {
+    "rothschild": {
+      "name": "Rothschild Dynasty"
+    },
+    "habsburg_stub": {
+      "name": "House of Habsburg (Stub)"
+    },
+    "darwin_wedgwood_stub": {
+      "name": "Darwin–Wedgwood (Stub)"
+    }
+  },
+  "policy": {
+    "living_years": 110,
+    "min_parent_age": 12,
+    "warn_parent_age_below": 18,
+    "warn_parent_age_above": 60,
+    "max_lifespan": 110,
+    "identity_conflict_years": 10
+  },
+  "grade_reason": "Unattributed compilation inside the uploaded app: no citations, notes read as a model's paraphrase of Wikipedia (x3d.onto GLOSSARY: a model's paraphrase of a page is S). The record is transcribed exactly (sha256, locator, verbatim quote); the fact it states is Suspected until a tool checks it.",
+  "sources": [
+    {
+      "path": "curated/decisions.json",
+      "base": "proto",
+      "parser": "json-tree",
+      "dataset": "rothschild",
+      "family": "analyst-decisions",
+      "prov": "model_recall",
+      "role": "graded analyst decisions that resolve error gates; first in precedence; every overridden value stays as an alternative",
+      "default_grade": "Suspected",
+      "grade_reason": "Model recall by the analyst, not checked against a source (wikidata.org was refused by the egress proxy). Suspected until a tool confirms it.",
+      "overlay": true
+    },
+    {
+      "path": "roths3/data/family.ts",
+      "parser": "ts-literal",
+      "var": "familyData",
+      "dataset": "rothschild",
+      "family": "cosmos-rothschild",
+      "role": "declared source of truth; loaded by roths3",
+      "consumer_rule": "react-lt-dataset",
+      "default_grade": "Suspected",
+      "copies": [
+        "roths/data/family.ts",
+        "roths2/data/family.ts",
+        "roths - Copy/data/family.ts"
+      ]
+    },
+    {
+      "path": "roths/data/trees/rothschild.json",
+      "parser": "json-tree",
+      "dataset": "rothschild",
+      "family": "cosmos-rothschild",
+      "role": "loaded by roths (datasets.ts); a 9-person cut of family.ts",
+      "consumer_rule": "react-lt-dataset",
+      "default_grade": "Suspected",
+      "copies": [
+        "roths - Copy/data/trees/rothschild.json"
+      ]
+    },
+    {
+      "path": "rothsch2.html",
+      "parser": "html-literal",
+      "var": "familyData",
+      "dataset": "rothschild",
+      "family": "cosmos-rothschild",
+      "role": "standalone page v2, 26 persons",
+      "consumer_rule": "html-lt",
+      "default_grade": "Suspected",
+      "copies": [
+        "roths/collateral/rothsch2.html"
+      ]
+    },
+    {
+      "path": "rothschilds.html",
+      "parser": "html-literal",
+      "var": "familyData",
+      "dataset": "rothschild",
+      "family": "cosmos-rothschild",
+      "role": "standalone page v1, 26 persons",
+      "consumer_rule": "html-all",
+      "default_grade": "Suspected"
+    },
+    {
+      "path": "roths/data/trees/habsburg_stub.json",
+      "parser": "json-tree",
+      "dataset": "habsburg_stub",
+      "family": "cosmos-stubs",
+      "role": "stub dataset",
+      "consumer_rule": "react-lt-dataset",
+      "default_grade": "Suspected",
+      "copies": [
+        "roths - Copy/data/trees/habsburg_stub.json"
+      ]
+    },
+    {
+      "path": "roths/data/trees/darwin_wedgwood_stub.json",
+      "parser": "json-tree",
+      "dataset": "darwin_wedgwood_stub",
+      "family": "cosmos-stubs",
+      "role": "stub dataset",
+      "consumer_rule": "react-lt-dataset",
+      "default_grade": "Suspected",
+      "copies": [
+        "roths - Copy/data/trees/darwin_wedgwood_stub.json"
+      ]
+    }
+  ],
+  "curated": [
+    "curated/places.json"
+  ]
+}

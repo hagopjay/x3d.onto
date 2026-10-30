@@ -1,0 +1,675 @@
+{
+ "generator": "ingest.py",
+ "version": "0.2.0",
+ "as_of": "2026-10-29",
+ "run_utc": "2026-10-29T23:10:54Z",
+ "python": "3.13.17",
+ "platform": "Linux-6.18.44-fc-v185-x86_64-with-glibc2.39",
+ "jsonschema": "4.26.0",
+ "manifest": {
+  "path": "config/merge.json",
+  "sha256": "c56c96bbad40e0f0cf9428a838646c977b604801fccc3c82a75a87db8d000827"
+ },
+ "scripts": {
+  "ingest.py": "60f4087a66d183c7672b4cf32a5572c9282ff61262bb89891b01164123f00ad9",
+  "build.py": "e1941b3d6dd2343069cce239b55a4ba401f79f8e3fd7539987daf669e0e7fff8",
+  "loaders.py": "38863602d50b210dcb3f7cc3b3ce34574a05e258f364ac7e15cd24d1bb806943",
+  "jsobj.py": "3e01fb850a6858936e244bff50c6254e05a684396b99a95eaa2a3a979bf98312",
+  "gdates.py": "d68eff07096e2e778d8121b2508112a904d593f2cffd6951538470cd8448fc38",
+  "kinship.py": "e6aedc08261c62ba0a83fdb77f55534ca0b771e58d3d5860a85bf73e330d63f8",
+  "gedcom7.py": "4f56c7ed692ce367985c5dd71a1b1244d2bd8a353a7eace342e768ac2a61998f",
+  "exports.py": "87f4d1b8b5aa413490649f596b3b91063363208e8dbda29c742e3c4391d3862d",
+  "gates.py": "3e1eb93ee995179330d3e5143f7a6110438b5c848c9782a002bbbe7c34a10bb5",
+  "identity.py": "f3f10d4890534aed7e461b9f5f9cf4606e2b13a846a9b49523a62763b996549d",
+  "merge.py": "d3d4e2c3fe1e9cd501d27b459433ba4e43160c343821f8b1bbca4f9f04dd4626",
+  "loomview.py": "e1a6d12ea2838755b3457c58e0469bb9812820a76aeb96b351d792a1ae32cbf6",
+  "schema/genealogy-graph.schema.json": "efdfc1a23167ebd1a2c8943986cf3f6749a5027621a795a061be07ca56ad696b",
+  "curated/places.json": "888f1d45cd7fc31cdbb13b097f48857ef7024d296bb81b01e36975142919f656",
+  "curated/houses.json": "62baa970a8c101401e2337a99f89e728c0df1980875172b0ff1ef19eecf67f93"
+ },
+ "inputs": [
+  {
+   "path": "curated/decisions.json",
+   "sha256": "332fe432ad2754a403ccc96556677ebcba0cecd336f48a1e884e5226774f15bc",
+   "bytes": 952,
+   "parser": "json-tree",
+   "records": 2,
+   "copies": []
+  },
+  {
+   "path": "facts/rothschild.json",
+   "sha256": "8503741118c4542f55ef8b256c49cfc22b01b043f7b3a3db38501f78dff67785",
+   "bytes": 60528,
+   "parser": "json-tree",
+   "records": 71,
+   "copies": []
+  },
+  {
+   "path": "facts/habsburg.json",
+   "sha256": "d27475a3e99d0807bc7c4751b18a820927fc0059d81db4c1647a4239d20f93d8",
+   "bytes": 30318,
+   "parser": "json-tree",
+   "records": 38,
+   "copies": []
+  },
+  {
+   "path": "facts/darwin_wedgwood.json",
+   "sha256": "8f2c06f5cbea75c2c843adef1f2a60c04a649826f268a216a8e6eab8e1156fa5",
+   "bytes": 24071,
+   "parser": "json-tree",
+   "records": 31,
+   "copies": []
+  },
+  {
+   "path": "harvest/roth-frankfurt.json",
+   "sha256": "4ad372a7b5ebfabca819aea7ed8fe01976316a34db9a623cf3ca81e239ab1074",
+   "bytes": 40696,
+   "parser": "harvest",
+   "records": 38,
+   "copies": []
+  },
+  {
+   "path": "harvest/roth-vienna.json",
+   "sha256": "a760b67c79cfe5f92e86bc02ee8e60abb2d2b6322b539bd257d12112484b879f",
+   "bytes": 39469,
+   "parser": "harvest",
+   "records": 32,
+   "copies": []
+  },
+  {
+   "path": "harvest/roth-london-19c.json",
+   "sha256": "0bdc03d3199f8ad5fea47519093a40d4f8d8f48d1e9d244c10787fd4ade2f2f0",
+   "bytes": 25390,
+   "parser": "harvest",
+   "records": 28,
+   "copies": []
+  },
+  {
+   "path": "harvest/roth-london-20c.json",
+   "sha256": "84170193aa54ea76f88b3cb488e0b6cc128206a060cccd678c71d722f89b27d6",
+   "bytes": 39030,
+   "parser": "harvest",
+   "records": 42,
+   "copies": []
+  },
+  {
+   "path": "harvest/roth-paris-19c.json",
+   "sha256": "bde360693170284b86dbc2190ee0245be34f6c132916b505dbe1c73b04a8fafd",
+   "bytes": 31062,
+   "parser": "harvest",
+   "records": 24,
+   "copies": []
+  },
+  {
+   "path": "harvest/roth-paris-20c.json",
+   "sha256": "6bc0aed273e202a976bce5d8c86e69ec473fe116cca7316e6c2c9f39df385542",
+   "bytes": 19864,
+   "parser": "harvest",
+   "records": 24,
+   "copies": []
+  },
+  {
+   "path": "harvest/habs-medieval.json",
+   "sha256": "be34004ab6e13b1031d54b7caff3f18724ea024113a4ba115090ce7f7a64c038",
+   "bytes": 81368,
+   "parser": "harvest",
+   "records": 76,
+   "copies": []
+  },
+  {
+   "path": "harvest/habs-spanish.json",
+   "sha256": "8d35d58dc216f44bfa8599b553a58857c62762e0e53b84437bf41db673fa38a9",
+   "bytes": 1277,
+   "parser": "harvest",
+   "records": 0,
+   "copies": []
+  },
+  {
+   "path": "harvest/dw-darwin.json",
+   "sha256": "aa2df00ab447bb8f89876b2c47f580ad762b191a546b3df4a6ef720d5816d19b",
+   "bytes": 56082,
+   "parser": "harvest",
+   "records": 58,
+   "copies": []
+  },
+  {
+   "path": "harvest/dw-wedgwood.json",
+   "sha256": "f4392c9cd968ace93ccf5c24b65792088aa624abe857270a9f30fa0575d667eb",
+   "bytes": 33802,
+   "parser": "harvest",
+   "records": 38,
+   "copies": []
+  },
+  {
+   "path": "roths3/data/family.ts",
+   "sha256": "f66540ff02427d734a36a67f0190c902df8f83be7376adce322cf987fd1aceaf",
+   "bytes": 6014,
+   "parser": "ts-literal",
+   "records": 18,
+   "copies": [
+    {
+     "path": "roths/data/family.ts",
+     "identical": true
+    },
+    {
+     "path": "roths2/data/family.ts",
+     "identical": true
+    },
+    {
+     "path": "roths - Copy/data/family.ts",
+     "identical": true
+    }
+   ]
+  },
+  {
+   "path": "roths/data/trees/rothschild.json",
+   "sha256": "6779d46bc4aff08169f3373d8565b6e553226b692efd90ca10dd53d40225d88f",
+   "bytes": 3634,
+   "parser": "json-tree",
+   "records": 9,
+   "copies": [
+    {
+     "path": "roths - Copy/data/trees/rothschild.json",
+     "identical": true
+    }
+   ]
+  },
+  {
+   "path": "rothsch2.html",
+   "sha256": "8ab4ffd536f4ca12fcc7a179c5f0304530f54663ce0979fc274cb3b9985481e3",
+   "bytes": 58794,
+   "parser": "html-literal",
+   "records": 26,
+   "copies": [
+    {
+     "path": "roths/collateral/rothsch2.html",
+     "identical": true
+    }
+   ]
+  },
+  {
+   "path": "rothschilds.html",
+   "sha256": "0c2d6e07586018de872770984aadfa8437d730cea1606a32c6e9994240157353",
+   "bytes": 24693,
+   "parser": "html-literal",
+   "records": 26,
+   "copies": []
+  },
+  {
+   "path": "roths/data/trees/habsburg_stub.json",
+   "sha256": "6fdeeb74e8a5712604265fab0546ca6051cbb5022ed5cadbe47349f7be82e7ae",
+   "bytes": 456,
+   "parser": "json-tree",
+   "records": 1,
+   "copies": [
+    {
+     "path": "roths - Copy/data/trees/habsburg_stub.json",
+     "identical": true
+    }
+   ]
+  },
+  {
+   "path": "roths/data/trees/darwin_wedgwood_stub.json",
+   "sha256": "8319012aed62c1b3726338ab43b412205e5aef7388b8121151c55ef720f9f5ab",
+   "bytes": 800,
+   "parser": "json-tree",
+   "records": 2,
+   "copies": [
+    {
+     "path": "roths - Copy/data/trees/darwin_wedgwood_stub.json",
+     "identical": true
+    }
+   ]
+  },
+  {
+   "path": "facts/consanguinity.json",
+   "sha256": "3f01490ce0a1353ef99b01e5a6b9781ef86bfa48ee061b45bea731ccd14df611",
+   "role": "cross-check"
+  },
+  {
+   "path": "facts/source_diff.json",
+   "sha256": "dd6f2654a33ce6dc7ca7f0b55aed5f7b52eebfad79bb489307cfe7a44fe02d89",
+   "role": "cross-check"
+  },
+  {
+   "path": "gates/datagates.py",
+   "sha256": "e021c0ac29440aad88e6259b4801f422ef6ad1f92e8d6a5c60ec46e6bdea1fcf",
+   "role": "gate module"
+  }
+ ],
+ "outputs": {
+  "private/genealogy.graph.json": {
+   "sha256": "5a9cdb6ae6097cab032a7ce624e69c58c9995f402909756c527f05f9bb5585e1",
+   "bytes": 6008386
+  },
+  "private/genealogy.graph.jsonld": {
+   "sha256": "e5b445e25728b5b8f09c719e1b054ec374a97ad8279d1a9f31771ab2e9ba9833",
+   "bytes": 3846026
+  },
+  "private/genealogy.ged": {
+   "sha256": "781aab7e1f8a8d1f6dc048785034a2707aa22e954d302237c1889aceaba58207",
+   "bytes": 283455
+  },
+  "private/genealogy.gedcomx.json": {
+   "sha256": "d64a528cfba11b111e0022f4fad21162a93306576fcf045557500f231a69e32d",
+   "bytes": 687679
+  },
+  "private/cosmos-datasets.json": {
+   "sha256": "87a340d6f1a2f99209292ad989eebefa039b8bb0ecef5238ab34742bb01b54b2",
+   "bytes": 219875
+  },
+  "public-candidate/genealogy.graph.json": {
+   "sha256": "2582742fcca4939f7406e33ce38203f3d611c8177aa97543f09980fb28a0e4fc",
+   "bytes": 5241724
+  },
+  "public-candidate/genealogy.graph.jsonld": {
+   "sha256": "df5052f9188859807a94e25422a3d4ce7d29d07681ff4498e456b93a6f467837",
+   "bytes": 3426674
+  },
+  "public-candidate/genealogy.ged": {
+   "sha256": "5fa25322d2c4e4c97a491c332eef2d5c97b36a9094664124260062e240161d64",
+   "bytes": 257498
+  },
+  "public-candidate/genealogy.gedcomx.json": {
+   "sha256": "62bf369dfa110779d7b8bf8103f04d1c643ab228377328b6507dc6db270b3977",
+   "bytes": 643385
+  },
+  "public-candidate/cosmos-datasets.json": {
+   "sha256": "0d0fffd685c93e51cb5cfaa96e3feebd4b337c8aedf657e2c11cb45fd268c1c3",
+   "bytes": 203107
+  },
+  "loom-view.json": {
+   "sha256": "2aef8ce474a1be1127f20473f2d0866cb15a145db69562ca4996f09ba01ea953",
+   "bytes": 295346
+  },
+  "private/derived-tables.json": {
+   "sha256": "06f3da8db4e056a6b32dcd7681646563e36226f756aa716f54ae3047a0a51145",
+   "bytes": 162905
+  },
+  "private/gates.json": {
+   "sha256": "ea90fe2ab001272e7ab54ea2df404e6ef4220dc83872aa7529f48850757b2fec",
+   "bytes": 324018
+  },
+  "private/merge-ledger.json": {
+   "sha256": "3da1b0517e5f57ca857bc8e5f8b5c483ef55c4c176deebd0a9d57ae48b8aaeb1",
+   "bytes": 164219
+  },
+  "gates.json": {
+   "sha256": "62a722b657781edd133115f6c7b348cfd8df0ef0696d0efed591a426d50c318b",
+   "bytes": 321839
+  }
+ },
+ "counts": {
+  "counts": {
+   "persons": 373,
+   "unions": 154,
+   "branches": 27,
+   "places": 22,
+   "edges": 881,
+   "claims": 6038,
+   "sources": 20
+  },
+  "edge_counts": {
+   "alt_parent": 2,
+   "born_in": 7,
+   "child_of": 247,
+   "died_in": 5,
+   "member_of": 312,
+   "partner_in": 283,
+   "seated_at": 25
+  },
+  "claim_grades": {
+   "Illustrative": 4,
+   "Likely": 4941,
+   "Suspected": 1093
+  },
+  "claim_prov": {
+   "doc": 6030,
+   "model_recall": 8
+  },
+  "node_grades": {
+   "Confirmed": 95,
+   "Likely": 409,
+   "Suspected": 72
+  },
+  "contested_facts": 30,
+  "consanguineous_unions": 26,
+  "persons_with_generation_flags": 111,
+  "living": 39,
+  "wikidata_resolved": 238,
+  "enwiki_sitelinks": 154
+ },
+ "gates": [
+  {
+   "id": "G01",
+   "name": "sources pinned; declared copies byte-identical",
+   "severity": "error",
+   "status": "pass",
+   "count": 0,
+   "tool": "ingest.py"
+  },
+  {
+   "id": "G02",
+   "name": "JSON parsed twice (json, located reader) agrees",
+   "severity": "error",
+   "status": "pass",
+   "count": 0,
+   "tool": "ingest.py"
+  },
+  {
+   "id": "G03",
+   "name": "loader notes (ids, unknown fields, URLs)",
+   "severity": "warn",
+   "status": "warn",
+   "count": 95,
+   "tool": "ingest.py"
+  },
+  {
+   "id": "G04",
+   "name": "every claim quote found verbatim in its source file",
+   "severity": "error",
+   "status": "pass",
+   "count": 0,
+   "tool": "ingest.py"
+  },
+  {
+   "id": "G05",
+   "name": "graph validates against schema/genealogy-graph.schema.json (private and public)",
+   "severity": "error",
+   "status": "pass",
+   "count": 0,
+   "tool": "jsonschema 4.26.0, Draft 2020-12"
+  },
+  {
+   "id": "G06",
+   "name": "parent links form no cycle",
+   "severity": "error",
+   "status": "pass",
+   "count": 0,
+   "tool": "kinship.topo_order"
+  },
+  {
+   "id": "G07",
+   "name": "references resolve (per source, then after the merge)",
+   "severity": "warn",
+   "status": "warn",
+   "count": 90,
+   "tool": "ingest.py"
+  },
+  {
+   "id": "G08",
+   "name": "spouse field stated from both sides",
+   "severity": "warn",
+   "status": "warn",
+   "count": 5,
+   "tool": "ingest.py"
+  },
+  {
+   "id": "G09",
+   "name": "temporal impossibilities (death before birth, parent under min age, birth after a parent died)",
+   "severity": "error",
+   "status": "pass",
+   "count": 0,
+   "tool": "ingest.py"
+  },
+  {
+   "id": "G10",
+   "name": "temporal oddities (young or old parent, long life)",
+   "severity": "warn",
+   "status": "warn",
+   "count": 2,
+   "tool": "ingest.py"
+  },
+  {
+   "id": "G11",
+   "name": "stored generation within the range topology allows",
+   "severity": "warn",
+   "status": "warn",
+   "count": 111,
+   "tool": "ingest.py"
+  },
+  {
+   "id": "G12",
+   "name": "children of one union share a stored generation",
+   "severity": "warn",
+   "status": "warn",
+   "count": 6,
+   "tool": "ingest.py"
+  },
+  {
+   "id": "G13",
+   "name": "contested facts (sources disagree; all values kept, first by precedence accepted)",
+   "severity": "warn",
+   "status": "warn",
+   "count": 30,
+   "tool": "ingest.py"
+  },
+  {
+   "id": "G14",
+   "name": "possible conflation (one id, dates more than 10 years apart)",
+   "severity": "warn",
+   "status": "warn",
+   "count": 2,
+   "tool": "ingest.py"
+  },
+  {
+   "id": "G15",
+   "name": "name variants (aliases, not conflicts)",
+   "severity": "info",
+   "status": "info",
+   "count": 41,
+   "tool": "ingest.py"
+  },
+  {
+   "id": "G16",
+   "name": "omissions (a source leaves parents empty where another names them)",
+   "severity": "info",
+   "status": "info",
+   "count": 7,
+   "tool": "ingest.py"
+  },
+  {
+   "id": "G17",
+   "name": "consanguineous unions (kinship > 0)",
+   "severity": "info",
+   "status": "info",
+   "count": 26,
+   "tool": "kinship.py (exact fractions)"
+  },
+  {
+   "id": "G18",
+   "name": "renderer parity: each consumer's spouse-edge rule replayed on its data",
+   "severity": "warn",
+   "status": "warn",
+   "count": 5,
+   "tool": "ingest.py"
+  },
+  {
+   "id": "G19",
+   "name": "placeholder media (stock photos standing in for portraits)",
+   "severity": "info",
+   "status": "info",
+   "count": 4,
+   "tool": "ingest.py"
+  },
+  {
+   "id": "G20",
+   "name": "dates before 1582 without a calendar",
+   "severity": "info",
+   "status": "info",
+   "count": 164,
+   "tool": "ingest.py"
+  },
+  {
+   "id": "G21",
+   "name": "GEDCOM 7 export, re-parse, re-import, rebuild: core unchanged",
+   "severity": "error",
+   "status": "pass",
+   "count": 0,
+   "tool": "gedcom7.py"
+  },
+  {
+   "id": "G22",
+   "name": "two builds from the same inputs are byte-identical",
+   "severity": "error",
+   "status": "pass",
+   "count": 0,
+   "tool": "ingest.py"
+  },
+  {
+   "id": "G23",
+   "name": "public candidate: no living or restricted identity, no paths",
+   "severity": "error",
+   "status": "pass",
+   "count": 0,
+   "tool": "ingest.py"
+  },
+  {
+   "id": "G24",
+   "name": "GEDCOM FAMC/FAMS agree with FAM HUSB/WIFE/CHIL",
+   "severity": "warn",
+   "status": "pass",
+   "count": 0,
+   "tool": "ingest.py"
+  },
+  {
+   "id": "G25",
+   "name": "Wikidata QIDs resolved",
+   "severity": "info",
+   "status": "info",
+   "count": 20,
+   "tool": "ingest.py"
+  },
+  {
+   "id": "G26",
+   "name": "harvest children[] read in reverse: each listed child has the person among its accepted parents",
+   "severity": "warn",
+   "status": "pass",
+   "count": 0,
+   "tool": "ingest.py"
+  },
+  {
+   "id": "G27",
+   "name": "identity: refused matches, two identifiers for one person, keys held by two persons",
+   "severity": "warn",
+   "status": "warn",
+   "count": 9,
+   "tool": "identity.py"
+  },
+  {
+   "id": "G28",
+   "name": "facts/consanguinity.json against kinship.py (fact-check links exactly; merged graph may only add kinship)",
+   "severity": "warn",
+   "status": "pass",
+   "count": 0,
+   "tool": "kinship.py"
+  },
+  {
+   "id": "G29",
+   "name": "parent roles (fact-check order father-first, harvest father/mother) against stated sex",
+   "severity": "warn",
+   "status": "pass",
+   "count": 0,
+   "tool": "ingest.py"
+  },
+  {
+   "id": "G30",
+   "name": "facts/source_diff.json against the loaders and against G13/G15/G16",
+   "severity": "warn",
+   "status": "pass",
+   "count": 0,
+   "tool": "ingest.py"
+  },
+  {
+   "id": "D00-schema",
+   "name": "datagates D00-schema (via the FamilyMember adapter)",
+   "severity": "error",
+   "status": "fail",
+   "count": 54,
+   "tool": "proto/gates/datagates.py"
+  },
+  {
+   "id": "D08-generation",
+   "name": "datagates D08-generation (via the FamilyMember adapter)",
+   "severity": "warn",
+   "status": "warn",
+   "count": 397,
+   "tool": "proto/gates/datagates.py"
+  },
+  {
+   "id": "D10-living",
+   "name": "datagates D10-living (via the FamilyMember adapter)",
+   "severity": "error",
+   "status": "fail",
+   "count": 31,
+   "tool": "proto/gates/datagates.py"
+  },
+  {
+   "id": "D14-island",
+   "name": "datagates D14-island (via the FamilyMember adapter)",
+   "severity": "warn",
+   "status": "warn",
+   "count": 38,
+   "tool": "proto/gates/datagates.py"
+  },
+  {
+   "id": "G31",
+   "name": "datagates on the published view itself (after withholding): no error left",
+   "severity": "error",
+   "status": "pass",
+   "count": 0,
+   "tool": "proto/gates/datagates.py"
+  },
+  {
+   "id": "G32",
+   "name": "loom-view.json against the loom-view/1 contract (keys, types, references, privacy rule)",
+   "severity": "error",
+   "status": "pass",
+   "count": 0,
+   "tool": "merge.check_view"
+  }
+ ],
+ "verdict": "public candidate written; 71 records withheld by error gates",
+ "built_in_s": 5.236,
+ "view": {
+  "rothschild": {
+   "people": 120,
+   "core": 92,
+   "unions": 43,
+   "close": 15,
+   "houses": 6,
+   "events": 10,
+   "confidence": {
+    "Confirmed": 39,
+    "Likely": 76,
+    "Suspected": 5
+   }
+  },
+  "habsburg": {
+   "people": 106,
+   "core": 75,
+   "unions": 39,
+   "close": 8,
+   "houses": 6,
+   "events": 0,
+   "confidence": {
+    "Confirmed": 3,
+    "Likely": 102,
+    "Suspected": 1
+   }
+  },
+  "darwin_wedgwood": {
+   "people": 76,
+   "core": 69,
+   "unions": 12,
+   "close": 3,
+   "houses": 8,
+   "events": 0,
+   "confidence": {
+    "Confirmed": 23,
+    "Likely": 48,
+    "Suspected": 5
+   }
+  }
+ }
+}
