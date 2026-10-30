@@ -18,6 +18,7 @@ import math, random
 import village_spec as VS
 
 TENDER_GAIT_LANES = ((7.4, 0, +1, 4), (9.0, 1, -1, 4), (13.4, 2, +1, 4))       # radius (m), gait copy (and outfit), direction (+1 or -1), walkers
+KHACHKAR_R, KHACHKAR_AZ = 11.0, 60.0          # the khachkar (tools/blender_khachkar.py): metres from the fountain and degrees from east toward north; between the stalls at 30 and 90 degrees, clear of the lanes at 9.0 and 13.4 m
 VILLAGER_COPY = 3                                                              # the villagers' H-Anim copies are numbered after the three shell tenders (hanim_T3 to hanim_T5)
 
 ATM_TOP, ATM_MARGIN = 1.07, 1.02          # the atmosphere reaches 7% above the planet's surface (17 m at village scale, about four times the real share, drawn big like everything else);
@@ -164,6 +165,8 @@ def build(L, anchor):
     anchor('earth', 'Earth and Moon', 'drawn about %s times too large so that you can see it, and the Moon about %d times too far out' % (format(int(round(big, -2)), ','), round(far)), tuple(E[i] + right[i] * VS.R_EARTH * 1.25 for i in range(3)))
     anchor('village', 'Aurelsbrunn', 'a 160 m village on a planet drawn 250 m in radius: the real Earth is 6,371 km, so the village is about 25,000 times too big for its planet', at(0, 0, 30))
     anchor('tether', 'The tether', 'from the fountain mast to the heart · the climbers on it are simulated', tuple(tip[i] + (SUN[i] - tip[i]) * 0.012 for i in range(3)))
+    kx, ky = KHACHKAR_R * math.cos(math.radians(KHACHKAR_AZ)), KHACHKAR_R * math.sin(math.radians(KHACHKAR_AZ))
+    anchor('khachkar', 'Khachkar', 'an Armenian cross-stone, 2.4 m of warm tufa: a cross growing from a wheel of eternity, framed in interlace · modelled in Blender', cam(kx, ky, 3.3))
     anchor('villagers', 'Villagers', 'H-Anim humans made in Blender, 1.75 m tall · their walk and their errands are simulated', cam(8.6, 3.4, 2.3))
 
     # ---- the stops

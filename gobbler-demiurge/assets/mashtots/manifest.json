@@ -1,0 +1,21 @@
+{
+ "font": "Noto Serif Armenian Bold",
+ "version": "Version 2.008",
+ "licence": "SIL Open Font License 1.1 (OFL.txt beside it)",
+ "copyright": "Copyright 2022 The Noto Project Authors (https://github.com/notofonts/armenian)",
+ "file": "NotoSerifArmenian-Bold.ttf",
+ "url": "https://raw.githubusercontent.com/notofonts/notofonts.github.io/main/fonts/NotoSerifArmenian/unhinted/ttf/NotoSerifArmenian-Bold.ttf",
+ "bytes": 17732,
+ "sha256": "77bdd84e02f617a0bd22aaae88458d5afd536bc3f8ab4bbe05b89fe6c86cb160",
+ "units_per_em": 1000,
+ "cap_height": 714,
+ "fonttools": "4.68.0",
+ "numerals": {
+  "source": "CLDR common/rbnf/root.xml, rule set %armenian-upper (excerpt in cldr-rbnf-armenian-upper.txt)",
+  "url": "https://raw.githubusercontent.com/unicode-org/cldr/main/common/rbnf/root.xml",
+  "excerpt_sha256": "278c69f9a7cf0442a7ecc01f290008e9c1de0969514eb1120c76eda1733c6d4c",
+  "checked": 36
+ },
+ "glyphs_json_sha256": "f56bb1b56214eefd2c57fc158d9984c7116af7df2c27964f8a46818a68d09e9d",
+ "script_sha256": "f809d81043907166c8ab634f089d9c96b3fe45ca2e86b05fd6092c91055e623f"
+}

@@ -1,0 +1,45 @@
+<!--
+Copyright © 1991-2026 Unicode, Inc.
+CLDR data files are interpreted according to the LDML specification (http://unicode.org/reports/tr35/)
+For terms of use, see http://www.unicode.org/copyright.html
+excerpt of 826-line file, fetched 2026-10-29, sha256 43fcb8dab6f1afa8c59be9eb6be9b6df0da45dc5cc91f6a3710cf2631e01ed2e
+%armenian-upper:
+-x: −>>;
+x.x: =#,##0.00=;
+0: 0;
+1: Ա;
+2: Բ;
+3: Գ;
+4: Դ;
+5: Ե;
+6: Զ;
+7: Է;
+8: Ը;
+9: Թ;
+10: Ժ[>>];
+20: Ի[>>];
+30: Լ[>>];
+40: Խ[>>];
+50: Ծ[>>];
+60: Կ[>>];
+70: Հ[>>];
+80: Ձ[>>];
+90: Ղ[>>];
+100: Ճ[>>];
+200: Մ[>>];
+300: Յ[>>];
+400: Ն[>>];
+500: Շ[>>];
+600: Ո[>>];
+700: Չ[>>];
+800: Պ[>>];
+900: Ջ[>>];
+1000: Ռ[>>];
+2000: Ս[>>];
+3000: Վ[>>];
+4000: Տ[>>];
+5000: Ր[>>];
+6000: Ց[>>];
+7000: Ւ[>>];
+8000: Փ[>>];
+9000: Ք[>>];

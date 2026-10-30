@@ -1,0 +1,293 @@
+{
+ "about": "The 36 letters of Mesrop Mashtots (traditionally 405 AD), in his order, with their classical numeric values. Names as the owner spells them; unicode_name is Unicode's.",
+ "letters": [
+  {
+   "order": 1,
+   "glyph": "Ա",
+   "codepoint": "U+0531",
+   "unicode_name": "ARMENIAN CAPITAL LETTER AYB",
+   "name": "Ayb",
+   "value": 1
+  },
+  {
+   "order": 2,
+   "glyph": "Բ",
+   "codepoint": "U+0532",
+   "unicode_name": "ARMENIAN CAPITAL LETTER BEN",
+   "name": "Ben",
+   "value": 2
+  },
+  {
+   "order": 3,
+   "glyph": "Գ",
+   "codepoint": "U+0533",
+   "unicode_name": "ARMENIAN CAPITAL LETTER GIM",
+   "name": "Gim",
+   "value": 3
+  },
+  {
+   "order": 4,
+   "glyph": "Դ",
+   "codepoint": "U+0534",
+   "unicode_name": "ARMENIAN CAPITAL LETTER DA",
+   "name": "Da",
+   "value": 4
+  },
+  {
+   "order": 5,
+   "glyph": "Ե",
+   "codepoint": "U+0535",
+   "unicode_name": "ARMENIAN CAPITAL LETTER ECH",
+   "name": "Yech",
+   "value": 5
+  },
+  {
+   "order": 6,
+   "glyph": "Զ",
+   "codepoint": "U+0536",
+   "unicode_name": "ARMENIAN CAPITAL LETTER ZA",
+   "name": "Za",
+   "value": 6
+  },
+  {
+   "order": 7,
+   "glyph": "Է",
+   "codepoint": "U+0537",
+   "unicode_name": "ARMENIAN CAPITAL LETTER EH",
+   "name": "E",
+   "value": 7
+  },
+  {
+   "order": 8,
+   "glyph": "Ը",
+   "codepoint": "U+0538",
+   "unicode_name": "ARMENIAN CAPITAL LETTER ET",
+   "name": "Et",
+   "value": 8
+  },
+  {
+   "order": 9,
+   "glyph": "Թ",
+   "codepoint": "U+0539",
+   "unicode_name": "ARMENIAN CAPITAL LETTER TO",
+   "name": "To",
+   "value": 9
+  },
+  {
+   "order": 10,
+   "glyph": "Ժ",
+   "codepoint": "U+053A",
+   "unicode_name": "ARMENIAN CAPITAL LETTER ZHE",
+   "name": "Zhe",
+   "value": 10
+  },
+  {
+   "order": 11,
+   "glyph": "Ի",
+   "codepoint": "U+053B",
+   "unicode_name": "ARMENIAN CAPITAL LETTER INI",
+   "name": "Ini",
+   "value": 20
+  },
+  {
+   "order": 12,
+   "glyph": "Լ",
+   "codepoint": "U+053C",
+   "unicode_name": "ARMENIAN CAPITAL LETTER LIWN",
+   "name": "Lyun",
+   "value": 30
+  },
+  {
+   "order": 13,
+   "glyph": "Խ",
+   "codepoint": "U+053D",
+   "unicode_name": "ARMENIAN CAPITAL LETTER XEH",
+   "name": "Khe",
+   "value": 40
+  },
+  {
+   "order": 14,
+   "glyph": "Ծ",
+   "codepoint": "U+053E",
+   "unicode_name": "ARMENIAN CAPITAL LETTER CA",
+   "name": "Tsa",
+   "value": 50
+  },
+  {
+   "order": 15,
+   "glyph": "Կ",
+   "codepoint": "U+053F",
+   "unicode_name": "ARMENIAN CAPITAL LETTER KEN",
+   "name": "Ken",
+   "value": 60
+  },
+  {
+   "order": 16,
+   "glyph": "Հ",
+   "codepoint": "U+0540",
+   "unicode_name": "ARMENIAN CAPITAL LETTER HO",
+   "name": "Ho",
+   "value": 70
+  },
+  {
+   "order": 17,
+   "glyph": "Ձ",
+   "codepoint": "U+0541",
+   "unicode_name": "ARMENIAN CAPITAL LETTER JA",
+   "name": "Dza",
+   "value": 80
+  },
+  {
+   "order": 18,
+   "glyph": "Ղ",
+   "codepoint": "U+0542",
+   "unicode_name": "ARMENIAN CAPITAL LETTER GHAD",
+   "name": "Ghat",
+   "value": 90
+  },
+  {
+   "order": 19,
+   "glyph": "Ճ",
+   "codepoint": "U+0543",
+   "unicode_name": "ARMENIAN CAPITAL LETTER CHEH",
+   "name": "Tche",
+   "value": 100
+  },
+  {
+   "order": 20,
+   "glyph": "Մ",
+   "codepoint": "U+0544",
+   "unicode_name": "ARMENIAN CAPITAL LETTER MEN",
+   "name": "Men",
+   "value": 200
+  },
+  {
+   "order": 21,
+   "glyph": "Յ",
+   "codepoint": "U+0545",
+   "unicode_name": "ARMENIAN CAPITAL LETTER YI",
+   "name": "Hi",
+   "value": 300
+  },
+  {
+   "order": 22,
+   "glyph": "Ն",
+   "codepoint": "U+0546",
+   "unicode_name": "ARMENIAN CAPITAL LETTER NOW",
+   "name": "Nu",
+   "value": 400
+  },
+  {
+   "order": 23,
+   "glyph": "Շ",
+   "codepoint": "U+0547",
+   "unicode_name": "ARMENIAN CAPITAL LETTER SHA",
+   "name": "Sha",
+   "value": 500
+  },
+  {
+   "order": 24,
+   "glyph": "Ո",
+   "codepoint": "U+0548",
+   "unicode_name": "ARMENIAN CAPITAL LETTER VO",
+   "name": "Vo",
+   "value": 600
+  },
+  {
+   "order": 25,
+   "glyph": "Չ",
+   "codepoint": "U+0549",
+   "unicode_name": "ARMENIAN CAPITAL LETTER CHA",
+   "name": "Cha",
+   "value": 700
+  },
+  {
+   "order": 26,
+   "glyph": "Պ",
+   "codepoint": "U+054A",
+   "unicode_name": "ARMENIAN CAPITAL LETTER PEH",
+   "name": "Pe",
+   "value": 800
+  },
+  {
+   "order": 27,
+   "glyph": "Ջ",
+   "codepoint": "U+054B",
+   "unicode_name": "ARMENIAN CAPITAL LETTER JHEH",
+   "name": "Dje",
+   "value": 900
+  },
+  {
+   "order": 28,
+   "glyph": "Ռ",
+   "codepoint": "U+054C",
+   "unicode_name": "ARMENIAN CAPITAL LETTER RA",
+   "name": "Ra",
+   "value": 1000
+  },
+  {
+   "order": 29,
+   "glyph": "Ս",
+   "codepoint": "U+054D",
+   "unicode_name": "ARMENIAN CAPITAL LETTER SEH",
+   "name": "Se",
+   "value": 2000
+  },
+  {
+   "order": 30,
+   "glyph": "Վ",
+   "codepoint": "U+054E",
+   "unicode_name": "ARMENIAN CAPITAL LETTER VEW",
+   "name": "Vev",
+   "value": 3000
+  },
+  {
+   "order": 31,
+   "glyph": "Տ",
+   "codepoint": "U+054F",
+   "unicode_name": "ARMENIAN CAPITAL LETTER TIWN",
+   "name": "Tyun",
+   "value": 4000
+  },
+  {
+   "order": 32,
+   "glyph": "Ր",
+   "codepoint": "U+0550",
+   "unicode_name": "ARMENIAN CAPITAL LETTER REH",
+   "name": "Re",
+   "value": 5000
+  },
+  {
+   "order": 33,
+   "glyph": "Ց",
+   "codepoint": "U+0551",
+   "unicode_name": "ARMENIAN CAPITAL LETTER CO",
+   "name": "Tso",
+   "value": 6000
+  },
+  {
+   "order": 34,
+   "glyph": "Ւ",
+   "codepoint": "U+0552",
+   "unicode_name": "ARMENIAN CAPITAL LETTER YIWN",
+   "name": "Hyun",
+   "value": 7000
+  },
+  {
+   "order": 35,
+   "glyph": "Փ",
+   "codepoint": "U+0553",
+   "unicode_name": "ARMENIAN CAPITAL LETTER PIWR",
+   "name": "Pyur",
+   "value": 8000
+  },
+  {
+   "order": 36,
+   "glyph": "Ք",
+   "codepoint": "U+0554",
+   "unicode_name": "ARMENIAN CAPITAL LETTER KEH",
+   "name": "Ke",
+   "value": 9000
+  }
+ ]
+}

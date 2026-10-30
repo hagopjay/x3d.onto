@@ -1,0 +1,79 @@
+{
+ "blender": "5.2.3 LTS",
+ "blenderio": "x3d-blender-io d9bbf91",
+ "script_sha256": "c0d7ce0945fe098e5c25a2971e525f70a521ac163fa18ee885848b5bc118ee06",
+ "village_spec_sha256": "4b754d626b5ffdaed1cc583a7a8583c630caca211d38725abefbe491a0be7ac5",
+ "bake": {
+  "engine": "Cycles CPU",
+  "samples": 384,
+  "key": {
+   "azimuth": 220.0,
+   "elevation": 55.0,
+   "colour": [
+    1.0,
+    0.85,
+    0.62
+   ],
+   "strength": 5.0,
+   "disc_degrees": 6.0
+  },
+  "sky": {
+   "type": "multiple scattering, disc off",
+   "sun_elevation": 26.0,
+   "strength": 0.25
+  },
+  "passes": "direct + indirect, albedo-coloured bounce",
+  "exposure": 0.5128,
+  "exposure_rule": "70% receiver ground corner -> 1.00",
+  "floor_linear": [
+   0.05,
+   0.07,
+   0.12
+  ],
+  "shoulder_from": 0.8,
+  "light_stats": {
+   "Khachkar": {
+    "light_p05": 0.062,
+    "light_p50": 0.684,
+    "light_p95": 1.253
+   },
+   "Receiver": {
+    "light_p05": 0.956,
+    "light_p50": 0.99,
+    "light_p95": 1.019
+   }
+  },
+  "receiver": "a 16 m square of paving round the stone, 32 x 32 cells, on the curve; baked with the stone, not exported"
+ },
+ "meshes": {
+  "Khachkar": 2627
+ },
+ "parts": {
+  "pedestal": 115,
+  "face": 2388,
+  "slab_and_cornice": 124
+ },
+ "place": {
+  "radius_m": 11.0,
+  "azimuth_deg": 60.0,
+  "faces": "the fountain"
+ },
+ "size_m": {
+  "slab_width": 1.0,
+  "slab_thickness": 0.3,
+  "slab_height": 2.22,
+  "cornice": 0.18,
+  "stone_height": 2.4,
+  "pedestal": 0.42,
+  "overall": 2.82
+ },
+ "relief_m": {
+  "field_depth": 0.045,
+  "boss": 0.012,
+  "grid": 0.08
+ },
+ "objects": 1,
+ "file": "khachkar.x3d",
+ "bytes": 362588,
+ "sha256": "194eb81ff19a3e84279b9b99c41f47222e65cb55c2b2192aac88dd651f907c59"
+}

@@ -1,5 +1,5 @@
 """python3 -I test/test_layers.py : the layers are deterministic, match the plan's counts, and compose in the right place (needs make v4-data first)."""
-import os, re, sys, json, unittest, hashlib, pathlib
+import os, re, sys, json, math, unittest, hashlib, pathlib
 HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.dirname(HERE); REPO = os.path.dirname(ROOT)
 sys.path.insert(0, os.path.join(ROOT, 'tools'))
 import layers, build_bird
@@ -18,7 +18,7 @@ class T(unittest.TestCase):
         self.assertEqual(len(re.findall(r"<Transform DEF='TenderOrbit\d+'", x)), 10)
         self.assertEqual(len(re.findall(r"<Group DEF='TenderBody\d'>", x)), 3); self.assertEqual(len(re.findall(r"<Group USE='TenderBody\d'/>", x)), 7)   # three H-Anim copies, shared by USE among the ten shell tenders
         self.assertEqual(x.count('<HAnimHumanoid'), 3); self.assertEqual(len(re.findall(r'<HAnimJoint DEF="hanim_T\d_\w+"', x)), 54)   # 18 joints each; the villagers' bodies are in their own lazy file
-        ids = {a['id'] for a in L['anchors']}; self.assertEqual(len(L['anchors']), 19)
+        ids = {a['id'] for a in L['anchors']}; self.assertEqual(len(L['anchors']), 21)            # 19, the Mashtots ring and the khachkar
         for t in ('fan_gltf', 'fan_usd', 'fan_video', 'fan_o3de', 'fan_paraview', 'fan_3dslicer', 'fan_unity', 'fan_defold', 'fan_ifc'): self.assertIn(t, ids)
         self.assertEqual(sum(1 for a in L['anchors'] if a['id'].startswith('fan_') and 'mock' in a['tag']), 6)   # six mocks, tagged
         self.assertEqual(sum(1 for a in L['anchors'] if a['id'].startswith('fan_') and a['tag'].startswith('Blender export')), 3)
@@ -34,6 +34,33 @@ class T(unittest.TestCase):
                 if n.startswith(('Earth', 'Village', 'Villagers', 'Climb', 'Moon', 'Cloud')): self.assertIn(n, seen, n)
         self.assertLess(x.index("<Group DEF='EarthWorld'"), x.index("toNode='EarthWorld'"))
         tag = {a['id']: a for a in L['anchors']}; self.assertIn('1,700', tag['earth']['tag']); self.assertIn('25,000', tag['village']['tag'])   # the scale notes say what is not to scale
+    def test_mashtots_ring(self):
+        import mashtots as MS
+        L = layers.build(EXP); x = L['sway']
+        self.assertEqual(len(re.findall(r"<Transform DEF='Mashtots\d\d'", x)), 36)                                      # the 36 letters of Mashtots, Օ and Ֆ left out
+        self.assertEqual(x.count("<Color DEF='MashtotsShades'"), 1); self.assertEqual(x.count("<Color USE='MashtotsShades'/>"), 35)  # one shade palette, shared
+        self.assertEqual([c for c, _, _ in MS.LETTERS], list(range(0x531, 0x555)))
+        self.assertEqual([v for _, _, v in MS.LETTERS][::9], [1, 10, 100, 1000]); self.assertEqual(MS.LETTERS[-1][2], 9000)
+        letters = json.loads(pathlib.Path(ROOT, 'assets', 'mashtots', 'letters.json').read_text(encoding='utf-8'))['letters']
+        self.assertEqual([(l['glyph'], l['name'], l['value']) for l in letters], [(chr(c), n, v) for c, n, v in MS.LETTERS])
+        man = json.loads(pathlib.Path(ROOT, 'assets', 'mashtots', 'manifest.json').read_text())
+        self.assertEqual(hashlib.sha256(pathlib.Path(ROOT, 'assets', 'mashtots', man['file']).read_bytes()).hexdigest(), man['sha256'])      # the font is the one the manifest names
+        self.assertEqual(hashlib.sha256(pathlib.Path(ROOT, 'assets', 'mashtots', 'glyphs.json').read_bytes()).hexdigest(), man['glyphs_json_sha256'])
+        for nm in ('MashtotsClock', 'MashtotsSpin', 'MashtotsReadClock', 'MashtotsRead', 'MashtotsReader', 'MashtotsRing'):                   # every ROUTE of the ring after its nodes (X_ITE drops one that is not)
+            for m in re.finditer(r"<ROUTE [^>]*Node='%s'" % nm, x): self.assertLess(x.index("DEF='%s'" % nm), m.start(), nm)
+        G = MS.load_glyphs()
+        for cp, name, _ in MS.LETTERS:                                                                                   # the face of every letter covers its outline: triangles add up to the area
+            polys = MS.flatten(G['glyphs']['%04X' % cp]['ops']); tot = 0.0
+            for o, hs in MS.nest(polys):
+                P = {}; rings = []
+                for poly in [o] + hs: b = len(P); P.update({b + k: p for k, p in enumerate(poly)}); rings.append(list(range(b, b + len(poly))))
+                tris = MS.earclip(P, MS.bridge(P, rings[0], rings[1:])); self.assertTrue(all(MS._cross(P[a], P[b], P[c]) > 0 for a, b, c in tris), name)
+                tot += sum(MS._cross(P[a], P[b], P[c]) / 2 for a, b, c in tris) - MS.area(o) - sum(MS.area(h) for h in hs)
+            self.assertAlmostEqual(tot, 0.0, delta=1.0, msg=name)
+        layers.MASHTOTS = False
+        try: off = layers.build(EXP)
+        finally: layers.MASHTOTS = True
+        self.assertNotIn('Mashtots', off['sway']); self.assertEqual(len(off['anchors']), 20)                              # the flag leaves the build as it was before the ring (19 tags plus the khachkar's)
     def test_villagers_file(self):
         v = layers.build(EXP)['villagers']
         self.assertEqual(len(re.findall(r"<Group DEF='VillagerBody\d'>", v)), 3); self.assertEqual(len(re.findall(r"<Group USE='VillagerBody\d'/>", v)), 9)   # three outfits, each with its own gait, shared by USE among twelve walkers
@@ -48,8 +75,9 @@ class T(unittest.TestCase):
         with tempfile.TemporaryDirectory() as d:
             sizes = world.build(d); self.assertEqual(sorted(sizes), ['earth-clouds.x3d', 'earth-moon.x3d', 'earth-planet.x3d', 'village.x3d'])
             for n in sizes:
-                t = pathlib.Path(d, n).read_text(encoding='utf-8'); self.assertNotIn('PhysicalMaterial', t, n); self.assertNotIn('NavigationInfo', t, n); self.assertLess(sizes[n], 1.5e6, n)
-            v = pathlib.Path(d, 'village.x3d').read_text(encoding='utf-8'); self.assertEqual(v.count('<Shape'), 4)               # four merged meshes (four draw calls), the light baked into one colour per face corner, not one object per house
+                t = pathlib.Path(d, n).read_text(encoding='utf-8'); self.assertNotIn('PhysicalMaterial', t, n); self.assertNotIn('NavigationInfo', t, n); self.assertLess(sizes[n], 1.6e6, n)   # 1.5e6 until the khachkar joined the village file (1.58 MB raw with it)
+            v = pathlib.Path(d, 'village.x3d').read_text(encoding='utf-8'); self.assertEqual(v.count('<Shape'), 5)               # four merged meshes and the khachkar (five draw calls), the light baked into one colour per face corner, not one object per house
+            self.assertEqual(len(re.findall(r"DEF=[\"']OB_Khachkar[\"']", v)), 1)                                                     # the khachkar stands in the plaza, in the village's own lazy file
     def test_glow_shader_defined_once_per_build(self):
         x = layers.build(EXP)['sway']; self.assertEqual(x.count("<ComposedShader DEF='GlowShader'"), 1); self.assertGreater(x.count("<ComposedShader USE='GlowShader'/>"), 1)
     def test_point_sprite_alpha_encoding(self):
@@ -76,6 +104,34 @@ class T(unittest.TestCase):
         for m in re.finditer(r"(DEF|USE)='([^']+)'", out):
             if m.group(1) == 'DEF': seen.add(m.group(2))
             else: self.assertIn(m.group(2), seen, 'USE before DEF: ' + m.group(2))
+    def test_armenian_knot_strands(self):
+        import weave
+        orns = weave.ornaments(4); self.assertEqual([o['L'] for o in orns], [2, 5, 3])                         # eight-armed arevakhach, the plaited border ring, twelve arms
+        self.assertNotEqual(weave.ornaments(5)[0], orns[0])                                                     # the next seed changes the knot
+        for o in orns:
+            for k in range(4):
+                for t in (0.0, 0.137, 0.5, 0.91):
+                    a, b = weave.point(o, k, t), weave.point(o, k, t + 1.0); self.assertAlmostEqual(math.hypot(a[0] - b[0], a[1] - b[1]), 0, places=9)   # closed and periodic
+            P = [weave.point(o, 0, weave.tparam(o, i / weave.N)) for i in range(weave.N + 1)]; self.assertLess(math.hypot(P[0][0] - P[-1][0], P[0][1] - P[-1][1]), 1e-9)   # the strip as the shader bends it closes on itself
+            for a, b, c in zip(P, P[1:], P[2:]):                                                                 # and is smooth: short steps, gentle bends, also where it curls
+                self.assertLess(math.hypot(c[0] - b[0], c[1] - b[1]), 0.15, o['name'])
+                d = abs((math.atan2(c[1] - b[1], c[0] - b[0]) - math.atan2(b[1] - a[1], b[0] - a[0]) + math.pi) % (2 * math.pi) - math.pi); self.assertLess(math.degrees(d), 15, o['name'])
+            cs = weave.crossings(o); lift, flips, base = weave.lift_profile(o, cs)
+            self.assertGreater(len(base), 8)
+            for k in range(4):                                                                                  # along every strand the crossings go over, under, over ...
+                sk = weave.strand_crossings(cs, k); self.assertEqual(len(sk) % 2, 0)
+                for (t0, s0), (t1, s1) in zip(sk, sk[1:] + sk[:1]): self.assertEqual(s0, -s1, (o['name'], k, t0))
+            for t, s in base: self.assertAlmostEqual(lift(t), s, places=6, msg=(o['name'], t))                  # the lift the strip carries is fully up where the strand is over, down where under
+            self.assertAlmostEqual(lift(0.0), lift(1.0), places=9)                                              # the lift closes too
+    def test_armenian_knot_in_the_scene(self):
+        L = layers.build(EXP); x = L['sway']
+        self.assertEqual(x.count("<TriangleStripSet DEF='WeaveStrip'"), 1); self.assertEqual(x.count("<TriangleStripSet USE='WeaveStrip'/>"), 11); self.assertEqual(len(re.findall(r"<ComposedShader DEF='WeaveSh\d_\d'", x)), 12)
+        self.assertEqual(len(re.findall(r"<Transform DEF='Shuttle\d' ", x)), 4); self.assertNotIn("DEF='ShuttleClock0'", x); self.assertNotIn('<Script', x)
+        for m in re.finditer(r"<ROUTE fromNode='(\w+)'[^>]*toNode='(\w+)'", x):                                   # X_ITE drops a ROUTE that comes before its node
+            for n in m.groups():
+                if n.startswith(('Weave', 'Shuttle')): d = re.search(r"DEF='%s'" % n, x); self.assertIsNotNone(d, n); self.assertLess(d.start(), m.start(), n)
+        self.assertEqual(len(L['knot']['ornaments']), 3); self.assertIn("startTime='1e12'", x)                  # the page starts the clock; elsewhere the first knot shows complete
+        old = layers.build(EXP, weave=False)['sway']; self.assertNotIn("DEF='Weave'", old); self.assertIn("DEF='ShuttleClock3'", old)   # weave=False: the earlier wandering shuttles
     def test_sound_beds_and_heart_tape(self):
         man = json.loads(pathlib.Path(ROOT, 'assets', 'audio', 'manifest.json').read_text())
         self.assertEqual(sorted(man['beds']), ['cosmos', 'village'])

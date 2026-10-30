@@ -187,11 +187,12 @@
   }
 
   var tags = [], tagsDirty = true, level = 'min';
-  var TAGR = { earth: [0.35, 5], village: [0.012, 0.6], tether: [0.002, 0.45], villagers: [0.0006, 0.012] };      /* the world tags show between these distances (scene units) and carry their honest scale note */
+  var TAGR = { earth: [0.35, 5], village: [0.012, 0.6], tether: [0.002, 0.45], villagers: [0.0006, 0.012], khachkar: [0.0006, 0.014] };      /* the world tags show between these distances (scene units) and carry their honest scale note */
   function buildTags(anchors) {
     var host = $('#gd-tags'); host.innerHTML = '';
     var cols = { heart: '#ffe9a8', ribcage: '#d6b25c', flywheel: '#f2c35f', blender: '#f5851a', fan_gltf: '#40d9ff', fan_usd: '#ffeebb', fan_video: '#f24dd9', tenders: '#8cf0a8', wing: '#9ed7ff',
-      earth: '#7fc4ff', village: '#ffd27a', tether: '#ffe9a8', villagers: '#8cf0a8' };
+      earth: '#7fc4ff', village: '#ffd27a', tether: '#ffe9a8', villagers: '#8cf0a8', mashtots: '#ffcf6a', khachkar: '#f2a987' };
+    if (q.get('mashtots') === '0') anchors = anchors.filter(function (a) { return a.id !== 'mashtots'; });
     tags = anchors.map(function (a) {
       var mock = /mock/.test(a.tag), world = a.id in TAGR, d = document.createElement('div'); d.className = 'gd-tag' + (mock ? ' mock' : '') + (world ? ' world' : ''); d.style.setProperty('--c', cols[a.id] || '#e9cf8a');
       d.innerHTML = '<i></i><div><b></b><small></small></div>'; $('b', d).textContent = a.label + (/^fan_/.test(a.id) ? (mock ? ' · mock' : ' · simulated') : ''); $('small', d).textContent = world ? a.tag : '';
@@ -360,7 +361,8 @@
       Boot.done = true; clearInterval(beat); beat = 0; busy.hidden = true; stageEl.dataset.stage = 'bird';
       Boot.birdMs = Math.round(performance.now() - Boot.t0); Boot.log.push(secs(Boot.t0) + ' bird on screen (' + kb(Boot.bytes.bird || 0) + ' gzipped scene)');
       Boot.summary = 'bird ' + (Boot.birdMs / 1000).toFixed(1) + ' s · ' + kb(Boot.bytes.bird || 0);
-      installSensor(el); hud(el); buildRail(); wire(el);
+      installSensor(el); hud(el); buildRail(); wire(el); weave(el);
+      if (q.get('mashtots') === '0') { var mr = node('MashtotsRing'); if (mr) mr.visible = false; }             /* ?mashtots=0: the bird without the ring of letters (its tag goes too, see buildTags) */
       document.body.dataset.loaded = '1';
       later(el);
       var v = q.get('view'); if (v && v in VIEWS) { if (VIEWS[v] > 2 && VIEWS[v] < 7) worldP.then(function () { go(VIEWS[v], 0); }); else go(VIEWS[v], 0); }
@@ -390,6 +392,11 @@
     }).catch(function (e) { console.warn('[gobbler] graph', e); Boot.log.push('graph FAILED: ' + e.message); $('#gv4-counts').textContent = 'bird only · graph failed: ' + e.message; });
   }
 
+  function weave(el) {                           /* the Armenian knot (tools/weave.py): its clock waits in the scene until the page starts it here; ?weave=0 hides it, ?weaveat=N starts N seconds in (a test hook) */
+    var c = node('WeaveClock'), s = node('Weave'); if (!c || !s) return;
+    if (q.get('weave') === '0') { s.whichChoice = -1; return; }
+    c.startTime = Date.now() / 1000 - (+q.get('weaveat') || 0);              /* X_ITE's clock is the wall clock in seconds */
+  }
   function wire(el) {
     PX.tourStart = trStart; PX.tourStop = trStop; PX.tourHold = trHold; PX.tourRelease = trRelease; PX.tourHeld = function () { return tr.held; };      /* the spline tour replaces the engine's; the hover layer holds and releases it the same way */
     var ts = PX.tourStop, tb = PX.tourStart;                    /* the engine writes 'Resume tour' on its own button; the page owns the label */
