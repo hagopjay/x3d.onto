@@ -67,3 +67,15 @@ Penalty sizes are small for hatches (0.10 weight): a Full-profile scene scores 0
 
 ## Files
 `metric.py`, `specs.py`, `adversarial.py`, `offline.py`, `program.py`, `test_lawful.py` (51 checks; `make lawful-test LAWFUL_PY=<python with dspy>`; with plain `python3` the DSPy checks are skipped), `data/prompts_live.jsonl`, `results/`.
+
+## First Gemini runs (2026-10-30, provider gemini-api; full write-up in xdomain/eval-plan/RESULTS-GEMINI-API.md on loom/gemini-api)
+| model | prompts | rounds | baseline | after GEPA | grade |
+|---|---|---:|---:|---:|---|
+| gemini-3.8-flash | 20 eval | 3 / 1 | 100% / 99.6% | stopped: nothing to optimise | C |
+| gemini-2.5-flash-lite | 20 eval (train + val) | 1 | 49.4% | 79.9% | C |
+| gemini-2.5-flash-lite | 50 live, held out (`heldout.py`) | 1 | 31.3% / 32.6% (two runs) | 58.3% / 60.2% (sign p < 0.001) | C |
+| gemini-2.5-flash-lite | 50 live, held out | 3 | 39.6% | 70.3% | C |
+| gemini-3.1-flash-lite | 50 live, held out (transfer) | 1 | 92.6% | 93.6% (p 0.45) | C |
+
+The optimised program is `results/gemini-lite-gepa-eval-r1.json`; `heldout.py SAVED --set live --rounds N` re-runs the check.
+GO.json for these runs was written from the user's messages of 2026-10-29 22:58Z and 2026-10-30 03:17Z and is not committed.

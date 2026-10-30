@@ -1,0 +1,268 @@
+{
+ "model": "gemini-3.1-flash-lite",
+ "set": "live",
+ "rounds": 1,
+ "n": 50,
+ "saved": "results/gemini-lite-gepa-eval-r1.json",
+ "base_mean": 92.62,
+ "opt_mean": 93.61,
+ "improved": 10,
+ "worse": 6,
+ "tied": 34,
+ "sign_p": 0.4545,
+ "base_perfect": 33,
+ "opt_perfect": 38,
+ "usd": 0.5911,
+ "rows": [
+  {
+   "pid": "obj-01",
+   "base": 1.0,
+   "opt": 1.0
+  },
+  {
+   "pid": "obj-02",
+   "base": 0.9875,
+   "opt": 1.0
+  },
+  {
+   "pid": "obj-03",
+   "base": 1.0,
+   "opt": 1.0
+  },
+  {
+   "pid": "obj-04",
+   "base": 1.0,
+   "opt": 1.0
+  },
+  {
+   "pid": "obj-05",
+   "base": 1.0,
+   "opt": 1.0
+  },
+  {
+   "pid": "asm-01",
+   "base": 1.0,
+   "opt": 1.0
+  },
+  {
+   "pid": "asm-02",
+   "base": 1.0,
+   "opt": 1.0
+  },
+  {
+   "pid": "asm-03",
+   "base": 1.0,
+   "opt": 1.0
+  },
+  {
+   "pid": "asm-04",
+   "base": 1.0,
+   "opt": 1.0
+  },
+  {
+   "pid": "asm-05",
+   "base": 1.0,
+   "opt": 1.0
+  },
+  {
+   "pid": "anim-01",
+   "base": 1.0,
+   "opt": 1.0
+  },
+  {
+   "pid": "anim-02",
+   "base": 1.0,
+   "opt": 1.0
+  },
+  {
+   "pid": "anim-03",
+   "base": 1.0,
+   "opt": 1.0
+  },
+  {
+   "pid": "anim-04",
+   "base": 1.0,
+   "opt": 1.0
+  },
+  {
+   "pid": "anim-05",
+   "base": 1.0,
+   "opt": 1.0
+  },
+  {
+   "pid": "int-01",
+   "base": 1.0,
+   "opt": 1.0
+  },
+  {
+   "pid": "int-02",
+   "base": 0.9059,
+   "opt": 0.9059
+  },
+  {
+   "pid": "int-03",
+   "base": 1.0,
+   "opt": 1.0
+  },
+  {
+   "pid": "int-04",
+   "base": 0.8765,
+   "opt": 0.9706
+  },
+  {
+   "pid": "int-05",
+   "base": 1.0,
+   "opt": 1.0
+  },
+  {
+   "pid": "hanim-01",
+   "base": 1.0,
+   "opt": 1.0
+  },
+  {
+   "pid": "hanim-02",
+   "base": 1.0,
+   "opt": 0.902
+  },
+  {
+   "pid": "hanim-03",
+   "base": 1.0,
+   "opt": 1.0
+  },
+  {
+   "pid": "hanim-04",
+   "base": 1.0,
+   "opt": 1.0
+  },
+  {
+   "pid": "hanim-05",
+   "base": 1.0,
+   "opt": 1.0
+  },
+  {
+   "pid": "geo-01",
+   "base": 0.4059,
+   "opt": 0.4059
+  },
+  {
+   "pid": "geo-02",
+   "base": 1.0,
+   "opt": 0.2773
+  },
+  {
+   "pid": "geo-03",
+   "base": 0.7059,
+   "opt": 1.0
+  },
+  {
+   "pid": "geo-04",
+   "base": 0.902,
+   "opt": 0.902
+  },
+  {
+   "pid": "geo-05",
+   "base": 0.4059,
+   "opt": 0.7059
+  },
+  {
+   "pid": "sp-01",
+   "base": 1.0,
+   "opt": 1.0
+  },
+  {
+   "pid": "sp-02",
+   "base": 1.0,
+   "opt": 1.0
+  },
+  {
+   "pid": "sp-03",
+   "base": 0.975,
+   "opt": 1.0
+  },
+  {
+   "pid": "sp-04",
+   "base": 0.9935,
+   "opt": 1.0
+  },
+  {
+   "pid": "sp-05",
+   "base": 1.0,
+   "opt": 1.0
+  },
+  {
+   "pid": "sp-06",
+   "base": 1.0,
+   "opt": 1.0
+  },
+  {
+   "pid": "sp-07",
+   "base": 1.0,
+   "opt": 0.35
+  },
+  {
+   "pid": "sp-08",
+   "base": 1.0,
+   "opt": 1.0
+  },
+  {
+   "pid": "sp-09",
+   "base": 0.8513,
+   "opt": 1.0
+  },
+  {
+   "pid": "sp-10",
+   "base": 0.398,
+   "opt": 1.0
+  },
+  {
+   "pid": "sp-11",
+   "base": 1.0,
+   "opt": 1.0
+  },
+  {
+   "pid": "sp-12",
+   "base": 1.0,
+   "opt": 1.0
+  },
+  {
+   "pid": "sp-13",
+   "base": 0.9059,
+   "opt": 0.9059
+  },
+  {
+   "pid": "sp-14",
+   "base": 0.8875,
+   "opt": 0.875
+  },
+  {
+   "pid": "sp-15",
+   "base": 1.0,
+   "opt": 1.0
+  },
+  {
+   "pid": "sp-16",
+   "base": 0.9225,
+   "opt": 1.0
+  },
+  {
+   "pid": "sp-17",
+   "base": 0.3266,
+   "opt": 1.0
+  },
+  {
+   "pid": "sp-18",
+   "base": 0.9706,
+   "opt": 0.8655
+  },
+  {
+   "pid": "sp-19",
+   "base": 1.0,
+   "opt": 1.0
+  },
+  {
+   "pid": "sp-20",
+   "base": 0.8893,
+   "opt": 0.74
+  }
+ ]
+}
