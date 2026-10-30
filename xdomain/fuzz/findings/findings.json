@@ -1,0 +1,4651 @@
+{
+ "summary": {
+  "n": 2000,
+  "seed": 1,
+  "xite": {
+   "ready": true,
+   "version": "16.5.1",
+   "xite_dir": "/home/claude/wt/fuzz/gobbler-v4/vendor/x_ite"
+  },
+  "render": false,
+  "uom_sha1": "08116b5746c7d2ba826cd9186ee9cf4cbe79c46a",
+  "fork": "/home/user/x3d_mcp",
+  "scenes_by_verdict": {
+   "xsd_valid/uom_clean": 1636,
+   "xsd_invalid/uom_clean": 268,
+   "xsd_invalid/uom_flags": 72,
+   "xsd_valid/uom_flags": 24
+  },
+  "buckets": {
+   "uom_allows_xsd_rejects": {
+    "scenes": 288,
+    "signatures": 61,
+    "by_mode": {
+     "uom": 163,
+     "mutant": 28,
+     "verified": 97
+    }
+   },
+   "uom_denies_xsd_accepts": {
+    "scenes": 24,
+    "signatures": 7,
+    "by_mode": {
+     "mutant": 22,
+     "verified": 2
+    }
+   },
+   "xsd_valid_xite_drops": {
+    "scenes": 81,
+    "signatures": 10,
+    "by_mode": {
+     "verified": 10,
+     "mutant": 67,
+     "uom": 4
+    }
+   },
+   "xsd_valid_xite_warns": {
+    "scenes": 12,
+    "signatures": 4,
+    "by_mode": {
+     "uom": 3,
+     "verified": 3,
+     "mutant": 6
+    }
+   },
+   "semantic_false_alarm": {
+    "scenes": 27,
+    "signatures": 3,
+    "by_mode": {
+     "uom": 21,
+     "verified": 6
+    }
+   },
+   "semantic_silent_drop": {
+    "scenes": 80,
+    "signatures": 9,
+    "by_mode": {
+     "verified": 10,
+     "mutant": 67,
+     "uom": 3
+    }
+   },
+   "profile_mismatch": {
+    "scenes": 33,
+    "signatures": 21,
+    "by_mode": {
+     "uom": 9,
+     "verified": 8,
+     "mutant": 16
+    }
+   }
+  },
+  "seconds": {
+   "roots": 2.8,
+   "generate": 7.2,
+   "oracles": 182.5,
+   "xite_ms_in_page": 229484,
+   "minimise": 55.2,
+   "total": 250.9
+  },
+  "reproducers_verified": 113,
+  "reproducers": 115,
+  "residue": {
+   "pairs": 441,
+   "uom_allows_xsd_rejects_pairs_seen": 149,
+   "of_which_in_the_441": 49
+  }
+ },
+ "rows": [
+  {
+   "bucket": "uom_allows_xsd_rejects",
+   "signature": [
+    "A",
+    "attr",
+    "bboxSize",
+    "pattern"
+   ],
+   "scenes": 148,
+   "file": "uom_allows_xsd_rejects/attr-bboxSize-pattern-cf704e.x3d",
+   "bytes": 154,
+   "elements": 2,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "xsd": "Line 5: Element 'Group', attribute 'bboxSize': [facet 'pattern'] The value '0.526 -3.692 -3.455' is not accepted by the pattern '\\s*((([+]?(((0|[1-9][0-9]*)(\\.[0-9]*)?|\\.[0-9]+)([Ee][+-]?[0-9]+)?)\\s+){2}([+]?((0|[1-9][0-9]*)(\\.[0-9]*)?|\\.[0-9]+)([Ee][+-]?[0-9]+)?)\\s*)|((\\-1(\\.(0)*)?([Ee][+-]?[0]+)?\\",
+    "pair": [
+     "Group",
+     "Transform",
+     "children"
+    ]
+   },
+   "xsd": {
+    "valid": false,
+    "errors": [
+     "Line 4: Element 'GeoTransform', attribute 'bboxSize': [facet 'pattern'] The value '-1.454 -4.249 -1.976' is not accepted by the pattern '\\s*((([+]?(((0|[1-9][0-9]*)(\\.[0-9]*)?|\\.[0-9]+)([Ee][+-]?[0-9]+)?)\\s+){2}([+]?((0|[1-9][0-9]*)(\\.[0-9]*)?|\\.[0-9]+)([Ee][+-]?[0-9]+)?)\\s*)|((\\-1(\\.(0)*)?([Ee][+-]?[0]+)?\\s+){2}\\-1(\\.(0)*)?([Ee][+-]?[0]+)?)\\s*)?'."
+    ]
+   },
+   "uom": [],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "uom_allows_xsd_rejects",
+   "signature": [
+    "A",
+    "not-expected",
+    "MovieTexture",
+    "textureProperties",
+    "X3DNode"
+   ],
+   "scenes": 23,
+   "file": "uom_allows_xsd_rejects/not-expected-MovieTexture-textureProperties-a2c52a.x3d",
+   "bytes": 247,
+   "elements": 4,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "xsd": "Line 11: Element 'TextureProperties': This element is not expected. Expected is one of ( IS, MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataSet, MetadataString ).",
+    "pair": [
+     "TextureProperties",
+     "MovieTexture",
+     "textureProperties"
+    ]
+   },
+   "xsd": {
+    "valid": false,
+    "errors": [
+     "Line 6: Element 'TextureProperties': This element is not expected. Expected is one of ( IS, MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataSet, MetadataString )."
+    ]
+   },
+   "uom": [],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "uom_allows_xsd_rejects",
+   "signature": [
+    "A",
+    "cf-enum",
+    "containerFieldChoicesGroupLODShapeTransformSwitch",
+    "pickTarget",
+    "uom-choice-type-agrees"
+   ],
+   "scenes": 9,
+   "file": "uom_allows_xsd_rejects/cf-enum-containerFieldChoicesGroupLODShapeTransformSwitch-pickTarget-ba81f9.x3d",
+   "bytes": 196,
+   "elements": 3,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "xsd": "Line 8: Element 'Switch', attribute 'containerField': [facet 'enumeration'] The value 'pickTarget' is not an element of the set {'children', 'proxy', 'rootNode', 'shape', 'skin'}.",
+    "pair": [
+     "Switch",
+     "LinePickSensor",
+     "pickTarget"
+    ]
+   },
+   "xsd": {
+    "valid": false,
+    "errors": [
+     "Line 5: Element 'LOD', attribute 'containerField': [facet 'enumeration'] The value 'pickTarget' is not an element of the set {'children', 'proxy', 'rootNode', 'shape', 'skin'}."
+    ]
+   },
+   "uom": [
+    {
+     "kind": "cf-choice",
+     "parent": "PrimitivePickSensor",
+     "field": "pickTarget",
+     "child": "LOD",
+     "cf_type": "containerFieldChoicesGroupLODShapeTransformSwitch",
+     "line": 5
+    }
+   ],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "uom_allows_xsd_rejects",
+   "signature": [
+    "A",
+    "not-expected",
+    "NurbsSet",
+    "geometry",
+    "X3DParametricGeometryNode"
+   ],
+   "scenes": 7,
+   "file": "uom_allows_xsd_rejects/not-expected-NurbsSet-geometry-cf4429.x3d",
+   "bytes": 153,
+   "elements": 3,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "xsd": "Line 6: Element 'NurbsSweptSurface': This element is not expected. Expected is one of ( IS, MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataSet, MetadataString, NurbsPatchSurface ).",
+    "pair": [
+     "NurbsSweptSurface",
+     "NurbsSet",
+     "geometry"
+    ]
+   },
+   "xsd": {
+    "valid": false,
+    "errors": [
+     "Line 5: Element 'NurbsCurve': This element is not expected. Expected is one of ( IS, MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataSet, MetadataString, NurbsPatchSurface )."
+    ]
+   },
+   "uom": [],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "uom_allows_xsd_rejects",
+   "signature": [
+    "A",
+    "not-expected",
+    "ParticleSystem",
+    "physics",
+    "X3DParticlePhysicsModelNode"
+   ],
+   "scenes": 7,
+   "file": "uom_allows_xsd_rejects/not-expected-ParticleSystem-physics-35edb7.x3d",
+   "bytes": 172,
+   "elements": 3,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "xsd": "Line 9: Element 'WindPhysicsModel': This element is not expected.",
+    "pair": [
+     "WindPhysicsModel",
+     "ParticleSystem",
+     "physics"
+    ]
+   },
+   "xsd": {
+    "valid": false,
+    "errors": [
+     "Line 5: Element 'ForcePhysicsModel': This element is not expected. Expected is one of ( IS, MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataSet, MetadataString, Appearance, Box, Cone )."
+    ]
+   },
+   "uom": [],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "uom_allows_xsd_rejects",
+   "signature": [
+    "A",
+    "not-expected",
+    "HAnimSegment",
+    "coord",
+    "X3DCoordinateNode"
+   ],
+   "scenes": 6,
+   "file": "uom_allows_xsd_rejects/not-expected-HAnimSegment-coord-2dc105.x3d",
+   "bytes": 161,
+   "elements": 3,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "xsd": "Line 18: Element 'CoordinateDouble': This element is not expected. Expected is ( HAnimDisplacer ).",
+    "pair": [
+     "CoordinateDouble",
+     "HAnimSegment",
+     "coord"
+    ]
+   },
+   "xsd": {
+    "valid": false,
+    "errors": [
+     "Line 5: Element 'Coordinate': This element is not expected. Expected is one of ( IS, MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataSet, MetadataString, Background, ColorInterpolator, CoordinateInterpolator )."
+    ]
+   },
+   "uom": [],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "uom_allows_xsd_rejects",
+   "signature": [
+    "A",
+    "not-expected",
+    "LinePickSensor",
+    "pickingGeometry",
+    "X3DGeometryNode"
+   ],
+   "scenes": 6,
+   "file": "uom_allows_xsd_rejects/not-expected-LinePickSensor-pickingGeometry-b0b924.x3d",
+   "bytes": 199,
+   "elements": 3,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "xsd": "Line 6: Element 'IndexedLineSet': This element is not expected.",
+    "pair": [
+     "IndexedLineSet",
+     "LinePickSensor",
+     "pickingGeometry"
+    ]
+   },
+   "xsd": {
+    "valid": false,
+    "errors": [
+     "Line 5: Element 'Polypoint2D': This element is not expected. Expected is one of ( IS, MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataSet, MetadataString, LineSet, IndexedLineSet, Anchor )."
+    ]
+   },
+   "uom": [],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "uom_allows_xsd_rejects",
+   "signature": [
+    "A",
+    "cf-enum",
+    "containerFieldChoicesSoundSource",
+    "outputs",
+    "uom-choice-type-agrees"
+   ],
+   "scenes": 6,
+   "file": "uom_allows_xsd_rejects/cf-enum-containerFieldChoicesSoundSource-outputs-e97fdf.x3d",
+   "bytes": 199,
+   "elements": 3,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "xsd": "Line 7: Element 'StreamAudioSource', attribute 'containerField': [facet 'enumeration'] The value 'outputs' is not an element of the set {'children', 'source'}.",
+    "pair": [
+     "StreamAudioSource",
+     "ChannelSplitter",
+     "outputs"
+    ]
+   },
+   "xsd": {
+    "valid": false,
+    "errors": [
+     "Line 5: Element 'BufferAudioSource', attribute 'containerField': [facet 'enumeration'] The value 'outputs' is not an element of the set {'children', 'source'}."
+    ]
+   },
+   "uom": [
+    {
+     "kind": "cf-choice",
+     "parent": "ChannelSplitter",
+     "field": "outputs",
+     "child": "BufferAudioSource",
+     "cf_type": "containerFieldChoicesSoundSource",
+     "line": 5
+    }
+   ],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "uom_allows_xsd_rejects",
+   "signature": [
+    "A",
+    "not-expected",
+    "PrimitivePickSensor",
+    "pickingGeometry",
+    "X3DGeometryNode"
+   ],
+   "scenes": 5,
+   "file": "uom_allows_xsd_rejects/not-expected-PrimitivePickSensor-pickingGeometry-a84f15.x3d",
+   "bytes": 203,
+   "elements": 3,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "xsd": "Line 5: Element 'LineSet': This element is not expected. Expected is one of ( IS, MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataSet, MetadataString, Box, Cone, Cylinder ).",
+    "pair": [
+     "LineSet",
+     "PrimitivePickSensor",
+     "pickingGeometry"
+    ]
+   },
+   "xsd": {
+    "valid": false,
+    "errors": [
+     "Line 5: Element 'Arc2D': This element is not expected. Expected is one of ( IS, MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataSet, MetadataString, Box, Cone, Cylinder )."
+    ]
+   },
+   "uom": [],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "uom_allows_xsd_rejects",
+   "signature": [
+    "A",
+    "not-expected",
+    "GeoViewpoint",
+    "navigationInfo",
+    "X3DBindableNode"
+   ],
+   "scenes": 5,
+   "file": "uom_allows_xsd_rejects/not-expected-GeoViewpoint-navigationInfo-a09f05.x3d",
+   "bytes": 216,
+   "elements": 4,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "xsd": "Line 6: Element 'NavigationInfo': This element is not expected.",
+    "pair": [
+     "NavigationInfo",
+     "GeoViewpoint",
+     "navigationInfo"
+    ]
+   },
+   "xsd": {
+    "valid": false,
+    "errors": [
+     "Line 6: Element 'NavigationInfo': This element is not expected."
+    ]
+   },
+   "uom": [],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "uom_allows_xsd_rejects",
+   "signature": [
+    "A",
+    "not-expected",
+    "PointPickSensor",
+    "pickingGeometry",
+    "X3DGeometryNode"
+   ],
+   "scenes": 3,
+   "file": "uom_allows_xsd_rejects/not-expected-PointPickSensor-pickingGeometry-7d088c.x3d",
+   "bytes": 198,
+   "elements": 3,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "xsd": "Line 8: Element 'PointSet': This element is not expected.",
+    "pair": [
+     "PointSet",
+     "PointPickSensor",
+     "pickingGeometry"
+    ]
+   },
+   "xsd": {
+    "valid": false,
+    "errors": [
+     "Line 5: Element 'Cylinder': This element is not expected. Expected is one of ( IS, MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataSet, MetadataString, PointSet, Anchor, Billboard )."
+    ]
+   },
+   "uom": [],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "uom_allows_xsd_rejects",
+   "signature": [
+    "A",
+    "not-expected",
+    "ParticleSystem",
+    "geometry",
+    "X3DGeometryNode"
+   ],
+   "scenes": 2,
+   "file": "uom_allows_xsd_rejects/not-expected-ParticleSystem-geometry-70cee3.x3d",
+   "bytes": 178,
+   "elements": 4,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "xsd": "Line 7: Element 'Extrusion': This element is not expected.",
+    "pair": [
+     "Extrusion",
+     "ParticleSystem",
+     "geometry"
+    ]
+   },
+   "xsd": {
+    "valid": false,
+    "errors": [
+     "Line 6: Element 'PointSet': This element is not expected. Expected is one of ( ConeEmitter, ExplosionEmitter, PointEmitter, PolylineEmitter, SurfaceEmitter, VolumeEmitter, BoundedPhysicsModel, TextureCoordinate, TextureCoordinateGenerator )."
+    ]
+   },
+   "uom": [],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "uom_allows_xsd_rejects",
+   "signature": [
+    "A",
+    "not-expected",
+    "NurbsSet",
+    "geometry",
+    "X3DNurbsSurfaceGeometryNode"
+   ],
+   "scenes": 2,
+   "file": "uom_allows_xsd_rejects/not-expected-NurbsSet-geometry-570b1c.x3d",
+   "bytes": 162,
+   "elements": 3,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "xsd": "Line 6: Element 'NurbsTrimmedSurface': This element is not expected. Expected is ( NurbsSweptSurface ).",
+    "pair": [
+     "NurbsTrimmedSurface",
+     "NurbsSet",
+     "geometry"
+    ]
+   },
+   "xsd": {
+    "valid": false,
+    "errors": [
+     "Line 5: Element 'NurbsTrimmedSurface': This element is not expected. Expected is one of ( IS, MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataSet, MetadataString, NurbsPatchSurface )."
+    ]
+   },
+   "uom": [],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "uom_allows_xsd_rejects",
+   "signature": [
+    "A",
+    "not-expected",
+    "ParticleSystem",
+    "color",
+    "X3DColorNode"
+   ],
+   "scenes": 2,
+   "file": "uom_allows_xsd_rejects/not-expected-ParticleSystem-color-324d92.x3d",
+   "bytes": 182,
+   "elements": 4,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "xsd": "Line 13: Element 'Color': This element is not expected. Expected is one of ( BoundedPhysicsModel, TextureCoordinate, TextureCoordinateGenerator ).",
+    "pair": [
+     "Color",
+     "ParticleSystem",
+     "color"
+    ]
+   },
+   "xsd": {
+    "valid": false,
+    "errors": [
+     "Line 6: Element 'Color': This element is not expected. Expected is one of ( BoundedPhysicsModel, TextureCoordinate, TextureCoordinateGenerator )."
+    ]
+   },
+   "uom": [],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "uom_allows_xsd_rejects",
+   "signature": [
+    "A",
+    "not-expected",
+    "Transform",
+    "children",
+    "X3DLayoutNode"
+   ],
+   "scenes": 2,
+   "file": "uom_allows_xsd_rejects/not-expected-Transform-children-f6aea5.x3d",
+   "bytes": 177,
+   "elements": 3,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "xsd": "Line 6: Element 'Layout': This element is not expected. Expected is one of ( IS, MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataSet, MetadataString, Background, ColorInterpolator, CoordinateInterpolator ).",
+    "pair": [
+     "Layout",
+     "Transform",
+     "children"
+    ]
+   },
+   "xsd": {
+    "valid": false,
+    "errors": [
+     "Line 5: Element 'Layout': This element is not expected. Expected is one of ( IS, MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataSet, MetadataString, Background, ColorInterpolator, CoordinateInterpolator )."
+    ]
+   },
+   "uom": [],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "uom_allows_xsd_rejects",
+   "signature": [
+    "A",
+    "not-expected",
+    "HAnimSegment",
+    "children",
+    "X3DChildNode"
+   ],
+   "scenes": 2,
+   "file": "uom_allows_xsd_rejects/not-expected-HAnimSegment-children-82770f.x3d",
+   "bytes": 183,
+   "elements": 4,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "xsd": "Line 9: Element 'LocalFog': This element is not expected. Expected is ( HAnimDisplacer ).",
+    "pair": [
+     "LocalFog",
+     "HAnimSegment",
+     "children"
+    ]
+   },
+   "xsd": {
+    "valid": false,
+    "errors": [
+     "Line 6: Element 'LocalFog': This element is not expected. Expected is ( HAnimDisplacer )."
+    ]
+   },
+   "uom": [],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "uom_allows_xsd_rejects",
+   "signature": [
+    "A",
+    "not-expected",
+    "LoadSensor",
+    "children",
+    "X3DChildNode"
+   ],
+   "scenes": 2,
+   "file": "uom_allows_xsd_rejects/not-expected-LoadSensor-children-e58cff.x3d",
+   "bytes": 158,
+   "elements": 3,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "xsd": "Line 11: Element 'FontLibrary': This element is not expected.",
+    "pair": [
+     "FontLibrary",
+     "LoadSensor",
+     "children"
+    ]
+   },
+   "xsd": {
+    "valid": false,
+    "errors": [
+     "Line 5: Element 'FontLibrary': This element is not expected. Expected is one of ( IS, MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataSet, MetadataString, Anchor, AudioClip, DISEntityTypeMapping )."
+    ]
+   },
+   "uom": [],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "uom_allows_xsd_rejects",
+   "signature": [
+    "A",
+    "not-expected",
+    "IndexedLineSet",
+    "fogCoord",
+    "X3DGeometricPropertyNode"
+   ],
+   "scenes": 2,
+   "file": "uom_allows_xsd_rejects/not-expected-IndexedLineSet-fogCoord-5ddc13.x3d",
+   "bytes": 199,
+   "elements": 4,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "xsd": "Line 8: Element 'FogCoordinate': This element is not expected. Expected is one of ( Color, ColorRGBA, ProtoInstance ).",
+    "pair": [
+     "FogCoordinate",
+     "IndexedLineSet",
+     "fogCoord"
+    ]
+   },
+   "xsd": {
+    "valid": false,
+    "errors": [
+     "Line 6: Element 'FogCoordinate': This element is not expected. Expected is one of ( IS, MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataSet, MetadataString, Color, ColorRGBA, Coordinate )."
+    ]
+   },
+   "uom": [],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "uom_allows_xsd_rejects",
+   "signature": [
+    "A",
+    "not-expected",
+    "ComposedTexture3D",
+    "texture",
+    "X3DTexture2DNode"
+   ],
+   "scenes": 2,
+   "file": "uom_allows_xsd_rejects/not-expected-ComposedTexture3D-texture-6db90b.x3d",
+   "bytes": 238,
+   "elements": 4,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "xsd": "Line 7: Element 'PixelTexture': This element is not expected. Expected is ( ImageTexture ).",
+    "pair": [
+     "PixelTexture",
+     "ComposedTexture3D",
+     "texture"
+    ]
+   },
+   "xsd": {
+    "valid": false,
+    "errors": [
+     "Line 6: Element 'PixelTexture': This element is not expected. Expected is one of ( IS, MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataSet, MetadataString, TextureProperties, ProtoInstance, ImageTexture )."
+    ]
+   },
+   "uom": [],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "uom_allows_xsd_rejects",
+   "signature": [
+    "A",
+    "attr",
+    "sourceCode",
+    "The attribute '_' is not allowed."
+   ],
+   "scenes": 2,
+   "file": "uom_allows_xsd_rejects/attr-sourceCode-The_attribute___is_not_allowed.-4f0e8f.x3d",
+   "bytes": 134,
+   "elements": 2,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "xsd": "Line 8: Element 'Script', attribute 'sourceCode': The attribute 'sourceCode' is not allowed.",
+    "pair": [
+     "Script",
+     "Scene",
+     "children"
+    ]
+   },
+   "xsd": {
+    "valid": false,
+    "errors": [
+     "Line 4: Element 'Script', attribute 'sourceCode': The attribute 'sourceCode' is not allowed."
+    ]
+   },
+   "uom": [],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "uom_allows_xsd_rejects",
+   "signature": [
+    "A",
+    "cf-enum",
+    "containerFieldChoicesX3DTexture2DNode",
+    "diffuseTexture",
+    "uom-choice-type-agrees"
+   ],
+   "scenes": 2,
+   "file": "uom_allows_xsd_rejects/cf-enum-containerFieldChoicesX3DTexture2DNode-diffuseTexture-b4f10d.x3d",
+   "bytes": 210,
+   "elements": 3,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "xsd": "Line 5: Element 'ImageCubeMapTexture', attribute 'containerField': [facet 'enumeration'] The value 'diffuseTexture' is not an element of the set {'texture', 'source', 'backTexture', 'bottomTexture', 'frontTexture', 'leftTexture', 'rightTexture', 'topTexture', 'children', 'baseTexture', 'emissiveText",
+    "pair": [
+     "ImageCubeMapTexture",
+     "EnvironmentLight",
+     "diffuseTexture"
+    ]
+   },
+   "xsd": {
+    "valid": false,
+    "errors": [
+     "Line 5: Element 'ImageCubeMapTexture', attribute 'containerField': [facet 'enumeration'] The value 'diffuseTexture' is not an element of the set {'texture', 'source', 'backTexture', 'bottomTexture', 'frontTexture', 'leftTexture', 'rightTexture', 'topTexture', 'children', 'baseTexture', 'emissiveTexture', 'metallicRoughnessTexture', 'normalTexture', 'occlusionTexture'}."
+    ]
+   },
+   "uom": [
+    {
+     "kind": "cf-choice",
+     "parent": "EnvironmentLight",
+     "field": "diffuseTexture",
+     "child": "ImageCubeMapTexture",
+     "cf_type": "containerFieldChoicesX3DTexture2DNode",
+     "line": 5
+    }
+   ],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "uom_allows_xsd_rejects",
+   "signature": [
+    "A",
+    "not-expected",
+    "Layer",
+    "viewport",
+    "X3DViewportNode"
+   ],
+   "scenes": 2,
+   "file": "uom_allows_xsd_rejects/not-expected-Layer-viewport-186abe.x3d",
+   "bytes": 228,
+   "elements": 6,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "xsd": "Line 8: Element 'Viewport': This element is not expected.",
+    "pair": [
+     "Viewport",
+     "Layer",
+     "viewport"
+    ]
+   },
+   "xsd": {
+    "valid": false,
+    "errors": [
+     "Line 8: Element 'Viewport': This element is not expected."
+    ]
+   },
+   "uom": [],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "uom_allows_xsd_rejects",
+   "signature": [
+    "A",
+    "missing-child",
+    "NurbsSet",
+    "Missing child element(s). Expected is ( NurbsSweptSurface )."
+   ],
+   "scenes": 2,
+   "file": "uom_allows_xsd_rejects/missing-child-NurbsSet-Missing_child_element_s_._Expected_is_NurbsSwep-fc09dc.x3d",
+   "bytes": 160,
+   "elements": 3,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "xsd": "Line 4: Element 'NurbsSet': Missing child element(s). Expected is ( NurbsSweptSurface ).",
+    "pair": [
+     "NurbsSet",
+     "Scene",
+     "children"
+    ]
+   },
+   "xsd": {
+    "valid": false,
+    "errors": [
+     "Line 4: Element 'NurbsSet': Missing child element(s). Expected is ( NurbsSweptSurface )."
+    ]
+   },
+   "uom": [],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "uom_allows_xsd_rejects",
+   "signature": [
+    "A",
+    "not-expected",
+    "PrimitivePickSensor",
+    "pickingGeometry",
+    "X3DNurbsSurfaceGeometryNode"
+   ],
+   "scenes": 2,
+   "file": "uom_allows_xsd_rejects/not-expected-PrimitivePickSensor-pickingGeometry-f347c8.x3d",
+   "bytes": 215,
+   "elements": 3,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "xsd": "Line 7: Element 'NurbsPatchSurface': This element is not expected. Expected is one of ( IS, MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataSet, MetadataString, Box, Cone, Cylinder ).",
+    "pair": [
+     "NurbsPatchSurface",
+     "PrimitivePickSensor",
+     "pickingGeometry"
+    ]
+   },
+   "xsd": {
+    "valid": false,
+    "errors": [
+     "Line 5: Element 'NurbsPatchSurface': This element is not expected. Expected is one of ( IS, MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataSet, MetadataString, Box, Cone, Cylinder )."
+    ]
+   },
+   "uom": [],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "uom_allows_xsd_rejects",
+   "signature": [
+    "A",
+    "not-expected",
+    "PrimitivePickSensor",
+    "pickingGeometry",
+    "X3DComposedGeometryNode"
+   ],
+   "scenes": 1,
+   "file": "uom_allows_xsd_rejects/not-expected-PrimitivePickSensor-pickingGeometry-c39030.x3d",
+   "bytes": 212,
+   "elements": 3,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "xsd": "Line 7: Element 'IndexedQuadSet': This element is not expected.",
+    "pair": [
+     "IndexedQuadSet",
+     "PrimitivePickSensor",
+     "pickingGeometry"
+    ]
+   },
+   "xsd": {
+    "valid": false,
+    "errors": [
+     "Line 5: Element 'IndexedQuadSet': This element is not expected. Expected is one of ( IS, MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataSet, MetadataString, Box, Cone, Cylinder )."
+    ]
+   },
+   "uom": [],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "uom_allows_xsd_rejects",
+   "signature": [
+    "A",
+    "cf-enum",
+    "containerFieldChoicesX3DTexture2DNode",
+    "specularTexture",
+    "uom-choice-type-agrees"
+   ],
+   "scenes": 1,
+   "file": "uom_allows_xsd_rejects/cf-enum-containerFieldChoicesX3DTexture2DNode-specularTexture-045347.x3d",
+   "bytes": 211,
+   "elements": 3,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "xsd": "Line 6: Element 'ImageCubeMapTexture', attribute 'containerField': [facet 'enumeration'] The value 'specularTexture' is not an element of the set {'texture', 'source', 'backTexture', 'bottomTexture', 'frontTexture', 'leftTexture', 'rightTexture', 'topTexture', 'children', 'baseTexture', 'emissiveTex",
+    "pair": [
+     "ImageCubeMapTexture",
+     "EnvironmentLight",
+     "specularTexture"
+    ]
+   },
+   "xsd": {
+    "valid": false,
+    "errors": [
+     "Line 5: Element 'ImageCubeMapTexture', attribute 'containerField': [facet 'enumeration'] The value 'specularTexture' is not an element of the set {'texture', 'source', 'backTexture', 'bottomTexture', 'frontTexture', 'leftTexture', 'rightTexture', 'topTexture', 'children', 'baseTexture', 'emissiveTexture', 'metallicRoughnessTexture', 'normalTexture', 'occlusionTexture'}."
+    ]
+   },
+   "uom": [
+    {
+     "kind": "cf-choice",
+     "parent": "EnvironmentLight",
+     "field": "specularTexture",
+     "child": "ImageCubeMapTexture",
+     "cf_type": "containerFieldChoicesX3DTexture2DNode",
+     "line": 5
+    }
+   ],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "uom_allows_xsd_rejects",
+   "signature": [
+    "A",
+    "not-expected",
+    "GeoMetadata",
+    "data",
+    "X3DNetworkSensorNode"
+   ],
+   "scenes": 1,
+   "file": "uom_allows_xsd_rejects/not-expected-GeoMetadata-data-fb156a.x3d",
+   "bytes": 182,
+   "elements": 3,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "xsd": "Line 5: Element 'ReceiverPdu': This element is not expected. Expected is one of ( IS, MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataSet, MetadataString, GeoCoordinate, GeoElevationGrid, GeoLocation ).",
+    "pair": [
+     "ReceiverPdu",
+     "GeoMetadata",
+     "data"
+    ]
+   },
+   "xsd": {
+    "valid": false,
+    "errors": [
+     "Line 5: Element 'ReceiverPdu': This element is not expected. Expected is one of ( IS, MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataSet, MetadataString, GeoCoordinate, GeoElevationGrid, GeoLocation )."
+    ]
+   },
+   "uom": [],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "uom_allows_xsd_rejects",
+   "signature": [
+    "A",
+    "not-expected",
+    "CADLayer",
+    "children",
+    "X3DNBodyCollidableNode"
+   ],
+   "scenes": 1,
+   "file": "uom_allows_xsd_rejects/not-expected-CADLayer-children-aa9697.x3d",
+   "bytes": 159,
+   "elements": 3,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "xsd": "Line 5: Element 'CollidableOffset': This element is not expected. Expected is one of ( IS, MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataSet, MetadataString, Background, ColorInterpolator, CoordinateInterpolator ).",
+    "pair": [
+     "CollidableOffset",
+     "CADLayer",
+     "children"
+    ]
+   },
+   "xsd": {
+    "valid": false,
+    "errors": [
+     "Line 5: Element 'CollidableOffset': This element is not expected. Expected is one of ( IS, MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataSet, MetadataString, Background, ColorInterpolator, CoordinateInterpolator )."
+    ]
+   },
+   "uom": [],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "uom_allows_xsd_rejects",
+   "signature": [
+    "A",
+    "not-expected",
+    "Transform",
+    "children",
+    "X3DSoundSourceNode"
+   ],
+   "scenes": 1,
+   "file": "uom_allows_xsd_rejects/not-expected-Transform-children-e27950.x3d",
+   "bytes": 183,
+   "elements": 3,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "xsd": "Line 6: Element 'MovieTexture': This element is not expected. Expected is one of ( IS, MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataSet, MetadataString, Background, ColorInterpolator, CoordinateInterpolator ).",
+    "pair": [
+     "MovieTexture",
+     "Transform",
+     "children"
+    ]
+   },
+   "xsd": {
+    "valid": false,
+    "errors": [
+     "Line 5: Element 'MovieTexture': This element is not expected. Expected is one of ( IS, MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataSet, MetadataString, Background, ColorInterpolator, CoordinateInterpolator )."
+    ]
+   },
+   "uom": [],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "uom_allows_xsd_rejects",
+   "signature": [
+    "A",
+    "not-expected",
+    "GeoTransform",
+    "children",
+    "X3DNBodyCollidableNode"
+   ],
+   "scenes": 1,
+   "file": "uom_allows_xsd_rejects/not-expected-GeoTransform-children-1d0330.x3d",
+   "bytes": 167,
+   "elements": 3,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "xsd": "Line 6: Element 'CollidableOffset': This element is not expected. Expected is one of ( IS, MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataSet, MetadataString, Background, ColorInterpolator, CoordinateInterpolator ).",
+    "pair": [
+     "CollidableOffset",
+     "GeoTransform",
+     "children"
+    ]
+   },
+   "xsd": {
+    "valid": false,
+    "errors": [
+     "Line 5: Element 'CollidableOffset': This element is not expected. Expected is one of ( IS, MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataSet, MetadataString, Background, ColorInterpolator, CoordinateInterpolator )."
+    ]
+   },
+   "uom": [],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "uom_allows_xsd_rejects",
+   "signature": [
+    "A",
+    "not-expected",
+    "LinePickSensor",
+    "pickingGeometry",
+    "X3DComposedGeometryNode"
+   ],
+   "scenes": 1,
+   "file": "uom_allows_xsd_rejects/not-expected-LinePickSensor-pickingGeometry-9d4404.x3d",
+   "bytes": 209,
+   "elements": 3,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "xsd": "Line 5: Element 'IndexedTriangleFanSet': This element is not expected. Expected is one of ( IS, MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataSet, MetadataString, LineSet, IndexedLineSet, Anchor ).",
+    "pair": [
+     "IndexedTriangleFanSet",
+     "LinePickSensor",
+     "pickingGeometry"
+    ]
+   },
+   "xsd": {
+    "valid": false,
+    "errors": [
+     "Line 5: Element 'IndexedTriangleFanSet': This element is not expected. Expected is one of ( IS, MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataSet, MetadataString, LineSet, IndexedLineSet, Anchor )."
+    ]
+   },
+   "uom": [],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "uom_allows_xsd_rejects",
+   "signature": [
+    "A",
+    "attr",
+    "sizeUnits",
+    "enumeration"
+   ],
+   "scenes": 1,
+   "file": "uom_allows_xsd_rejects/attr-sizeUnits-enumeration-4b7d1a.x3d",
+   "bytes": 282,
+   "elements": 4,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "xsd": "Line 6: Element 'Layout', attribute 'sizeUnits': [facet 'enumeration'] The value '\"FRACTION\" \"FRACTION\" \"WORLD\" \"PIXEL\"' is not an element of the set {'\"WORLD\" \"WORLD\"', '\"WORLD\" \"FRACTION\"', '\"WORLD\" \"PIXEL\"', '\"FRACTION\" \"WORLD\"', '\"FRACTION\" \"FRACTION\"', '\"FRACTION\" \"PIXEL\"', '\"PIXEL\" \"WORLD\"', '",
+    "pair": [
+     "Layout",
+     "LayoutLayer",
+     "layout"
+    ]
+   },
+   "xsd": {
+    "valid": false,
+    "errors": [
+     "Line 6: Element 'Layout', attribute 'sizeUnits': [facet 'enumeration'] The value '\"FRACTION\" \"FRACTION\" \"WORLD\" \"PIXEL\"' is not an element of the set {'\"WORLD\" \"WORLD\"', '\"WORLD\" \"FRACTION\"', '\"WORLD\" \"PIXEL\"', '\"FRACTION\" \"WORLD\"', '\"FRACTION\" \"FRACTION\"', '\"FRACTION\" \"PIXEL\"', '\"PIXEL\" \"WORLD\"', '\"PIXEL\" \"FRACTION\"', '\"PIXEL\" \"PIXEL\"'}.",
+     "Line 6: Element 'Layout', attribute 'sizeUnits': '\"FRACTION\" \"FRACTION\" \"WORLD\" \"PIXEL\"' is not a valid value of the list type 'layoutUnitsChoices'."
+    ]
+   },
+   "uom": [],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "uom_allows_xsd_rejects",
+   "signature": [
+    "A",
+    "not-expected",
+    "GeoLOD",
+    "rootNode",
+    "X3DChildNode"
+   ],
+   "scenes": 1,
+   "file": "uom_allows_xsd_rejects/not-expected-GeoLOD-rootNode-25c883.x3d",
+   "bytes": 184,
+   "elements": 3,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "xsd": "Line 14: Element 'CollisionCollection': This element is not expected. Expected is one of ( Background, ColorInterpolator, CoordinateInterpolator, DirectionalLight, Group, NavigationInfo, NormalInterpolator, OrientationInterpolator, PositionInterpolator, ScalarInterpolator ).",
+    "pair": [
+     "CollisionCollection",
+     "GeoLOD",
+     "rootNode"
+    ]
+   },
+   "xsd": {
+    "valid": false,
+    "errors": [
+     "Line 5: Element 'CollisionCollection': This element is not expected. Expected is one of ( IS, MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataSet, MetadataString, Background, ColorInterpolator, CoordinateInterpolator )."
+    ]
+   },
+   "uom": [],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "uom_allows_xsd_rejects",
+   "signature": [
+    "A",
+    "not-expected",
+    "PointPickSensor",
+    "pickingGeometry",
+    "X3DComposedGeometryNode"
+   ],
+   "scenes": 1,
+   "file": "uom_allows_xsd_rejects/not-expected-PointPickSensor-pickingGeometry-9f90b9.x3d",
+   "bytes": 213,
+   "elements": 3,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "xsd": "Line 6: Element 'IndexedTriangleStripSet': This element is not expected. Expected is one of ( IS, MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataSet, MetadataString, PointSet, Anchor, Billboard ).",
+    "pair": [
+     "IndexedTriangleStripSet",
+     "PointPickSensor",
+     "pickingGeometry"
+    ]
+   },
+   "xsd": {
+    "valid": false,
+    "errors": [
+     "Line 5: Element 'IndexedTriangleStripSet': This element is not expected. Expected is one of ( IS, MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataSet, MetadataString, PointSet, Anchor, Billboard )."
+    ]
+   },
+   "uom": [],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "uom_allows_xsd_rejects",
+   "signature": [
+    "A",
+    "not-expected",
+    "HAnimSegment",
+    "children",
+    "X3DSoundChannelNode"
+   ],
+   "scenes": 1,
+   "file": "uom_allows_xsd_rejects/not-expected-HAnimSegment-children-2694ad.x3d",
+   "bytes": 190,
+   "elements": 4,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "xsd": "Line 13: Element 'ChannelSplitter': This element is not expected. Expected is ( HAnimDisplacer ).",
+    "pair": [
+     "ChannelSplitter",
+     "HAnimSegment",
+     "children"
+    ]
+   },
+   "xsd": {
+    "valid": false,
+    "errors": [
+     "Line 6: Element 'ChannelSplitter': This element is not expected. Expected is ( HAnimDisplacer )."
+    ]
+   },
+   "uom": [],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "uom_allows_xsd_rejects",
+   "signature": [
+    "A",
+    "not-expected",
+    "ScreenGroup",
+    "children",
+    "X3DViewportNode"
+   ],
+   "scenes": 1,
+   "file": "uom_allows_xsd_rejects/not-expected-ScreenGroup-children-9f0702.x3d",
+   "bytes": 183,
+   "elements": 3,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "xsd": "Line 5: Element 'Viewport': This element is not expected. Expected is one of ( IS, MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataSet, MetadataString, Background, ColorInterpolator, CoordinateInterpolator ).",
+    "pair": [
+     "Viewport",
+     "ScreenGroup",
+     "children"
+    ]
+   },
+   "xsd": {
+    "valid": false,
+    "errors": [
+     "Line 5: Element 'Viewport': This element is not expected. Expected is one of ( IS, MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataSet, MetadataString, Background, ColorInterpolator, CoordinateInterpolator )."
+    ]
+   },
+   "uom": [],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "uom_allows_xsd_rejects",
+   "signature": [
+    "A",
+    "not-expected",
+    "GeoMetadata",
+    "data",
+    "X3DChildNode"
+   ],
+   "scenes": 1,
+   "file": "uom_allows_xsd_rejects/not-expected-GeoMetadata-data-54a05e.x3d",
+   "bytes": 199,
+   "elements": 3,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "xsd": "Line 6: Element 'NurbsOrientationInterpolator': This element is not expected. Expected is one of ( IS, MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataSet, MetadataString, GeoCoordinate, GeoElevationGrid, GeoLocation ).",
+    "pair": [
+     "NurbsOrientationInterpolator",
+     "GeoMetadata",
+     "data"
+    ]
+   },
+   "xsd": {
+    "valid": false,
+    "errors": [
+     "Line 5: Element 'NurbsOrientationInterpolator': This element is not expected. Expected is one of ( IS, MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataSet, MetadataString, GeoCoordinate, GeoElevationGrid, GeoLocation )."
+    ]
+   },
+   "uom": [],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "uom_allows_xsd_rejects",
+   "signature": [
+    "A",
+    "not-expected",
+    "Anchor",
+    "children",
+    "X3DSoundNode"
+   ],
+   "scenes": 1,
+   "file": "uom_allows_xsd_rejects/not-expected-Anchor-children-02c56c.x3d",
+   "bytes": 177,
+   "elements": 3,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "xsd": "Line 5: Element 'PeriodicWave': This element is not expected. Expected is one of ( IS, MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataSet, MetadataString, Background, ColorInterpolator, CoordinateInterpolator ).",
+    "pair": [
+     "PeriodicWave",
+     "Anchor",
+     "children"
+    ]
+   },
+   "xsd": {
+    "valid": false,
+    "errors": [
+     "Line 5: Element 'PeriodicWave': This element is not expected. Expected is one of ( IS, MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataSet, MetadataString, Background, ColorInterpolator, CoordinateInterpolator )."
+    ]
+   },
+   "uom": [],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "uom_allows_xsd_rejects",
+   "signature": [
+    "A",
+    "not-expected",
+    "ParticleSystem",
+    "appearance",
+    "X3DAppearanceNode"
+   ],
+   "scenes": 1,
+   "file": "uom_allows_xsd_rejects/not-expected-ParticleSystem-appearance-e82ada.x3d",
+   "bytes": 180,
+   "elements": 4,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "xsd": "Line 9: Element 'Appearance': This element is not expected. Expected is one of ( ConeEmitter, ExplosionEmitter, PointEmitter, PolylineEmitter, SurfaceEmitter, VolumeEmitter, BoundedPhysicsModel, TextureCoordinate, TextureCoordinateGenerator ).",
+    "pair": [
+     "Appearance",
+     "ParticleSystem",
+     "appearance"
+    ]
+   },
+   "xsd": {
+    "valid": false,
+    "errors": [
+     "Line 6: Element 'Appearance': This element is not expected. Expected is one of ( ConeEmitter, ExplosionEmitter, PointEmitter, PolylineEmitter, SurfaceEmitter, VolumeEmitter, BoundedPhysicsModel, TextureCoordinate, TextureCoordinateGenerator )."
+    ]
+   },
+   "uom": [],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "uom_allows_xsd_rejects",
+   "signature": [
+    "A",
+    "not-expected",
+    "CADLayer",
+    "children",
+    "X3DInfoNode"
+   ],
+   "scenes": 1,
+   "file": "uom_allows_xsd_rejects/not-expected-CADLayer-children-5208cd.x3d",
+   "bytes": 163,
+   "elements": 3,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "xsd": "Line 12: Element 'DISEntityTypeMapping': This element is not expected. Expected is one of ( ROUTE, ExternProtoDeclare, ProtoDeclare, IMPORT, EXPORT, Background, ColorInterpolator, CoordinateInterpolator, DirectionalLight, Group ).",
+    "pair": [
+     "DISEntityTypeMapping",
+     "CADLayer",
+     "children"
+    ]
+   },
+   "xsd": {
+    "valid": false,
+    "errors": [
+     "Line 5: Element 'DISEntityTypeMapping': This element is not expected. Expected is one of ( IS, MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataSet, MetadataString, Background, ColorInterpolator, CoordinateInterpolator )."
+    ]
+   },
+   "uom": [],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "uom_allows_xsd_rejects",
+   "signature": [
+    "A",
+    "missing-child",
+    "GeoLOD",
+    "Missing child element(s). Expected is one of ( Background, ColorInterpolator, Co"
+   ],
+   "scenes": 1,
+   "file": "uom_allows_xsd_rejects/missing-child-GeoLOD-Missing_child_element_s_._Expected_is_one_of_Back-db8989.x3d",
+   "bytes": 150,
+   "elements": 3,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "xsd": "Line 4: Element 'GeoLOD': Missing child element(s). Expected is one of ( Background, ColorInterpolator, CoordinateInterpolator, DirectionalLight, Group, NavigationInfo, NormalInterpolator, OrientationInterpolator, PositionInterpolator, ScalarInterpolator ).",
+    "pair": [
+     "GeoLOD",
+     "Scene",
+     "children"
+    ]
+   },
+   "xsd": {
+    "valid": false,
+    "errors": [
+     "Line 4: Element 'GeoLOD': Missing child element(s). Expected is one of ( Background, ColorInterpolator, CoordinateInterpolator, DirectionalLight, Group, NavigationInfo, NormalInterpolator, OrientationInterpolator, PositionInterpolator, ScalarInterpolator )."
+    ]
+   },
+   "uom": [],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "uom_allows_xsd_rejects",
+   "signature": [
+    "A",
+    "not-expected",
+    "NurbsTrimmedSurface",
+    "texCoord",
+    "X3DSingleTextureCoordinateNode"
+   ],
+   "scenes": 1,
+   "file": "uom_allows_xsd_rejects/not-expected-NurbsTrimmedSurface-texCoord-6fd756.x3d",
+   "bytes": 215,
+   "elements": 4,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "xsd": "Line 11: Element 'TextureCoordinate4D': This element is not expected.",
+    "pair": [
+     "TextureCoordinate4D",
+     "NurbsTrimmedSurface",
+     "texCoord"
+    ]
+   },
+   "xsd": {
+    "valid": false,
+    "errors": [
+     "Line 6: Element 'TextureCoordinate4D': This element is not expected. Expected is one of ( IS, MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataSet, MetadataString, Contour2D, Coordinate, CoordinateDouble )."
+    ]
+   },
+   "uom": [],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "uom_allows_xsd_rejects",
+   "signature": [
+    "A",
+    "cf-enum",
+    "containerFieldChoicesX3DTexture3DNode",
+    "transferFunction",
+    "uom-choice-type-agrees"
+   ],
+   "scenes": 1,
+   "file": "uom_allows_xsd_rejects/cf-enum-containerFieldChoicesX3DTexture3DNode-transferFunction-39677d.x3d",
+   "bytes": 281,
+   "elements": 4,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "xsd": "Line 9: Element 'ComposedTexture3D', attribute 'containerField': [facet 'enumeration'] The value 'transferFunction' is not an element of the set {'gradients', 'segmentIdentifiers', 'surfaceNormals', 'texture', 'voxels', 'children'}.",
+    "pair": [
+     "ComposedTexture3D",
+     "OpacityMapVolumeStyle",
+     "transferFunction"
+    ]
+   },
+   "xsd": {
+    "valid": false,
+    "errors": [
+     "Line 6: Element 'ComposedTexture3D', attribute 'containerField': [facet 'enumeration'] The value 'transferFunction' is not an element of the set {'gradients', 'segmentIdentifiers', 'surfaceNormals', 'texture', 'voxels', 'children'}."
+    ]
+   },
+   "uom": [
+    {
+     "kind": "cf-choice",
+     "parent": "OpacityMapVolumeStyle",
+     "field": "transferFunction",
+     "child": "ComposedTexture3D",
+     "cf_type": "containerFieldChoicesX3DTexture3DNode",
+     "line": 6
+    }
+   ],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "uom_allows_xsd_rejects",
+   "signature": [
+    "A",
+    "not-expected",
+    "GeoLOD",
+    "rootNode",
+    "X3DLayoutNode"
+   ],
+   "scenes": 1,
+   "file": "uom_allows_xsd_rejects/not-expected-GeoLOD-rootNode-3f20f5.x3d",
+   "bytes": 171,
+   "elements": 3,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "xsd": "Line 9: Element 'Layout': This element is not expected. Expected is ( GeoOrigin ).",
+    "pair": [
+     "Layout",
+     "GeoLOD",
+     "rootNode"
+    ]
+   },
+   "xsd": {
+    "valid": false,
+    "errors": [
+     "Line 5: Element 'Layout': This element is not expected. Expected is one of ( IS, MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataSet, MetadataString, Background, ColorInterpolator, CoordinateInterpolator )."
+    ]
+   },
+   "uom": [],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "uom_allows_xsd_rejects",
+   "signature": [
+    "A",
+    "cf-enum",
+    "containerFieldChoicesX3DUrlObject",
+    "pickTarget",
+    "uom-choice-type-agrees"
+   ],
+   "scenes": 1,
+   "file": "uom_allows_xsd_rejects/cf-enum-containerFieldChoicesX3DUrlObject-pickTarget-6e3754.x3d",
+   "bytes": 199,
+   "elements": 3,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "xsd": "Line 5: Element 'Anchor', attribute 'containerField': [facet 'enumeration'] The value 'pickTarget' is not an element of the set {'children', 'children'}.",
+    "pair": [
+     "Anchor",
+     "PrimitivePickSensor",
+     "pickTarget"
+    ]
+   },
+   "xsd": {
+    "valid": false,
+    "errors": [
+     "Line 5: Element 'Anchor', attribute 'containerField': [facet 'enumeration'] The value 'pickTarget' is not an element of the set {'children', 'children'}."
+    ]
+   },
+   "uom": [
+    {
+     "kind": "cf-choice",
+     "parent": "PrimitivePickSensor",
+     "field": "pickTarget",
+     "child": "Anchor",
+     "cf_type": "containerFieldChoicesX3DUrlObject",
+     "line": 5
+    }
+   ],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "uom_allows_xsd_rejects",
+   "signature": [
+    "A",
+    "not-expected",
+    "CADLayer",
+    "children",
+    "X3DChildNode"
+   ],
+   "scenes": 1,
+   "file": "uom_allows_xsd_rejects/not-expected-CADLayer-children-9661f5.x3d",
+   "bytes": 188,
+   "elements": 3,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "xsd": "Line 6: Element 'CollisionCollection': This element is not expected. Expected is one of ( IS, MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataSet, MetadataString, Background, ColorInterpolator, CoordinateInterpolator ).",
+    "pair": [
+     "CollisionCollection",
+     "CADLayer",
+     "children"
+    ]
+   },
+   "xsd": {
+    "valid": false,
+    "errors": [
+     "Line 5: Element 'CollisionCollection': This element is not expected. Expected is one of ( IS, MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataSet, MetadataString, Background, ColorInterpolator, CoordinateInterpolator )."
+    ]
+   },
+   "uom": [],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "uom_allows_xsd_rejects",
+   "signature": [
+    "A",
+    "not-expected",
+    "HAnimSegment",
+    "children",
+    "X3DSoundSourceNode"
+   ],
+   "scenes": 1,
+   "file": "uom_allows_xsd_rejects/not-expected-HAnimSegment-children-86a2bf.x3d",
+   "bytes": 194,
+   "elements": 4,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "xsd": "Line 14: Element 'ListenerPointSource': This element is not expected. Expected is ( HAnimDisplacer ).",
+    "pair": [
+     "ListenerPointSource",
+     "HAnimSegment",
+     "children"
+    ]
+   },
+   "xsd": {
+    "valid": false,
+    "errors": [
+     "Line 6: Element 'ListenerPointSource': This element is not expected. Expected is ( HAnimDisplacer )."
+    ]
+   },
+   "uom": [],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "uom_allows_xsd_rejects",
+   "signature": [
+    "A",
+    "not-expected",
+    "PointPickSensor",
+    "pickingGeometry",
+    "X3DNurbsSurfaceGeometryNode"
+   ],
+   "scenes": 1,
+   "file": "uom_allows_xsd_rejects/not-expected-PointPickSensor-pickingGeometry-464b2b.x3d",
+   "bytes": 207,
+   "elements": 3,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "xsd": "Line 18: Element 'NurbsPatchSurface': This element is not expected.",
+    "pair": [
+     "NurbsPatchSurface",
+     "PointPickSensor",
+     "pickingGeometry"
+    ]
+   },
+   "xsd": {
+    "valid": false,
+    "errors": [
+     "Line 5: Element 'NurbsPatchSurface': This element is not expected. Expected is one of ( IS, MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataSet, MetadataString, PointSet, Anchor, Billboard )."
+    ]
+   },
+   "uom": [],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "uom_allows_xsd_rejects",
+   "signature": [
+    "A",
+    "not-expected",
+    "HAnimSegment",
+    "children",
+    "X3DDamperNode"
+   ],
+   "scenes": 1,
+   "file": "uom_allows_xsd_rejects/not-expected-HAnimSegment-children-b23e69.x3d",
+   "bytes": 191,
+   "elements": 4,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "xsd": "Line 10: Element 'CoordinateDamper': This element is not expected. Expected is ( HAnimDisplacer ).",
+    "pair": [
+     "CoordinateDamper",
+     "HAnimSegment",
+     "children"
+    ]
+   },
+   "xsd": {
+    "valid": false,
+    "errors": [
+     "Line 6: Element 'CoordinateDamper': This element is not expected. Expected is ( HAnimDisplacer )."
+    ]
+   },
+   "uom": [],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "uom_allows_xsd_rejects",
+   "signature": [
+    "A",
+    "not-expected",
+    "CADAssembly",
+    "children",
+    "X3DProductStructureChildNode"
+   ],
+   "scenes": 1,
+   "file": "uom_allows_xsd_rejects/not-expected-CADAssembly-children-5ffa27.x3d",
+   "bytes": 156,
+   "elements": 3,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "xsd": "Line 12: Element 'CADFace': This element is not expected. Expected is one of ( ROUTE, ExternProtoDeclare, ProtoDeclare, IMPORT, EXPORT, Background, ColorInterpolator, CoordinateInterpolator, DirectionalLight, Group ).",
+    "pair": [
+     "CADFace",
+     "CADAssembly",
+     "children"
+    ]
+   },
+   "xsd": {
+    "valid": false,
+    "errors": [
+     "Line 5: Element 'CADFace': This element is not expected. Expected is one of ( IS, MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataSet, MetadataString, Background, ColorInterpolator, CoordinateInterpolator )."
+    ]
+   },
+   "uom": [],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "uom_allows_xsd_rejects",
+   "signature": [
+    "A",
+    "not-expected",
+    "LineSet",
+    "attrib",
+    "X3DVertexAttributeNode"
+   ],
+   "scenes": 1,
+   "file": "uom_allows_xsd_rejects/not-expected-LineSet-attrib-b218ec.x3d",
+   "bytes": 192,
+   "elements": 4,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "xsd": "Line 7: Element 'FloatVertexAttribute': This element is not expected. Expected is one of ( IS, MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataSet, MetadataString, Color, ColorRGBA, Coordinate ).",
+    "pair": [
+     "FloatVertexAttribute",
+     "LineSet",
+     "attrib"
+    ]
+   },
+   "xsd": {
+    "valid": false,
+    "errors": [
+     "Line 6: Element 'FloatVertexAttribute': This element is not expected. Expected is one of ( IS, MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataSet, MetadataString, Color, ColorRGBA, Coordinate )."
+    ]
+   },
+   "uom": [],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "uom_allows_xsd_rejects",
+   "signature": [
+    "A",
+    "not-expected",
+    "HAnimSite",
+    "children",
+    "X3DViewportNode"
+   ],
+   "scenes": 1,
+   "file": "uom_allows_xsd_rejects/not-expected-HAnimSite-children-17c360.x3d",
+   "bytes": 179,
+   "elements": 3,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "xsd": "Line 5: Element 'Viewport': This element is not expected. Expected is one of ( IS, MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataSet, MetadataString, Background, ColorInterpolator, CoordinateInterpolator ).",
+    "pair": [
+     "Viewport",
+     "HAnimSite",
+     "children"
+    ]
+   },
+   "xsd": {
+    "valid": false,
+    "errors": [
+     "Line 5: Element 'Viewport': This element is not expected. Expected is one of ( IS, MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataSet, MetadataString, Background, ColorInterpolator, CoordinateInterpolator )."
+    ]
+   },
+   "uom": [],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "uom_allows_xsd_rejects",
+   "signature": [
+    "A",
+    "not-expected",
+    "VolumePickSensor",
+    "pickTarget",
+    "X3DShapeNode"
+   ],
+   "scenes": 1,
+   "file": "uom_allows_xsd_rejects/not-expected-VolumePickSensor-pickTarget-c5c6ac.x3d",
+   "bytes": 201,
+   "elements": 3,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "xsd": "Line 6: Element 'ParticleSystem': This element is not expected. Expected is one of ( Anchor, Billboard, Collision, Group, Inline, LOD, StaticGroup, Switch, Transform, EspduTransform ).",
+    "pair": [
+     "ParticleSystem",
+     "VolumePickSensor",
+     "pickTarget"
+    ]
+   },
+   "xsd": {
+    "valid": false,
+    "errors": [
+     "Line 5: Element 'ParticleSystem': This element is not expected. Expected is one of ( IS, MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataSet, MetadataString, Polyline2D, Polypoint2D, Rectangle2D )."
+    ]
+   },
+   "uom": [],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "uom_allows_xsd_rejects",
+   "signature": [
+    "A",
+    "not-expected",
+    "HAnimSite",
+    "children",
+    "X3DChildNode"
+   ],
+   "scenes": 1,
+   "file": "uom_allows_xsd_rejects/not-expected-HAnimSite-children-a6fe37.x3d",
+   "bytes": 180,
+   "elements": 3,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "xsd": "Line 7: Element 'RigidBody': This element is not expected. Expected is one of ( IS, MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataSet, MetadataString, Background, ColorInterpolator, CoordinateInterpolator ).",
+    "pair": [
+     "RigidBody",
+     "HAnimSite",
+     "children"
+    ]
+   },
+   "xsd": {
+    "valid": false,
+    "errors": [
+     "Line 5: Element 'RigidBody': This element is not expected. Expected is one of ( IS, MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataSet, MetadataString, Background, ColorInterpolator, CoordinateInterpolator )."
+    ]
+   },
+   "uom": [],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "uom_allows_xsd_rejects",
+   "signature": [
+    "A",
+    "not-expected",
+    "HAnimSegment",
+    "children",
+    "X3DSoundNode"
+   ],
+   "scenes": 1,
+   "file": "uom_allows_xsd_rejects/not-expected-HAnimSegment-children-e2666c.x3d",
+   "bytes": 189,
+   "elements": 3,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "xsd": "Line 9: Element 'PeriodicWave': This element is not expected. Expected is one of ( ROUTE, ExternProtoDeclare, ProtoDeclare, IMPORT, EXPORT, Background, ColorInterpolator, CoordinateInterpolator, DirectionalLight, Group ).",
+    "pair": [
+     "PeriodicWave",
+     "HAnimSegment",
+     "children"
+    ]
+   },
+   "xsd": {
+    "valid": false,
+    "errors": [
+     "Line 5: Element 'PeriodicWave': This element is not expected. Expected is one of ( IS, MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataSet, MetadataString, Background, ColorInterpolator, CoordinateInterpolator )."
+    ]
+   },
+   "uom": [],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "uom_allows_xsd_rejects",
+   "signature": [
+    "A",
+    "not-expected",
+    "GeoMetadata",
+    "data",
+    "X3DRigidJointNode"
+   ],
+   "scenes": 1,
+   "file": "uom_allows_xsd_rejects/not-expected-GeoMetadata-data-94d583.x3d",
+   "bytes": 191,
+   "elements": 3,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "xsd": "Line 6: Element 'SingleAxisHingeJoint': This element is not expected. Expected is one of ( IS, MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataSet, MetadataString, GeoCoordinate, GeoElevationGrid, GeoLocation ).",
+    "pair": [
+     "SingleAxisHingeJoint",
+     "GeoMetadata",
+     "data"
+    ]
+   },
+   "xsd": {
+    "valid": false,
+    "errors": [
+     "Line 5: Element 'SingleAxisHingeJoint': This element is not expected. Expected is one of ( IS, MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataSet, MetadataString, GeoCoordinate, GeoElevationGrid, GeoLocation )."
+    ]
+   },
+   "uom": [],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "uom_allows_xsd_rejects",
+   "signature": [
+    "A",
+    "not-expected",
+    "Switch",
+    "children",
+    "X3DSoundNode"
+   ],
+   "scenes": 1,
+   "file": "uom_allows_xsd_rejects/not-expected-Switch-children-42ba52.x3d",
+   "bytes": 177,
+   "elements": 3,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "xsd": "Line 8: Element 'PeriodicWave': This element is not expected. Expected is one of ( IS, MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataSet, MetadataString, Background, ColorInterpolator, CoordinateInterpolator ).",
+    "pair": [
+     "PeriodicWave",
+     "Switch",
+     "children"
+    ]
+   },
+   "xsd": {
+    "valid": false,
+    "errors": [
+     "Line 5: Element 'PeriodicWave': This element is not expected. Expected is one of ( IS, MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataSet, MetadataString, Background, ColorInterpolator, CoordinateInterpolator )."
+    ]
+   },
+   "uom": [],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "uom_allows_xsd_rejects",
+   "signature": [
+    "A",
+    "not-expected",
+    "Transform",
+    "children",
+    "X3DSoundNode"
+   ],
+   "scenes": 1,
+   "file": "uom_allows_xsd_rejects/not-expected-Transform-children-b62a59.x3d",
+   "bytes": 183,
+   "elements": 3,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "xsd": "Line 6: Element 'PeriodicWave': This element is not expected. Expected is one of ( IS, MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataSet, MetadataString, Background, ColorInterpolator, CoordinateInterpolator ).",
+    "pair": [
+     "PeriodicWave",
+     "Transform",
+     "children"
+    ]
+   },
+   "xsd": {
+    "valid": false,
+    "errors": [
+     "Line 5: Element 'PeriodicWave': This element is not expected. Expected is one of ( IS, MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataSet, MetadataString, Background, ColorInterpolator, CoordinateInterpolator )."
+    ]
+   },
+   "uom": [],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "uom_allows_xsd_rejects",
+   "signature": [
+    "A",
+    "not-expected",
+    "GeoLocation",
+    "children",
+    "X3DProductStructureChildNode"
+   ],
+   "scenes": 1,
+   "file": "uom_allows_xsd_rejects/not-expected-GeoLocation-children-777ded.x3d",
+   "bytes": 156,
+   "elements": 3,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "xsd": "Line 5: Element 'CADFace': This element is not expected. Expected is one of ( IS, MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataSet, MetadataString, Background, ColorInterpolator, CoordinateInterpolator ).",
+    "pair": [
+     "CADFace",
+     "GeoLocation",
+     "children"
+    ]
+   },
+   "xsd": {
+    "valid": false,
+    "errors": [
+     "Line 5: Element 'CADFace': This element is not expected. Expected is one of ( IS, MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataSet, MetadataString, Background, ColorInterpolator, CoordinateInterpolator )."
+    ]
+   },
+   "uom": [],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "uom_allows_xsd_rejects",
+   "signature": [
+    "A",
+    "not-expected",
+    "PrimitivePickSensor",
+    "pickTarget",
+    "X3DGroupingNode"
+   ],
+   "scenes": 1,
+   "file": "uom_allows_xsd_rejects/not-expected-PrimitivePickSensor-pickTarget-93e928.x3d",
+   "bytes": 206,
+   "elements": 3,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "xsd": "Line 11: Element 'PickableGroup': This element is not expected. Expected is one of ( IS, MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataSet, MetadataString, Box, Cone, Cylinder ).",
+    "pair": [
+     "PickableGroup",
+     "PrimitivePickSensor",
+     "pickTarget"
+    ]
+   },
+   "xsd": {
+    "valid": false,
+    "errors": [
+     "Line 5: Element 'PickableGroup': This element is not expected. Expected is one of ( IS, MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataSet, MetadataString, Box, Cone, Cylinder )."
+    ]
+   },
+   "uom": [],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "uom_allows_xsd_rejects",
+   "signature": [
+    "A",
+    "missing-child",
+    "NurbsSet",
+    "Missing child element(s). Expected is ( NurbsSwungSurface )."
+   ],
+   "scenes": 1,
+   "file": "uom_allows_xsd_rejects/missing-child-NurbsSet-Missing_child_element_s_._Expected_is_NurbsSwun-f55b9a.x3d",
+   "bytes": 187,
+   "elements": 4,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "xsd": "Line 6: Element 'NurbsSet': Missing child element(s). Expected is ( NurbsSwungSurface ).",
+    "pair": [
+     "NurbsSet",
+     "Scene",
+     "children"
+    ]
+   },
+   "xsd": {
+    "valid": false,
+    "errors": [
+     "Line 4: Element 'NurbsSet': Missing child element(s). Expected is ( NurbsSwungSurface )."
+    ]
+   },
+   "uom": [],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "uom_denies_xsd_accepts",
+   "signature": [
+    "B",
+    "range",
+    "",
+    "",
+    "HAnimJoint",
+    "scale"
+   ],
+   "scenes": 9,
+   "file": "uom_denies_xsd_accepts/range-0ab556.x3d",
+   "bytes": 137,
+   "elements": 2,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "violation": {
+     "kind": "range",
+     "child": "HAnimJoint",
+     "attr": "scale",
+     "value": "-1 -1 -1",
+     "line": 7
+    }
+   },
+   "xsd": {
+    "valid": true,
+    "errors": []
+   },
+   "uom": [
+    {
+     "kind": "range",
+     "child": "HAnimJoint",
+     "attr": "scale",
+     "value": "-1 -1 -1",
+     "line": 4
+    }
+   ],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "uom_denies_xsd_accepts",
+   "signature": [
+    "B",
+    "range",
+    "",
+    "",
+    "HAnimHumanoid",
+    "scale"
+   ],
+   "scenes": 6,
+   "file": "uom_denies_xsd_accepts/range-5206c8.x3d",
+   "bytes": 140,
+   "elements": 2,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "violation": {
+     "kind": "range",
+     "child": "HAnimHumanoid",
+     "attr": "scale",
+     "value": "-1 -1 -1",
+     "line": 5
+    }
+   },
+   "xsd": {
+    "valid": true,
+    "errors": []
+   },
+   "uom": [
+    {
+     "kind": "range",
+     "child": "HAnimHumanoid",
+     "attr": "scale",
+     "value": "-1 -1 -1",
+     "line": 4
+    }
+   ],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "uom_denies_xsd_accepts",
+   "signature": [
+    "B",
+    "range",
+    "",
+    "",
+    "HAnimJoint",
+    "stiffness"
+   ],
+   "scenes": 5,
+   "file": "uom_denies_xsd_accepts/range-9a7985.x3d",
+   "bytes": 135,
+   "elements": 2,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "violation": {
+     "kind": "range",
+     "child": "HAnimJoint",
+     "attr": "stiffness",
+     "value": "-1",
+     "line": 11
+    }
+   },
+   "xsd": {
+    "valid": true,
+    "errors": []
+   },
+   "uom": [
+    {
+     "kind": "range",
+     "child": "HAnimJoint",
+     "attr": "stiffness",
+     "value": "-1",
+     "line": 4
+    }
+   ],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "uom_denies_xsd_accepts",
+   "signature": [
+    "B",
+    "range",
+    "",
+    "",
+    "NavigationInfo",
+    "avatarSize"
+   ],
+   "scenes": 1,
+   "file": "uom_denies_xsd_accepts/range-1dea09.x3d",
+   "bytes": 140,
+   "elements": 2,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "violation": {
+     "kind": "range",
+     "child": "NavigationInfo",
+     "attr": "avatarSize",
+     "value": "-1",
+     "line": 4
+    }
+   },
+   "xsd": {
+    "valid": true,
+    "errors": []
+   },
+   "uom": [
+    {
+     "kind": "range",
+     "child": "NavigationInfo",
+     "attr": "avatarSize",
+     "value": "-1",
+     "line": 4
+    }
+   ],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "uom_denies_xsd_accepts",
+   "signature": [
+    "B",
+    "containment",
+    "LayoutLayer",
+    "children",
+    "X3DGeometryNode"
+   ],
+   "scenes": 1,
+   "file": "uom_denies_xsd_accepts/containment-LayoutLayer-children-c1d880.x3d",
+   "bytes": 226,
+   "elements": 4,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "violation": {
+     "kind": "containment",
+     "parent": "LayoutLayer",
+     "field": "children",
+     "child": "InlineGeometry",
+     "line": 8
+    }
+   },
+   "xsd": {
+    "valid": true,
+    "errors": []
+   },
+   "uom": [
+    {
+     "kind": "containment",
+     "parent": "LayoutLayer",
+     "field": "children",
+     "child": "InlineGeometry",
+     "line": 6
+    }
+   ],
+   "sem_errors": [
+    {
+     "level": "error",
+     "check": "containerfield-type-mismatch",
+     "message": "LayoutLayer.children does not accept a InlineGeometry (accepts: X3DChildNode)."
+    }
+   ],
+   "profile_ok": true,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "uom_denies_xsd_accepts",
+   "signature": [
+    "B",
+    "range",
+    "",
+    "",
+    "ColorRGBA",
+    "color"
+   ],
+   "scenes": 1,
+   "file": "uom_denies_xsd_accepts/range-d0dad6.x3d",
+   "bytes": 215,
+   "elements": 4,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "violation": {
+     "kind": "range",
+     "child": "ColorRGBA",
+     "attr": "color",
+     "value": "-1 -1 -1 -1",
+     "line": 12
+    }
+   },
+   "xsd": {
+    "valid": true,
+    "errors": []
+   },
+   "uom": [
+    {
+     "kind": "range",
+     "child": "ColorRGBA",
+     "attr": "color",
+     "value": "-1 -1 -1 -1",
+     "line": 6
+    }
+   ],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "uom_denies_xsd_accepts",
+   "signature": [
+    "B",
+    "containment",
+    "HAnimHumanoid",
+    "children",
+    "X3DGroupingNode"
+   ],
+   "scenes": 1,
+   "file": "uom_denies_xsd_accepts/containment-HAnimHumanoid-children-c9882c.x3d",
+   "bytes": 165,
+   "elements": 3,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "violation": {
+     "kind": "containment",
+     "parent": "HAnimHumanoid",
+     "field": "children",
+     "child": "HAnimSegment",
+     "line": 8
+    }
+   },
+   "xsd": {
+    "valid": true,
+    "errors": []
+   },
+   "uom": [
+    {
+     "kind": "containment",
+     "parent": "HAnimHumanoid",
+     "field": "children",
+     "child": "HAnimSegment",
+     "line": 5
+    }
+   ],
+   "sem_errors": [
+    {
+     "level": "error",
+     "check": "containerfield-type-mismatch",
+     "message": "HAnimHumanoid.children does not accept a HAnimSegment (accepts: HAnimPose). Use containerField='segments'."
+    }
+   ],
+   "profile_ok": true,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "xsd_valid_xite_drops",
+   "signature": [
+    "C",
+    "route",
+    "XML Parser: Unknown named or imported node '_'.",
+    "sem-silent"
+   ],
+   "scenes": 67,
+   "file": "xsd_valid_xite_drops/route-XML_Parser_Unknown_named_or_imported_node___.-sem-silent-1e98f2.x3d",
+   "bytes": 273,
+   "elements": 4,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "msgs": [
+     "XML Parser: Unknown named or imported node 'hanim_Tender_sacroiliac'."
+    ],
+    "drops": [
+     [
+      "route"
+     ]
+    ]
+   },
+   "xsd": {
+    "valid": true,
+    "errors": []
+   },
+   "uom": [],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [
+     "XML Parser: Unknown named or imported node 'Classes'."
+    ],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "xsd_valid_xite_drops",
+   "signature": [
+    "C",
+    "exception",
+    "Failed to set the '_' property on '_': The minDecibels provided (-#) is greater than or equal to the maximum bound (-#).",
+    "silent",
+    "sem-silent"
+   ],
+   "scenes": 2,
+   "file": "xsd_valid_xite_drops/exception-Failed_to_set_the___property_on___The_minDecibels_provided_--c17fb3.x3d",
+   "bytes": 138,
+   "elements": 2,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "msgs": [
+     "Node type 'Analyser' does not match component/profile statements in 'http://fuzz.local/'.",
+     "Node type 'OscillatorSource' does not match component/profile statements in 'http://fuzz.local/'.",
+     "Node type 'OscillatorSource' does not match component/profile statements in 'http://fuzz.local/'.",
+     "Node type 'PeriodicWave' does not match component/profile statements in 'http://fuzz.local/'."
+    ],
+    "drops": [
+     [
+      "exception",
+      "Failed to set the '_' property on '_': The minDecibels provided (-#) is greater than or equal to the maximum bound (-#)."
+     ]
+    ]
+   },
+   "xsd": {
+    "valid": true,
+    "errors": []
+   },
+   "uom": [],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": null,
+    "exc": "Failed to set the 'minDecibels' property on 'AnalyserNode': The minDecibels provided (-30) is greater than or equal to the maximum bound (-30)."
+   }
+  },
+  {
+   "bucket": "xsd_valid_xite_drops",
+   "signature": [
+    "C",
+    "exception",
+    "scene load did not settle in # ms",
+    "silent",
+    "sem-silent"
+   ],
+   "scenes": 2,
+   "file": "xsd_valid_xite_drops/exception-scene_load_did_not_settle_in_ms-silent-1f865c.x3d",
+   "bytes": 145,
+   "elements": 2,
+   "reproduces": false,
+   "minimised": true,
+   "detail": {
+    "msgs": [],
+    "drops": [
+     [
+      "exception",
+      "scene load did not settle in # ms"
+     ]
+    ]
+   },
+   "xsd": {
+    "valid": true,
+    "errors": []
+   },
+   "uom": [],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "xsd_valid_xite_drops",
+   "signature": [
+    "C",
+    "route",
+    "XML Parser: Bad ROUTE specification: destination field \"_\" must be an input.",
+    "sem-silent"
+   ],
+   "scenes": 2,
+   "file": "xsd_valid_xite_drops/route-XML_Parser_Bad_ROUTE_specification_destination_field___must_be_a-9cef92.x3d",
+   "bytes": 259,
+   "elements": 4,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "msgs": [
+     "XML Parser: Bad ROUTE specification: destination field \"maxChannelCount\" must be an input."
+    ],
+    "drops": [
+     [
+      "route"
+     ]
+    ]
+   },
+   "xsd": {
+    "valid": true,
+    "errors": []
+   },
+   "uom": [],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [
+     "XML Parser: Bad ROUTE specification: destination field \"maxChannelCount\" must be an input."
+    ],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "xsd_valid_xite_drops",
+   "signature": [
+    "C",
+    "exception",
+    "t?.checkLoadState is not a function",
+    "silent",
+    "sem-silent"
+   ],
+   "scenes": 2,
+   "file": "xsd_valid_xite_drops/exception-t_.checkLoadState_is_not_a_function-silent-a663f9.x3d",
+   "bytes": 201,
+   "elements": 3,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "msgs": [
+     "Node type 'PositionDamper' does not match component/profile statements in 'http://fuzz.local/'.",
+     "Node type 'StreamAudioSource' does not match component/profile statements in 'http://fuzz.local/'.",
+     "Node type 'TextureProjector' does not match component/profile statements in 'http://fuzz.local/'.",
+     "Node type 'TextureBackground' does not match component/profile statements in 'http://fuzz.local/'."
+    ],
+    "drops": [
+     [
+      "exception",
+      "t?.checkLoadState is not a function"
+     ]
+    ]
+   },
+   "xsd": {
+    "valid": true,
+    "errors": []
+   },
+   "uom": [],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": null,
+    "exc": "t?.checkLoadState is not a function"
+   }
+  },
+  {
+   "bucket": "xsd_valid_xite_drops",
+   "signature": [
+    "C",
+    "route",
+    "XML Parser: Unknown field '_' in node class ListenerPointSource.",
+    "sem-silent"
+   ],
+   "scenes": 2,
+   "file": "xsd_valid_xite_drops/route-XML_Parser_Unknown_field___in_node_class_ListenerPointSource.-se-fd9ec9.x3d",
+   "bytes": 248,
+   "elements": 4,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "msgs": [
+     "XML Parser: Unknown field 'startTime' in node class ListenerPointSource.",
+     "XML Parser: Unknown field 'isPaused' in node class ListenerPointSource."
+    ],
+    "drops": [
+     [
+      "route"
+     ]
+    ]
+   },
+   "xsd": {
+    "valid": true,
+    "errors": []
+   },
+   "uom": [],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [
+     "XML Parser: Unknown field 'isPaused' in node class ListenerPointSource."
+    ],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "xsd_valid_xite_drops",
+   "signature": [
+    "C",
+    "exception",
+    "t?.checkLoadState is not a function",
+    "silent",
+    "sem-flags"
+   ],
+   "scenes": 1,
+   "file": "xsd_valid_xite_drops/exception-t_.checkLoadState_is_not_a_function-silent-d9b7ae.x3d",
+   "bytes": 284,
+   "elements": 4,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "msgs": [],
+    "drops": [
+     [
+      "exception",
+      "t?.checkLoadState is not a function"
+     ]
+    ]
+   },
+   "xsd": {
+    "valid": true,
+    "errors": []
+   },
+   "uom": [],
+   "sem_errors": [
+    {
+     "level": "error",
+     "check": "route-missing-from-node",
+     "message": "ROUTE fromNode='N2' not found. Available DEFs: (none)."
+    }
+   ],
+   "profile_ok": true,
+   "xite": {
+    "warn": [
+     "XML Parser: Unknown named or imported node 'N2'."
+    ],
+    "error": [],
+    "routes": null,
+    "exc": "t?.checkLoadState is not a function"
+   }
+  },
+  {
+   "bucket": "xsd_valid_xite_drops",
+   "signature": [
+    "C",
+    "route",
+    "XML Parser: Unknown field '_' in node class Script.",
+    "sem-silent"
+   ],
+   "scenes": 1,
+   "file": "xsd_valid_xite_drops/route-XML_Parser_Unknown_field___in_node_class_Script.-sem-silent-56f1ac.x3d",
+   "bytes": 244,
+   "elements": 4,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "msgs": [
+     "Node type 'AudioDestination' does not match component/profile statements in 'http://fuzz.local/'.",
+     "Node type 'GeoViewpoint' does not match component/profile statements in 'http://fuzz.local/'.",
+     "Node type 'BufferAudioSource' does not match component/profile statements in 'http://fuzz.local/'.",
+     "Node type 'HAnimSite' does not match component/profile statements in 'http://fuzz.local/'."
+    ],
+    "drops": [
+     [
+      "route"
+     ]
+    ]
+   },
+   "xsd": {
+    "valid": true,
+    "errors": []
+   },
+   "uom": [],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [
+     "XML Parser: Unknown field 'sourceCode' in node class Script."
+    ],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "xsd_valid_xite_drops",
+   "signature": [
+    "C",
+    "route",
+    "XML Parser: Bad ROUTE specification: source field type must match destination field type of fields named \"_\" and \"_\".",
+    "sem-silent"
+   ],
+   "scenes": 1,
+   "file": "xsd_valid_xite_drops/route-XML_Parser_Bad_ROUTE_specification_source_field_type_must_match-d4ee39.x3d",
+   "bytes": 247,
+   "elements": 4,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "msgs": [
+     "XML Parser: Bad ROUTE specification: source field type must match destination field type of fields named \"loopStart\" and \"gain\"."
+    ],
+    "drops": [
+     [
+      "route"
+     ]
+    ]
+   },
+   "xsd": {
+    "valid": true,
+    "errors": []
+   },
+   "uom": [],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [
+     "XML Parser: Bad ROUTE specification: source field type must match destination field type of fields named \"loopStart\" and \"gain\"."
+    ],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "xsd_valid_xite_drops",
+   "signature": [
+    "C",
+    "exception",
+    "Failed to set the '_' property on '_': The minDecibels provided (#) is greater than the maximum bound (-#).",
+    "silent",
+    "sem-silent"
+   ],
+   "scenes": 1,
+   "file": "xsd_valid_xite_drops/exception-Failed_to_set_the___property_on___The_minDecibels_provided_i-89ecfe.x3d",
+   "bytes": 158,
+   "elements": 2,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "msgs": [],
+    "drops": [
+     [
+      "exception",
+      "Failed to set the '_' property on '_': The minDecibels provided (#) is greater than the maximum bound (-#)."
+     ]
+    ]
+   },
+   "xsd": {
+    "valid": true,
+    "errors": []
+   },
+   "uom": [],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": null,
+    "exc": "Failed to set the 'minDecibels' property on 'AnalyserNode': The minDecibels provided (0) is greater than the maximum bound (-30)."
+   }
+  },
+  {
+   "bucket": "xsd_valid_xite_warns",
+   "signature": [
+    "D",
+    "warn",
+    "Use of field HAnimHumanoid.sites is deprecated. This field may be removed in future versions of X3D."
+   ],
+   "scenes": 6,
+   "file": "xsd_valid_xite_warns/warn-Use_of_field_HAnimHumanoid.sites_is_deprecated._This_field_may_be-5acc38.x3d",
+   "bytes": 185,
+   "elements": 3,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "msg": "Use of field HAnimHumanoid.sites is deprecated. This field may be removed in future versions of X3D."
+   },
+   "xsd": {
+    "valid": true,
+    "errors": []
+   },
+   "uom": [],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [
+     "Use of field HAnimHumanoid.sites is deprecated. This field may be removed in future versions of X3D."
+    ],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "xsd_valid_xite_warns",
+   "signature": [
+    "D",
+    "warn",
+    "Use of field HAnimHumanoid.segments is deprecated. This field may be removed in future versions of X3D."
+   ],
+   "scenes": 2,
+   "file": "xsd_valid_xite_warns/warn-Use_of_field_HAnimHumanoid.segments_is_deprecated._This_field_may-e6cb38.x3d",
+   "bytes": 191,
+   "elements": 3,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "msg": "Use of field HAnimHumanoid.segments is deprecated. This field may be removed in future versions of X3D."
+   },
+   "xsd": {
+    "valid": true,
+    "errors": []
+   },
+   "uom": [],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [
+     "Use of field HAnimHumanoid.segments is deprecated. This field may be removed in future versions of X3D."
+    ],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "xsd_valid_xite_warns",
+   "signature": [
+    "D",
+    "warn",
+    "TwoSidedMaterial is deprecated, please use Appearance backMaterial field instead."
+   ],
+   "scenes": 2,
+   "file": "xsd_valid_xite_warns/warn-TwoSidedMaterial_is_deprecated_please_use_Appearance_backMaterial-011212.x3d",
+   "bytes": 194,
+   "elements": 4,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "msg": "TwoSidedMaterial is deprecated, please use Appearance backMaterial field instead."
+   },
+   "xsd": {
+    "valid": true,
+    "errors": []
+   },
+   "uom": [],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [
+     "TwoSidedMaterial is deprecated, please use Appearance backMaterial field instead."
+    ],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "xsd_valid_xite_warns",
+   "signature": [
+    "D",
+    "warn",
+    "XML Parser: Unknown proto or externproto type '_'."
+   ],
+   "scenes": 2,
+   "file": "xsd_valid_xite_warns/warn-XML_Parser_Unknown_proto_or_externproto_type___.-f869ff.x3d",
+   "bytes": 135,
+   "elements": 2,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "msg": "XML Parser:  Unknown proto or externproto type 'fz24'."
+   },
+   "xsd": {
+    "valid": true,
+    "errors": []
+   },
+   "uom": [],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [
+     "XML Parser:  Unknown proto or externproto type 'fz24'."
+    ],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "semantic_false_alarm",
+   "signature": [
+    "E",
+    "interpolator-key-length"
+   ],
+   "scenes": 25,
+   "file": "semantic_false_alarm/interpolator-key-length-99576d.x3d",
+   "bytes": 176,
+   "elements": 2,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "diag": {
+     "level": "error",
+     "check": "interpolator-key-length",
+     "message": "PositionInterpolator: expected 3 keyValue float(s) per key (3 keys -> 9), got 1 per key (3 total)."
+    }
+   },
+   "xsd": {
+    "valid": true,
+    "errors": []
+   },
+   "uom": [],
+   "sem_errors": [
+    {
+     "level": "error",
+     "check": "interpolator-key-length",
+     "message": "ScalarInterpolator: keyValue has 3 values, not divisible by the 2 key(s). Each key needs a whole keyValue entry."
+    }
+   ],
+   "profile_ok": true,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "semantic_false_alarm",
+   "signature": [
+    "E",
+    "splat-scale-space"
+   ],
+   "scenes": 1,
+   "file": "semantic_false_alarm/splat-scale-space-f728ec.x3d",
+   "bytes": 193,
+   "elements": 2,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "diag": {
+     "level": "error",
+     "check": "splat-scale-space",
+     "message": "GaussianSplats: 6 of 9 scale values are negative. X3D scales are linear standard deviations; a 3DGS PLY stores ln(scale), so apply exp() when converting."
+    }
+   },
+   "xsd": {
+    "valid": true,
+    "errors": []
+   },
+   "uom": [],
+   "sem_errors": [
+    {
+     "level": "error",
+     "check": "splat-scale-space",
+     "message": "GaussianSplats: 6 of 9 scale values are negative. X3D scales are linear standard deviations; a 3DGS PLY stores ln(scale), so apply exp() when converting."
+    }
+   ],
+   "profile_ok": true,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "semantic_false_alarm",
+   "signature": [
+    "E",
+    "splat-array-length"
+   ],
+   "scenes": 1,
+   "file": "semantic_false_alarm/splat-array-length-02a6fa.x3d",
+   "bytes": 288,
+   "elements": 2,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "diag": {
+     "level": "error",
+     "check": "splat-array-length",
+     "message": "GaussianSplats: sphericalHarmonicsDegree0Coef0 holds 2 splats but positions holds 3. Every per-splat array needs one entry per splat."
+    }
+   },
+   "xsd": {
+    "valid": true,
+    "errors": []
+   },
+   "uom": [],
+   "sem_errors": [
+    {
+     "level": "error",
+     "check": "splat-array-length",
+     "message": "GaussianSplats: sphericalHarmonicsDegree0Coef0 holds 2 splats but positions holds 3. Every per-splat array needs one entry per splat."
+    }
+   ],
+   "profile_ok": true,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "semantic_silent_drop",
+   "signature": [
+    "S",
+    "route",
+    "XML Parser: Unknown named or imported node '_'."
+   ],
+   "scenes": 67,
+   "file": "semantic_silent_drop/route-XML_Parser_Unknown_named_or_imported_node___.-539b6b.x3d",
+   "bytes": 273,
+   "elements": 4,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "msgs": [
+     "XML Parser: Unknown named or imported node 'hanim_Tender_sacroiliac'."
+    ]
+   },
+   "xsd": {
+    "valid": true,
+    "errors": []
+   },
+   "uom": [],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [
+     "XML Parser: Unknown named or imported node 'Classes'."
+    ],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "semantic_silent_drop",
+   "signature": [
+    "S",
+    "exception",
+    "Failed to set the '_' property on '_': The minDecibels provided (-#) is greater than or equal to the maximum bound (-#).",
+    "silent"
+   ],
+   "scenes": 2,
+   "file": "semantic_silent_drop/exception-Failed_to_set_the___property_on___The_minDecibels_provided_--9990fa.x3d",
+   "bytes": 138,
+   "elements": 2,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "msgs": [
+     "Node type 'Analyser' does not match component/profile statements in 'http://fuzz.local/'.",
+     "Node type 'OscillatorSource' does not match component/profile statements in 'http://fuzz.local/'.",
+     "Node type 'OscillatorSource' does not match component/profile statements in 'http://fuzz.local/'."
+    ]
+   },
+   "xsd": {
+    "valid": true,
+    "errors": []
+   },
+   "uom": [],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": null,
+    "exc": "Failed to set the 'minDecibels' property on 'AnalyserNode': The minDecibels provided (-30) is greater than or equal to the maximum bound (-30)."
+   }
+  },
+  {
+   "bucket": "semantic_silent_drop",
+   "signature": [
+    "S",
+    "exception",
+    "scene load did not settle in # ms",
+    "silent"
+   ],
+   "scenes": 2,
+   "file": "semantic_silent_drop/exception-scene_load_did_not_settle_in_ms-silent-e71a60.x3d",
+   "bytes": 145,
+   "elements": 2,
+   "reproduces": false,
+   "minimised": true,
+   "detail": {
+    "msgs": []
+   },
+   "xsd": {
+    "valid": true,
+    "errors": []
+   },
+   "uom": [],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "semantic_silent_drop",
+   "signature": [
+    "S",
+    "route",
+    "XML Parser: Bad ROUTE specification: destination field \"_\" must be an input."
+   ],
+   "scenes": 2,
+   "file": "semantic_silent_drop/route-XML_Parser_Bad_ROUTE_specification_destination_field___must_be_a-f9e7f6.x3d",
+   "bytes": 259,
+   "elements": 4,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "msgs": [
+     "XML Parser: Bad ROUTE specification: destination field \"maxChannelCount\" must be an input."
+    ]
+   },
+   "xsd": {
+    "valid": true,
+    "errors": []
+   },
+   "uom": [],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [
+     "XML Parser: Bad ROUTE specification: destination field \"maxChannelCount\" must be an input."
+    ],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "semantic_silent_drop",
+   "signature": [
+    "S",
+    "exception",
+    "t?.checkLoadState is not a function",
+    "silent"
+   ],
+   "scenes": 2,
+   "file": "semantic_silent_drop/exception-t_.checkLoadState_is_not_a_function-silent-1403e9.x3d",
+   "bytes": 201,
+   "elements": 3,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "msgs": [
+     "Node type 'PositionDamper' does not match component/profile statements in 'http://fuzz.local/'.",
+     "Node type 'StreamAudioSource' does not match component/profile statements in 'http://fuzz.local/'.",
+     "Node type 'TextureProjector' does not match component/profile statements in 'http://fuzz.local/'."
+    ]
+   },
+   "xsd": {
+    "valid": true,
+    "errors": []
+   },
+   "uom": [],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": null,
+    "exc": "t?.checkLoadState is not a function"
+   }
+  },
+  {
+   "bucket": "semantic_silent_drop",
+   "signature": [
+    "S",
+    "route",
+    "XML Parser: Unknown field '_' in node class ListenerPointSource."
+   ],
+   "scenes": 2,
+   "file": "semantic_silent_drop/route-XML_Parser_Unknown_field___in_node_class_ListenerPointSource.-b180cb.x3d",
+   "bytes": 248,
+   "elements": 4,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "msgs": [
+     "XML Parser: Unknown field 'startTime' in node class ListenerPointSource.",
+     "XML Parser: Unknown field 'isPaused' in node class ListenerPointSource."
+    ]
+   },
+   "xsd": {
+    "valid": true,
+    "errors": []
+   },
+   "uom": [],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [
+     "XML Parser: Unknown field 'isPaused' in node class ListenerPointSource."
+    ],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "semantic_silent_drop",
+   "signature": [
+    "S",
+    "route",
+    "XML Parser: Unknown field '_' in node class Script."
+   ],
+   "scenes": 1,
+   "file": "semantic_silent_drop/route-XML_Parser_Unknown_field___in_node_class_Script.-12342a.x3d",
+   "bytes": 244,
+   "elements": 4,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "msgs": [
+     "Node type 'AudioDestination' does not match component/profile statements in 'http://fuzz.local/'.",
+     "Node type 'GeoViewpoint' does not match component/profile statements in 'http://fuzz.local/'.",
+     "Node type 'BufferAudioSource' does not match component/profile statements in 'http://fuzz.local/'."
+    ]
+   },
+   "xsd": {
+    "valid": true,
+    "errors": []
+   },
+   "uom": [],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [
+     "XML Parser: Unknown field 'sourceCode' in node class Script."
+    ],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "semantic_silent_drop",
+   "signature": [
+    "S",
+    "route",
+    "XML Parser: Bad ROUTE specification: source field type must match destination field type of fields named \"_\" and \"_\"."
+   ],
+   "scenes": 1,
+   "file": "semantic_silent_drop/route-XML_Parser_Bad_ROUTE_specification_source_field_type_must_match-3c0d9f.x3d",
+   "bytes": 247,
+   "elements": 4,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "msgs": [
+     "XML Parser: Bad ROUTE specification: source field type must match destination field type of fields named \"loopStart\" and \"gain\"."
+    ]
+   },
+   "xsd": {
+    "valid": true,
+    "errors": []
+   },
+   "uom": [],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [
+     "XML Parser: Bad ROUTE specification: source field type must match destination field type of fields named \"loopStart\" and \"gain\"."
+    ],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "semantic_silent_drop",
+   "signature": [
+    "S",
+    "exception",
+    "Failed to set the '_' property on '_': The minDecibels provided (#) is greater than the maximum bound (-#).",
+    "silent"
+   ],
+   "scenes": 1,
+   "file": "semantic_silent_drop/exception-Failed_to_set_the___property_on___The_minDecibels_provided_i-f122cc.x3d",
+   "bytes": 158,
+   "elements": 2,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "msgs": []
+   },
+   "xsd": {
+    "valid": true,
+    "errors": []
+   },
+   "uom": [],
+   "sem_errors": [],
+   "profile_ok": true,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": null,
+    "exc": "Failed to set the 'minDecibels' property on 'AnalyserNode': The minDecibels provided (0) is greater than the maximum bound (-30)."
+   }
+  },
+  {
+   "bucket": "profile_mismatch",
+   "signature": [
+    "F",
+    "fork-flags_xite-loads",
+    "Interchange",
+    "Shape"
+   ],
+   "scenes": 4,
+   "file": "profile_mismatch/fork-flags_xite-loads-Interchange-Shape-459149.x3d",
+   "bytes": 201,
+   "elements": 4,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "missing": [
+     "PhysicalMaterial"
+    ]
+   },
+   "xsd": {
+    "valid": true,
+    "errors": []
+   },
+   "uom": [],
+   "sem_errors": [
+    {
+     "level": "error",
+     "check": "profile-component",
+     "message": "PhysicalMaterial (component Shape level 2, not declared) is outside profile 'Interchange'. Browsers that enforce the header (X_ITE, x3d-tidy) refuse to load it."
+    }
+   ],
+   "profile_ok": false,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "profile_mismatch",
+   "signature": [
+    "F",
+    "fork-flags_xite-loads",
+    "MedicalInterchange",
+    "Shape"
+   ],
+   "scenes": 4,
+   "file": "profile_mismatch/fork-flags_xite-loads-MedicalInterchange-Shape-773add.x3d",
+   "bytes": 208,
+   "elements": 4,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "missing": [
+     "PhysicalMaterial"
+    ]
+   },
+   "xsd": {
+    "valid": true,
+    "errors": []
+   },
+   "uom": [],
+   "sem_errors": [
+    {
+     "level": "error",
+     "check": "profile-component",
+     "message": "PhysicalMaterial (component Shape level 2, not declared) is outside profile 'MedicalInterchange'. Browsers that enforce the header (X_ITE, x3d-tidy) refuse to load it."
+    }
+   ],
+   "profile_ok": false,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "profile_mismatch",
+   "signature": [
+    "F",
+    "fork-flags_xite-loads",
+    "Interactive",
+    "Shape"
+   ],
+   "scenes": 3,
+   "file": "profile_mismatch/fork-flags_xite-loads-Interactive-Shape-77d781.x3d",
+   "bytes": 201,
+   "elements": 4,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "missing": [
+     "PhysicalMaterial"
+    ]
+   },
+   "xsd": {
+    "valid": true,
+    "errors": []
+   },
+   "uom": [],
+   "sem_errors": [
+    {
+     "level": "error",
+     "check": "profile-component",
+     "message": "PhysicalMaterial (component Shape level 2, not declared) is outside profile 'Interactive'. Browsers that enforce the header (X_ITE, x3d-tidy) refuse to load it."
+    }
+   ],
+   "profile_ok": false,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "profile_mismatch",
+   "signature": [
+    "F",
+    "fork-flags_xite-loads",
+    "Immersive",
+    "Sound"
+   ],
+   "scenes": 3,
+   "file": "profile_mismatch/fork-flags_xite-loads-Immersive-Sound-75dac7.x3d",
+   "bytes": 137,
+   "elements": 2,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "missing": [
+     "StreamAudioDestination"
+    ]
+   },
+   "xsd": {
+    "valid": true,
+    "errors": []
+   },
+   "uom": [],
+   "sem_errors": [
+    {
+     "level": "error",
+     "check": "profile-component",
+     "message": "StreamAudioDestination (component Sound level 2, not declared) is outside profile 'Immersive'. Browsers that enforce the header (X_ITE, x3d-tidy) refuse to load it."
+    }
+   ],
+   "profile_ok": false,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "profile_mismatch",
+   "signature": [
+    "F",
+    "fork-flags_xite-loads",
+    "CADInterchange",
+    "Shape"
+   ],
+   "scenes": 2,
+   "file": "profile_mismatch/fork-flags_xite-loads-CADInterchange-Shape-9838df.x3d",
+   "bytes": 204,
+   "elements": 4,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "missing": [
+     "PhysicalMaterial"
+    ]
+   },
+   "xsd": {
+    "valid": true,
+    "errors": []
+   },
+   "uom": [],
+   "sem_errors": [
+    {
+     "level": "error",
+     "check": "profile-component",
+     "message": "PhysicalMaterial (component Shape level 2, not declared) is outside profile 'CADInterchange'. Browsers that enforce the header (X_ITE, x3d-tidy) refuse to load it."
+    }
+   ],
+   "profile_ok": false,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "profile_mismatch",
+   "signature": [
+    "F",
+    "fork-flags_xite-loads",
+    "Immersive",
+    "Interpolation"
+   ],
+   "scenes": 2,
+   "file": "profile_mismatch/fork-flags_xite-loads-Immersive-Interpolation-f8d46c.x3d",
+   "bytes": 137,
+   "elements": 2,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "missing": [
+     "PositionInterpolator2D"
+    ]
+   },
+   "xsd": {
+    "valid": true,
+    "errors": []
+   },
+   "uom": [],
+   "sem_errors": [
+    {
+     "level": "error",
+     "check": "profile-component",
+     "message": "PositionInterpolator2D (component Interpolation level 3, not declared) is outside profile 'Immersive'. Browsers that enforce the header (X_ITE, x3d-tidy) refuse to load it."
+    }
+   ],
+   "profile_ok": false,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "profile_mismatch",
+   "signature": [
+    "F",
+    "fork-flags_xite-loads",
+    "Immersive",
+    "Grouping"
+   ],
+   "scenes": 1,
+   "file": "profile_mismatch/fork-flags_xite-loads-Immersive-Grouping-c2f786.x3d",
+   "bytes": 126,
+   "elements": 2,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "missing": [
+     "StaticGroup"
+    ]
+   },
+   "xsd": {
+    "valid": true,
+    "errors": []
+   },
+   "uom": [],
+   "sem_errors": [
+    {
+     "level": "error",
+     "check": "profile-component",
+     "message": "StaticGroup (component Grouping level 3, not declared) is outside profile 'Immersive'. Browsers that enforce the header (X_ITE, x3d-tidy) refuse to load it."
+    }
+   ],
+   "profile_ok": false,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "profile_mismatch",
+   "signature": [
+    "F",
+    "fork-flags_xite-loads",
+    "Interchange",
+    "Navigation"
+   ],
+   "scenes": 1,
+   "file": "profile_mismatch/fork-flags_xite-loads-Interchange-Navigation-3b8c21.x3d",
+   "bytes": 131,
+   "elements": 2,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "missing": [
+     "OrthoViewpoint",
+     "ViewpointGroup"
+    ]
+   },
+   "xsd": {
+    "valid": true,
+    "errors": []
+   },
+   "uom": [],
+   "sem_errors": [
+    {
+     "level": "error",
+     "check": "profile-component",
+     "message": "OrthoViewpoint (component Navigation level 3, not declared) is outside profile 'Interchange'. Browsers that enforce the header (X_ITE, x3d-tidy) refuse to load it."
+    }
+   ],
+   "profile_ok": false,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "profile_mismatch",
+   "signature": [
+    "F",
+    "fork-flags_xite-loads",
+    "CADInterchange",
+    "Grouping"
+   ],
+   "scenes": 1,
+   "file": "profile_mismatch/fork-flags_xite-loads-CADInterchange-Grouping-58f401.x3d",
+   "bytes": 131,
+   "elements": 2,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "missing": [
+     "StaticGroup"
+    ]
+   },
+   "xsd": {
+    "valid": true,
+    "errors": []
+   },
+   "uom": [],
+   "sem_errors": [
+    {
+     "level": "error",
+     "check": "profile-component",
+     "message": "StaticGroup (component Grouping level 3, not declared) is outside profile 'CADInterchange'. Browsers that enforce the header (X_ITE, x3d-tidy) refuse to load it."
+    }
+   ],
+   "profile_ok": false,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "profile_mismatch",
+   "signature": [
+    "F",
+    "fork-flags_xite-loads",
+    "Immersive",
+    "Navigation"
+   ],
+   "scenes": 1,
+   "file": "profile_mismatch/fork-flags_xite-loads-Immersive-Navigation-5228f8.x3d",
+   "bytes": 129,
+   "elements": 2,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "missing": [
+     "OrthoViewpoint"
+    ]
+   },
+   "xsd": {
+    "valid": true,
+    "errors": []
+   },
+   "uom": [],
+   "sem_errors": [
+    {
+     "level": "error",
+     "check": "profile-component",
+     "message": "OrthoViewpoint (component Navigation level 3, not declared) is outside profile 'Immersive'. Browsers that enforce the header (X_ITE, x3d-tidy) refuse to load it."
+    }
+   ],
+   "profile_ok": false,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "profile_mismatch",
+   "signature": [
+    "F",
+    "fork-flags_xite-loads",
+    "Interactive",
+    "Networking"
+   ],
+   "scenes": 1,
+   "file": "profile_mismatch/fork-flags_xite-loads-Interactive-Networking-25d33b.x3d",
+   "bytes": 127,
+   "elements": 2,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "missing": [
+     "LoadSensor",
+     "MovieTexture"
+    ]
+   },
+   "xsd": {
+    "valid": true,
+    "errors": []
+   },
+   "uom": [],
+   "sem_errors": [
+    {
+     "level": "error",
+     "check": "profile-component",
+     "message": "LoadSensor (component Networking level 3, not declared) is outside profile 'Interactive'. Browsers that enforce the header (X_ITE, x3d-tidy) refuse to load it."
+    }
+   ],
+   "profile_ok": false,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "profile_mismatch",
+   "signature": [
+    "F",
+    "fork-flags_xite-loads",
+    "Immersive",
+    "Texturing"
+   ],
+   "scenes": 1,
+   "file": "profile_mismatch/fork-flags_xite-loads-Immersive-Texturing-ac4d58.x3d",
+   "bytes": 249,
+   "elements": 5,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "missing": [
+     "TextureProperties"
+    ]
+   },
+   "xsd": {
+    "valid": true,
+    "errors": []
+   },
+   "uom": [],
+   "sem_errors": [
+    {
+     "level": "error",
+     "check": "profile-component",
+     "message": "TextureProperties (component Texturing level 2, not declared) is outside profile 'Immersive'. Browsers that enforce the header (X_ITE, x3d-tidy) refuse to load it."
+    }
+   ],
+   "profile_ok": false,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "profile_mismatch",
+   "signature": [
+    "F",
+    "fork-flags_xite-loads",
+    "CADInterchange",
+    "Lighting"
+   ],
+   "scenes": 1,
+   "file": "profile_mismatch/fork-flags_xite-loads-CADInterchange-Lighting-32b89e.x3d",
+   "bytes": 136,
+   "elements": 2,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "missing": [
+     "EnvironmentLight"
+    ]
+   },
+   "xsd": {
+    "valid": true,
+    "errors": []
+   },
+   "uom": [],
+   "sem_errors": [
+    {
+     "level": "error",
+     "check": "profile-component",
+     "message": "EnvironmentLight (component Lighting level 1, not declared) is outside profile 'CADInterchange'. Browsers that enforce the header (X_ITE, x3d-tidy) refuse to load it."
+    }
+   ],
+   "profile_ok": false,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "profile_mismatch",
+   "signature": [
+    "F",
+    "fork-flags_xite-loads",
+    "Interchange",
+    "Grouping"
+   ],
+   "scenes": 1,
+   "file": "profile_mismatch/fork-flags_xite-loads-Interchange-Grouping-75e2d1.x3d",
+   "bytes": 128,
+   "elements": 2,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "missing": [
+     "StaticGroup",
+     "SquadOrientationInterpolator"
+    ]
+   },
+   "xsd": {
+    "valid": true,
+    "errors": []
+   },
+   "uom": [],
+   "sem_errors": [
+    {
+     "level": "error",
+     "check": "profile-component",
+     "message": "StaticGroup (component Grouping level 3, not declared) is outside profile 'Interchange'. Browsers that enforce the header (X_ITE, x3d-tidy) refuse to load it."
+    }
+   ],
+   "profile_ok": false,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "profile_mismatch",
+   "signature": [
+    "F",
+    "fork-flags_xite-loads",
+    "Interactive",
+    "Interpolation"
+   ],
+   "scenes": 1,
+   "file": "profile_mismatch/fork-flags_xite-loads-Interactive-Interpolation-90b6a1.x3d",
+   "bytes": 130,
+   "elements": 2,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "missing": [
+     "EaseInEaseOut"
+    ]
+   },
+   "xsd": {
+    "valid": true,
+    "errors": []
+   },
+   "uom": [],
+   "sem_errors": [
+    {
+     "level": "error",
+     "check": "profile-component",
+     "message": "EaseInEaseOut (component Interpolation level 4, not declared) is outside profile 'Interactive'. Browsers that enforce the header (X_ITE, x3d-tidy) refuse to load it."
+    }
+   ],
+   "profile_ok": false,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "profile_mismatch",
+   "signature": [
+    "F",
+    "fork-flags_xite-loads",
+    "Immersive",
+    "EnvironmentalEffects"
+   ],
+   "scenes": 1,
+   "file": "profile_mismatch/fork-flags_xite-loads-Immersive-EnvironmentalEffects-6a60d8.x3d",
+   "bytes": 123,
+   "elements": 2,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "missing": [
+     "LocalFog"
+    ]
+   },
+   "xsd": {
+    "valid": true,
+    "errors": []
+   },
+   "uom": [],
+   "sem_errors": [
+    {
+     "level": "error",
+     "check": "profile-component",
+     "message": "LocalFog (component EnvironmentalEffects level 4, not declared) is outside profile 'Immersive'. Browsers that enforce the header (X_ITE, x3d-tidy) refuse to load it."
+    }
+   ],
+   "profile_ok": false,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "profile_mismatch",
+   "signature": [
+    "F",
+    "fork-flags_xite-loads",
+    "Immersive",
+    "Shape"
+   ],
+   "scenes": 1,
+   "file": "profile_mismatch/fork-flags_xite-loads-Immersive-Shape-cbfb78.x3d",
+   "bytes": 199,
+   "elements": 4,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "missing": [
+     "PhysicalMaterial"
+    ]
+   },
+   "xsd": {
+    "valid": true,
+    "errors": []
+   },
+   "uom": [],
+   "sem_errors": [
+    {
+     "level": "error",
+     "check": "profile-component",
+     "message": "PhysicalMaterial (component Shape level 2, not declared) is outside profile 'Immersive'. Browsers that enforce the header (X_ITE, x3d-tidy) refuse to load it."
+    }
+   ],
+   "profile_ok": false,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "profile_mismatch",
+   "signature": [
+    "F",
+    "fork-flags_xite-loads",
+    "MedicalInterchange",
+    "Interpolation"
+   ],
+   "scenes": 1,
+   "file": "profile_mismatch/fork-flags_xite-loads-MedicalInterchange-Interpolation-cb5f64.x3d",
+   "bytes": 146,
+   "elements": 2,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "missing": [
+     "PositionInterpolator2D"
+    ]
+   },
+   "xsd": {
+    "valid": true,
+    "errors": []
+   },
+   "uom": [],
+   "sem_errors": [
+    {
+     "level": "error",
+     "check": "profile-component",
+     "message": "PositionInterpolator2D (component Interpolation level 3, not declared) is outside profile 'MedicalInterchange'. Browsers that enforce the header (X_ITE, x3d-tidy) refuse to load it."
+    }
+   ],
+   "profile_ok": false,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "profile_mismatch",
+   "signature": [
+    "F",
+    "fork-flags_xite-loads",
+    "Immersive",
+    "Rendering"
+   ],
+   "scenes": 1,
+   "file": "profile_mismatch/fork-flags_xite-loads-Immersive-Rendering-2f7134.x3d",
+   "bytes": 124,
+   "elements": 2,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "missing": [
+     "ClipPlane"
+    ]
+   },
+   "xsd": {
+    "valid": true,
+    "errors": []
+   },
+   "uom": [],
+   "sem_errors": [
+    {
+     "level": "error",
+     "check": "profile-component",
+     "message": "ClipPlane (component Rendering level 5, not declared) is outside profile 'Immersive'. Browsers that enforce the header (X_ITE, x3d-tidy) refuse to load it."
+    }
+   ],
+   "profile_ok": false,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "profile_mismatch",
+   "signature": [
+    "F",
+    "fork-flags_xite-loads",
+    "Immersive",
+    "Text"
+   ],
+   "scenes": 1,
+   "file": "profile_mismatch/fork-flags_xite-loads-Immersive-Text-b14b07.x3d",
+   "bytes": 126,
+   "elements": 2,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "missing": [
+     "FontLibrary"
+    ]
+   },
+   "xsd": {
+    "valid": true,
+    "errors": []
+   },
+   "uom": [],
+   "sem_errors": [
+    {
+     "level": "error",
+     "check": "profile-component",
+     "message": "FontLibrary (component Text level 2, not declared) is outside profile 'Immersive'. Browsers that enforce the header (X_ITE, x3d-tidy) refuse to load it."
+    }
+   ],
+   "profile_ok": false,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  },
+  {
+   "bucket": "profile_mismatch",
+   "signature": [
+    "F",
+    "fork-flags_xite-loads",
+    "Interactive",
+    "EnvironmentalEffects"
+   ],
+   "scenes": 1,
+   "file": "profile_mismatch/fork-flags_xite-loads-Interactive-EnvironmentalEffects-d47aa7.x3d",
+   "bytes": 125,
+   "elements": 2,
+   "reproduces": true,
+   "minimised": true,
+   "detail": {
+    "missing": [
+     "LocalFog"
+    ]
+   },
+   "xsd": {
+    "valid": true,
+    "errors": []
+   },
+   "uom": [],
+   "sem_errors": [
+    {
+     "level": "error",
+     "check": "profile-component",
+     "message": "LocalFog (component EnvironmentalEffects level 4, not declared) is outside profile 'Interactive'. Browsers that enforce the header (X_ITE, x3d-tidy) refuse to load it."
+    }
+   ],
+   "profile_ok": false,
+   "xite": {
+    "warn": [],
+    "error": [],
+    "routes": 0,
+    "exc": null
+   }
+  }
+ ]
+}

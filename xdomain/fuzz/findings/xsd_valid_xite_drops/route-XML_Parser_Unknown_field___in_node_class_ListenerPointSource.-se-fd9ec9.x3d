@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<X3D profile="Full" version="4.1">
+  <Scene>
+    <TimeTrigger DEF="N1"/>
+    <ListenerPointSource DEF="N3"/>
+    <ROUTE fromNode="N3" fromField="isPaused" toNode="N1" toField="set_boolean"/>
+  </Scene>
+</X3D>

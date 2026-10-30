@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<X3D profile="Full" version="4.1">
+  <Scene>
+    <DynamicsCompressor DEF="N1"/>
+    <BufferAudioSource DEF="N4"/>
+    <ROUTE fromNode="N4" fromField="loopStart" toNode="N1" toField="gain"/>
+  </Scene>
+</X3D>

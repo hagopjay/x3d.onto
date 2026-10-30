@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<X3D profile="Full" version="4.1">
+  <Scene>
+    <BufferAudioSource DEF="N3"/>
+    <AudioDestination DEF="N4"/>
+    <ROUTE fromNode="N3" fromField="channelCount" toNode="N4" toField="maxChannelCount"/>
+  </Scene>
+</X3D>
