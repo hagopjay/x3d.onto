@@ -1,0 +1,67 @@
+{
+ "id": "Q922667",
+ "name": "James Mayer de Rothschild",
+ "version": "v1",
+ "model": "gemini-3-pro-image",
+ "prompt": "Repaint the person in the attached reference image, James Mayer de Rothschild (1792-1868), as a new portrait. The face must follow the reference faithfully: same face shape, features, hair, age and expression. Keep the clothing of the reference, simplified to what a head-and-shoulders crop shows.\n\nHead-and-shoulders portrait, vertical 4:5 framing, the face about a third of the frame height, centred, shoulders cut by the lower edge. Finish: a quiet, realistic painted study in oils, muted natural colour, soft light from the upper left, gentle shadow. Background: plain warm mid-grey that darkens softly toward the edges, with nothing else in it. No text, no frame, no border, no signature, no watermark, no crown, jewellery or insignia unless the reference shows it.\n\nThis is a respectful historical likeness. Keep the face's proportions exactly as in the reference: do not exaggerate, idealise, glamorise, modernise or caricature any feature. Natural eyes, closed or natural mouth, no visible hands.",
+ "prompt_sha256": "d73650c1e15419409062ebee199d34405f55a2e61b0376f377b046bb37c9a0a4",
+ "reference": {
+  "id": "Q922667",
+  "name": "James Mayer de Rothschild",
+  "file": "File:James Mayer de Rothschild (1792-1868).jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:James_Mayer_de_Rothschild_(1792-1868).jpg",
+  "original": "https://upload.wikimedia.org/wikipedia/commons/7/71/James_Mayer_de_Rothschild_%281792-1868%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "downloaded": "https://upload.wikimedia.org/wikipedia/commons/7/71/James_Mayer_de_Rothschild_%281792-1868%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+  "original_sha256": null,
+  "author": "Flandrin",
+  "date": "1860",
+  "credit": "Collections",
+  "licence": "Public domain",
+  "licence_url": null,
+  "attribution_required": "false",
+  "description": "James Mayer de Rothschild (1792-1868)",
+  "licence_ok": true,
+  "local": "reference.jpg",
+  "sha256": "324ab7a2dc812811a0304423aa67ca1f3f00ce01a86fe14c951ba5a5140fc168",
+  "checked": "2026-10-30T21:06:07Z"
+ },
+ "created": "2026-10-30T21:16:06Z",
+ "sha256": "ac1b4db486bf1a608e08d02707b6f18307005f49a969927fe9ec5663abe164ce",
+ "label": "AI portrait after Flandrin, 1860 (public domain)",
+ "imagined": false,
+ "review": {
+  "verdict": "pass",
+  "notes": "Faithful to Flandrin c.1860: fair receding hair, pale eyes, black stock; dignified, no exaggeration; clean ground.",
+  "reviewed": "2026-10-30T21:16:47Z",
+  "checks": [
+   "likeness",
+   "dignity",
+   "hands-eyes-teeth",
+   "era dress",
+   "clean background"
+  ]
+ },
+ "usage": {
+  "promptTokenCount": 487,
+  "candidatesTokenCount": 1301,
+  "totalTokenCount": 2047,
+  "promptTokensDetails": [
+   {
+    "modality": "TEXT",
+    "tokenCount": 229
+   },
+   {
+    "modality": "IMAGE",
+    "tokenCount": 258
+   }
+  ],
+  "candidatesTokensDetails": [
+   {
+    "modality": "IMAGE",
+    "tokenCount": 1120
+   }
+  ],
+  "thoughtsTokenCount": 259,
+  "serviceTier": "standard"
+ }
+}

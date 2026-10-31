@@ -1,0 +1,44 @@
+{
+ "id": "Q153956",
+ "name": "Albert I of Germany",
+ "version": "v1",
+ "model": "gemini-3-pro-image",
+ "prompt": "Imagine a portrait of Albert I of Germany (1255-1308), of whom no likeness survives. Show a plausible, unremarkable person of the right age, sex and rank, in dress correct for Austria around 1298. Note: Son of Rudolf I; German king and Duke of Austria and Styria.\n\nHead-and-shoulders portrait, vertical 4:5 framing, the face about a third of the frame height, centred, shoulders cut by the lower edge. Finish: a quiet, realistic painted study in oils, muted natural colour, soft light from the upper left, gentle shadow. Background: plain warm mid-grey that darkens softly toward the edges, with nothing else in it. No text, no frame, no border, no signature, no watermark, no crown, jewellery or insignia unless the reference shows it.\n\nThis is a respectful historical likeness. Keep the face's proportions exactly as in the reference: do not exaggerate, idealise, glamorise, modernise or caricature any feature. Natural eyes, closed or natural mouth, no visible hands.",
+ "prompt_sha256": "f2fb90b355e9653a5092510b4eda5afa033a8adc5ff7608f717e6082a98cfc32",
+ "reference": null,
+ "created": "2026-10-31T01:15:23Z",
+ "sha256": "d5a98d60974179e94c32a0ee6cdae4a09d40088ceefb46a400bc10020d1fdbac",
+ "label": "AI-imagined portrait: no likeness survives",
+ "imagined": true,
+ "review": {
+  "verdict": "pass",
+  "notes": "Imagined (no likeness survives): plain middle-aged man in a dark c.1300 robe; neutral, dignified, no invented insignia.",
+  "reviewed": "2026-10-31T01:19:36Z",
+  "checks": [
+   "likeness",
+   "dignity",
+   "hands-eyes-teeth",
+   "era dress",
+   "clean background"
+  ]
+ },
+ "usage": {
+  "promptTokenCount": 228,
+  "candidatesTokenCount": 1273,
+  "totalTokenCount": 1777,
+  "promptTokensDetails": [
+   {
+    "modality": "TEXT",
+    "tokenCount": 228
+   }
+  ],
+  "candidatesTokensDetails": [
+   {
+    "modality": "IMAGE",
+    "tokenCount": 1120
+   }
+  ],
+  "thoughtsTokenCount": 276,
+  "serviceTier": "standard"
+ }
+}

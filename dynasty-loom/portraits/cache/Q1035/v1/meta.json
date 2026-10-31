@@ -1,0 +1,67 @@
+{
+ "id": "Q1035",
+ "name": "Charles Darwin",
+ "version": "v1",
+ "model": "gemini-3-pro-image",
+ "prompt": "Repaint the person in the attached reference image, Charles Darwin (1809-1882), as a new portrait. The face must follow the reference faithfully: same face shape, features, hair, age and expression. Keep the clothing of the reference, simplified to what a head-and-shoulders crop shows.\n\nHead-and-shoulders portrait, vertical 4:5 framing, the face about a third of the frame height, centred, shoulders cut by the lower edge. Finish: a quiet, realistic painted study in oils, muted natural colour, soft light from the upper left, gentle shadow. Background: plain warm mid-grey that darkens softly toward the edges, with nothing else in it. No text, no frame, no border, no signature, no watermark, no crown, jewellery or insignia unless the reference shows it.\n\nThis is a respectful historical likeness. Keep the face's proportions exactly as in the reference: do not exaggerate, idealise, glamorise, modernise or caricature any feature. Natural eyes, closed or natural mouth, no visible hands.",
+ "prompt_sha256": "bcf0d5c88dd1e31a2b18868b3980c0eb1d27ed3d7d971f92077f58d5c053ca27",
+ "reference": {
+  "id": "Q1035",
+  "name": "Charles Darwin",
+  "file": "File:Charles Darwin by Julia Margaret Cameron, c. 1868.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Charles_Darwin_by_Julia_Margaret_Cameron,_c._1868.jpg",
+  "original": "https://upload.wikimedia.org/wikipedia/commons/3/33/Charles_Darwin_by_Julia_Margaret_Cameron%2C_c._1868.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "downloaded": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/33/Charles_Darwin_by_Julia_Margaret_Cameron%2C_c._1868.jpg/1280px-Charles_Darwin_by_Julia_Margaret_Cameron%2C_c._1868.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "original_sha256": null,
+  "author": "Julia Margaret Cameron / Adam Cuerden",
+  "date": "circa 1868date QS:P,+1868-00-00T00:00:00Z/9,P1480,Q5727902, printed 1875",
+  "credit": "Alfred Steiglitz Collection reference 1949.881, Art Institute of Chicago",
+  "licence": "Public domain",
+  "licence_url": null,
+  "attribution_required": "false",
+  "description": "Carbon print of a photograph of Charles Darwin.  \n\nImage/paper: 26.9 × 21.6 cm (10 5/8 × 8 9/16 in.); Mount: 33.8 × 28.1 cm (13 5/16 × 11 1/8 in.)",
+  "licence_ok": true,
+  "local": "reference.jpg",
+  "sha256": "85da63be2558e6ceeb8157468a841c2891c0c08f01e1c6121a1fc012cc8d58bc",
+  "checked": "2026-10-30T23:26:16Z"
+ },
+ "created": "2026-10-31T01:17:53Z",
+ "sha256": "67e6419d6fa2d8c92a69b29330c1f609dd1276f2a6466b16712f62804d556094",
+ "label": "AI portrait after Julia Margaret Cameron / Adam Cuerden, 1868 (public domain)",
+ "imagined": false,
+ "review": {
+  "verdict": "pass",
+  "notes": "Clearly Cameron's Darwin (c.1868): domed bald head, long white beard, heavy brows; turned towards three-quarter from profile; dignified.",
+  "reviewed": "2026-10-31T01:19:36Z",
+  "checks": [
+   "likeness",
+   "dignity",
+   "hands-eyes-teeth",
+   "era dress",
+   "clean background"
+  ]
+ },
+ "usage": {
+  "promptTokenCount": 485,
+  "candidatesTokenCount": 1304,
+  "totalTokenCount": 1952,
+  "promptTokensDetails": [
+   {
+    "modality": "TEXT",
+    "tokenCount": 227
+   },
+   {
+    "modality": "IMAGE",
+    "tokenCount": 258
+   }
+  ],
+  "candidatesTokensDetails": [
+   {
+    "modality": "IMAGE",
+    "tokenCount": 1120
+   }
+  ],
+  "thoughtsTokenCount": 163,
+  "serviceTier": "standard"
+ }
+}

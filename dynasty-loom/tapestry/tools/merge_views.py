@@ -373,6 +373,8 @@ SHELL_JS = r"""(function () {
 })();
 """
 
+NAV_HEAD = '<style media="all">\n  /* nav: the page owns the camera (lib/orbit.js); the Lens toggle and its plain-words chip (hypersphere only, v5: the loom header keeps its one row) */\n  x3d-canvas { touch-action: none; cursor: grab; } x3d-canvas:active { cursor: grabbing; }\n  #lens-t { font-variant: small-caps; letter-spacing: .04em; font-size: 16px; }\n  #lens-t[aria-pressed="true"] { border-bottom-color: var(--accent); color: var(--accent); }\n  #lenschip { flex-basis: 100%; font: italic 13.5px/1.3 var(--ui); color: var(--dim); }\n  @media (max-width: 720px) { #lens-t { font-size: 13px; padding: 4px 2px; } #lenschip { font-size: 12px; } header .brand, #views { order: -2; } #lens-t { order: -1; } }\n  body:not([data-view="loom"]) header .sub { flex: 1 1 480px; min-width: 0; }\n</style><!-- nav -->\n<script src="lib/lens.js"></script><script src="lib/orbit.js"></script><!-- nav: the lens mirror and the orbit camera (lib/) -->\n'   # nav (README, "v5 (Artifact version 5)"): the hypersphere's lens style and its two libraries (lib/). v5 review: on a phone the Lens
+                   # button joins the first row (brand, views); on a desktop the sub line may wrap inside its row, so Lens never takes a row of its own
 MARKUP = """<div id="poster" aria-hidden="true" hidden><span class="pcap">Still: a Blender Cycles render of the Rothschild sphere from the Wide shot, shown while the live X3D scene loads</span></div>
 <div id="vignette" aria-hidden="true"></div>
 <div id="labels" aria-hidden="true"></div>
@@ -385,6 +387,8 @@ MARKUP = """<div id="poster" aria-hidden="true" hidden><span class="pcap">Still:
   <span class="sub" id="sub">radius = time · fiber = a life · arc = a marriage · dye = share of descent from the founders</span>
   <nav id="fams" aria-label="Family"></nav>
   <button id="look-t" aria-pressed="false">Night</button>
+  <button id="lens-t" class="only-hyper" aria-pressed="false" title="A hyperbolic lens: magnify one place and let the rest recede (L)">Lens</button>
+  <span id="lenschip" class="only-hyper" hidden>Lens: the focus is magnified, the rest recedes; distances are not to scale.</span>
 </header>
 <nav id="rail" aria-label="Tour stops"></nav>
 <section id="cap" class="panel" aria-live="polite">
@@ -403,7 +407,7 @@ MARKUP = """<div id="poster" aria-hidden="true" hidden><span class="pcap">Still:
         <label class="tick" title="lower the quality when the frame rate falls"><input type="checkbox" id="auto" checked> auto</label></span>
       <span id="fps" class="only-hyper"></span><span id="where" class="only-hyper"></span>
       <span class="keys only-loom">1–8 ladder · T tour · ←/→ stops · [ ] { } year · V view · Esc clear</span>
-      <span class="keys only-hyper">T tour · ←/→ stops · P plunge · W wide · [ ] { } year · Q quality · V view · Esc clear</span>
+      <span class="keys only-hyper">drag orbit · Shift-drag free · right-drag pan · wheel zoom · double-click centre · arrows orbit · + − zoom · 0 reset · L lens · T tour · PgUp/PgDn stops · P plunge · W wide · [ ] { } year · Q quality · V view · Esc clear</span>
     </div>
   </div>
 </section>
@@ -451,7 +455,7 @@ def build():
 <style>
 """
     if hcss.strip() != TH.CSS_MARK: raise SystemExit('merge: the hypersphere page\'s <style> must hold only the theme mark (v2)')
-    page = (head + lcss + SHELL_CSS + TH.CSS_MARK + '\n</style>\n</head>\n<body>\n'
+    page = (head + lcss + SHELL_CSS + TH.CSS_MARK + '\n</style>\n' + NAV_HEAD + '</head>\n<body>\n'
             + MARKUP + '<script>\n' + shell + loom_engine(ljs) + hyper_engine(hjs) + 'window.dynastyApi.start();\n</script>\n</body>\n</html>\n')
     page = TH.fill_page(page)   # v2: DEFAULT_THEME + ALT_THEME + PHONE_UI: fonts link, style sheet, the look constants (shell and sphere)
     if re.search(r'\beval\s*\(|new\s+Function\b', page): raise SystemExit('merge: eval or new Function in the page')

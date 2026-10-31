@@ -1,0 +1,67 @@
+{
+ "id": "Q76956",
+ "name": "Rudolf I of Germany",
+ "version": "v1",
+ "model": "gemini-3-pro-image",
+ "prompt": "Repaint the person in the attached reference image, Rudolf I of Germany (1218-1291), as a new portrait. The face must follow the reference faithfully: same face shape, features, hair, age and expression. Keep the clothing of the reference, simplified to what a head-and-shoulders crop shows.\n\nHead-and-shoulders portrait, vertical 4:5 framing, the face about a third of the frame height, centred, shoulders cut by the lower edge. Finish: a quiet, realistic painted study in oils, muted natural colour, soft light from the upper left, gentle shadow. Background: plain warm mid-grey that darkens softly toward the edges, with nothing else in it. No text, no frame, no border, no signature, no watermark, no crown, jewellery or insignia unless the reference shows it.\n\nThis is a respectful historical likeness. Keep the face's proportions exactly as in the reference: do not exaggerate, idealise, glamorise, modernise or caricature any feature. Natural eyes, closed or natural mouth, no visible hands.",
+ "prompt_sha256": "2479c92a263ed584e9511188e5162b33829982589bb546b61ed4abea9c9275ce",
+ "reference": {
+  "id": "Q76956",
+  "name": "Rudolf I of Germany",
+  "file": "File:Rudolf von Habsburg Speyer.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Rudolf_von_Habsburg_Speyer.jpg",
+  "original": "https://upload.wikimedia.org/wikipedia/commons/5/56/Rudolf_von_Habsburg_Speyer.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "downloaded": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/56/Rudolf_von_Habsburg_Speyer.jpg/1280px-Rudolf_von_Habsburg_Speyer.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "original_sha256": null,
+  "author": "Haselburg-müller",
+  "date": "2011-10-28",
+  "credit": "Own work",
+  "licence": "CC BY-SA 3.0",
+  "licence_url": "https://creativecommons.org/licenses/by-sa/3.0",
+  "attribution_required": "true",
+  "description": "Rudolf I of Germany",
+  "licence_ok": true,
+  "local": "reference.jpg",
+  "sha256": "cc5cd401ce8f8889e29b5f54c8497255d375521f21a63d7ca339be1eeeba57ed",
+  "checked": "2026-10-30T23:18:30Z"
+ },
+ "created": "2026-10-31T01:15:07Z",
+ "sha256": "1f7e296a601d78db7eae7b0d9952ecaad708753fb5bdcb938ba184eda145feeb",
+ "label": "AI portrait after Haselburg-müller (CC BY-SA 3.0)",
+ "imagined": false,
+ "review": {
+  "verdict": "pass",
+  "notes": "After the Speyer tomb effigy: the effigy's famously gaunt aged face and long hair, eagle shield on the chest; crown and sceptre left out per the look rules. Photo of the effigy is CC BY-SA 3.0 (Haselburg-müller), recorded.",
+  "reviewed": "2026-10-31T01:19:34Z",
+  "checks": [
+   "likeness",
+   "dignity",
+   "hands-eyes-teeth",
+   "era dress",
+   "clean background"
+  ]
+ },
+ "usage": {
+  "promptTokenCount": 487,
+  "candidatesTokenCount": 1303,
+  "totalTokenCount": 1995,
+  "promptTokensDetails": [
+   {
+    "modality": "TEXT",
+    "tokenCount": 229
+   },
+   {
+    "modality": "IMAGE",
+    "tokenCount": 258
+   }
+  ],
+  "candidatesTokensDetails": [
+   {
+    "modality": "IMAGE",
+    "tokenCount": 1120
+   }
+  ],
+  "thoughtsTokenCount": 205,
+  "serviceTier": "standard"
+ }
+}
