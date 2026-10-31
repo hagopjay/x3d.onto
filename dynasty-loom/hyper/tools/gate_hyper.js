@@ -25,6 +25,19 @@
 //   switch reloads the scenes from theme/<slug>/ at the same stop and swaps the chrome, then switches back. At 1280x800, 1366x768, 1527x923 and
 //   390x844, in both looks: the rail, caption and card sit below the measured header and the page does not scroll sideways. Frames per family: the
 //   establishing shot, a close stop with its portrait, the overlay mid-fade, the phone view and the alternate look.
+// v5 (nav, Artifact version 5): the page owns the camera (lib/orbit.js; the Probe binds NavigationInfo NONE, so X_ITE adds no navigation). The
+//   checks that assumed X_ITE-owned navigation keep their intent in the new form (each marked 'v5 nav' below):
+//   - "the Host shot bound at load": the Probe is bound with NONE and the Core holds the Host shot's pose (pivot, distance, orientation);
+//   - "lands on the shot": the Core's pose is the shot's (camera position before the view shift < 0.002, view direction and up < 0.1 deg), and
+//     X_ITE drew the commanded pose (the sensed landing < 0.002 from it; a flight that moved must have sensed samples on its commanded path).
+//     The view shift is the page's deliberate parallel slide that centres the pivot in the area the UI leaves free, so the drawn camera sits
+//     shift * dist from the shot's position by design; that slide is bounded: the pivot sits at most SHIFT_MAX (0.15) of the smaller viewport side
+//     from the canvas centre (|shift| / (2 tan(fov / 2)); the free area's centre measured 0.03-0.105 in run r5), so the drawn camera stays on the shot;
+//   - "FLY bound" / "EXAMINE": NavigationInfo NONE everywhere, the Probe bound (the Core moves inside and outside the pocket alike);
+//   - Host and the plunge's first leg are Probe flights (no native bind); the Flywheel shot is the idle orbit from the current pose;
+//   - a click selects (hover tag, card, lineage lit, the camera stays put) and a double-click re-centres on the person (the click used to fly);
+//   - the stops moved from the arrows to PageUp/PageDown (the arrows orbit by 15 deg, checked too).
+//   - on a phone a tap opens the card after the 450 ms double-tap window: the check waits for the card (at most 5 s) instead of 900 ms.
 // Writes hyper/gate.json and <frames-dir>/receipt.json, and adds an "xite_gate" block to out/receipt.json.
 const { chromium } = require('playwright'); const http = require('http'); const fs = require('fs'); const path = require('path'); const crypto = require('crypto');
 const { execFileSync } = require('child_process');
@@ -86,6 +99,22 @@ function motion(rec, endPos) {
   return Object.assign(a, { basis: 'commanded', sensed_n: S.length, sensed_spikes: sensed.jumps, tracking_max: +trk.toFixed(5), end_pos_err: sensed.end_pos_err });
 }
 const smooth = a => (a.tracking_max == null || a.tracking_max < 2e-3) && (a.few || (a.jumps === 0 && a.speed_ratio < 6 && (a.turn_deg < 3 || a.ang_speed_ratio < 6)));
+// v5 nav: the Core (lib/orbit.js, the copy the served page ships) for the shot's orientation, and the pose checks of a page-owned camera
+const OB = (() => { try { return require(path.join(OUT, 'lib', 'orbit.js')); } catch (e) { return null; } })();
+const navNow = pg => pg.evaluate(() => { const s = window.dynastyNav ? dynastyNav.state() : null, P = hyperApi.pose();
+  return { ready: !!(s && s.ready), pivot: s && s.pivot, dist: s && s.dist, q: s && s.q, shift: s && s.shift, fov: s && s.fov, idle: s && s.idle, yaw: s && s.yaw, shot: P.shot, bound: P.bound, nav: P.nav, p: P.p, sp: P.sensed && P.sensed.p }; });
+function landing(n, shot, k) {   // the Core's pose against the shot (pocket units; k scales a host-space shot), and the drawn pose against the commanded one
+  if (!n || !n.q || !OB) return { shot_err: null, dir_err_deg: null, up_err_deg: null, drawn_err: null };
+  const U = OB.util, pos = shot.pos.map(x => x * k), tgt = shot.tgt.map(x => x * k), dir = U.qrot(n.q, [0, 0, 1]), unshifted = U.add(n.pivot, U.mul(dir, n.dist));
+  const want = U.lookQ(pos, tgt, shot.up || [0, 1, 0]), ang = (a, b) => Math.acos(Math.max(-1, Math.min(1, U.dot(a, b)))) * 180 / Math.PI;
+  return { shot_err: +len(sub(unshifted, pos)).toFixed(5), dir_err_deg: +ang(U.qrot(n.q, [0, 0, -1]), U.qrot(want, [0, 0, -1])).toFixed(3), up_err_deg: +ang(U.qrot(n.q, [0, 1, 0]), U.qrot(want, [0, 1, 0])).toFixed(3),
+    drawn_err: n.sp && n.p ? +len(sub(n.sp, n.p)).toFixed(5) : null, shift: n.shift,
+    shift_frac: n.shift && n.fov ? +(Math.hypot(n.shift[0], n.shift[1]) / (2 * Math.tan(n.fov / 2))).toFixed(4) : null };   // the pivot's offset / the smaller side
+}
+const SHIFT_MAX = 0.15;   // v5 review: the view shift's bound (the pivot's offset from the canvas centre, as a fraction of the smaller viewport side)
+const landed = (L, a) => L.shot_err != null && L.shot_err < 2e-3 && L.dir_err_deg < 0.1 && L.up_err_deg < 0.1 && L.drawn_err != null && L.drawn_err < 2e-3 &&
+  L.shift_frac != null && L.shift_frac <= SHIFT_MAX &&
+  (a.end_pos_err == null ? true : a.end_pos_err < 2e-3) && (a.basis !== 'commanded' || a.path < 1e-4 || a.sensed_n > 0);
 
 (async () => {
   await new Promise(r => srv.listen(0, '127.0.0.1', r)); const BASE = 'http://127.0.0.1:' + srv.address().port + '/';
@@ -117,8 +146,10 @@ const smooth = a => (a.tracking_max == null || a.tracking_max < 2e-3) && (a.few 
     await sleep(1500);
     const st0 = await p.evaluate(() => ({ fam: hyperApi.family, hash: location.hash, bound: hyperApi.pose().bound, shaders: hyperApi.shaders(), tier: hyperApi.tier, scale: document.getElementById('scale').textContent,
       sub: document.getElementById('sub').textContent, has: hyperApi.has }));
-    check(fam.key + ': loaded through the #hash, the Host shot bound at load, every ComposedShader compiled (isValid), the radial scale stated on screen',
-      st0.fam === fam.key && st0.hash === '#' + fam.key.replace(/_/g, '-') && /^Opening/.test(st0.bound || '') && st0.shaders.length === 8 && st0.shaders.every(s => s.isValid === true) &&
+    const n0 = await navNow(p), L0 = landing(n0, D.shots.Host, D.shots.Host.space === 'host' ? 1 / D.pocket_scale : 1);   // v5 nav: the Probe (NONE) holds the Host shot's pose
+    st0.nav = { ready: n0.ready, nav: n0.nav, shot: n0.shot, landing: L0 };
+    check(fam.key + ': loaded through the #hash, the Host shot at load (v5 nav: the Probe bound with NavigationInfo NONE, the Core on the Host shot\'s pose), every ComposedShader compiled (isValid), the radial scale stated on screen',
+      st0.fam === fam.key && st0.hash === '#' + fam.key.replace(/_/g, '-') && st0.bound === 'Probe' && n0.nav === 'NONE' && n0.ready && n0.shot === 'Host' && landed(L0, {}) && st0.shaders.length === 8 && st0.shaders.every(s => s.isValid === true) &&
       st0.scale.includes(D.units.Y0 + ' at the seed') && st0.scale.includes('years per pocket unit'), st0);
     if (FRAMES) frames.push(await shoot(p, fam.key + '-S00-Host'));
     if (SMOKE && fi > 0) continue;
@@ -128,14 +159,13 @@ const smooth = a => (a.tracking_max == null || a.tracking_max < 2e-3) && (a.few 
       await p.evaluate(() => hyperApi.recStart());
       const ok = await p.evaluate(i => hyperApi.goStop(i), i);
       await settle(p, endPos);
-      await p.waitForFunction(n => hyperApi.pose().nav === n, s.nav, { timeout: 15000 }).catch(() => {});   // the page switches NavigationInfo three frames after arrival
-      const rec = await p.evaluate(() => hyperApi.recStop()), pose = await p.evaluate(() => hyperApi.pose());
-      const a = motion(rec, endPos), marks = rec.marks.map(m => m.label);
+      const rec = await p.evaluate(() => hyperApi.recStop()), pose = await p.evaluate(() => hyperApi.pose()), nv = await navNow(p);
+      const a = motion(rec, pose.p), marks = rec.marks.map(m => m.label), L = landing(nv, s, k);   // v5 nav: the sensed track ends on the commanded pose; the Core's pose is the shot's
       const entered = t.move === 'plunge' ? marks.includes('enter pocket') || pose.inside : true;
-      const navOk = s.nav === 'FLY' ? pose.nav === 'FLY' : pose.nav === 'EXAMINE';
-      metrics.moves.push(Object.assign({ family: fam.key, stop: i, shot: t.shot, size: s.size, move: t.move, planned_s: t.dur_s }, a));
-      check(fam.key + ' stop ' + (i + 1) + ' ' + t.key + ' -> ' + t.shot + ' (' + s.size + ', ' + t.move + '): arrives, smooth (no speed spike, peak/mean < 6), lands on the shot (< 0.002 pocket units)' + (t.move === 'plunge' ? ', enters the pocket, FLY bound' : ''),
-        ok === true && smooth(a) && a.end_pos_err < 2e-3 && entered && navOk, Object.assign({ entered, nav: pose.nav, marks: marks.slice(-4) }, a));
+      const navOk = pose.nav === 'NONE' && pose.bound === 'Probe' && nv.ready;   // v5 nav: X_ITE adds no navigation anywhere; the Core owns the camera (was FLY inside, EXAMINE outside)
+      metrics.moves.push(Object.assign({ family: fam.key, stop: i, shot: t.shot, size: s.size, move: t.move, planned_s: t.dur_s, landing: L }, a));
+      check(fam.key + ' stop ' + (i + 1) + ' ' + t.key + ' -> ' + t.shot + ' (' + s.size + ', ' + t.move + '): arrives, smooth (no speed spike, peak/mean < 6), lands on the shot (v5 nav: the Core\'s pose < 0.002 pocket units and 0.1 deg, X_ITE drew it < 0.002)' + (t.move === 'plunge' ? ', enters the pocket' : '') + ', NavigationInfo NONE',
+        ok === true && smooth(a) && landed(L, a) && entered && navOk, Object.assign({ entered, nav: pose.nav, marks: marks.slice(-4), landing: L }, a));
       await stopChecks(p, D, fam.key, i, W, H);
       if (SMOKE && i >= 2) break;
     }
@@ -222,15 +252,18 @@ const smooth = a => (a.tracking_max == null || a.tracking_max < 2e-3) && (a.few 
     await pg.evaluate(() => hyperApi.recStart());
     const D = await pg.evaluate(() => ({ shots: hyperApi.data.shots, scale: hyperApi.data.pocket_scale }));
     const s = D.shots[name], k = s.space === 'host' ? 1 / D.scale : 1, endPos = s.pos.map(x => x * k);
-    const native = name === 'Host' || name === 'Flywheel';
-    if (native) { await pg.evaluate(n => hyperApi.flyShot(n), name); if (name === 'Flywheel') await sleep(3200); else { await sleep(1800); await settle(pg, endPos, 0.01); } }
-    else { await pg.evaluate(n => hyperApi.flyShot(n), name); await settle(pg, endPos); }
+    const idle = name === 'Flywheel';   // v5 nav: no native binds; Host is a Probe flight, the Flywheel shot is the idle orbit from the current pose
+    const y0 = idle ? (await navNow(pg)).yaw : null;
+    await pg.evaluate(n => hyperApi.flyShot(n), name); if (idle) await sleep(3200); else await settle(pg, endPos);
     await sleep(300);
-    const rec = await pg.evaluate(() => hyperApi.recStop()), pose = await pg.evaluate(() => hyperApi.pose()), chip = await pg.evaluate(() => document.getElementById('shotchip').textContent);
-    const a = motion(rec, name === 'Flywheel' ? null : endPos); a.chip = chip;
-    metrics.moves.push(Object.assign({ family: 'rothschild', shot: name, size: s.size, move: native ? 'bind (X3D ANIMATE)' : 'Probe flight' }, a));
-    const landed = name === 'Flywheel' ? /Flywheel/.test(pose.bound || '') : a.end_pos_err < (native ? 0.01 : 2e-3);
-    check('shot ' + name + ' (' + s.size + ', ' + (native ? 'native bind' : 'Probe flight') + '): smooth, no jump, lands on the shot, the chip names it' + (label ? '; ' + label : ''), smooth(a) && landed && chip.indexOf(s.size + ' · ') === 0 && (!opts || !opts.extra || opts.extra(pose)), Object.assign({ bound: pose.bound, nav: pose.nav }, a));
+    const rec = await pg.evaluate(() => hyperApi.recStop()), pose = await pg.evaluate(() => hyperApi.pose()), chip = await pg.evaluate(() => document.getElementById('shotchip').textContent), nv = await navNow(pg);
+    const a = motion(rec, idle ? null : pose.p); a.chip = chip;
+    const L = idle ? null : landing(nv, s, k);
+    metrics.moves.push(Object.assign({ family: 'rothschild', shot: name, size: s.size, move: idle ? 'idle orbit (Core)' : 'Probe flight', landing: L }, a));
+    let turned = null; if (idle) { turned = Math.abs(nv.yaw - y0); if (turned > Math.PI) turned = 2 * Math.PI - turned; }
+    const ok = idle ? !!nv.idle && nv.shot === 'Flywheel' && turned > 1e-3 && pose.nav === 'NONE' : landed(L, a) && pose.nav === 'NONE';
+    check('shot ' + name + ' (' + s.size + ', ' + (idle ? 'the idle orbit: it ramps in from the current pose and turns about the pivot' : 'Probe flight') + '): smooth, no jump, ' + (idle ? 'turning' : 'lands on the shot (the Core\'s pose, X_ITE drew it)') + ', the chip names it' + (label ? '; ' + label : ''),
+      smooth(a) && ok && chip.indexOf(s.size + ' · ') === 0 && (!opts || !opts.extra || opts.extra(pose)), Object.assign({ bound: pose.bound, nav: pose.nav, landing: L, idle: nv.idle, turned_rad: turned }, a));
     if (FRAMES) frames.push(await shoot(pg, 'rothschild-shot-' + name));
     return { a, pose };
   }
@@ -243,11 +276,12 @@ const smooth = a => (a.tracking_max == null || a.tracking_max < 2e-3) && (a.few 
         await fly(pg, 'Host');
         await pg.evaluate(() => hyperApi.recStart()); await pg.keyboard.press('p'); await sleep(1500);
         await pg.waitForFunction(() => !hyperApi.pose().flying && hyperApi.pose().shot === 'Inside', null, { timeout: 120000 }).catch(() => {}); await settle(pg, D.shots.Inside.pos);
-        await pg.waitForFunction(() => hyperApi.pose().nav === 'FLY', null, { timeout: 15000 }).catch(() => {});
-        const rec = await pg.evaluate(() => hyperApi.recStop()), pose = await pg.evaluate(() => hyperApi.pose()), s = D.shots.Inside, a = motion({ samples: rec.samples.filter(x => x.t > (rec.marks.find(m => /^fly/.test(m.label)) || { t: 0 }).t - 5), cmds: rec.cmds.filter(x => x.t > (rec.marks.find(m => /^fly/.test(m.label)) || { t: 0 }).t - 5) }, s.pos);
-        metrics.moves.push(Object.assign({ family: 'rothschild', shot: 'Inside', size: s.size, move: 'plunge (key P)' }, a));
-        check('plunge (key P): Host to Inside in 7 s (x' + SLOWMO + ' slow motion here), smooth, through the shell (ShellSense reports enter pocket), lands on the Inside shot, FLY bound', smooth(a) && a.end_pos_err < 2e-3 && rec.marks.some(m => m.label === 'enter pocket') && pose.nav === 'FLY' && a.seconds > 6 * SLOWMO && a.seconds < 8.6 * SLOWMO,
-          Object.assign({ marks: rec.marks.map(m => m.label), nav: pose.nav }, a));
+        // v5 nav: the plunge's first leg to the Host is a Probe flight (skipped when the camera is already there), so the 7 s move is the one after the 'fly Inside' mark
+        const rec = await pg.evaluate(() => hyperApi.recStop()), pose = await pg.evaluate(() => hyperApi.pose()), s = D.shots.Inside, nv = await navNow(pg), fm = (rec.marks.find(m => /^fly Inside/.test(m.label)) || { t: 0 }).t;
+        const a = motion({ samples: rec.samples.filter(x => x.t > fm - 5), cmds: rec.cmds.filter(x => x.t > fm - 5) }, pose.p), L = landing(nv, s, s.space === 'host' ? 1 / D.pocket_scale : 1);
+        metrics.moves.push(Object.assign({ family: 'rothschild', shot: 'Inside', size: s.size, move: 'plunge (key P)', landing: L }, a));
+        check('plunge (key P): Host to Inside in 7 s (x' + SLOWMO + ' slow motion here), smooth, through the shell (ShellSense reports enter pocket), lands on the Inside shot (v5 nav: the Core\'s pose, X_ITE drew it), NavigationInfo NONE', smooth(a) && landed(L, a) && rec.marks.some(m => m.label === 'enter pocket') && pose.nav === 'NONE' && a.seconds > 6 * SLOWMO && a.seconds < 8.6 * SLOWMO,
+          Object.assign({ marks: rec.marks.map(m => m.label), nav: pose.nav, landing: L }, a));
         if (FRAMES) frames.push(await shoot(pg, 'rothschild-shot-Inside'));
         continue;
       }
@@ -262,23 +296,32 @@ const smooth = a => (a.tracking_max == null || a.tracking_max < 2e-3) && (a.few 
           const m = [0, 1, 2].map(k => L[i][k] + (L[i + 1][k] - L[i][k]) * f), s = A.project(m);
           if (!s || s.x < R.x0 + 30 || s.x > R.x1 - 30 || s.y < R.y0 + 30 || s.y > R.y1 - 30) continue;
           if (boxes.some(b => s.x > b.x - 8 && s.x < b.x + b.w + 8 && s.y > b.y - 8 && s.y < b.y + b.h + 8)) continue;
-          if (A.nearestPerson(s.x, s.y, 12) === id && A.nearestPerson(s.x + 3, s.y + 3, 12) === id) return { id, x: s.x, y: s.y, name: A.cards.people[id].name, label: A.data.people[id].label, i: A.data.people[id].i };
+          if (A.nearestPerson(s.x, s.y, 12) === id && A.nearestPerson(s.x + 3, s.y + 3, 12) === id) return { id, x: s.x, y: s.y, m, name: A.cards.people[id].name, label: A.data.people[id].label, i: A.data.people[id].i };
         } }
       return null; });
     if (!tgt) check('click: a free point on a fiber at the Wide shot', false, 'none found');
     else {
       await pg.mouse.move(tgt.x + 2, tgt.y); await sleep(300); await pg.mouse.move(tgt.x, tgt.y); await sleep(600);
       const hover = await pg.evaluate(() => ({ hidden: document.getElementById('tag').hidden, text: document.getElementById('tag').textContent }));
-      await pg.evaluate(() => hyperApi.recStart());
-      await pg.mouse.click(tgt.x, tgt.y); await sleep(600);
-      const r = await pg.evaluate(() => ({ picked: hyperApi.picked, card: !document.getElementById('card').hidden, h2: (document.querySelector('#card h2') || {}).textContent || '',
-        uPick: hyperApi.browser.currentScene.getImportedNode('FiberCore').uPick, uPickGlow: hyperApi.browser.currentScene.getImportedNode('FiberGlow').uPick, sections: [...document.querySelectorAll('#card h3')].map(e => e.textContent) }));
-      await pg.waitForFunction(() => !hyperApi.pose().flying, null, { timeout: 30000 }).catch(() => {}); await sleep(700);
-      const rec = await pg.evaluate(() => hyperApi.recStop()), a = motion(rec, null);
-      check('click: the real mouse on ' + tgt.name + '\'s fiber shows the hover tag, picks the life, opens its card (RECORD and COMPUTED), lights it (uPick) and flies smoothly to its Present shot',
-        !hover.hidden && hover.text.startsWith(tgt.label) && r.picked && r.card && r.h2.startsWith(tgt.name) && r.uPick === tgt.i && r.uPickGlow === tgt.i && r.sections.join() === 'RECORD,COMPUTED' && smooth(a) && rec.marks.some(m => /^arrive Present/.test(m.label)),
-        { at: [Math.round(tgt.x), Math.round(tgt.y)], hover, r, a });
+      // v5 nav: a click selects (the camera stays put: the fiber does not slide from under the pointer); a double-click re-centres on the person
+      await pg.mouse.click(tgt.x, tgt.y); await sleep(1100);   // past the double-click window (500 ms)
+      const r = await pg.evaluate(m => { const q = hyperApi.project(m); return { picked: hyperApi.picked, card: !document.getElementById('card').hidden, h2: (document.querySelector('#card h2') || {}).textContent || '',
+        uPick: hyperApi.browser.currentScene.getImportedNode('FiberCore').uPick, uPickGlow: hyperApi.browser.currentScene.getImportedNode('FiberGlow').uPick, sections: [...document.querySelectorAll('#card h3')].map(e => e.textContent),
+        at: q && [q.x, q.y], flying: hyperApi.pose().flying, tween: dynastyNav.state().tween }; }, tgt.m);
+      const drift = r.at ? Math.hypot(r.at[0] - tgt.x, r.at[1] - tgt.y) : null;
+      check('click: the real mouse on ' + tgt.name + '\'s fiber shows the hover tag, picks the life, opens its card (RECORD and COMPUTED), lights it (uPick); v5 nav: the camera stays (no flight, the fiber within 2 px of the pointer)',
+        !hover.hidden && hover.text.startsWith(tgt.label) && r.picked === tgt.id && r.card && r.h2.startsWith(tgt.name) && r.uPick === tgt.i && r.uPickGlow === tgt.i && r.sections.join() === 'RECORD,COMPUTED' && !r.flying && !r.tween && drift != null && drift <= 2,
+        { at: [Math.round(tgt.x), Math.round(tgt.y)], drift_px: drift == null ? null : +drift.toFixed(2), hover, r });
       if (FRAMES) frames.push(await shoot(pg, 'rothschild-pick-card'));
+      await pg.evaluate(() => hyperApi.recStart());
+      const dc = await pg.evaluate(a => { const A = hyperApi, free = (x, y) => { const e = document.elementFromPoint(x, y); return !!e && (e.tagName === 'CANVAS' || !!e.closest('x3d-canvas')); };   // a point on the fiber the open card does not cover
+        if (a.at && free(a.at[0], a.at[1]) && A.nearestPerson(a.at[0], a.at[1], 12) === a.id) return a.at; const q = A.screenOf(a.id); return q && free(q.x, q.y) && A.nearestPerson(q.x, q.y, 12) === a.id ? [q.x, q.y] : null; }, { at: r.at, id: tgt.id });
+      if (dc) await pg.mouse.dblclick(dc[0], dc[1]); await sleep(300);
+      await pg.waitForFunction(() => { const s = dynastyNav.state(); return !s.tween && !s.flying && !s.shiftEasing; }, null, { timeout: 60000, polling: 100 }).catch(() => {}); await sleep(500);
+      const rc = await pg.evaluate(id => { const pp = hyperApi.data.people[id], P = (pp.present.bead && pp.present.bead.pos) || pp.anchor, s = dynastyNav.state(); return { P, pivot: s.pivot, shot: s.shot, picked: hyperApi.picked, card: !document.getElementById('card').hidden }; }, tgt.id);
+      const rec = await pg.evaluate(() => hyperApi.recStop()), a = motion(rec, null), perr = len(sub(rc.pivot, rc.P));
+      check('double-click: the real mouse re-centres on ' + tgt.name + ' (v5 nav: the orbit pivot eases onto the person, smoothly; the card stays open on them)',
+        !!dc && rc.shot === 'Pick' && perr < 1e-3 && rc.picked === tgt.id && rc.card && smooth(a) && rec.marks.some(m => m.label === 'pick ' + tgt.id + ' (re-centre)'), { at: dc && dc.map(Math.round), pivot_err: +perr.toFixed(6), shot: rc.shot, picked: rc.picked, marks: rec.marks.map(m => m.label).slice(-3), a });
       await pg.keyboard.press('Escape'); await sleep(400);
       const cl = await pg.evaluate(() => ({ picked: hyperApi.picked, card: !document.getElementById('card').hidden, uPick: hyperApi.browser.currentScene.getImportedNode('FiberCore').uPick }));
       check('click: Esc clears the pick, closes the card and relights every fiber', cl.picked === null && !cl.card && cl.uPick === -1, cl);
@@ -316,13 +359,18 @@ const smooth = a => (a.tracking_max == null || a.tracking_max < 2e-3) && (a.few 
     await pg.evaluate(() => { if (document.activeElement && document.activeElement.blur) document.activeElement.blur(); });   // the fell slider kept focus from its click: arrows belong to it
     await pg.keyboard.press('w'); await sleep(200); const kw = await pg.evaluate(() => hyperApi.pose().flying);
     await pg.waitForFunction(() => !hyperApi.pose().flying, null, { timeout: 30000 }).catch(() => {}); const kw2 = await pg.evaluate(() => hyperApi.pose().shot);
+    const ya = (await navNow(pg)).yaw; await pg.keyboard.press('ArrowRight'); await sleep(300);   // v5 nav: the arrows orbit (15 deg yaw, eased):
+    // measured once the Core's key ease has run out (state().keys.yaw back to 0; at most 10 s), since its frames are software-rendered here
+    await pg.waitForFunction(() => { const s = dynastyNav.state(); return s.keys && s.keys.yaw === 0 && s.keys.pitch === 0; }, null, { timeout: 10000, polling: 50 }).catch(() => {});
+    let kyaw = ((await navNow(pg)).yaw - ya) * 180 / Math.PI; if (kyaw > 180) kyaw -= 360; if (kyaw < -180) kyaw += 360;
     const k0 = await pg.evaluate(() => [hyperApi.stop, hyperApi.data.tour.length]);
-    await pg.keyboard.press('ArrowRight'); await sleep(300); const kr = await pg.evaluate(k0 => (hyperApi.stop - ((Math.max(0, k0[0]) + 1) % k0[1])), k0);   // 0 = moved to the next stop
+    await pg.keyboard.press('PageDown'); await sleep(300); const kr = await pg.evaluate(k0 => (hyperApi.stop - ((Math.max(0, k0[0]) + 1) % k0[1])), k0);   // 0 = moved to the next stop (v5 nav: PageDown; was the right arrow)
     await pg.keyboard.press('t'); await sleep(300); const tOn = await pg.evaluate(() => document.getElementById('tour').textContent);
     await pg.keyboard.press('t'); await sleep(300); const tOff = await pg.evaluate(() => document.getElementById('tour').textContent);
     await pg.keyboard.press('q'); await sleep(200); const kq = await pg.evaluate(() => hyperApi.tier);
     await pg.keyboard.press('Escape'); await sleep(300);
-    check('keys: W flies to Wide, the right arrow goes to the next stop, T starts and stops the tour, Q cycles the quality', kw === true && kw2 === 'Wide' && kr === 0 && /❚❚/.test(tOn) && /▸/.test(tOff) && kq === 'balanced', { kw, kw2, kr, tOn, tOff, kq });
+    check('keys: W flies to Wide, the right arrow orbits 15 deg (v5 nav), PageDown goes to the next stop (v5 nav: was the right arrow), T starts and stops the tour, Q cycles the quality',
+      kw === true && kw2 === 'Wide' && Math.abs(Math.abs(kyaw) - 15) < 0.05 && kr === 0 && /❚❚/.test(tOn) && /▸/.test(tOff) && kq === 'balanced', { kw, kw2, kyaw: +kyaw.toFixed(3), kr, tOn, tOff, kq });
     await pg.evaluate(t => hyperApi.setTier(['fast', 'balanced', 'ultra'].indexOf(t)), MOTION_TIER);   // back to the motion tier for the other families
   }
 
@@ -347,8 +395,11 @@ const smooth = a => (a.tracking_max == null || a.tracking_max < 2e-3) && (a.few 
     const tgt = await ph.evaluate(() => { const A = hyperApi, R = A.safeRect(); for (const id of Object.keys(A.data.people)) { const L = A.data.people[id].line;
       for (let i = 0; i < L.length - 1; i++) { const m = [0, 1, 2].map(k => (L[i][k] + L[i + 1][k]) / 2), s = A.project(m); if (s && s.x > R.x0 + 20 && s.x < R.x1 - 20 && s.y > R.y0 + 20 && s.y < R.y1 - 20 && A.nearestPerson(s.x, s.y, 22) === id) return { id, x: s.x, y: s.y }; } } return null; });
     if (tgt) {
-      await ph.touchscreen.tap(tgt.x, tgt.y); await sleep(900);
-      const c = await ph.evaluate(() => { const e = document.getElementById('card'), r = e.getBoundingClientRect(); return { hidden: e.hidden, l: r.left, r: r.right, b: r.bottom, iw: innerWidth, ih: innerHeight, picked: hyperApi.picked }; });
+      // v5 nav: on touch the page opens the card after the 450 ms double-tap window (so it never covers the second tap), on its frame clock;
+      // so wait for the card (at most 5 s) instead of a fixed 900 ms, and report how long it took
+      const t0 = Date.now(); await ph.touchscreen.tap(tgt.x, tgt.y);
+      await ph.waitForFunction(() => !document.getElementById('card').hidden, null, { timeout: 5000, polling: 50 }).catch(() => {});
+      const c = await ph.evaluate(() => { const e = document.getElementById('card'), r = e.getBoundingClientRect(); return { hidden: e.hidden, l: r.left, r: r.right, b: r.bottom, iw: innerWidth, ih: innerHeight, picked: hyperApi.picked }; }); c.ms = Date.now() - t0;
       check('phone: a tap on a fiber opens its card as a sheet inside the gutters', !c.hidden && c.picked && c.l >= 16 && c.r <= c.iw - 16 && c.b <= c.ih, c);
       if (FRAMES) frames.push(await shoot(ph, 'phone-rothschild-card', 390, 844, null));
     } else check('phone: a fiber to tap', false, 'none found');
@@ -385,6 +436,13 @@ const smooth = a => (a.tracking_max == null || a.tracking_max < 2e-3) && (a.few 
     const labs = ps.items.map(it => [it.id, it.label, (PJ.people[it.id] || {}).label]), kinds = ps.items.map(it => [it.id, it.kind, (PJ.people[it.id] || {}).kind]);
     check(tag + ' plates: ' + ps.items.length + ' in (X3D transparency ' + (ps.transparency == null ? '?' : ps.transparency.toFixed(3)) + ' <= ' + D.plate_timing.t + ' + 0.02), each with its portraits.json label and kind (pending entries their placeholder or monogram)',
       ps.cur === t.shot && ps.transparency <= D.plate_timing.t + 0.02 && ps.items.length === g.items.length && labs.every(x => x[1] === x[2]) && kinds.every(x => x[1] === x[2]), { cur: ps.cur, transparency: ps.transparency, labs, kinds });
+    // v5 review (look), new: the portrait overlay never sits on another person's plate (it did at Darwin-Wedgwood stop 5), and no name label sits on the
+    // plate of a different person ('Josiah 1795' on Robert Darwin's plate at stop 6); a plate the portrait could not avoid is shrunk away, so not shown
+    const ov = await pg.evaluate(() => { const f0 = document.getElementById('portrait').getBoundingClientRect(), f = { x: f0.left, y: f0.top, w: f0.width, h: f0.height }, pls = hyperApi.plateRects(), P = hyperApi.portraitState() || {}, C = hyperApi.cards;
+      const hit = (a, b) => a.x < b.x + b.w && b.x < a.x + a.w && a.y < b.y + b.h && b.y < a.y + a.h;
+      return { shown: pls.length, portrait: [f.x, f.y, f.w, f.h].map(Math.round), under: pls.filter(r => r.id !== P.id && hit(f, r)).map(r => r.id), hidden: P.hidPlates,
+        names: [].concat(...hyperApi.labelBoxes().map(l => pls.filter(r => hit(l, r) && !(l.kind !== 'house' && l.kind !== 'year' && C.people[r.id] && C.people[r.id].label === l.text)).map(r => l.text + ' on ' + r.id))) }; });
+    check(tag + ' plates and names (v5 review): no shown plate under the portrait, no name label on another person\'s plate', ov.under.length === 0 && ov.names.length === 0, ov);
     if (w < 600) return;
     // hover and click a plate with the real mouse: the tag names it with its label; the card shows the portrait (or monogram) with its label
     const tgt = await pg.evaluate(() => { const st = hyperApi.plateState(), cv = document.querySelector('#x3d canvas, x3d-canvas, canvas');
@@ -504,7 +562,9 @@ const smooth = a => (a.tracking_max == null || a.tracking_max < 2e-3) && (a.few 
   }
 
   async function settle(pg, endPos, tol = 2e-3) {   // the sensor reports the pose a rendered frame after the Probe is written: wait for it
-    await pg.waitForFunction(a => { const P = hyperApi.pose().p, e = a[0]; return P && Math.hypot(P[0] - e[0], P[1] - e[1], P[2] - e[2]) < a[1]; }, [endPos, tol], { timeout: 30000, polling: 100 }).catch(() => {});
+    // v5 nav: the page owns the camera and slides it by the view shift, so the drawn pose is the commanded one, not the shot's own position:
+    // wait for the flight to end and for X_ITE to have drawn what the page commanded (the landing on the shot is checked from the Core's pose)
+    await pg.waitForFunction(t => { const P = hyperApi.pose(), c = P.p, e = P.sensed && P.sensed.p; return !P.flying && c && e && Math.hypot(c[0] - e[0], c[1] - e[1], c[2] - e[2]) < t; }, tol, { timeout: 30000, polling: 100 }).catch(() => {});
     await sleep(300);
   }
   async function shoot(pg, name, w = W, h = H, tier = 2) {   // frames at Ultra (the look), whatever tier the moves ran at

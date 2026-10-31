@@ -40,6 +40,7 @@ def run(cmd):
 def main():
     man = arg('--manifest')
     if not man: sys.exit(__doc__)
+    man = os.path.abspath(man)  # the stages run in other folders
     out = os.path.abspath(arg('--out', os.path.join(ROOT, 'build', 'v2')))
     art = os.path.abspath(arg('--artifact', os.path.join(out, 'artifact')))
     sde = os.environ.get('SOURCE_DATE_EPOCH')

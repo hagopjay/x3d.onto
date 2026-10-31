@@ -1,0 +1,67 @@
+{
+ "id": "Q242147",
+ "name": "Emma Darwin (née Wedgwood)",
+ "version": "v1",
+ "model": "gemini-3-pro-image",
+ "prompt": "Repaint the person in the attached reference image, Emma Darwin (née Wedgwood) (1808-1896), as a new portrait. The face must follow the reference faithfully: same face shape, features, hair, age and expression. Keep the clothing of the reference, simplified to what a head-and-shoulders crop shows.\n\nHead-and-shoulders portrait, vertical 4:5 framing, the face about a third of the frame height, centred, shoulders cut by the lower edge. Finish: a quiet, realistic painted study in oils, muted natural colour, soft light from the upper left, gentle shadow. Background: plain warm mid-grey that darkens softly toward the edges, with nothing else in it. No text, no frame, no border, no signature, no watermark, no crown, jewellery or insignia unless the reference shows it.\n\nThis is a respectful historical likeness. Keep the face's proportions exactly as in the reference: do not exaggerate, idealise, glamorise, modernise or caricature any feature. Natural eyes, closed or natural mouth, no visible hands.",
+ "prompt_sha256": "4df5a6af8ac2b8f31113bf8cfb770bf7c4506aca253574d6e52aad85d4869b0d",
+ "reference": {
+  "id": "Q242147",
+  "name": "Emma Darwin (née Wedgwood)",
+  "file": "File:George Richmond - Emma Darwin - 1840.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:George_Richmond_-_Emma_Darwin_-_1840.jpg",
+  "original": "https://upload.wikimedia.org/wikipedia/commons/a/a0/George_Richmond_-_Emma_Darwin_-_1840.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "downloaded": "https://upload.wikimedia.org/wikipedia/commons/a/a0/George_Richmond_-_Emma_Darwin_-_1840.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+  "original_sha256": null,
+  "author": "George Richmond",
+  "date": "1840date QS:P571,+1840-00-00T00:00:00Z/9",
+  "credit": "https://www.allposters.co.uk/-sp/Lady-Darwin-When-Young-Posters_i1348506_.htm",
+  "licence": "Public domain",
+  "licence_url": null,
+  "attribution_required": "false",
+  "description": "Portrait of Emma Darwin (1808-1896)",
+  "licence_ok": true,
+  "local": "reference.jpg",
+  "sha256": "14ca3ced9d83accc9b19e32b9ab79957e0650f4c746c2a1ecee3ef8efdc6f7c2",
+  "checked": "2026-10-30T23:27:21Z"
+ },
+ "created": "2026-10-31T01:18:07Z",
+ "sha256": "5b9bb97668f4122547199cd8d36723620e71742cb761f6f8041ba21be4babc15",
+ "label": "AI portrait after George Richmond, 1840 (public domain)",
+ "imagined": false,
+ "review": {
+  "verdict": "pass",
+  "notes": "After Richmond 1840: ringlets, pale shawl, cream dress. Reads older than 32 and adds pink ribbons; likeness acceptable.",
+  "reviewed": "2026-10-31T01:19:36Z",
+  "checks": [
+   "likeness",
+   "dignity",
+   "hands-eyes-teeth",
+   "era dress",
+   "clean background"
+  ]
+ },
+ "usage": {
+  "promptTokenCount": 489,
+  "candidatesTokenCount": 1337,
+  "totalTokenCount": 2122,
+  "promptTokensDetails": [
+   {
+    "modality": "TEXT",
+    "tokenCount": 231
+   },
+   {
+    "modality": "IMAGE",
+    "tokenCount": 258
+   }
+  ],
+  "candidatesTokensDetails": [
+   {
+    "modality": "IMAGE",
+    "tokenCount": 1120
+   }
+  ],
+  "thoughtsTokenCount": 296,
+  "serviceTier": "standard"
+ }
+}

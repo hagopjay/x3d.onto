@@ -1,0 +1,44 @@
+{
+ "id": "Q76988",
+ "name": "Mayer Amschel Rothschild",
+ "version": "v1",
+ "model": "gemini-3-pro-image",
+ "prompt": "Imagine a portrait of Mayer Amschel Rothschild (1744-1812), of whom no likeness survives. Show a plausible, unremarkable person of the right age, sex and rank, in dress correct for Frankfurt around 1802. Note: Founder of M. A. Rothschild & Söhne in Frankfurt; father of the five brothers who founded the Frankfurt, Vienna, London, Naples and Paris houses. Born 23 February 1743 or 1744 (sources differ); died 19 September 1812.\n\nHead-and-shoulders portrait, vertical 4:5 framing, the face about a third of the frame height, centred, shoulders cut by the lower edge. Finish: a quiet, realistic painted study in oils, muted natural colour, soft light from the upper left, gentle shadow. Background: plain warm mid-grey that darkens softly toward the edges, with nothing else in it. No text, no frame, no border, no signature, no watermark, no crown, jewellery or insignia unless the reference shows it.\n\nThis is a respectful historical likeness. Keep the face's proportions exactly as in the reference: do not exaggerate, idealise, glamorise, modernise or caricature any feature. Natural eyes, closed or natural mouth, no visible hands.",
+ "prompt_sha256": "db5e1569efc971273f360cbb1c949feb20d907e0e8b1b2caae89ea414b2521c3",
+ "reference": null,
+ "created": "2026-10-30T19:09:25Z",
+ "sha256": "230fdf4de7391ebac48dd2101b9ce1af8beb10213155fdb635a2d69d162d4799",
+ "label": "AI-imagined portrait: no likeness survives",
+ "imagined": true,
+ "review": {
+  "verdict": "pass",
+  "notes": "Imagined (no authenticated likeness; Hubbard 1916 drawing rejected as a source). Plain c.1800 coat, waistcoat, cravat, white hair; neutral, dignified, no stereotype.",
+  "reviewed": "2026-10-30T19:09:59Z",
+  "checks": [
+   "likeness",
+   "dignity",
+   "hands-eyes-teeth",
+   "era dress",
+   "clean background"
+  ]
+ },
+ "usage": {
+  "promptTokenCount": 278,
+  "candidatesTokenCount": 1304,
+  "totalTokenCount": 1877,
+  "promptTokensDetails": [
+   {
+    "modality": "TEXT",
+    "tokenCount": 278
+   }
+  ],
+  "candidatesTokensDetails": [
+   {
+    "modality": "IMAGE",
+    "tokenCount": 1120
+   }
+  ],
+  "thoughtsTokenCount": 295,
+  "serviceTier": "standard"
+ }
+}

@@ -13,6 +13,9 @@
 //   y1), so the merged header did not push into the labels; a frame.
 //   the switch: the view buttons and the V key; a picked person and the family carry across; the shared fell slider and Tour button drive the
 //   active view only. X_ITE from the page's own origin; no eval in our code. Writes scene2/artifact-gate.json and frames/artifact-<view>-<run>.png.
+//   v5 (nav): the page owns the camera, so "the Host shot bound" reads: the Probe bound with NavigationInfo NONE and the page's Core on the Host
+//   shot's pose (its pivot on the shot's target and its distance the shot's, < 0.002 pocket units; v5 review: and its view direction the shot's,
+//   < 0.1 deg); X_ITE's own Opening viewpoint is no longer bound.
 const http = require('http'), fs = require('fs'), path = require('path');
 const { chromium } = require('playwright');
 const HERE = path.resolve(__dirname, '..');
@@ -62,7 +65,12 @@ function serve() {
     await p.goto(base + run.q, { waitUntil: 'load' });
     const until = (fn, arg, ms = 180000) => p.waitForFunction(fn, arg, { timeout: ms, polling: 100 }).then(() => true).catch(() => false);
     const hyperState = () => p.evaluate(() => ({ view: dynastyApi.view, loaded: document.body.dataset.loaded, fam: hyperApi.family, hash: location.hash, xite: hyperApi.xite, shaders: hyperApi.shaders(),
-      bound: hyperApi.pose().bound, labels: hyperApi.labelBoxes().length, failed: hyperApi.failed || null, poster: (e => e.hidden || e.classList.contains('gone'))(document.getElementById('poster')),
+      bound: hyperApi.pose().bound, nav: hyperApi.pose().nav, shot: hyperApi.pose().shot,
+      hostErr: (() => { if (!window.dynastyNav || !hyperApi.data) return null; const D = hyperApi.data, s = D.shots.Host, k = s.space === 'host' ? 1 / D.pocket_scale : 1, st = dynastyNav.state();   // v5 nav
+        return Math.hypot(...st.pivot.map((x, i) => x - s.tgt[i] * k)) + Math.abs(st.dist - Math.hypot(...s.pos.map((x, i) => (x - s.tgt[i]) * k))); })(),
+      hostDirDeg: (() => { if (!window.dynastyNav || !hyperApi.data) return null; const s = hyperApi.data.shots.Host, q = dynastyNav.state().q, [x, y, z, w] = q;   // v5 review: the view direction too
+        const f = [-(2 * (x * z + w * y)), -(2 * (y * z - w * x)), -(1 - 2 * (x * x + y * y))], d = s.tgt.map((t, i) => t - s.pos[i]), dl = Math.hypot(...d), fl = Math.hypot(...f);
+        return Math.acos(Math.max(-1, Math.min(1, (f[0] * d[0] + f[1] * d[1] + f[2] * d[2]) / (dl * fl)))) * 180 / Math.PI; })(), labels: hyperApi.labelBoxes().length, failed: hyperApi.failed || null, poster: (e => e.hidden || e.classList.contains('gone'))(document.getElementById('poster')),
       look: document.documentElement.dataset.look || null, ink: !!(window.dynastyApi && dynastyApi.looks && (dynastyApi.looks.themes[document.documentElement.dataset.look] || {}).ink) }));
     const loomState = () => p.evaluate(async () => {   // label text drawn: give X_ITE's font fetch a moment, then read every Label of the bound stop
       const A = window.loomApi; let lab = null;
@@ -126,7 +134,7 @@ function serve() {
     r.checks.hyper_default_view = r.default_view === 'hyper';
     r.checks.hyper_all_loaded = H.length === 3 && H.every(f => f.loaded === '1' && !f.failed);
     r.checks.hyper_shaders_compiled = H.every(f => f.shaders && f.shaders.length === 8 && f.shaders.every(s => s.isValid === true));
-    r.checks.hyper_host_bound = H.every(f => /^Opening/.test(f.bound || ''));
+    r.checks.hyper_host_bound = H.every(f => f.bound === 'Probe' && f.nav === 'NONE' && f.shot === 'Host' && f.hostErr != null && f.hostErr < 2e-3 && f.hostDirDeg != null && f.hostDirDeg < 0.1);   // v5 nav (was /^Opening/ bound by X_ITE)
     r.checks.hyper_labels_drawn = H.every(f => f.labels > 0);
     r.checks.hyper_hash_routing = Object.entries(r.hyper).every(([k, f]) => f.hash === '#' + k.replace(/_/g, '-') && f.fam === k && f.view === 'hyper');
     // v2: an ink look (light ground) loads on its own ground and never fetches the dark loading still; a dark look shows it, then lets it go
