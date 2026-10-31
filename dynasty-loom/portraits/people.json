@@ -1,0 +1,450 @@
+{
+ "version": 1,
+ "rule": "Tier 1 is the whole job (\"dont go crazy\"). More only if HagopJay asks.",
+ "people": [
+  {
+   "tier": 1,
+   "family": "rothschild",
+   "id": "Q76988",
+   "qid": "Q76988",
+   "name": "Mayer Amschel Rothschild",
+   "born": 1744,
+   "died": 1812,
+   "house": "Frankfurt",
+   "note": "Founder of M. A. Rothschild & Söhne in Frankfurt; father of the five brothers who founded the Frankfurt, Vienna, London, Naples and Paris houses. Born 23 February 1743 or 1744 (sources differ); died 19 September 1812.",
+   "wikipedia": "https://en.wikipedia.org/wiki/Mayer_Amschel_Rothschild",
+   "sources": [
+    "https://en.wikipedia.org/wiki/Mayer_Amschel_Rothschild",
+    "https://dbpedia.org/page/Mayer_Amschel_Rothschild",
+    "https://www.wikidata.org/wiki/Q76988",
+    "https://en.wikipedia.org/wiki/Genealogy_of_the_Rothschild_family"
+   ]
+  },
+  {
+   "tier": 1,
+   "family": "rothschild",
+   "id": "Q1557224",
+   "qid": "Q1557224",
+   "name": "Gutle Schnapper (Gutle Rothschild)",
+   "born": 1753,
+   "died": 1849,
+   "house": "Frankfurt",
+   "note": "Married Mayer Amschel on 29 August 1770; mother of ten surviving children including the five founding brothers. (No English Wikipedia article: the source link was dead.)",
+   "wikipedia": "https://en.wikipedia.org/wiki/Gutle_Schnapper",
+   "sources": [
+    "https://en.wikipedia.org/wiki/Mayer_Amschel_Rothschild",
+    "https://www.wikidata.org/wiki/Q1557224",
+    "https://en.wikipedia.org/wiki/Genealogy_of_the_Rothschild_family",
+    "https://family.rothschildarchive.org/people/209-gutle-rothschild-1753-1849"
+   ]
+  },
+  {
+   "tier": 1,
+   "family": "rothschild",
+   "id": "Q63990",
+   "qid": "Q63990",
+   "name": "Amschel Mayer von Rothschild",
+   "born": 1773,
+   "died": 1855,
+   "house": "Frankfurt",
+   "note": "Eldest son; head of the Frankfurt house. Married Eva Hanau in 1796 and died childless (6 December 1855), after which nephews Mayer Carl and Wilhelm Carl ran the Frankfurt bank.",
+   "wikipedia": "https://en.wikipedia.org/wiki/Amschel_Mayer_Rothschild",
+   "sources": [
+    "https://en.wikipedia.org/wiki/Amschel_Mayer_Rothschild",
+    "https://dbpedia.org/page/Amschel_Mayer_Rothschild",
+    "https://www.rothschildarchive.org/genealogy",
+    "https://en.wikipedia.org/wiki/Mayer_Carl_von_Rothschild"
+   ]
+  },
+  {
+   "tier": 1,
+   "family": "rothschild",
+   "id": "Q370060",
+   "qid": "Q370060",
+   "name": "Salomon Mayer von Rothschild",
+   "born": 1774,
+   "died": 1855,
+   "house": "Vienna",
+   "note": "Founded the Vienna house; his bank financed the Nordbahn, Austria's first steam railway (claim tagged citation-needed on Wikipedia). Lost influence after Metternich's fall in 1848, handed the bank to his son Anselm and retired to Paris…",
+   "wikipedia": "https://en.wikipedia.org/wiki/Salomon_Mayer_von_Rothschild",
+   "sources": [
+    "https://en.wikipedia.org/wiki/Salomon_Mayer_von_Rothschild",
+    "https://dbpedia.org/page/Salomon_Mayer_von_Rothschild",
+    "https://www.rothschildarchive.org/genealogy",
+    "https://en.wikipedia.org/wiki/Mayer_Amschel_Rothschild"
+   ]
+  },
+  {
+   "tier": 1,
+   "family": "rothschild",
+   "id": "Q547291",
+   "qid": "Q547291",
+   "name": "Nathan Mayer Rothschild",
+   "born": 1777,
+   "died": 1836,
+   "house": "London",
+   "note": "Founded the London house (N M Rothschild & Sons). From 1811, working with Commissary-General J. C. Herries, he arranged the transfer of money to pay Wellington's troops in the Peninsula. Died in Frankfurt on 28 July 1836 after travelling…",
+   "wikipedia": "https://en.wikipedia.org/wiki/Nathan_Mayer_Rothschild",
+   "sources": [
+    "https://en.wikipedia.org/wiki/Nathan_Mayer_Rothschild",
+    "https://www.rothschildarchive.org/genealogy",
+    "https://en.wikipedia.org/wiki/Mayer_Amschel_Rothschild",
+    "https://en.wikipedia.org/wiki/Genealogy_of_the_Rothschild_family"
+   ]
+  },
+  {
+   "tier": 1,
+   "family": "rothschild",
+   "id": "Q63656",
+   "qid": "Q63656",
+   "name": "Carl Mayer von Rothschild",
+   "born": 1788,
+   "died": 1855,
+   "house": "Naples",
+   "note": "Sent from Frankfurt to Naples in 1821, where he founded the Naples house; died in Naples on 10 March 1855. (It was his sons Mayer Carl and Wilhelm Carl, not Carl, who took over Frankfurt.)",
+   "wikipedia": "https://en.wikipedia.org/wiki/Carl_Mayer_von_Rothschild",
+   "sources": [
+    "https://en.wikipedia.org/wiki/Carl_Mayer_von_Rothschild",
+    "https://dbpedia.org/page/Carl_Mayer_von_Rothschild",
+    "https://www.rothschildarchive.org/genealogy",
+    "https://en.wikipedia.org/wiki/Rothschild_banking_family_of_Naples"
+   ]
+  },
+  {
+   "tier": 1,
+   "family": "rothschild",
+   "id": "Q922667",
+   "qid": "Q922667",
+   "name": "James Mayer de Rothschild",
+   "born": 1792,
+   "died": 1868,
+   "house": "Paris",
+   "note": "Founded the Paris house (de Rothschild Frères); a major financier of French railways and mining. Married his niece Betty, daughter of his brother Salomon, on 11 July 1824.",
+   "wikipedia": "https://en.wikipedia.org/wiki/James_Mayer_de_Rothschild",
+   "sources": [
+    "https://en.wikipedia.org/wiki/James_Mayer_de_Rothschild",
+    "https://www.rothschildarchive.org/genealogy",
+    "https://en.wikipedia.org/wiki/Mayer_Amschel_Rothschild",
+    "https://en.wikipedia.org/wiki/Genealogy_of_the_Rothschild_family"
+   ]
+  },
+  {
+   "tier": 1,
+   "family": "rothschild",
+   "id": "Q333605",
+   "qid": "Q333605",
+   "name": "Lionel de Rothschild",
+   "born": 1808,
+   "died": 1879,
+   "house": "London",
+   "note": "Head of N M Rothschild & Sons. Elected MP for the City of London in 1847 but able to take his seat only on 26 July 1858, as the first Jewish member of Parliament. Married his first cousin Charlotte, daughter of Carl, in 1836.",
+   "wikipedia": "https://en.wikipedia.org/wiki/Lionel_de_Rothschild",
+   "sources": [
+    "https://en.wikipedia.org/wiki/Lionel_de_Rothschild",
+    "https://www.rothschildarchive.org/genealogy",
+    "https://en.wikipedia.org/wiki/Genealogy_of_the_Rothschild_family"
+   ]
+  },
+  {
+   "tier": 1,
+   "family": "rothschild",
+   "id": "Q334120",
+   "qid": "Q334120",
+   "name": "Nathan Mayer 'Natty' Rothschild, 1st Baron Rothschild",
+   "born": 1840,
+   "died": 1915,
+   "house": "London",
+   "note": "Head of N M Rothschild & Sons; created Baron Rothschild in 1885, the first Jewish member of the House of Lords not to have converted to Christianity. Married his double first cousin Emma Louise in 1867.",
+   "wikipedia": "https://en.wikipedia.org/wiki/Nathan_Rothschild,_1st_Baron_Rothschild",
+   "sources": [
+    "https://en.wikipedia.org/wiki/Nathan_Rothschild,_1st_Baron_Rothschild",
+    "https://www.rothschildarchive.org/genealogy",
+    "https://en.wikipedia.org/wiki/Genealogy_of_the_Rothschild_family"
+   ]
+  },
+  {
+   "tier": 1,
+   "family": "rothschild",
+   "id": "Q316669",
+   "qid": "Q316669",
+   "name": "Walter Rothschild, 2nd Baron Rothschild",
+   "born": 1868,
+   "died": 1937,
+   "house": "London",
+   "note": "Zoologist; opened his private museum at Tring in 1892 (now the Natural History Museum at Tring). Addressee of the Balfour Declaration, 2 November 1917. Never married.",
+   "wikipedia": "https://en.wikipedia.org/wiki/Walter_Rothschild,_2nd_Baron_Rothschild",
+   "sources": [
+    "https://en.wikipedia.org/wiki/Walter_Rothschild,_2nd_Baron_Rothschild",
+    "https://www.rothschildarchive.org/genealogy",
+    "https://en.wikipedia.org/wiki/Genealogy_of_the_Rothschild_family",
+    "https://www.wikidata.org/wiki/Q316669"
+   ]
+  },
+  {
+   "tier": 1,
+   "family": "rothschild",
+   "id": "Q467167",
+   "qid": "Q467167",
+   "name": "Edmond James de Rothschild",
+   "born": 1845,
+   "died": 1934,
+   "house": "Paris",
+   "note": "Youngest child of James; patron of the First Aliyah settlements, called 'the Father of the Yishuv' and 'HaNadiv HaYadua' (the Known Benefactor); founded PICA in 1924. Married his cousin Adelheid, daughter of Wilhelm Carl, in 1877.",
+   "wikipedia": "https://en.wikipedia.org/wiki/Edmond_James_de_Rothschild",
+   "sources": [
+    "https://en.wikipedia.org/wiki/Edmond_James_de_Rothschild",
+    "https://www.rothschildarchive.org/genealogy",
+    "https://en.wikipedia.org/wiki/James_Mayer_de_Rothschild",
+    "https://en.wikipedia.org/wiki/Genealogy_of_the_Rothschild_family"
+   ]
+  },
+  {
+   "tier": 1,
+   "family": "rothschild",
+   "id": "Q7044697",
+   "qid": "Q7044697",
+   "name": "Betty von Rothschild",
+   "born": 1805,
+   "died": 1886,
+   "house": "Paris",
+   "note": "Daughter of Salomon; married her uncle James in 1824. Noted for her Paris salon (Heine, Balzac, Rossini) and her patronage of the arts; Ingres painted her portrait (1841–48).",
+   "wikipedia": "https://en.wikipedia.org/wiki/Betty_von_Rothschild",
+   "sources": [
+    "https://en.wikipedia.org/wiki/Betty_von_Rothschild",
+    "https://dbpedia.org/page/Betty_von_Rothschild",
+    "https://www.rothschildarchive.org/genealogy",
+    "https://en.wikipedia.org/wiki/Mayer_Amschel_Rothschild"
+   ]
+  },
+  {
+   "tier": 1,
+   "family": "habsburg",
+   "id": "Q76956",
+   "qid": "Q76956",
+   "name": "Rudolf I of Germany",
+   "born": 1218,
+   "died": 1291,
+   "house": "Habsburg main line",
+   "note": "Count of Habsburg who became the first Habsburg king of the Romans; the Stammliste counts him as Count Rudolf IV.",
+   "wikipedia": null,
+   "sources": [
+    "https://de.wikipedia.org/wiki/Stammliste_der_Habsburger"
+   ]
+  },
+  {
+   "tier": 1,
+   "family": "habsburg",
+   "id": "Q153956",
+   "qid": "Q153956",
+   "name": "Albert I of Germany",
+   "born": 1255,
+   "died": 1308,
+   "house": "Austria",
+   "note": "Son of Rudolf I; German king and Duke of Austria and Styria.",
+   "wikipedia": null,
+   "sources": [
+    "https://de.wikipedia.org/wiki/Stammliste_der_Habsburger"
+   ]
+  },
+  {
+   "tier": 1,
+   "family": "habsburg",
+   "id": "Q150494",
+   "qid": "Q150494",
+   "name": "Leopold I, Holy Roman Emperor",
+   "born": 1640,
+   "died": 1705,
+   "house": "Austria",
+   "note": "His first wife Margaret Theresa of Spain (12 December 1666) was 'both his niece and his first cousin'. Charles VI was his son by his third wife, Eleonore Magdalene of Neuburg.",
+   "wikipedia": "https://en.wikipedia.org/wiki/Leopold_I,_Holy_Roman_Emperor",
+   "sources": [
+    "https://en.wikipedia.org/wiki/Leopold_I,_Holy_Roman_Emperor"
+   ]
+  },
+  {
+   "tier": 1,
+   "family": "habsburg",
+   "id": "Q691402",
+   "qid": "Q691402",
+   "name": "Philip IV of Spain",
+   "born": 1605,
+   "died": 1665,
+   "house": "Spain",
+   "note": "His second wife, Mariana of Austria (7 October 1649), was his niece; father of Margaret Theresa and Charles II.",
+   "wikipedia": "https://en.wikipedia.org/wiki/Philip_IV_of_Spain",
+   "sources": [
+    "https://en.wikipedia.org/wiki/Philip_IV_of_Spain"
+   ]
+  },
+  {
+   "tier": 1,
+   "family": "habsburg",
+   "id": "Q311469",
+   "qid": "Q311469",
+   "name": "Mariana of Austria",
+   "born": 1634,
+   "died": 1696,
+   "house": "Spain",
+   "note": "Married her maternal uncle Philip IV in 1649; mother of Charles II.",
+   "wikipedia": "https://en.wikipedia.org/wiki/Mariana_of_Austria",
+   "sources": [
+    "https://en.wikipedia.org/wiki/Ferdinand_III,_Holy_Roman_Emperor",
+    "https://en.wikipedia.org/wiki/Philip_IV_of_Spain",
+    "https://en.wikipedia.org/wiki/Charles_II_of_Spain"
+   ]
+  },
+  {
+   "tier": 1,
+   "family": "habsburg",
+   "id": "Q158659",
+   "qid": "Q158659",
+   "name": "Margaret Theresa of Spain",
+   "born": 1651,
+   "died": 1673,
+   "house": "Austria",
+   "note": "Married her uncle and first cousin Leopold I in 1666.",
+   "wikipedia": "https://en.wikipedia.org/wiki/Margaret_Theresa_of_Spain",
+   "sources": [
+    "https://en.wikipedia.org/wiki/Philip_IV_of_Spain",
+    "https://en.wikipedia.org/wiki/Leopold_I,_Holy_Roman_Emperor"
+   ]
+  },
+  {
+   "tier": 1,
+   "family": "darwin_wedgwood",
+   "id": "Q234050",
+   "qid": "Q234050",
+   "name": "Erasmus Darwin",
+   "born": 1731,
+   "died": 1802,
+   "house": "Erasmus Darwin's household",
+   "note": "Grandfather of both Charles Darwin (through Robert, son of his first wife Mary Howard) and Francis Galton (through Violetta, daughter of his second wife Elizabeth Pole).",
+   "wikipedia": "https://en.wikipedia.org/wiki/Erasmus_Darwin",
+   "sources": [
+    "https://en.wikipedia.org/wiki/Darwin–Wedgwood_family",
+    "https://en.wikipedia.org/wiki/Darwin%E2%80%93Wedgwood_family"
+   ]
+  },
+  {
+   "tier": 1,
+   "family": "darwin_wedgwood",
+   "id": "Q319331",
+   "qid": "Q319331",
+   "name": "Josiah Wedgwood",
+   "born": 1730,
+   "died": 1795,
+   "house": "Etruria / Maer",
+   "note": "Potter, entrepreneur and abolitionist; founded the Wedgwood company in 1759. Married his cousin Sarah Wedgwood on 25 January 1764 ('third cousin' per the Darwin–Wedgwood family article; 'distant cousin' per his own).",
+   "wikipedia": "https://en.wikipedia.org/wiki/Josiah_Wedgwood",
+   "sources": [
+    "https://en.wikipedia.org/wiki/Josiah_Wedgwood",
+    "https://dbpedia.org/page/Josiah_Wedgwood",
+    "https://en.wikipedia.org/wiki/Darwin–Wedgwood_family",
+    "https://en.wikipedia.org/wiki/Darwin%E2%80%93Wedgwood_family"
+   ]
+  },
+  {
+   "tier": 1,
+   "family": "darwin_wedgwood",
+   "id": "Q47905425",
+   "qid": "Q47905425",
+   "name": "Sarah Wedgwood",
+   "born": 1734,
+   "died": 1815,
+   "house": "Etruria / Maer",
+   "note": "Wife and cousin of Josiah Wedgwood; mother of Susannah, John, Josiah II and Thomas.",
+   "wikipedia": null,
+   "sources": [
+    "https://en.wikipedia.org/wiki/Josiah_Wedgwood",
+    "https://en.wikipedia.org/wiki/Darwin–Wedgwood_family",
+    "https://en.wikipedia.org/wiki/Darwin%E2%80%93Wedgwood_family"
+   ]
+  },
+  {
+   "tier": 1,
+   "family": "darwin_wedgwood",
+   "id": "Q204473",
+   "qid": "Q204473",
+   "name": "Robert Darwin",
+   "born": 1766,
+   "died": 1848,
+   "house": "Shrewsbury (The Mount)",
+   "note": "Robert Waring Darwin, son of Erasmus; married Josiah Wedgwood's daughter Susannah, the first Darwin–Wedgwood marriage; father of Charles.",
+   "wikipedia": "https://en.wikipedia.org/wiki/Robert_Darwin",
+   "sources": [
+    "https://en.wikipedia.org/wiki/Darwin–Wedgwood_family",
+    "https://en.wikipedia.org/wiki/Darwin%E2%80%93Wedgwood_family",
+    "https://en.wikipedia.org/wiki/Josiah_Wedgwood"
+   ]
+  },
+  {
+   "tier": 1,
+   "family": "darwin_wedgwood",
+   "id": "Q7648718",
+   "qid": "Q7648718",
+   "name": "Susannah Darwin (née Wedgwood)",
+   "born": 1765,
+   "died": 1817,
+   "house": "Shrewsbury (The Mount)",
+   "note": "Eldest child of Josiah Wedgwood; wife of Robert Darwin and mother of Charles Darwin.",
+   "wikipedia": "https://en.wikipedia.org/wiki/Susannah_Wedgwood",
+   "sources": [
+    "https://en.wikipedia.org/wiki/Darwin–Wedgwood_family",
+    "https://en.wikipedia.org/wiki/Josiah_Wedgwood",
+    "https://en.wikipedia.org/wiki/Darwin%E2%80%93Wedgwood_family"
+   ]
+  },
+  {
+   "tier": 1,
+   "family": "darwin_wedgwood",
+   "id": "Q1035",
+   "qid": "Q1035",
+   "name": "Charles Darwin",
+   "born": 1809,
+   "died": 1882,
+   "house": "Down House",
+   "note": "Naturalist; married his first cousin Emma Wedgwood. Because his mother and Emma's father were siblings, their children had six great-grandparents instead of eight.",
+   "wikipedia": "https://en.wikipedia.org/wiki/Charles_Darwin",
+   "sources": [
+    "https://en.wikipedia.org/wiki/Darwin–Wedgwood_family",
+    "https://en.wikipedia.org/wiki/Darwin%E2%80%93Wedgwood_family",
+    "https://en.wikipedia.org/wiki/Josiah_Wedgwood"
+   ]
+  },
+  {
+   "tier": 1,
+   "family": "darwin_wedgwood",
+   "id": "Q242147",
+   "qid": "Q242147",
+   "name": "Emma Darwin (née Wedgwood)",
+   "born": 1808,
+   "died": 1896,
+   "house": "Down House",
+   "note": "Youngest child of Josiah II; married her first cousin Charles Darwin; mother of ten children, three of whom died young.",
+   "wikipedia": "https://en.wikipedia.org/wiki/Emma_Darwin",
+   "sources": [
+    "https://en.wikipedia.org/wiki/Darwin–Wedgwood_family",
+    "https://en.wikipedia.org/wiki/Josiah_Wedgwood_II",
+    "https://en.wikipedia.org/wiki/Darwin%E2%80%93Wedgwood_family",
+    "https://en.wikipedia.org/wiki/Josiah_Wedgwood"
+   ]
+  },
+  {
+   "tier": 1,
+   "family": "darwin_wedgwood",
+   "id": "Q3133240",
+   "qid": "Q3133240",
+   "name": "Hensleigh Wedgwood",
+   "born": 1803,
+   "died": 1891,
+   "house": "Hensleigh Wedgwood's household",
+   "note": "Etymologist (A Dictionary of English Etymology, 1857) and founding member of the Philological Society. Married his first cousin Fanny Mackintosh in 1832: her mother Catherine Allen was his mother's sister.",
+   "wikipedia": "https://en.wikipedia.org/wiki/Hensleigh_Wedgwood",
+   "sources": [
+    "https://en.wikipedia.org/wiki/Hensleigh_Wedgwood",
+    "https://en.wikipedia.org/wiki/Darwin%E2%80%93Wedgwood_family",
+    "https://en.wikipedia.org/wiki/Wedgwood_(disambiguation)"
+   ]
+  }
+ ]
+}

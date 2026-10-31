@@ -1,0 +1,30 @@
+{
+ "artifact": ".../v5-relcheck",
+ "build_date": "2026-10-30",
+ "looks": [
+  "museum-atlas",
+  "documentary-night"
+ ],
+ "phone_ui": "editorial-clarity",
+ "files": 134,
+ "bytes": 18841785,
+ "largest": {
+  "path": "pocket-rothschild.x3d",
+  "bytes": 2272432
+ },
+ "portraits": {
+  "ai_portrait": 26,
+  "by_status": {
+   "ok": 26
+  },
+  "monogram": 0,
+  "people": 26,
+  "placeholder": 0
+ },
+ "compare": {
+  "release": ".../v5-candidate",
+  "differ": [],
+  "missing": [],
+  "extra": []
+ }
+}

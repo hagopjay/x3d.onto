@@ -1,0 +1,67 @@
+{
+ "id": "Q3133240",
+ "name": "Hensleigh Wedgwood",
+ "version": "v1",
+ "model": "gemini-3-pro-image",
+ "prompt": "Repaint the person in the attached reference image, Hensleigh Wedgwood (1803-1891), as a new portrait. The face must follow the reference faithfully: same face shape, features, hair, age and expression. Keep the clothing of the reference, simplified to what a head-and-shoulders crop shows.\n\nHead-and-shoulders portrait, vertical 4:5 framing, the face about a third of the frame height, centred, shoulders cut by the lower edge. Finish: a quiet, realistic painted study in oils, muted natural colour, soft light from the upper left, gentle shadow. Background: plain warm mid-grey that darkens softly toward the edges, with nothing else in it. No text, no frame, no border, no signature, no watermark, no crown, jewellery or insignia unless the reference shows it.\n\nThis is a respectful historical likeness. Keep the face's proportions exactly as in the reference: do not exaggerate, idealise, glamorise, modernise or caricature any feature. Natural eyes, closed or natural mouth, no visible hands.",
+ "prompt_sha256": "926408cede3829ab32cfcd32e18032f87cec1522c917f4ea9003fdbda2ebcb94",
+ "reference": {
+  "id": "Q3133240",
+  "name": "Hensleigh Wedgwood",
+  "file": "File:Hensleigh Wedgwood spiritualist.png",
+  "page": "https://commons.wikimedia.org/wiki/File:Hensleigh_Wedgwood_spiritualist.png",
+  "original": "https://upload.wikimedia.org/wikipedia/commons/0/0b/Hensleigh_Wedgwood_spiritualist.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "downloaded": "https://upload.wikimedia.org/wikipedia/commons/0/0b/Hensleigh_Wedgwood_spiritualist.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+  "original_sha256": null,
+  "author": "AnonymousUnknown author",
+  "date": "circa 1870date QS:P,+1870-00-00T00:00:00Z/9,P1480,Q5727902",
+  "credit": "Anonymous illustration CA. 1870 of the etymologist and spiritualist Hensleigh Wedgwood. No authorship of illustration and no copyright information ever published.",
+  "licence": "Public domain",
+  "licence_url": null,
+  "attribution_required": "false",
+  "description": "The etymologist and spiritualist Hensleigh Wedgwood.",
+  "licence_ok": true,
+  "local": "reference.png",
+  "sha256": "fbc0f573204b25f179d876bc5530ec800fc20188fdb380eee0bb51f95a3621ec",
+  "checked": "2026-10-30T23:28:10Z"
+ },
+ "created": "2026-10-31T01:18:23Z",
+ "sha256": "f8ac0eeeca9e29b02a12f9a7c644e6823a5d0bc469e0a3009c435cef42c14bb2",
+ "label": "AI portrait after AnonymousUnknown author, 1870 (public domain)",
+ "imagined": false,
+ "review": {
+  "verdict": "pass",
+  "notes": "Faithful to the c.1870 sketch: balding, round spectacles, full beard; colour imagined in the era's dress.",
+  "reviewed": "2026-10-31T01:19:36Z",
+  "checks": [
+   "likeness",
+   "dignity",
+   "hands-eyes-teeth",
+   "era dress",
+   "clean background"
+  ]
+ },
+ "usage": {
+  "promptTokenCount": 486,
+  "candidatesTokenCount": 1335,
+  "totalTokenCount": 2040,
+  "promptTokensDetails": [
+   {
+    "modality": "TEXT",
+    "tokenCount": 228
+   },
+   {
+    "modality": "IMAGE",
+    "tokenCount": 258
+   }
+  ],
+  "candidatesTokensDetails": [
+   {
+    "modality": "IMAGE",
+    "tokenCount": 1120
+   }
+  ],
+  "thoughtsTokenCount": 219,
+  "serviceTier": "standard"
+ }
+}

@@ -104,6 +104,7 @@ def main():
     for fn in sorted(os.listdir(os.path.join(out, 'fonts'))): files['fonts/' + fn] = os.path.join(out, 'fonts', fn)
     hman = json.load(open(os.path.join(hyp, 'hyper-manifest.json'), encoding='utf-8'))   # the hypersphere view
     files['hyper-manifest.json'] = os.path.join(hyp, 'hyper-manifest.json')
+    for fn in ('orbit.js', 'lens.js'): files['lib/' + fn] = os.path.join(hyp, 'lib', fn)   # nav: the orbit camera and the lens mirror (build_hypersphere.py writes them)
     for f in hman['families']:
         for k in ('host', 'pocket', 'data'): files[f[k]] = os.path.join(hyp, f[k])
         if f['cards'] not in files: raise SystemExit('the hypersphere reads %s, which the loom does not ship' % f['cards'])

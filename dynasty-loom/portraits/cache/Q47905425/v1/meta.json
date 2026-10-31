@@ -1,0 +1,67 @@
+{
+ "id": "Q47905425",
+ "name": "Sarah Wedgwood",
+ "version": "v1",
+ "model": "gemini-3-pro-image",
+ "prompt": "Repaint the person in the attached reference image, Sarah Wedgwood (1734-1815), as a new portrait. The face must follow the reference faithfully: same face shape, features, hair, age and expression. Keep the clothing of the reference, simplified to what a head-and-shoulders crop shows.\n\nHead-and-shoulders portrait, vertical 4:5 framing, the face about a third of the frame height, centred, shoulders cut by the lower edge. Finish: a quiet, realistic painted study in oils, muted natural colour, soft light from the upper left, gentle shadow. Background: plain warm mid-grey that darkens softly toward the edges, with nothing else in it. No text, no frame, no border, no signature, no watermark, no crown, jewellery or insignia unless the reference shows it.\n\nThis is a respectful historical likeness. Keep the face's proportions exactly as in the reference: do not exaggerate, idealise, glamorise, modernise or caricature any feature. Natural eyes, closed or natural mouth, no visible hands.",
+ "prompt_sha256": "869f26e123e22cec18df8d3f3626eb2fa75dcc30a0148b1c46350757ef5a880a",
+ "reference": {
+  "id": "Q47905425",
+  "name": "Sarah Wedgwood",
+  "file": "File:Joshua Reynolds (1723-1792) - Sarah Wedgwood (1734–1815) - 5609 - V^A Wedgwood Collection.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Joshua_Reynolds_(1723-1792)_-_Sarah_Wedgwood_(1734%E2%80%931815)_-_5609_-_V%5EA_Wedgwood_Collection.jpg",
+  "original": "https://upload.wikimedia.org/wikipedia/commons/8/8a/Joshua_Reynolds_%281723-1792%29_-_Sarah_Wedgwood_%281734%E2%80%931815%29_-_5609_-_V%5EA_Wedgwood_Collection.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "downloaded": "https://upload.wikimedia.org/wikipedia/commons/8/8a/Joshua_Reynolds_%281723-1792%29_-_Sarah_Wedgwood_%281734%E2%80%931815%29_-_5609_-_V%5EA_Wedgwood_Collection.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+  "original_sha256": null,
+  "author": "Joshua Reynolds",
+  "date": "1782",
+  "credit": "Art UK",
+  "licence": "Public domain",
+  "licence_url": null,
+  "attribution_required": "false",
+  "description": "",
+  "licence_ok": true,
+  "local": "reference.jpg",
+  "sha256": "2ff9167fd6476fff9da1eca5cef4b30e3ad5b45b6131b8e41a2740deaf6599c2",
+  "checked": "2026-10-30T23:22:10Z"
+ },
+ "created": "2026-10-31T01:17:11Z",
+ "sha256": "53a6271dc5a57b760f96a59c9ada3946abe03873a0c7e8e66424648851441203",
+ "label": "AI portrait after Joshua Reynolds, 1782 (public domain)",
+ "imagined": false,
+ "review": {
+  "verdict": "pass",
+  "notes": "Faithful to Reynolds 1782: lace cap over powdered hair, dark dress, white fichu; dignified.",
+  "reviewed": "2026-10-31T01:19:35Z",
+  "checks": [
+   "likeness",
+   "dignity",
+   "hands-eyes-teeth",
+   "era dress",
+   "clean background"
+  ]
+ },
+ "usage": {
+  "promptTokenCount": 485,
+  "candidatesTokenCount": 1307,
+  "totalTokenCount": 2032,
+  "promptTokensDetails": [
+   {
+    "modality": "TEXT",
+    "tokenCount": 227
+   },
+   {
+    "modality": "IMAGE",
+    "tokenCount": 258
+   }
+  ],
+  "candidatesTokensDetails": [
+   {
+    "modality": "IMAGE",
+    "tokenCount": 1120
+   }
+  ],
+  "thoughtsTokenCount": 240,
+  "serviceTier": "standard"
+ }
+}

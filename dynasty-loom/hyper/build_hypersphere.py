@@ -37,14 +37,19 @@ Mapping (stated on screen and in the receipt):
   founder's house at azimuth 0 (+Z); inside a house people are ordered by descent (depth first, children by birth, an in-law right after
   their spouse) and spread in elevation in that order (siblings and cousins sit together), azimuth jittered by the golden ratio.
 """
-import argparse, base64, hashlib, json, math, os, re, shutil, sys
+import argparse, base64, hashlib, importlib.util, json, math, os, re, shutil, sys
 from collections import defaultdict
 
 HERE = os.path.dirname(os.path.abspath(__file__))                        # proto/hyper
 PROTO = os.path.dirname(HERE)
 SRC, PAGE = os.path.join(HERE, 'src'), os.path.join(HERE, 'page', 'index.html')
 VENDOR = os.path.join(PROTO, 'x3d', 'vendor', 'x_ite')
-VERSION = 'build_hypersphere.py 2.0'
+# NAV HOOK (README, "v5 (Artifact version 5)"): the lens library, loaded by path (python3 -I puts no script directory on sys.path)
+LENS_LIB = os.environ.get('LENS_LIB', os.path.abspath(os.path.join(HERE, 'nav', 'lens_glsl.py')))
+sys.dont_write_bytecode = True   # no __pycache__ beside the library
+_spec = importlib.util.spec_from_file_location('lens_glsl', LENS_LIB); LENSG = importlib.util.module_from_spec(_spec); _spec.loader.exec_module(LENSG)
+NAV_LIB = os.path.dirname(LENS_LIB)   # orbit.js and lens.js ship beside the page as lib/*.js
+VERSION = 'nav (orbit camera + hyperbolic lens) on build_hypersphere.py 2.0'
 sys.path.insert(0, HERE)
 import themes as TH   # noqa: E402  (v2: the look table)
 
@@ -65,7 +70,7 @@ SCALE = 6.0                                # pocket -> host (the host Inlines th
 G = R_GLASS / 10.0                         # camera grammar units (present shell = 10) -> pocket units
 GAP = math.radians(4.0)                    # gap between house sectors
 LAT_MAX = 0.80                             # elevation band: asin(...) * 0.80, so nothing sits on the poles
-ARC_STEP = 0.035                           # radians between samples along an arc
+ARC_STEP = 0.035                           # radians between samples along an arc (v3); NAV HOOK densify: arc_pts takes LENSG.arc_step(rad, R_GLASS)
 RAD_STEP = 0.012                           # pocket units between samples along a fiber (pulses and the time cut need vertices)
 CLOSE_DR = 0.0045                          # a close marriage is doubled: two arcs this far apart in radius
 CORE_W = THEME['core_w']                            # ribbon half-widths (pocket units): hot core, soft glow by tier
@@ -212,7 +217,7 @@ def part(defn, typ, name):
     # X_ITE 16.5.1 reads a ShaderPart's CDATA as its url; raw GLSL there is fetched as a relative URL. The data: prefix makes X_ITE decode it
     # in place (no request, nothing for connect-src to refuse); the look bible's CSP finding.
     mime = 'x-shader/x-vertex' if typ == 'VERTEX' else 'x-shader/x-fragment'
-    return "<ShaderPart DEF='%s' type='%s'><![CDATA[data:%s,%s]]></ShaderPart>" % (defn, typ, mime, glsl(name))
+    return "<ShaderPart DEF='%s' type='%s'><![CDATA[data:%s,%s]]></ShaderPart>" % (defn, typ, mime, LENSG.patch(defn, name, glsl(name), R_GLASS))   # NAV HOOK: the lens (and logDepth where the shader has none)
 
 
 def fields(spec, ind):
@@ -341,7 +346,7 @@ def layout(F, C):
 
 # ---------------------------------------------------------------- geometry: polylines, then camera-facing ribbons
 def arc_pts(d1, d2, rad):
-    a = math.acos(clamp(dot(norm(d1), norm(d2)), -1, 1)); n = max(2, int(math.ceil(a / ARC_STEP)) + 1)
+    a = math.acos(clamp(dot(norm(d1), norm(d2)), -1, 1)); n = max(2, int(math.ceil(a / LENSG.arc_step(rad, R_GLASS, ARC_STEP))) + 1)   # NAV HOOK densify
     return [mul(slerp(d1, d2, i / (n - 1)), rad) for i in range(n)]
 
 
@@ -965,9 +970,11 @@ def write_plates(w, plates):
             tx = ("<ImageTexture USE='%s'/>" % tdef) if tdef in tex else ("<ImageTexture DEF='%s' url='\"%s\"' repeatS='false' repeatT='false'/>" % (tdef, it['tex'])); tex.add(tdef)
             geo = "<IndexedTriangleSet USE='PlateQuad'/>" if quad else ("<IndexedTriangleSet DEF='PlateQuad' solid='false' index='0 1 2 0 2 3'><Coordinate point='-0.5 -0.5 0 0.5 -0.5 0 0.5 0.5 0 -0.5 0.5 0'/>"
                                                                        "<TextureCoordinate point='0 0 1 0 1 1 0 1'/></IndexedTriangleSet>"); quad = True
+            w("        <Transform DEF='PlateLens_%s_%d'>\n" % (g['group'][7:], k))   # NAV HOOK: the page moves and scales it with the lens
             w("        <Transform DEF='Plate_%s_%d' translation='%s'>\n          <Billboard axisOfRotation='0 0 0'>\n            <Transform scale='%s %s 1'>\n"
               "              <Shape>\n                <Appearance>%s%s</Appearance>\n                %s\n              </Shape>\n            </Transform>\n          </Billboard>\n        </Transform>\n" % (
                   g['group'][7:], k, v3(it['start'], 5), fnum(it['w'], 5), fnum(it['h'], 5), mat, tx, geo))
+            w("        </Transform>\n")
         w("      </Group>\n")
     w("    </Group>\n")
     for shot, g in plates.items():
@@ -984,7 +991,7 @@ def write_plates(w, plates):
         for k, it in enumerate(g['items']):
             w("    <ROUTE fromNode='%s' fromField='fraction_changed' toNode='PlateDrift_%s_%d' toField='set_fraction'/>\n" % (g['clock_in'], g['group'][7:], k))
             w("    <ROUTE fromNode='PlateDrift_%s_%d' fromField='value_changed' toNode='Plate_%s_%d' toField='set_translation'/>\n" % (g['group'][7:], k, g['group'][7:], k))
-        defs += [g['clock_in'], g['clock_out'], g['mat']]
+        defs += [g['clock_in'], g['clock_out'], g['mat']] + ['PlateLens_%s_%d' % (g['group'][7:], k) for k in range(len(g['items']))]   # NAV HOOK
     return defs
 
 
@@ -1030,6 +1037,8 @@ def write_pocket(F, C, L, shots, tour, rib, path, mapping, plates=None):
     w("    <WorldInfo title='Dynasty hypersphere: %s' info='%s'/>\n" % (esc(C['name']), ' '.join('&quot;%s&quot;' % esc(x) for x in mapping['lines'])))
     w("    <NavigationInfo DEF='Nav' type='\"EXAMINE\" \"ANY\"' headlight='false' speed='0.6' avatarSize='0.01 0.16 0.075' transitionType='\"ANIMATE\"' transitionTime='1.6'/>\n")
     w("    <NavigationInfo DEF='NavFly' type='\"FLY\" \"ANY\"' headlight='false' speed='0.15' avatarSize='0.004 0.16 0.075' transitionType='\"ANIMATE\"' transitionTime='2.4'/>\n")
+    w("    <!-- NavNone (nav): the page owns the camera. The Probe binds it, so X_ITE adds no navigation of its own (it still delivers clicks to sensors). -->\n")
+    w("    <NavigationInfo DEF='NavNone' type='\"NONE\"' headlight='false' avatarSize='0.004 0.16 0.075' transitionType='\"TELEPORT\"' transitionTime='0'/>\n")
     w("    <Background DEF='PocketSky' skyColor='%s'/>\n" % ' '.join('%.3f' % x for x in TH._rgb(THEME['ground_bot'])))
     w("    <!-- THE SHOTS (camera grammar). Wide first, so it is bound when this file is opened alone; inside a host the host's opening view is bound. -->\n")
     names = ['Wide', 'Crown', 'Colossus'] + [hshot(k) for k in L['keys']] + sorted(n for n in shots if n.startswith('S'))
@@ -1049,48 +1058,50 @@ def write_pocket(F, C, L, shots, tour, rib, path, mapping, plates=None):
     wd = shots['Wide']
     w("    <!-- Probe: the viewpoint the page flies from the real camera pose. ProbeFrame turns +Y to the shot's up (rolled shots stay level under EXAMINE).\n"
       "         CamSense reports the camera in pocket units; ShellSense reports entering the glass. -->\n")
-    w("    <Transform DEF='ProbeFrame'>\n      <Viewpoint DEF='Probe' description='Probe' position='%s' orientation='%s' centerOfRotation='0 0 0' fieldOfView='%s'/>\n    </Transform>\n" % (
+    w("    <Transform DEF='ProbeFrame'>\n      <Viewpoint DEF='Probe' description='Probe' position='%s' orientation='%s' centerOfRotation='0 0 0' fieldOfView='%s'>\n        <NavigationInfo USE='NavNone' containerField='navigationInfo'/>\n      </Viewpoint>\n    </Transform>\n" % (
         v3(wd['pos'], 5), v3(look_at(wd['pos'], wd['tgt']), 6), fnum(wd['fov'], 3)))
     w("    <ProximitySensor DEF='CamSense' size='1000000 1000000 1000000'/>\n    <ProximitySensor DEF='ShellSense' size='%s %s %s'/>\n" % ((fnum(2 * R_GLASS),) * 3))
     w("    <!-- THE FOUNDERS' SEED: a small limb-darkened sun (SeedCore, tone-mapped like every shader here; the PhysicalMaterial is the fallback),\n"
       "         a point light, and an analytic glow on a small proxy (SeedGlow). Both breathe with the Clock (4 s). -->\n")
     w("    <PointLight DEF='SeedLight' global='true' location='0 0 0' color='1 0.74 0.45' intensity='0.35' radius='100' attenuation='1 0 0'/>\n")
+    w("    <!-- SeedXf (nav): the lens moves and scales the seed from the page (its glow is analytic in its own local space). -->\n    <Transform DEF='SeedXf'>\n")
     w("    <Shape DEF='Seed'>\n      <Appearance DEF='SeedApp'><PhysicalMaterial DEF='SeedMat' baseColor='1 0.95 0.85' emissiveColor='0.55 0.45 0.32' metallic='0' roughness='0.2'/>\n"
       "        <ComposedShader DEF='SeedCore' language='GLSL'>%s\n          %s\n          %s\n        </ComposedShader>\n      </Appearance>\n" % (
         fields(common + [('uExposure', 'SFFloat', '1')], '          '), part('SeedVS', 'VERTEX', 'ring.vert.glsl'), part('SeedCoreFS', 'FRAGMENT', 'seedcore.frag.glsl')))
     w("      <IndexedTriangleSet solid='true' index='%s'>\n        <Coordinate point='%s'/>\n        <Normal vector='%s'/>\n      </IndexedTriangleSet>\n    </Shape>\n" % (' '.join(str(i) for t in ef for i in t), flat(ev, 5), flat(en, 4)))
     w("    <Shape DEF='SeedGlowShape'>\n      <Appearance DEF='SeedGlowApp' alphaMode='BLEND'>\n        <ComposedShader DEF='SeedGlow' language='GLSL'>%s\n          %s\n          %s\n        </ComposedShader>\n      </Appearance>\n" % (
-        fields(seed_f, '          '), part('RayVS', 'VERTEX', 'ray.vert.glsl'), part('SeedFS', 'FRAGMENT', 'seed.frag.glsl')))
+        fields(seed_f + LENSG.fields('SeedGlow', seed_f), '          '), part('RayVS', 'VERTEX', 'ray.vert.glsl'), part('SeedFS', 'FRAGMENT', 'seed.frag.glsl')))
     w("      <IndexedTriangleSet DEF='SeedGlowProxy' solid='false' index='%s'>\n        <Coordinate point='%s'/>\n      </IndexedTriangleSet>\n    </Shape>\n" % (' '.join(str(i) for t in gf for i in t), flat(gv, 5)))
+    w("    </Transform>\n")
     w("    <!-- THE SUBJECT BEAD: on a close shot the page moves BeadXf to the stop's event (a point on the subject's life, or the middle of a marriage\n"
       "         arc, where uRing draws a ring) and turns BeadSwitch on. The same point-glow shader as the seed, smaller, on a 2 s breath. -->\n")
     w("    <Transform DEF='BeadXf'>\n      <Switch DEF='BeadSwitch' whichChoice='-1'>\n        <Shape DEF='Bead'>\n          <Appearance DEF='BeadApp' alphaMode='BLEND'>\n"
-      "            <ComposedShader DEF='BeadGlow' language='GLSL'>%s\n              <ShaderPart USE='RayVS'/>\n              <ShaderPart USE='SeedFS'/>\n            </ComposedShader>\n          </Appearance>\n" % fields(glow_f(BEAD_GLOW, BEAD_R, 0, 1), '              '))
+      "            <ComposedShader DEF='BeadGlow' language='GLSL'>%s\n              <ShaderPart USE='RayVS'/>\n              <ShaderPart USE='SeedFS'/>\n            </ComposedShader>\n          </Appearance>\n" % fields(glow_f(BEAD_GLOW, BEAD_R, 0, 1) + LENSG.fields('BeadGlow', glow_f(BEAD_GLOW, BEAD_R, 0, 1)), '              '))
     w("          <IndexedTriangleSet DEF='BeadProxy' solid='false' index='%s'>\n            <Coordinate point='%s'/>\n          </IndexedTriangleSet>\n        </Shape>\n      </Switch>\n    </Transform>\n" % (
         ' '.join(str(i) for t in bf for i in t), flat(bv, 6)))
     w("    <!-- THE THREADS: one ribbon mesh drawn twice (USE). The hot core is opaque and narrow; the glow is transparent and wide. A life is a radial\n"
       "         fiber from r(born) to r(died); a spawn arc on the birth shell joins it to a parent; a move bends it along the shell of the move year;\n"
       "         a marriage is an arc on the shell of its year (a close one doubled and brighter). Vertex attributes carry year, kind, estimate, person. -->\n")
     w("    <Shape DEF='Threads'>\n      <Appearance DEF='CoreApp' alphaMode='OPAQUE'>\n        <ComposedShader DEF='FiberCore' language='GLSL'>%s\n          %s\n          %s\n        </ComposedShader>\n      </Appearance>\n" % (
-        fields(fiber_f(CORE_W, CORE_MIN_PX, CORE_MAX_PX, 0), '          '), part('FiberVS', 'VERTEX', 'fiber.vert.glsl'), part('FiberFS', 'FRAGMENT', 'fiber.frag.glsl')))
+        fields(fiber_f(CORE_W, CORE_MIN_PX, CORE_MAX_PX, 0) + LENSG.fields('FiberCore', fiber_f(CORE_W, CORE_MIN_PX, CORE_MAX_PX, 0)), '          '), part('FiberVS', 'VERTEX', 'fiber.vert.glsl'), part('FiberFS', 'FRAGMENT', 'fiber.frag.glsl')))
     w("      <IndexedTriangleSet DEF='Ribbons' solid='false' colorPerVertex='true' index='%s'>\n" % ' '.join(str(i) for i in rib.idx))
     w("        <Coordinate point='%s'/>\n        <Color color='%s'/>\n" % (flat(rib.pos, 5), flat(rib.col, 3)))
     w("        <FloatVertexAttribute name='aTan' numComponents='3' value='%s'/>\n" % flat(rib.tan, 3))
     w("        <FloatVertexAttribute name='aInfo' numComponents='4' value='%s'/>\n" % ' '.join('%s %s %s %s' % (fnum(i[0], 0), fnum(i[1], 2), fnum(i[2], 3), fnum(i[3], 0)) for i in rib.info))
     w("        <FloatVertexAttribute name='aAux' numComponents='4' value='%s'/>\n" % ' '.join('%s %s %s %s' % (fnum(a[0], 3), fnum(a[1], 0), fnum(a[2], 0), fnum(a[3], 0)) for a in rib.aux))
     w("      </IndexedTriangleSet>\n    </Shape>\n")
-    w("    <Switch DEF='GlowSwitch' whichChoice='0'>\n      <Shape DEF='Glow'>\n        <Appearance DEF='GlowApp' alphaMode='BLEND'>\n          <ComposedShader DEF='FiberGlow' language='GLSL'>%s\n            <ShaderPart USE='FiberVS'/>\n            <ShaderPart USE='FiberFS'/>\n          </ComposedShader>\n        </Appearance>\n        <IndexedTriangleSet USE='Ribbons'/>\n      </Shape>\n    </Switch>\n" % fields(fiber_f(GLOW_W_TIER['ultra'], GLOW_MIN_PX, GLOW_MAX_PX, 1), '            '))
+    w("    <Switch DEF='GlowSwitch' whichChoice='0'>\n      <Shape DEF='Glow'>\n        <Appearance DEF='GlowApp' alphaMode='BLEND'>\n          <ComposedShader DEF='FiberGlow' language='GLSL'>%s\n            <ShaderPart USE='FiberVS'/>\n            <ShaderPart USE='FiberFS'/>\n          </ComposedShader>\n        </Appearance>\n        <IndexedTriangleSet USE='Ribbons'/>\n      </Shape>\n    </Switch>\n" % fields(fiber_f(GLOW_W_TIER['ultra'], GLOW_MIN_PX, GLOW_MAX_PX, 1) + LENSG.fields('FiberGlow', fiber_f(GLOW_W_TIER['ultra'], GLOW_MIN_PX, GLOW_MAX_PX, 1)), '            '))
     w("    <!-- THE GLASS: analytic sphere r=%s on a proxy r=%s (solid false: the shader keeps one layer outside and the far wall inside); time shells\n"
       "         every 50 years from %d; the fell shell; raymarched haze; gl_FragDepth from the analytic entry point, so host geometry composites. -->\n" % (fnum(R_GLASS), fnum(R_PROXY), L['shell0']))
     w("    <Shape DEF='Shell'>\n      <Appearance DEF='ShellApp' alphaMode='BLEND'>\n        <ComposedShader DEF='ShellShader' language='GLSL'>%s\n          <ShaderPart USE='RayVS'/>\n          %s\n        </ComposedShader>\n      </Appearance>\n" % (
-        fields(shell_f, '          '), part('ShellFS', 'FRAGMENT', 'shell.frag.glsl')))
+        fields(shell_f + LENSG.fields('ShellShader', shell_f), '          '), part('ShellFS', 'FRAGMENT', 'shell.frag.glsl')))
     w("      <IndexedTriangleSet DEF='ShellProxy' solid='false' index='%s'>\n        <Coordinate point='%s'/>\n      </IndexedTriangleSet>\n    </Shape>\n" % (' '.join(str(i) for t in sf for i in t), flat(sv, 5)))
     plate_defs = write_plates(w, plates or {})
     w("    <!-- CLOCKS: standard X3D drives the shaders, so the pocket animates by itself when Inlined in any host. Every period divides 600 s. -->\n")
     w("    <TimeSensor DEF='Clock' cycleInterval='600' loop='true'/>\n")
     for s_ in ('ShellShader', 'SeedGlow', 'SeedCore', 'BeadGlow', 'FiberCore', 'FiberGlow'):
         w("    <ROUTE fromNode='Clock' fromField='fraction_changed' toNode='%s' toField='uCycle'/>\n" % s_)
-    exports = ['Probe', 'ProbeFrame', 'CamSense', 'ShellSense', 'Nav', 'NavFly', 'Inside', 'Flywheel', 'FlywheelRig', 'FlywheelClock'] + names + \
+    exports = ['Probe', 'ProbeFrame', 'CamSense', 'ShellSense', 'Nav', 'NavFly', 'NavNone', 'SeedXf', 'Inside', 'Flywheel', 'FlywheelRig', 'FlywheelClock'] + names + \
               ['Frame_' + n for n in names if shots[n]['frame']] + ['FiberCore', 'FiberGlow', 'ShellShader', 'SeedGlow', 'SeedCore', 'BeadGlow', 'BeadXf', 'BeadSwitch', 'GlowApp', 'ShellApp', 'SeedGlowApp', 'BeadApp', 'GlowSwitch', 'Clock', 'SeedMat'] + plate_defs
     for e in exports: w("    <EXPORT localDEF='%s'/>\n" % e)
     w("  </Scene>\n</X3D>\n")
@@ -1124,7 +1135,7 @@ def write_host(C, L, shots, exports, pocket_file, path, mapping):
     for i, g in enumerate(RINGS):
         tp, tn, ti = torus(g['R'], g['r']); ring_tri += len(ti) // 3
         app = ("<Appearance DEF='Pewter'><PhysicalMaterial DEF='PewterMat' baseColor='%s' emissiveColor='0.03 0.032 0.036' metallic='0.75' roughness='0.36'/>"
-               "<ComposedShader DEF='RingShader' language='GLSL'>%s %s %s</ComposedShader></Appearance>" % (v3(PEWTER, 3), fields([('uCycle', 'SFFloat', '0.25'), ('uExposure', 'SFFloat', '1.6'), ('uTint', 'SFVec3f', v3(PEWTER, 3))], '            '),
+               "<ComposedShader DEF='RingShader' language='GLSL'>%s %s %s</ComposedShader></Appearance>" % (v3(PEWTER, 3), fields([('uCycle', 'SFFloat', '0.25'), ('uExposure', 'SFFloat', '1.6'), ('uTint', 'SFVec3f', v3(PEWTER, 3))] + LENSG.fields('RingShader'), '            '),
                part('RingVS', 'VERTEX', 'ring.vert.glsl'), part('RingFS', 'FRAGMENT', 'ring.frag.glsl'))) if i == 0 else "<Appearance USE='Pewter'/>"
         w("      <Transform DEF='%s' rotation='%s'>\n        <Shape>\n          %s\n" % (g['def'], ' '.join(fnum(v, 4) for v in g['rot']), app))
         w("          <IndexedTriangleSet solid='true' index='%s'>\n            <Coordinate point='%s'/>\n            <Normal vector='%s'/>\n          </IndexedTriangleSet>\n        </Shape>\n      </Transform>\n" % (' '.join(str(v) for v in ti), flat(tp, 4), flat(tn, 3)))
@@ -1173,8 +1184,7 @@ def build_family(F, C, out, portraits=None, root_rel=''):
         p = P[pid]; pts = []
         for pl in polys:
             if pl['kind'] == 'life' and pl['ids'][0] == pid:
-                keep = [0] + [i for i in range(1, len(pl['pts']) - 1) if pl['kinds'][i] != pl['kinds'][i - 1] or pl['kinds'][i] == 1 or pl['kinds'][i + 1] != pl['kinds'][i]] + [len(pl['pts']) - 1]
-                pts = [r5(pl['pts'][i]) for i in sorted(set(keep))]
+                pts = [r5(q) for q in LENSG.pick_line(pl['pts'])]   # NAV HOOK: every pick_step pocket units, so lens picking can warp it
         ps = present_shot(L, {}, 'Pick', pid, store=False, variant=L['index'][pid])
         people[pid] = dict(i=L['index'][pid], label=p['label'], name=p['name'], house=p['house_name'], born=p['born'], died=p['died'], line=pts,
                            present={k: ps[k] for k in ('pos', 'tgt', 'up', 'fov', 'size', 'frame', 'nav', 'space', 'beat', 'bead', 'composition')}, anchor=label_point(L, pid),
@@ -1185,7 +1195,7 @@ def build_family(F, C, out, portraits=None, root_rel=''):
     doc = dict(version='hyper-view/1', family=fam, name=C['name'], host=host, pocket=pocket, cards='%s.cards.json' % fam, pocket_scale=SCALE, timing=TIMING,
                units=dict(Y0=L['Y0'], top=L['TOP'], R0=R0, K=L['K'], R=R_GLASS, Rp=R_PROXY, Rtop=R_TOP, shell0=L['shell0'], years_per_unit=round(yrs_per_unit, 2)),
                mapping=mapping, sectors=sectors, order_west_to_east=L['keys'], founders=L['founders'], shots=shots, tour=tour, chain_checks=checks, stop_labels=labels,
-               people=people, glow=GLOW_W_TIER, picked=dict(colossus_house=big), dye_legend=dye_legend(C), bead_r=BEAD_R, theme=THEME['slug'],
+               people=people, glow=GLOW_W_TIER, picked=dict(colossus_house=big), lens=LENSG.page_block(), dye_legend=dye_legend(C), bead_r=BEAD_R, theme=THEME['slug'],
                theme_dyes={dk: d['color'] for dk, d in C['dyes'].items()}, plates=plates, plate_timing=dict(fade=list(PLATE_FADE), out_s=PLATE_OUT_S, t=PLATE_T),
                dye_steps={str(k): sum(1 for pid in P if dye_rgb(P[pid].get('shares'), C['dyes'])[1] == k) for k in list(range(DYE_K_MAX + 1)) + [None]},
                counts=dict(people=len(P), unions=len(U), close=sum(1 for u in U.values() if u['close']), unions_year_estimated=sum(1 for u in U.values() if u['year_precision'] not in ('year', 'day', 'month')),
@@ -1264,7 +1274,12 @@ def main():
     files += ['assets/images/' + n for n in sorted(os.listdir(os.path.join(VENDOR, 'assets', 'images')))]
     for rel in files:
         dst = os.path.join(out, 'x_ite', rel); os.makedirs(os.path.dirname(dst), exist_ok=True); shutil.copyfile(os.path.join(VENDOR, rel), dst)
-    own = ['index.html', 'hyper-manifest.json'] + [x for s in summary.values() for x in (s['host'], s['pocket'], s['data'], s['geometry'], s['cards'])]
+    os.makedirs(os.path.join(out, 'lib'), exist_ok=True)   # NAV HOOK: the orbit camera and the lens mirror, plain scripts beside the page
+    for fn in ('orbit.js', 'lens.js'):
+        js = open(os.path.join(NAV_LIB, fn), encoding='utf-8').read()
+        if re.search(r'\beval\s*\(|new\s+Function\b', js): raise SystemExit('lib/%s uses eval or new Function' % fn)
+        open(os.path.join(out, 'lib', fn), 'w', encoding='utf-8', newline='\n').write(js)
+    own = ['index.html', 'hyper-manifest.json', 'lib/orbit.js', 'lib/lens.js'] + [x for s in summary.values() for x in (s['host'], s['pocket'], s['data'], s['geometry'], s['cards'])]
     problems, living = [], []
     for f in own:
         text = open(os.path.join(out, f), encoding='utf-8').read()
@@ -1274,9 +1289,9 @@ def main():
                 if isinstance(p.get('born'), int) and p['born'] >= view['asof'] - 110 and p.get('died') is None: living.append('%s %s' % (f, p.get('name')))
     if problems or living: raise SystemExit('publish gates: %r %r' % (problems, living))
     published = own + ['x_ite/' + r for r in files]
-    pub = {p: {'from': os.path.join(out, p), 'contentType': TYPES.get(os.path.splitext(p)[1], 'application/octet-stream')} for p in published}
+    pub = {p: {'from': p, 'contentType': TYPES.get(os.path.splitext(p)[1], 'application/octet-stream')} for p in published}
     json.dump(pub, open(os.path.join(out, 'publish.json'), 'w', encoding='utf-8'), indent=1, sort_keys=True)
-    inputs = {os.path.relpath(p, PROTO): sha_file(p) for p in [os.path.abspath(__file__), os.path.join(HERE, 'themes.py'), a.view, PAGE] + [os.path.join(a.cards, k + '.cards.json') for k in FAMILIES] +
+    inputs = {os.path.relpath(p, PROTO): sha_file(p) for p in [os.path.abspath(__file__), LENS_LIB, os.path.join(NAV_LIB, 'orbit.js'), os.path.join(NAV_LIB, 'lens.js'), os.path.join(HERE, 'themes.py'), a.view, PAGE] + [os.path.join(a.cards, k + '.cards.json') for k in FAMILIES] +
               sorted(os.path.join(SRC, n) for n in os.listdir(SRC)) + [os.path.join(VENDOR, 'x_ite.min.js')]}
     outputs = {p: sha_file(os.path.join(out, p)) for p in own + ['publish.json']}
     outputs['x_ite/* (%d files, copied)' % len(files)] = hashlib.sha256(''.join(sha_file(os.path.join(out, 'x_ite', r)) for r in files).encode()).hexdigest()

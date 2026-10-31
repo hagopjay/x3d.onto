@@ -340,6 +340,7 @@ BASE_CSS = '''  /* ---- the v2 look (hyper/themes.py via merge_views.py): one st
   #portrait figcaption b { display: block; font: 600 15px/1.25 var(--display); }
   #portrait figcaption span { display: block; color: var(--dim); font-variant-numeric: lining-nums; }
   #portrait figcaption .plab { font: italic 11.5px/1.3 var(--ui); color: var(--dim); margin-top: 2px; letter-spacing: 0; text-transform: none; }
+  #portrait figcaption b, #portrait figcaption span { text-shadow: var(--lab-halo), var(--lab-halo); }   /* v5: a doubled knockout, so fibers and arcs pass behind the name and the AI label */
   #lead { position: fixed; left: 0; top: 0; height: 1px; background: var(--ink); transform-origin: 0 50%; pointer-events: none; opacity: 0; z-index: 2; }
   #lead::before { content: ''; position: absolute; left: -3px; top: -3px; width: 7px; height: 7px; border-radius: 50%; background: var(--ink); }
   body:has(#card:not([hidden])) #rail .t { display: none; }
