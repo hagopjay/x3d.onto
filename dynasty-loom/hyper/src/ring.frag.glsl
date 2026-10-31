@@ -16,6 +16,6 @@ void main() {
   vec3 L = normalize(vec3(.45, .62, .64)), H = normalize(L + V);
   vec3 metal = uTint;
   float diff = clamp(dot(N, L), 0., 1.), spec = pow(clamp(dot(N, H), 0., 1.), 48.), rim = pow(1. - c, 3.);
-  vec3 col = metal * (.05 + .34 * diff) + vec3(.92, .95, 1.) * spec * 1.3 + metal * rim * .45;
-  x3d_FragColor = vec4(encode(col, uExposure) + dither(gl_FragCoord.xy, uCycle * 600.), 1.);
+  vec3 col = metal * (S_RING_AMB + S_RING_DIFF * diff) + vec3(.92, .95, 1.) * spec * S_RING_SPEC + metal * rim * .45;
+  x3d_FragColor = vec4((S_INK > .5 ? clamp(col, 0., 1.) : encode(col, uExposure)) + dither(gl_FragCoord.xy, uCycle * 600.), 1.);
 }

@@ -1,0 +1,25 @@
+{
+ "artifact": ".../v4-candidate",
+ "build_date": "2026-10-30",
+ "looks": [
+  "museum-atlas",
+  "documentary-night"
+ ],
+ "phone_ui": "editorial-clarity",
+ "files": 132,
+ "bytes": 16103987,
+ "largest": {
+  "path": "pocket-rothschild.x3d",
+  "bytes": 1844441
+ },
+ "portraits": {
+  "ai_portrait": 6,
+  "by_status": {
+   "ok": 6,
+   "pending": 20
+  },
+  "monogram": 0,
+  "people": 26,
+  "placeholder": 20
+ }
+}

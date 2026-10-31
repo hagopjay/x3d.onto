@@ -1,0 +1,871 @@
+{
+ "stage": "make_artifact.py",
+ "source": "../../../proto/v2/build/v2/tapestry",
+ "hyper_source": "../../../proto/v2/build/v2/hyper",
+ "hyper_built_by": "build_hypersphere.py 2.0",
+ "views": [
+  "hypersphere (default)",
+  "loom"
+ ],
+ "looks": [
+  "museum-atlas",
+  "documentary-night"
+ ],
+ "hyper_alt_source": "../../../proto/v2/build/v2/hyper-alt",
+ "xite_components": [
+  "EventUtilitiesComponent.min.js",
+  "Geometry2DComponent.min.js",
+  "Geometry3DComponent.min.js",
+  "KeyDeviceSensorComponent.min.js",
+  "ScriptingComponent.min.js",
+  "TextComponent.min.js",
+  "X_ITEComponent.min.js"
+ ],
+ "portraits": {
+  "manifest": {
+   "entries": 26,
+   "generated": "2026-10-30T19:11:50Z",
+   "sha256": "437548d639d01737640e6fcf2b14b4042460ba5e287829a57685003d6fc87489",
+   "version": 1
+  },
+  "counts": {
+   "ai_portrait": 6,
+   "by_status": {
+    "ok": 6,
+    "pending": 20
+   },
+   "monogram": 0,
+   "people": 26,
+   "placeholder": 20
+  },
+  "people": {
+   "Q1035": {
+    "kind": "placeholder",
+    "status": "pending",
+    "label": "Portrait in progress"
+   },
+   "Q150494": {
+    "kind": "placeholder",
+    "status": "pending",
+    "label": "Portrait in progress"
+   },
+   "Q153956": {
+    "kind": "placeholder",
+    "status": "pending",
+    "label": "Portrait in progress"
+   },
+   "Q1557224": {
+    "kind": "ai-portrait",
+    "status": "ok",
+    "label": "AI portrait after Moritz Daniel Oppenheim, 1836 (public domain)"
+   },
+   "Q158659": {
+    "kind": "placeholder",
+    "status": "pending",
+    "label": "Portrait in progress"
+   },
+   "Q204473": {
+    "kind": "placeholder",
+    "status": "pending",
+    "label": "Portrait in progress"
+   },
+   "Q234050": {
+    "kind": "placeholder",
+    "status": "pending",
+    "label": "Portrait in progress"
+   },
+   "Q242147": {
+    "kind": "placeholder",
+    "status": "pending",
+    "label": "Portrait in progress"
+   },
+   "Q311469": {
+    "kind": "placeholder",
+    "status": "pending",
+    "label": "Portrait in progress"
+   },
+   "Q3133240": {
+    "kind": "placeholder",
+    "status": "pending",
+    "label": "Portrait in progress"
+   },
+   "Q316669": {
+    "kind": "placeholder",
+    "status": "pending",
+    "label": "Portrait in progress"
+   },
+   "Q319331": {
+    "kind": "placeholder",
+    "status": "pending",
+    "label": "Portrait in progress"
+   },
+   "Q333605": {
+    "kind": "placeholder",
+    "status": "pending",
+    "label": "Portrait in progress"
+   },
+   "Q334120": {
+    "kind": "placeholder",
+    "status": "pending",
+    "label": "Portrait in progress"
+   },
+   "Q370060": {
+    "kind": "ai-portrait",
+    "status": "ok",
+    "label": "AI portrait after Moritz Daniel Oppenheim (public domain)"
+   },
+   "Q467167": {
+    "kind": "placeholder",
+    "status": "pending",
+    "label": "Portrait in progress"
+   },
+   "Q47905425": {
+    "kind": "placeholder",
+    "status": "pending",
+    "label": "Portrait in progress"
+   },
+   "Q547291": {
+    "kind": "ai-portrait",
+    "status": "ok",
+    "label": "AI portrait after Moritz Daniel Oppenheim, 1853 (public domain)"
+   },
+   "Q63656": {
+    "kind": "ai-portrait",
+    "status": "ok",
+    "label": "AI portrait after Moritz Daniel Oppenheim, 1850 (public domain)"
+   },
+   "Q63990": {
+    "kind": "ai-portrait",
+    "status": "ok",
+    "label": "AI portrait after Moritz Daniel Oppenheim, 1840 (public domain)"
+   },
+   "Q691402": {
+    "kind": "placeholder",
+    "status": "pending",
+    "label": "Portrait in progress"
+   },
+   "Q7044697": {
+    "kind": "placeholder",
+    "status": "pending",
+    "label": "Portrait in progress"
+   },
+   "Q7648718": {
+    "kind": "placeholder",
+    "status": "pending",
+    "label": "Portrait in progress"
+   },
+   "Q76956": {
+    "kind": "placeholder",
+    "status": "pending",
+    "label": "Portrait in progress"
+   },
+   "Q76988": {
+    "kind": "ai-portrait",
+    "status": "ok",
+    "label": "AI-imagined portrait: no likeness survives"
+   },
+   "Q922667": {
+    "kind": "placeholder",
+    "status": "pending",
+    "label": "Portrait in progress"
+   }
+  }
+ },
+ "script": "fcdbcab9edadfdddf025d727bcc975aa59b5e5976e826961f2300df8a52e3a6f",
+ "page": {
+  "file": "index.html",
+  "sha256": "79e7da5014729b7c10125bfa6b278fb7f21f836e8e355d1d760aefa983430401",
+  "from_sha256": "839e56ea386c8794c271e3defe6cd874d1feac85019016b6b8187170dde57241"
+ },
+ "gates": {
+  "secrets": "none",
+  "possibly_living": "none",
+  "people_in_cards": 302,
+  "link_hosts": {
+   "en.wikipedia.org": 569,
+   "de.wikipedia.org": 72,
+   "www.rothschildarchive.org": 64,
+   "family.rothschildarchive.org": 41,
+   "www.wikidata.org": 31,
+   "www.thepeerage.com": 30,
+   "www.w3.org": 15,
+   "www.web3d.org": 15,
+   "dbpedia.org": 7,
+   "thepeerage.com": 7,
+   "guide-to-the-archive.rothschildarchive.org": 2,
+   "doi.org": 2,
+   "epsilon.ac.uk": 2,
+   "archivesearch.lib.cam.ac.uk": 2,
+   "archives.trin.cam.ac.uk": 2,
+   "www.rmg.co.uk": 1,
+   "col.rct.uk": 1,
+   "www.stirnet.com": 1,
+   "www.darwinproject.ac.uk": 1,
+   "collection.sciencemuseumgroup.org.uk": 1,
+   "www.paratype.com": 1,
+   "openfontlicense.org": 1,
+   "oss.sgi.com": 1,
+   "fonts.googleapis.com": 1,
+   "cdn.jsdelivr.net": 1
+  }
+ },
+ "files": {
+  "darwin_wedgwood.cards.json": {
+   "bytes": 112033,
+   "sha256": "e11c4ff9635c203070b2ef1a5e399daaf47ed7abd1c622cf97eddfa31f27ba4f",
+   "type": "application/json"
+  },
+  "darwin_wedgwood.hyper.json": {
+   "bytes": 94447,
+   "sha256": "a5dc5277580a3d81ba7a018e1a3be57e76f2affc9e86753a36807db1aa5d6046",
+   "type": "application/json"
+  },
+  "darwin_wedgwood.x3d": {
+   "bytes": 161449,
+   "sha256": "fdb195f616fc457911f78765f2b416d1c356c6e2feeb681db6c827ee872f0d68",
+   "type": "application/xml"
+  },
+  "fonts/UBUNTU-FONT-LICENCE.txt": {
+   "bytes": 4673,
+   "sha256": "2f0015108d68627bd788d313f529c21ff4da2c2c42a5e1f3883acc83480f9002",
+   "type": "text/plain"
+  },
+  "fonts/UbuntuMono-R.ttf": {
+   "bytes": 197424,
+   "sha256": "4828d016e010938208340721dd53b9eaedca39c8cd62e38d6fbc11cd943c35cc",
+   "type": "font/ttf"
+  },
+  "habsburg.cards.json": {
+   "bytes": 138700,
+   "sha256": "c5b5616630bc7a3a835faee080200114a973bee017600b9fbff360b26ce25911",
+   "type": "application/json"
+  },
+  "habsburg.hyper.json": {
+   "bytes": 119656,
+   "sha256": "1d25767885d3da7dded52ddd85c26ad0b8b745a36f300ba6e4c4dca7dd6c4814",
+   "type": "application/json"
+  },
+  "habsburg.x3d": {
+   "bytes": 160377,
+   "sha256": "f4b0e7c08fa57284f052e1af91c6b41e5c945dbee081ab2b625072afb4e0780b",
+   "type": "application/xml"
+  },
+  "hyper-darwin_wedgwood.x3d": {
+   "bytes": 310920,
+   "sha256": "403d0ba5731702cfcff96af183aa5fb2571f9865b13b83e11a082a14edde17ea",
+   "type": "application/xml"
+  },
+  "hyper-habsburg.x3d": {
+   "bytes": 310685,
+   "sha256": "440e10b519749eed60adcfe8c1a8c3eb4df940d4a799b961e0f82b359f8ad22b",
+   "type": "application/xml"
+  },
+  "hyper-manifest.json": {
+   "bytes": 914,
+   "sha256": "8a055bc0cbc096113ffae1886ebc06a39a8997d6adced9810697144eb6631bb4",
+   "type": "application/json"
+  },
+  "hyper-rothschild.x3d": {
+   "bytes": 312049,
+   "sha256": "f028b52a286568ca7b9e2f4a6b4e37f1b5058efc0dccf276eedfc0da97c67ed1",
+   "type": "application/xml"
+  },
+  "loom-manifest.json": {
+   "bytes": 3124,
+   "sha256": "815e51fb94184d4f0d00778e91ece6a5335d1c065a7e494b6cdd2a3f9c1abd92",
+   "type": "application/json"
+  },
+  "pocket-darwin_wedgwood.x3d": {
+   "bytes": 1060245,
+   "sha256": "dc9e1441a3eecc4b2890f0eaa4281d07a521664747efa5d73f05ec71b44bd277",
+   "type": "application/xml"
+  },
+  "pocket-habsburg.x3d": {
+   "bytes": 1181405,
+   "sha256": "bd228ffd6334a3aad8cd659b1f15f64bff09b5932ed20ff3fe7c34e3cc3f76c4",
+   "type": "application/xml"
+  },
+  "pocket-rothschild.x3d": {
+   "bytes": 1844441,
+   "sha256": "c1adddda35fa606d10d811f3a16a0dabeb22b3fb9d8bc51c1ece88540bea115a",
+   "type": "application/xml"
+  },
+  "portraits.json": {
+   "bytes": 15554,
+   "sha256": "039eefb84c4d651fbf14970bda4d5aa5126e9338a4ab32ed71f35e3554dca830",
+   "type": "application/json"
+  },
+  "portraits/Q1035/placeholder/cutout-768.webp": {
+   "bytes": 42142,
+   "sha256": "24a8ca056f0a56040004f2fa8a3c72a84fd30fc3061d8d2861d4334c4ecaaa43",
+   "type": "image/webp"
+  },
+  "portraits/Q1035/placeholder/thumb-256.webp": {
+   "bytes": 8330,
+   "sha256": "2049db73aea13255da83978486440874a0aadd23afd9da19351a4ebe2e353eba",
+   "type": "image/webp"
+  },
+  "portraits/Q150494/placeholder/cutout-768.webp": {
+   "bytes": 41796,
+   "sha256": "fa0fe7dc1bcefabfabf3d9361b07f925376fda54a7cfc8a814aee70858e52bbf",
+   "type": "image/webp"
+  },
+  "portraits/Q150494/placeholder/thumb-256.webp": {
+   "bytes": 8204,
+   "sha256": "3688fca7aee161e0b0644a080e80830cfb23b90c9e83ed71dada07d82131432b",
+   "type": "image/webp"
+  },
+  "portraits/Q153956/placeholder/cutout-768.webp": {
+   "bytes": 42076,
+   "sha256": "fbea1f303de99bcaa8cf19c50155cb4b0ff97ed04dc0cdbd5a7fa0c45b4d0d76",
+   "type": "image/webp"
+  },
+  "portraits/Q153956/placeholder/thumb-256.webp": {
+   "bytes": 8256,
+   "sha256": "31076eadb68b0cc473f03ee454460cdef5538c5b356b75c941c556667107269c",
+   "type": "image/webp"
+  },
+  "portraits/Q1557224/v1/cutout-768.webp": {
+   "bytes": 118554,
+   "sha256": "62b39a56cfd9f6b1fa179ea6888a8beaa8808474f8572e4cf6f465336ff2fdaa",
+   "type": "image/webp"
+  },
+  "portraits/Q1557224/v1/thumb-256.webp": {
+   "bytes": 22398,
+   "sha256": "8e28aa5439b9e5336516d4d218b3ea7fe0984047544ec59a9dec66ef0aa182d4",
+   "type": "image/webp"
+  },
+  "portraits/Q158659/placeholder/cutout-768.webp": {
+   "bytes": 42462,
+   "sha256": "a06003500ba912e8c5008f15892b72bf24cdb0d2c9d384d8d58821e45c74c859",
+   "type": "image/webp"
+  },
+  "portraits/Q158659/placeholder/thumb-256.webp": {
+   "bytes": 8410,
+   "sha256": "b0511d93ea7905df94b9a61ee6c50fa82b099fd92ed183839b1305fbc7a697d9",
+   "type": "image/webp"
+  },
+  "portraits/Q204473/placeholder/cutout-768.webp": {
+   "bytes": 42504,
+   "sha256": "84e071975692a18e0a88d234e6481b14dfd034b7e4451b2ce682bfde9a257566",
+   "type": "image/webp"
+  },
+  "portraits/Q204473/placeholder/thumb-256.webp": {
+   "bytes": 8306,
+   "sha256": "b666f8994efaf992b27b6a9a3ab88782e529e12f296464fbcfa7643dc4d2716b",
+   "type": "image/webp"
+  },
+  "portraits/Q234050/placeholder/cutout-768.webp": {
+   "bytes": 41974,
+   "sha256": "7909464be01137b0dda44324c37154de6a36a1caeee67472da48e452f1da22c8",
+   "type": "image/webp"
+  },
+  "portraits/Q234050/placeholder/thumb-256.webp": {
+   "bytes": 8242,
+   "sha256": "1f83615503864f597f9141b2b9cf546dfe58ce3de6fe342b3e8519e4880f6e85",
+   "type": "image/webp"
+  },
+  "portraits/Q242147/placeholder/cutout-768.webp": {
+   "bytes": 42166,
+   "sha256": "d6fe93b346294debb0790465fd36476579968515ee60b51caaffd1c44c843317",
+   "type": "image/webp"
+  },
+  "portraits/Q242147/placeholder/thumb-256.webp": {
+   "bytes": 8302,
+   "sha256": "b304e093c1002522f749631a3441b1563dcffcf0d1c6460b83c4bfb39406d3f9",
+   "type": "image/webp"
+  },
+  "portraits/Q311469/placeholder/cutout-768.webp": {
+   "bytes": 42154,
+   "sha256": "643487b1b9437db1e563d354c92ab32b283232e099a7af75bb9cb84d3620dc4a",
+   "type": "image/webp"
+  },
+  "portraits/Q311469/placeholder/thumb-256.webp": {
+   "bytes": 8196,
+   "sha256": "082322ab80a6d89c08e359bf44690e1b6e1d68b47bfcfaa184d0b99c3ffe8b12",
+   "type": "image/webp"
+  },
+  "portraits/Q3133240/placeholder/cutout-768.webp": {
+   "bytes": 42684,
+   "sha256": "754efa5eb55305260ca2b897ccf7409331c4491c0e00323ce18bcff4cf624cf3",
+   "type": "image/webp"
+  },
+  "portraits/Q3133240/placeholder/thumb-256.webp": {
+   "bytes": 8450,
+   "sha256": "a528a098f657b841b54598a3075e395b4038f4e481408485a59eae14e4f02282",
+   "type": "image/webp"
+  },
+  "portraits/Q316669/placeholder/cutout-768.webp": {
+   "bytes": 42174,
+   "sha256": "484e003072ee0321e6d30102c36dc1f923d2840bfcbbee2e3061d1193973b5b1",
+   "type": "image/webp"
+  },
+  "portraits/Q316669/placeholder/thumb-256.webp": {
+   "bytes": 8444,
+   "sha256": "0c370eeb6617ce6a81741e570c37ea0955958272071108eba6581c220a616cff",
+   "type": "image/webp"
+  },
+  "portraits/Q319331/placeholder/cutout-768.webp": {
+   "bytes": 42390,
+   "sha256": "10fd0f2fc748d737aaf1c2fde32c59ecabd86dc44c05fb2862fca2fde235f302",
+   "type": "image/webp"
+  },
+  "portraits/Q319331/placeholder/thumb-256.webp": {
+   "bytes": 8348,
+   "sha256": "1cae16be70f81ab51a9766d47e2cad43e7a2c4319c90feff439c3ce1310f4671",
+   "type": "image/webp"
+  },
+  "portraits/Q333605/placeholder/cutout-768.webp": {
+   "bytes": 41680,
+   "sha256": "ef6d11300b9e1bb9113519f8a7b12e317796edf261009a6d2bb204a4216b72b1",
+   "type": "image/webp"
+  },
+  "portraits/Q333605/placeholder/thumb-256.webp": {
+   "bytes": 8268,
+   "sha256": "cb7f4d4b2cf6857e970f5b895fcb2b54c3897fb81cb711a8387cc926541dbbc4",
+   "type": "image/webp"
+  },
+  "portraits/Q334120/placeholder/cutout-768.webp": {
+   "bytes": 42950,
+   "sha256": "6407811bded733ba7603bd432b90a84dc20a88864ff12103b7d2dc1b6f3f273a",
+   "type": "image/webp"
+  },
+  "portraits/Q334120/placeholder/thumb-256.webp": {
+   "bytes": 8598,
+   "sha256": "c3bafc48a8361aac7fd5b221b19ea605c58462396e78de0e38ffbb0018a7f585",
+   "type": "image/webp"
+  },
+  "portraits/Q370060/v1/cutout-768.webp": {
+   "bytes": 55524,
+   "sha256": "0fea77b04ea0096efa708b06096f783e66f3b6203c0aca323f85ff4d7538f8e1",
+   "type": "image/webp"
+  },
+  "portraits/Q370060/v1/thumb-256.webp": {
+   "bytes": 10634,
+   "sha256": "e411baafb307d3f5c3186074b7a6c8e46f931018c371644be4b0872fb2ecd2d5",
+   "type": "image/webp"
+  },
+  "portraits/Q467167/placeholder/cutout-768.webp": {
+   "bytes": 42092,
+   "sha256": "95df309d1c2b153cefa38672d3cec81aebad556719a863bdbb783d5d655e46c1",
+   "type": "image/webp"
+  },
+  "portraits/Q467167/placeholder/thumb-256.webp": {
+   "bytes": 8410,
+   "sha256": "56367a64e0e6153b9aea703f80ae61995bfa1be4af00c11b67404232dade2880",
+   "type": "image/webp"
+  },
+  "portraits/Q47905425/placeholder/cutout-768.webp": {
+   "bytes": 42836,
+   "sha256": "367f914175a1293c02236110b936058673e5c1ec09c72840a5657aa7af014d9f",
+   "type": "image/webp"
+  },
+  "portraits/Q47905425/placeholder/thumb-256.webp": {
+   "bytes": 8424,
+   "sha256": "95ea2e1dd2c5c1f4da3a97e08789683d1bf584e8b28734503b5d786acd570b4a",
+   "type": "image/webp"
+  },
+  "portraits/Q547291/v1/cutout-768.webp": {
+   "bytes": 55338,
+   "sha256": "325f8cc233c25e73c9bf0aef6d9c4e5d9980e8f5cc22361b1e6c2448455f01de",
+   "type": "image/webp"
+  },
+  "portraits/Q547291/v1/thumb-256.webp": {
+   "bytes": 9876,
+   "sha256": "4a74b8fe72e7dd7bd0dc6e5809dd44436688ccaa8efcbcaeb3902805aa2631c4",
+   "type": "image/webp"
+  },
+  "portraits/Q63656/v1/cutout-768.webp": {
+   "bytes": 58892,
+   "sha256": "18b437a11ed7db9c1a57e5ce5b8a8568ff6cd1c71ce60b575a80382dce2fb184",
+   "type": "image/webp"
+  },
+  "portraits/Q63656/v1/thumb-256.webp": {
+   "bytes": 10900,
+   "sha256": "da4f7e9fc622824d7994b20def1481df064302eeadecd1546daee607762f53e7",
+   "type": "image/webp"
+  },
+  "portraits/Q63990/v1/cutout-768.webp": {
+   "bytes": 56874,
+   "sha256": "ca1e456de0f556d0d406ffa6e69b6330c94a410ede99a2d3d94a802ee8072769",
+   "type": "image/webp"
+  },
+  "portraits/Q63990/v1/thumb-256.webp": {
+   "bytes": 9858,
+   "sha256": "287911c3b1910c7840f8b9e833e82544e4ebfb4b14220f87b5b8a3325259cb13",
+   "type": "image/webp"
+  },
+  "portraits/Q691402/placeholder/cutout-768.webp": {
+   "bytes": 42022,
+   "sha256": "439fdbe6cb61f6904219f393e63ab00d7e531906a0d82c3f72b19a05ac8203f5",
+   "type": "image/webp"
+  },
+  "portraits/Q691402/placeholder/thumb-256.webp": {
+   "bytes": 8332,
+   "sha256": "b568fa0318d962d7f3ae37dd7be37ed1072f2357da58635afa190800e4e1ee35",
+   "type": "image/webp"
+  },
+  "portraits/Q7044697/placeholder/cutout-768.webp": {
+   "bytes": 41948,
+   "sha256": "67d0048d1b1137cb9c2e549c76930a759a6cdb15ca3c9f85e1ef5edab6376e13",
+   "type": "image/webp"
+  },
+  "portraits/Q7044697/placeholder/thumb-256.webp": {
+   "bytes": 8324,
+   "sha256": "3de34817de54c28a1fa47476e223ec184d6af57206056438892b53b2d6943c8a",
+   "type": "image/webp"
+  },
+  "portraits/Q7648718/placeholder/cutout-768.webp": {
+   "bytes": 42204,
+   "sha256": "10a2cd67cfc202e95fef998baad54b1a44be362f0fe25c638d02a792ac2aa8aa",
+   "type": "image/webp"
+  },
+  "portraits/Q7648718/placeholder/thumb-256.webp": {
+   "bytes": 8346,
+   "sha256": "fb957caf1ab9324ac1518b2f76275f3e8454516886fa43d4051d59ae14f2821f",
+   "type": "image/webp"
+  },
+  "portraits/Q76956/placeholder/cutout-768.webp": {
+   "bytes": 41612,
+   "sha256": "9ffa6d38f5e3dd8876003475ef84209342d2a0e1f4d1866dd2f26afe76df38ef",
+   "type": "image/webp"
+  },
+  "portraits/Q76956/placeholder/thumb-256.webp": {
+   "bytes": 8312,
+   "sha256": "9a14bdfbd02d289994a10d865e6d07c6a04af8d86b611ac8e8b70053ccb9633e",
+   "type": "image/webp"
+  },
+  "portraits/Q76988/v1/cutout-768.webp": {
+   "bytes": 79762,
+   "sha256": "89205f83d1fe9d39d93da806dab55e9bde3c778ca29a36abf644b5c6aed015ba",
+   "type": "image/webp"
+  },
+  "portraits/Q76988/v1/thumb-256.webp": {
+   "bytes": 12438,
+   "sha256": "ac755fc8b863cde890f0bd681c15313625e0644d7124d7eeb6b76c193fc9ed1e",
+   "type": "image/webp"
+  },
+  "portraits/Q922667/placeholder/cutout-768.webp": {
+   "bytes": 42440,
+   "sha256": "dc6865a5054cbef3425b153e5d4e8fbc37115372a10a678433055b17503a9c5c",
+   "type": "image/webp"
+  },
+  "portraits/Q922667/placeholder/thumb-256.webp": {
+   "bytes": 8530,
+   "sha256": "814ad8bf86164d6f436c4409a984dd4e9e0a3d462b282f5c2a8dfe557d985b8e",
+   "type": "image/webp"
+  },
+  "poster-tall-plate.webp": {
+   "bytes": 81246,
+   "sha256": "2f7af247fe3b518201012a1570b74cb90e6ad52a8d902a48e1984e6b1254a73f",
+   "type": "image/webp"
+  },
+  "poster-wide-plate.webp": {
+   "bytes": 78820,
+   "sha256": "1e6ff1d09e3dbea8764e9344458e15ce1912f01e697909c40e53f6e5363d388a",
+   "type": "image/webp"
+  },
+  "rothschild.cards.json": {
+   "bytes": 192475,
+   "sha256": "1f67a7d5076e14b43e370b4305986c5efa31bd1c4b9e19c1f32f80e37300894f",
+   "type": "application/json"
+  },
+  "rothschild.hyper.json": {
+   "bytes": 159639,
+   "sha256": "71e5e80d6941bb99ca1ec2602df11e511ff50ab916f7d31bb631263b1187c0d9",
+   "type": "application/json"
+  },
+  "rothschild.x3d": {
+   "bytes": 209880,
+   "sha256": "089d283154f278a85633497ec596fa13de95c161f8b04615a92c444813a7e138",
+   "type": "application/xml"
+  },
+  "theme/documentary-night/darwin_wedgwood.hyper.json": {
+   "bytes": 94486,
+   "sha256": "5c4a5c79f07606d7459df428965d8807821d35ec3ae7dcbef5698be1bae976bf",
+   "type": "application/json"
+  },
+  "theme/documentary-night/habsburg.hyper.json": {
+   "bytes": 119683,
+   "sha256": "3393d60f3dbde73e993c9986c50172bbbd6e012cd173f6e25c90072d33d47d47",
+   "type": "application/json"
+  },
+  "theme/documentary-night/hyper-darwin_wedgwood.x3d": {
+   "bytes": 310954,
+   "sha256": "973ca1f65067b42148559356d481f94e82453af40d477e3fcafbed95d682be68",
+   "type": "application/xml"
+  },
+  "theme/documentary-night/hyper-habsburg.x3d": {
+   "bytes": 310719,
+   "sha256": "8d622f17807d2126c19d34d61e6349178d15db2655a18f470ce9378c48b0ff76",
+   "type": "application/xml"
+  },
+  "theme/documentary-night/hyper-rothschild.x3d": {
+   "bytes": 312083,
+   "sha256": "03db3f0f8d767343260e766ad3cbe8db16b563e9d4464ba1fb811a8db8f806a2",
+   "type": "application/xml"
+  },
+  "theme/documentary-night/pocket-darwin_wedgwood.x3d": {
+   "bytes": 1060438,
+   "sha256": "7fd8642058bd1beb5d46186a16302dd4090904fa364fd67bde00e46a3c966733",
+   "type": "application/xml"
+  },
+  "theme/documentary-night/pocket-habsburg.x3d": {
+   "bytes": 1170354,
+   "sha256": "c3b78de5d110bc763c03a01655b3e82507cd1a8903db354df76b45d55a031ac6",
+   "type": "application/xml"
+  },
+  "theme/documentary-night/pocket-rothschild.x3d": {
+   "bytes": 1841308,
+   "sha256": "7436f0a8891e273379f7c8b8b8b65876040cba8362c6c59410bc43e097c322c7",
+   "type": "application/xml"
+  },
+  "theme/documentary-night/rothschild.hyper.json": {
+   "bytes": 159714,
+   "sha256": "f8e873ab6f8d78f3f70012edc76771500f273966e59cf573476a1fa7a193d369",
+   "type": "application/json"
+  },
+  "x_ite/LICENSE.md": {
+   "bytes": 2793,
+   "sha256": "4b4a56dafaa360d8541ed5425e9e891cb678e6cd5eaf71bfe7ef25514db01695",
+   "type": "text/markdown"
+  },
+  "x_ite/assets/components/EventUtilitiesComponent.min.js": {
+   "bytes": 7603,
+   "sha256": "debb52ec149388b8dc102263a53716acbd2e3dfd100d31787c7445e63e4c87ce",
+   "type": "text/javascript"
+  },
+  "x_ite/assets/components/Geometry2DComponent.min.js": {
+   "bytes": 16156,
+   "sha256": "c3820f74e259fe2d965a7df525d0397c23c6d7171f7742ff6326dc812e6777d8",
+   "type": "text/javascript"
+  },
+  "x_ite/assets/components/Geometry3DComponent.min.js": {
+   "bytes": 780,
+   "sha256": "1f9f567a0474dfd65792dd827f59b1ed26d7130a00f40ab688d1ee3e5b77a923",
+   "type": "text/javascript"
+  },
+  "x_ite/assets/components/KeyDeviceSensorComponent.min.js": {
+   "bytes": 7521,
+   "sha256": "75f7d0029c086f32cea25f17e8de985b72cce73f34c95e627767f3c46dbea9f8",
+   "type": "text/javascript"
+  },
+  "x_ite/assets/components/ScriptingComponent.min.js": {
+   "bytes": 9716,
+   "sha256": "eb8e388a42e0f1702bd2157303105ecef8dab85e3c186d656a83e4d2b5cd345d",
+   "type": "text/javascript"
+  },
+  "x_ite/assets/components/TextComponent.min.js": {
+   "bytes": 262880,
+   "sha256": "d4ea785709b2a4fa603901f0bc9810443619f846a82b07deedfff9959dda157b",
+   "type": "text/javascript"
+  },
+  "x_ite/assets/components/X_ITEComponent.min.js": {
+   "bytes": 64887,
+   "sha256": "ebe528cdf1f8b960ffbc6209d0793f7a2bec1375cace300160c5945410214317",
+   "type": "text/javascript"
+  },
+  "x_ite/assets/fonts/PT_Sans/OFL.txt": {
+   "bytes": 4426,
+   "sha256": "ddb81de52138bf0990ceadbac2e259d8972ea117e871e6f58ced3c5a1b4ebd58",
+   "type": "text/plain"
+  },
+  "x_ite/assets/fonts/PT_Sans/PTSans-Bold.woff2": {
+   "bytes": 116004,
+   "sha256": "94e51718d7fedb6a683f8cc6b6b28da12369daa956af3d2fec72fbbebf293c85",
+   "type": "font/woff2"
+  },
+  "x_ite/assets/fonts/PT_Sans/PTSans-BoldItalic.woff2": {
+   "bytes": 85048,
+   "sha256": "e031d59ddf4d69b013176d475945c4e22ca8da261c1531894ca8164beaebba10",
+   "type": "font/woff2"
+  },
+  "x_ite/assets/fonts/PT_Sans/PTSans-Italic.woff2": {
+   "bytes": 107644,
+   "sha256": "52994449548cf6efcb460ad7ee4048791c1020af883b7644af97f1488cba2444",
+   "type": "font/woff2"
+  },
+  "x_ite/assets/fonts/PT_Sans/PTSans-Regular.woff2": {
+   "bytes": 113608,
+   "sha256": "ab8c275a98d2dda2d0029af2a1e47817094841cecf1969207af332b107ae31aa",
+   "type": "font/woff2"
+  },
+  "x_ite/assets/images/animation.svg": {
+   "bytes": 891,
+   "sha256": "5277f2eb45bdb1986eee73721c66ba0e25bb63bc97e46fe5d46e812db5625fb6",
+   "type": "image/svg+xml"
+  },
+  "x_ite/assets/images/background-dark.svg": {
+   "bytes": 1660,
+   "sha256": "c566f18ba62311756c95a910d32a4b65bdf00155a0152bc842dc9b5e074f1868",
+   "type": "image/svg+xml"
+  },
+  "x_ite/assets/images/background-light.svg": {
+   "bytes": 1660,
+   "sha256": "c7deb3391feeba8df43e9f985ab00ff4f70f9ee85f3182a67bd4e8fa388efae3",
+   "type": "image/svg+xml"
+  },
+  "x_ite/assets/images/block.svg": {
+   "bytes": 476,
+   "sha256": "7a309387c6d430f0ad07550b7906ff39a250c37d0213367437fafca804ebdf1e",
+   "type": "image/svg+xml"
+  },
+  "x_ite/assets/images/border_all.svg": {
+   "bytes": 249,
+   "sha256": "72fc8943d86d867d002c08b3305b380da98dd55b613e0f16ecb8b7f405e55803",
+   "type": "image/svg+xml"
+  },
+  "x_ite/assets/images/check_circle.svg": {
+   "bytes": 463,
+   "sha256": "64954f2f5a626c953f13df55d1434d6778d665134de0d481db8520d0a3e4e187",
+   "type": "image/svg+xml"
+  },
+  "x_ite/assets/images/directions_run.svg": {
+   "bytes": 425,
+   "sha256": "308aab12a1ecd883d12977030c1a5fa9ca49055c9055c6b3767182d84aec1c57",
+   "type": "image/svg+xml"
+  },
+  "x_ite/assets/images/done_all.svg": {
+   "bytes": 253,
+   "sha256": "5fb764e25d7a1d372e65d84981850e006d73c0eaafe0c34f99603031634fbb63",
+   "type": "image/svg+xml"
+  },
+  "x_ite/assets/images/eye_tracking.svg": {
+   "bytes": 725,
+   "sha256": "ae28d97531ef87bd15f87a95f30356496f4023423cbd85e7fcad80c586298cd9",
+   "type": "image/svg+xml"
+  },
+  "x_ite/assets/images/fullscreen.svg": {
+   "bytes": 253,
+   "sha256": "6401071fa5181a24f82e38814933df4ee4c056585e742658b7e2e04fbb3418e7",
+   "type": "image/svg+xml"
+  },
+  "x_ite/assets/images/fullscreen_exit.svg": {
+   "bytes": 253,
+   "sha256": "79de34f2c40ac41d9cd769272204059525e6372cfe4f8a20514adcae49752af0",
+   "type": "image/svg+xml"
+  },
+  "x_ite/assets/images/globe.svg": {
+   "bytes": 567,
+   "sha256": "746cb27057df0680f130fa9c23bfa8de9b46dde627d829b59246b3fdf502e927",
+   "type": "image/svg+xml"
+  },
+  "x_ite/assets/images/head_mounted_device.svg": {
+   "bytes": 636,
+   "sha256": "7136eb4d4ad6cb14b676260ec73265c41a98c1033a4ec17d2611e642d81e03a1",
+   "type": "image/svg+xml"
+  },
+  "x_ite/assets/images/hexagon.svg": {
+   "bytes": 229,
+   "sha256": "616d461f7171edac16a4d39a3461e97072783f64c6908097958f5ff73496a1a6",
+   "type": "image/svg+xml"
+  },
+  "x_ite/assets/images/info.svg": {
+   "bytes": 535,
+   "sha256": "67a49a839c0c6bd3ac8cda3401729a4330e317d38c3621bf3f0fa83e9b63ab33",
+   "type": "image/svg+xml"
+  },
+  "x_ite/assets/images/language.svg": {
+   "bytes": 976,
+   "sha256": "e1d774cb673cb2b0e5237b80894fe229817a372938928e3201fb248d0db2965e",
+   "type": "image/svg+xml"
+  },
+  "x_ite/assets/images/logo.svg": {
+   "bytes": 414,
+   "sha256": "32957ec5753338f88dfc512b750b835ec024a80501e0b92701afb62be93a49dd",
+   "type": "image/svg+xml"
+  },
+  "x_ite/assets/images/no_sound.svg": {
+   "bytes": 311,
+   "sha256": "e1379d410ebf313d8534dc2c78d3fd14b1bebc436df09c14cb2dbfd6addb6e93",
+   "type": "image/svg+xml"
+  },
+  "x_ite/assets/images/play_circle.svg": {
+   "bytes": 439,
+   "sha256": "69736a6477d57b53989faf3367e392e20f5ed73678af081cdd3f47bbd5712347",
+   "type": "image/svg+xml"
+  },
+  "x_ite/assets/images/point_scan.svg": {
+   "bytes": 322,
+   "sha256": "886331820d1f601e3a666dfc3a34044ed8d9b4f3f20d97078b3046636a016dc1",
+   "type": "image/svg+xml"
+  },
+  "x_ite/assets/images/radio_button_checked.svg": {
+   "bytes": 515,
+   "sha256": "f3fc188af02702c0c21078c23283d40f2313c90086aa44764d3670caf4270a5c",
+   "type": "image/svg+xml"
+  },
+  "x_ite/assets/images/radio_button_unchecked.svg": {
+   "bytes": 410,
+   "sha256": "1bd7e227ba4f0ee004f97ad06fc55a96257fdab737acfccd7e34a36e5995d62c",
+   "type": "image/svg+xml"
+  },
+  "x_ite/assets/images/schedule.svg": {
+   "bytes": 473,
+   "sha256": "d5940e3032d313018726648a0025a35f4c17821b8fd6c6e8cb8acd452f28d019",
+   "type": "image/svg+xml"
+  },
+  "x_ite/assets/images/stadia_controller.svg": {
+   "bytes": 1219,
+   "sha256": "afdb133e2be33c4974930d3b72ac8bff65def359d8b77ad6fb4d1c4f5e891700",
+   "type": "image/svg+xml"
+  },
+  "x_ite/assets/images/stop_circle.svg": {
+   "bytes": 436,
+   "sha256": "edaab41a2266ac7c9a1719da6eb3c8b4e052eaa4fb2e04ce7b033d5681757aa0",
+   "type": "image/svg+xml"
+  },
+  "x_ite/assets/images/stroke_partial.svg": {
+   "bytes": 623,
+   "sha256": "0068a4e6781aab601250f6284bb2cd55469afb02df01a641b7f13cd7615b6a4a",
+   "type": "image/svg+xml"
+  },
+  "x_ite/assets/images/texture.svg": {
+   "bytes": 353,
+   "sha256": "da956b053479f44e959f7d6498a8649ca5c0ce2a747372417bca7d4a5a9f39f4",
+   "type": "image/svg+xml"
+  },
+  "x_ite/assets/images/travel.svg": {
+   "bytes": 288,
+   "sha256": "7320a24390d9a611c6aeed98baaff35d1943713c472ce0440f07aa3c74a9dce1",
+   "type": "image/svg+xml"
+  },
+  "x_ite/assets/images/visibility.svg": {
+   "bytes": 554,
+   "sha256": "f0fd15326059fb4f09c5c01729c638ea76c27076d026377de0aaab2287445f60",
+   "type": "image/svg+xml"
+  },
+  "x_ite/assets/lib/lut_charlie.png": {
+   "bytes": 53816,
+   "sha256": "869b877864fab2debc6f888c654b0298441bdffcd7816689c2bc12334a885f5e",
+   "type": "image/png"
+  },
+  "x_ite/assets/lib/lut_ggx.png": {
+   "bytes": 85965,
+   "sha256": "7103005340dbcc8956c7d20b9ef84d521c45605fb82de2059d539d329bbac0c1",
+   "type": "image/png"
+  },
+  "x_ite/assets/lib/mikktspace_bg.wasm": {
+   "bytes": 44694,
+   "sha256": "d734e040ae6480a0d00ba08b8aaae29c2eb59c8705c38b7bc120885fc94c54e2",
+   "type": "application/wasm"
+  },
+  "x_ite/assets/linetype/linetypes.png": {
+   "bytes": 138,
+   "sha256": "824a23ce80644950a9957bba5f879dc72cb36c86964bcb750d7e17e56c3fca1b",
+   "type": "image/png"
+  },
+  "x_ite/x_ite.css": {
+   "bytes": 15832,
+   "sha256": "e9eb804d4bb8726d3c952af2aa878a9bc7090805a0af56d3bcf32b54e4dc4bb4",
+   "type": "text/css"
+  },
+  "x_ite/x_ite.min.js": {
+   "bytes": 1306526,
+   "sha256": "66ce41650e084ac519f552b0129f625d3941c086ea8edf1623c7d68e365e08a3",
+   "type": "text/javascript"
+  }
+ },
+ "total_bytes": 16103987,
+ "count": 132
+}

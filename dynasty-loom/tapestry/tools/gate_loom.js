@@ -8,17 +8,28 @@
 // (the X_ITE text box within 48 px across and 14 px up or down of the generator's anchor); on the phone page every stop of the default family
 // binds its own phone viewpoint and labels, which are measured the same way at 390 x 844 (text >= 12 px, no overlap, inside the phone safe area).
 // Merge (tools/merge_views.py): the page now opens on the hypersphere view, so this gate asks for the loom by its hash (#loom); nothing else changed.
+// v2: --artifact=DIR serves a release set the way the Artifact host does (the page inside a skeleton, .x3d as application/xml, X_ITE beside it) and
+// writes tapestry/gate-artifact.json (frames anywhere, --frames-dir absolute). With the looks (dynastyApi.looks) it adds: the header's look switch in
+// the loom view (html[data-look], the brand, ground, panels, ink and type change; the loom scene is not reloaded: its colours stay v3's), and back;
+// at 1280x800, 1366x768, 1527x923 and 390x844, in both looks, the rail, caption and open card sit below the measured header with no sideways scroll.
+// The phone UI may hide the rail when the caption carries previous and next.
 const { chromium } = require('playwright'); const http = require('http'); const fs = require('fs'); const path = require('path'); const { execFileSync } = require('child_process');
 const ARGV = process.argv.slice(2), FRAMES = !ARGV.includes('--no-frames'), TAG = (ARGV.find(a => a.startsWith('--tag=')) || '--tag=').slice(6), ALL_STOPS = ARGV.includes('--all-stops');
-const SCENE2 = path.resolve(__dirname, '..'), ROOT = path.resolve(SCENE2, '..'), OUT = path.join(SCENE2, 'out'), REC = path.join(OUT, 'receipt.json');
+const ARTIFACT = (ARGV.find(a => a.startsWith('--artifact=')) || '').slice(11);
+const SCENE2 = path.resolve(__dirname, '..'), ROOT = path.resolve(SCENE2, '..'), OUT = ARTIFACT ? path.resolve(ARTIFACT) : path.join(SCENE2, 'out'), REC = path.join(OUT, 'receipt.json');
+const PAGE = ARTIFACT ? 'index.html#loom' : 'tapestry/out/index.html?local=1#loom', XITE_AT = ARTIFACT ? 'x_ite/' : 'x3d/vendor/x_ite/', SIZES = [[1280, 800], [1366, 768], [1527, 923], [390, 844]];
 const FR = path.resolve(SCENE2, (ARGV.find(a => a.startsWith('--frames-dir=')) || '--frames-dir=frames').slice(13));
-if (!FR.startsWith(SCENE2 + path.sep)) throw new Error('--frames-dir must lie under tapestry/');
+if (!ARTIFACT && !FR.startsWith(SCENE2 + path.sep)) throw new Error('--frames-dir must lie under tapestry/');
 const W = 1527, H = 923;
 const SHOTS = { rothschild: ['cloth', 'arrows', 'doubles', 'closeweave'], habsburg: ['cloth'], darwin_wedgwood: ['doubles'] };
-const MIME = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.x3d': 'model/x3d+xml', '.woff2': 'font/woff2', '.png': 'image/png', '.svg': 'image/svg+xml', '.wasm': 'application/wasm' };
-const srv = http.createServer((q, r) => { let p = path.join(ROOT, decodeURIComponent(q.url.split('?')[0])); if (p.endsWith('/')) p += 'index.html';
-  if (!p.startsWith(ROOT)) { r.writeHead(403); return r.end(); }
-  fs.readFile(p, (e, d) => { if (e) { r.writeHead(404); return r.end(); } r.writeHead(200, { 'content-type': MIME[path.extname(p)] || 'application/octet-stream' }); r.end(d); }); });
+const MIME = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.x3d': ARTIFACT ? 'application/xml' : 'model/x3d+xml', '.webp': 'image/webp', '.ttf': 'font/ttf', '.woff2': 'font/woff2', '.png': 'image/png', '.svg': 'image/svg+xml', '.wasm': 'application/wasm' };
+const SKELETON = ['<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><style>:root{color-scheme:light}body{margin:0;font:14px system-ui,sans-serif}[hidden]{display:none!important}</style></head><body>', '</body></html>'];
+const SRV_ROOT = ARTIFACT ? OUT : ROOT;
+const srv = http.createServer((q, r) => { const u = decodeURIComponent(q.url.split('?')[0].split('#')[0]); let p = path.join(SRV_ROOT, u); if (p.endsWith('/')) p += 'index.html';
+  if (!p.startsWith(SRV_ROOT)) { r.writeHead(403); return r.end(); }
+  if (u === '/favicon.ico') { r.writeHead(204); return r.end(); }
+  fs.readFile(p, (e, d) => { if (e) { r.writeHead(404); return r.end(); } if (ARTIFACT && p === path.join(OUT, 'index.html')) d = Buffer.from(SKELETON[0] + d.toString('utf8') + SKELETON[1]);
+    r.writeHead(200, { 'content-type': MIME[path.extname(p)] || 'application/octet-stream', 'cache-control': 'no-store' }); r.end(d); }); });
 let pass = 0, fail = 0; const checks = [];
 const check = (name, ok, detail) => { ok ? pass++ : fail++; checks.push({ name, ok: !!ok, detail: detail === undefined ? '' : String(detail).slice(0, 600) }); console.log((ok ? 'PASS ' : 'FAIL ') + name + (detail !== undefined ? '  ' + String(detail).slice(0, 300) : '')); };
 const sleep = ms => new Promise(r => setTimeout(r, ms));
@@ -60,12 +71,12 @@ const inter = (a, b) => Math.max(0, Math.min(a.x + a.w, b.x + b.w) - Math.max(a.
   p.on('response', r => { if (r.status() >= 400) bad.push('HTTP ' + r.status() + ' ' + r.url()); });
   const loaded = () => p.waitForFunction(() => document.body.dataset.loaded === '1' || document.body.dataset.loaded === 'failed', null, { timeout: 240000 });
   const t0 = Date.now();
-  await p.goto(BASE + 'tapestry/out/index.html?local=1#loom', { waitUntil: 'load' }); await loaded();
+  await p.goto(BASE + PAGE, { waitUntil: 'load' }); await loaded();
   const bootMs = Date.now() - t0, failed = await p.evaluate(() => window.loomApi.failed || null);
   check('boot: the page loads the default family (rothschild) in X_ITE with no failure', !failed, failed || bootMs + ' ms to loaded (software GL, local server)');
   if (failed) { await finish(); return; }
   const eng = await p.evaluate(() => ({ name: window.loomApi.browser.name, version: window.loomApi.browser.version, fam: window.loomApi.family, xite: [...document.scripts].map(s => s.src).filter(Boolean) }));
-  check('engine: X_ITE 16.5.1, the vendored copy under ?local=1', eng.version === '16.5.1' && eng.fam === 'rothschild' && eng.xite.some(s => s.endsWith('/x3d/vendor/x_ite/x_ite.min.js')), JSON.stringify(eng));
+  check('engine: X_ITE 16.5.1, the vendored copy' + (ARTIFACT ? ' shipped beside the page' : ' under ?local=1'), eng.version === '16.5.1' && eng.fam === 'rothschild' && eng.xite.some(s => s === BASE + XITE_AT + 'x_ite.min.js'), JSON.stringify(eng));
   const manifest = JSON.parse(fs.readFileSync(path.join(OUT, 'loom-manifest.json'), 'utf8')); const measured = {}; const frames = [];
   for (const fam of manifest.families) {
     if (fam.key !== 'rothschild') { await p.evaluate(k => window.loomApi.loadFamily(k, 0), fam.key); await sleep(300); await loaded(); }
@@ -108,17 +119,19 @@ const inter = (a, b) => Math.max(0, Math.min(a.x + a.w, b.x + b.w) - Math.max(a.
       await p.evaluate(() => window.loomApi.bindStop(0)); await sleep(1500);
     }
   }
+  if (await p.evaluate(() => !!(window.dynastyApi && dynastyApi.looks))) await v2Looks(p);
   // ---- phone width: no horizontal scroll, the caption and rail stay on screen
   const ph = await b.newPage({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 1, isMobile: true, hasTouch: true }); ph.setDefaultTimeout(180000);
   const pcons = []; ph.on('console', m => pcons.push({ type: m.type(), text: m.text().slice(0, 300) })); ph.on('pageerror', e => errs.push('phone pageerror ' + String(e).slice(0, 300)));
   ph.on('request', r => reqs.push(r.url()));
-  await ph.goto(BASE + 'tapestry/out/index.html?local=1#loom', { waitUntil: 'load' });
+  await ph.goto(BASE + PAGE, { waitUntil: 'load' });
   await ph.waitForFunction(() => document.body.dataset.loaded === '1' || document.body.dataset.loaded === 'failed', null, { timeout: 240000 }); await sleep(2500);
   const pl = await ph.evaluate(() => { const r = id => { const e = document.getElementById(id).getBoundingClientRect(); return [Math.round(e.left), Math.round(e.top), Math.round(e.right), Math.round(e.bottom)]; };
     const A = window.loomApi, st = A.cards.stops[A.stop], c = A.view === 'phone' ? st.phone.camera : st.camera, need = 2 * Math.atan((c.frame_w / 2) / c.dist);
-    return { sw: document.documentElement.scrollWidth, iw: innerWidth, cap: r('cap'), rail: r('rail'), view: A.view, fov: A.browser.activeViewpoint.fieldOfView, need }; }).catch(e => ({ error: String(e) }));
-  check('phone (390 x 844): no horizontal page scroll; the caption strip and the stop rail sit inside the 16 px gutters; the stop\'s phone viewpoint is bound and its field of view spans its frame\'s width',
-    pl.sw <= pl.iw && pl.cap[0] >= 16 && pl.cap[2] <= pl.iw - 16 && pl.rail[0] >= 16 && pl.rail[2] <= pl.iw - 16 && pl.view === 'phone' && pl.fov >= pl.need - 1e-6, JSON.stringify(pl));
+    const railShown = getComputedStyle(document.getElementById('rail')).display !== 'none', pn = !!document.getElementById('prev').offsetWidth && !!document.getElementById('next').offsetWidth;
+    return { sw: document.documentElement.scrollWidth, iw: innerWidth, cap: r('cap'), rail: railShown ? r('rail') : null, prevNext: pn, view: A.view, fov: A.browser.activeViewpoint.fieldOfView, need }; }).catch(e => ({ error: String(e) }));
+  check('phone (390 x 844): no horizontal page scroll; the caption strip and the stop rail (or, v2 phone UI, the caption\'s previous and next) sit inside the 16 px gutters; the stop\'s phone viewpoint is bound and its field of view spans its frame\'s width',
+    pl.sw <= pl.iw && pl.cap[0] >= 16 && pl.cap[2] <= pl.iw - 16 && (pl.rail ? pl.rail[0] >= 16 && pl.rail[2] <= pl.iw - 16 : pl.prevNext) && pl.view === 'phone' && pl.fov >= pl.need - 1e-6, JSON.stringify(pl));
   const PC = JSON.parse(fs.readFileSync(path.join(OUT, manifest.families[0].cards), 'utf8')); measured.phone = [];
   for (let i = 0; i < PC.stops.length; i++) {
     const st = PC.stops[i], PS = st.phone.camera.safe_area;
@@ -137,7 +150,7 @@ const inter = (a, b) => Math.max(0, Math.min(a.x + a.w, b.x + b.w) - Math.max(a.
   // ---- the console and the network
   const xite = cons.filter(c => c.type === 'error' || c.type === 'warning' || /unknown|warning|error|could not|dropp/i.test(c.text));
   check('console: no errors or warnings (no unknown nodes or fields), no failed request', xite.length === 0 && errs.length === 0 && bad.length === 0, JSON.stringify(xite.concat(errs, bad).slice(0, 6)));
-  const ext = [...new Set(reqs.filter(u => !u.startsWith(BASE) && !u.startsWith('data:') && !u.startsWith('blob:')))];
+  const ext = [...new Set(reqs.filter(u => !u.startsWith(BASE) && !u.startsWith('data:') && !u.startsWith('blob:') && !/^https:\/\/fonts\.(googleapis|gstatic)\.com\//.test(u)))];   // v2: Google Fonts is the one font host
   const paths = [...new Set(reqs.filter(u => u.startsWith(BASE)).map(u => u.slice(BASE.length).split('?')[0]))].sort();
   check('network: no request leaves the page\'s own origin under ?local=1 (the CDN path is the only external one, and only without it)', ext.length === 0, JSON.stringify({ external: ext, fetched: paths }));
   await finish();
@@ -161,6 +174,53 @@ const inter = (a, b) => Math.max(0, Math.min(a.x + a.w, b.x + b.w) - Math.max(a.
     await p.keyboard.press('Escape'); await sleep(500);
     const cl = await p.evaluate(() => ({ picked: window.loomApi.picked, card: !document.getElementById('card').hidden }));
     check('click: Esc clears the pick and closes the card', cl.picked === null && !cl.card, JSON.stringify(cl));
+  }
+  async function v2Looks(p) {   // v2: the look switch in the loom view, and the header against the rail, caption and card at four sizes in both looks
+    const L = await p.evaluate(() => dynastyApi.looks), alt = L.order[1], def = L.default; measured.v2 = { looks: [], header: [] };
+    await p.evaluate(() => window.loomApi.bindStop(0)); await sleep(1500);
+    const chrome = () => p.evaluate(() => { const cs = q => getComputedStyle(document.querySelector(q)), A = window.loomApi; return { look: document.documentElement.dataset.look, bg: cs('body').backgroundColor, panel: cs('#cap').backgroundColor, ink: cs('#capt').color,
+      font: cs('#capt').fontFamily, brand: document.getElementById('brand').textContent, btn: document.getElementById('look-t').textContent, pressed: document.getElementById('look-t').getAttribute('aria-pressed'), view: document.body.dataset.view,
+      fam: A.family, stop: A.stop, bound: A.browser.activeViewpoint && A.browser.activeViewpoint.description, loaded: document.body.dataset.loaded, labels: A.browser.currentScene.getNamedNode('Labels').children.length }; });
+    if (!alt) { check('look switch: an alternate look ships', false, JSON.stringify(L.order)); return; }
+    const c0 = await chrome(), n0 = reqs.length;
+    await p.click('#look-t'); await sleep(1500);
+    const c1 = await chrome(), got = reqs.slice(n0).filter(u => /\.(x3d|json)$/.test(u.split('?')[0]));
+    measured.v2.looks.push({ from: c0, to: c1, requests: got });
+    check('look switch (loom view): the header button "' + c0.btn + '" turns on ' + alt + ' (html[data-look], aria-pressed, the brand, panels, ink and type); the loom scene stays loaded and bound, not refetched, on the same page ground (its colours stay v3\'s)',
+      c0.look === def && c1.look === alt && c1.pressed === 'true' && c1.bg === c0.bg && c1.panel !== c0.panel && c1.font !== c0.font && c1.brand !== c0.brand && c1.view === 'loom' && c1.fam === c0.fam && c1.stop === c0.stop && c1.bound === c0.bound && c1.loaded === '1' && got.length === 0,
+      JSON.stringify({ c0, c1, refetched: got }));
+    if (FRAMES) frames.push(await shoot(p, 'loom-v2-' + alt + '-' + c1.fam + '-' + c1.stop));
+    for (const look of [alt, def]) {
+      if ((await p.evaluate(() => document.documentElement.dataset.look)) !== look) { await p.evaluate(l => dynastyApi.setLook(l, true), look); await sleep(600); }
+      for (const [w, h] of SIZES) {
+        await p.setViewportSize({ width: w, height: h }); await sleep(1600);
+        await p.evaluate(() => { const A = window.loomApi, st = A.cards.stops[A.stop]; A.pick(st.focus[0]); }); await sleep(500);
+        const m = await p.evaluate(() => { const R = q => { const e = document.querySelector(q); if (!e || e.hidden) return null; const cs = getComputedStyle(e); if (cs.display === 'none' || cs.visibility === 'hidden') return null; const r = e.getBoundingClientRect(); return r.width && r.height ? [r.left, r.top, r.right, r.bottom].map(x => Math.round(x * 10) / 10) : null; };
+          const hd = document.querySelector('header'), kids = [...hd.querySelectorAll('*')].filter(e => e.offsetWidth && getComputedStyle(e).display !== 'none').map(e => e.getBoundingClientRect());
+          return { headerH: dynastyApi.headerH, cssVar: getComputedStyle(document.documentElement).getPropertyValue('--header-h').trim(), head: R('header'), kidsBottom: Math.max(...kids.map(k => k.bottom)), kidsRight: Math.max(...kids.map(k => k.right)), rail: R('#rail'), cap: R('#cap'), card: R('#card'), sw: document.documentElement.scrollWidth, iw: innerWidth, ih: innerHeight, picked: window.loomApi.picked }; });
+        const hb = m.head[3], below = b => !b || b[1] >= hb - 0.5, ix = (a, b) => a && b && Math.min(a[2], b[2]) - Math.max(a[0], b[0]) > 0 && Math.min(a[3], b[3]) - Math.max(a[1], b[1]) > 0;
+        const ok = below(m.rail) && below(m.cap) && below(m.card) && m.kidsBottom <= hb + 0.5 && m.kidsRight <= m.iw && m.sw <= m.iw && Math.abs(m.headerH - Math.ceil(hb)) <= 1 && !ix(m.rail, m.cap) && (!m.card || m.card[3] <= m.ih + 0.5);
+        measured.v2.header.push(Object.assign({ look, view: 'loom', size: [w, h], ok }, m));
+        if (w === W) {   // the chrome is legible on the loom's dark ground: WCAG contrast of each text against its composited background (the page ground under all)
+          const cr = await p.evaluate(() => { const rgb = s => (s.match(/[\d.]+/g) || []).map(Number), over = (f, b) => { const a = f.length > 3 ? f[3] : 1; return [0, 1, 2].map(i => f[i] * a + b[i] * (1 - a)); };
+            const lum = c => { const f = v => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); }; return 0.2126 * f(c[0]) + 0.7152 * f(c[1]) + 0.0722 * f(c[2]); };
+            const bgOf = el => { const chain = []; for (let e = el; e; e = e.parentElement) chain.push(rgb(getComputedStyle(e).backgroundColor)); let bg = [255, 255, 255]; chain.reverse().forEach(c => { if (c.length) bg = over(c, bg); }); return bg; };
+            const ratio = el => { const fg = over(rgb(getComputedStyle(el).color), bgOf(el)), bg = bgOf(el), a = lum(fg), b = lum(bg); return +((Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05)).toFixed(2); };
+            const els = [['brand', document.getElementById('brand')], ['caption title', document.getElementById('capt')], ['look switch', document.getElementById('look-t')]]
+              .concat([...document.querySelectorAll('#fams button')].map(e => ['family ' + e.textContent, e]), [...document.querySelectorAll('#views button')].map(e => ['view ' + e.textContent, e]), [...document.querySelectorAll('#rail button')].map(e => ['rail ' + e.textContent, e]));
+            return els.filter(x => x[1] && x[1].offsetWidth).map(([k, e]) => [k, ratio(e)]); });
+          const low = cr.filter(x => x[1] < 4.5);
+          measured.v2.contrast = (measured.v2.contrast || []).concat([{ look, rows: cr }]);
+          check('legible chrome (' + look + ', loom view): the brand, caption title, look switch, family, view and rail buttons have WCAG contrast >= 4.5 against their composited background', low.length === 0, JSON.stringify({ low, min: Math.min(...cr.map(x => x[1])) }));
+        }
+        check('header (' + look + ', loom view, ' + w + 'x' + h + '): the rail, caption and open card sit below the measured header (--header-h ' + m.cssVar + '), nothing in the header spills out of it, the rail and caption do not meet, no sideways scroll', ok, JSON.stringify(m));
+        if (FRAMES && (w === 1280 || w === 1366)) frames.push(await shoot(p, 'loom-v2-header-' + look + '-' + w + 'x' + h, w, h));
+        await p.keyboard.press('Escape'); await sleep(300);
+      }
+    }
+    await p.setViewportSize({ width: W, height: H }); await sleep(1200);
+    const c2 = await chrome();
+    check('look switch back (loom view): ' + def + ' again with the same chrome as before', c2.look === def && c2.bg === c0.bg && c2.panel === c0.panel && c2.font === c0.font && c2.btn === c0.btn && c2.loaded === '1', JSON.stringify(c2));
   }
   async function shoot(pg, name, w = W, h = H) {
     fs.mkdirSync(FR, { recursive: true }); const file = path.join(FR, name + '.png'); let st = null;
@@ -187,19 +247,19 @@ const inter = (a, b) => Math.max(0, Math.min(a.x + a.w, b.x + b.w) - Math.max(a.
     const crypto = require('crypto'), H256 = f => crypto.createHash('sha256').update(fs.readFileSync(f)).digest('hex');
     let tarCheck = null;                        // every X_ITE file the page pulled (vendored) must exist at the same path in the npm tarball, i.e. on the CDN
     try { const tgz = path.join(ROOT, 'x3d', 'vendor', 'x_ite-16.5.1.tgz'), entries = new Set(execFileSync('tar', ['tzf', tgz], { encoding: 'utf8' }).split('\n'));
-      const pulled = [...new Set(reqs.filter(u => u.startsWith(BASE + 'x3d/vendor/x_ite/')).map(u => u.slice((BASE + 'x3d/vendor/x_ite/').length).split('?')[0]))].sort();
+      const pulled = [...new Set(reqs.filter(u => u.startsWith(BASE + XITE_AT)).map(u => u.slice((BASE + XITE_AT).length).split('?')[0]))].sort();
       tarCheck = { pulled, missing_in_tarball: pulled.filter(x => !entries.has('package/dist/' + x)) };
       check('cdn: each X_ITE file the page pulled (' + pulled.length + ') exists at package/dist/<same path> in the npm tarball, so the jsDelivr path serves it', tarCheck.missing_in_tarball.length === 0, JSON.stringify(tarCheck));
     } catch (e) { check('cdn: tarball listing', false, String(e).slice(0, 200)); }
-    const out = { tag: TAG, when: new Date().toISOString(), cdn_assets: tarCheck, engine: 'X_ITE 16.5.1 (vendored, ?local=1)', chromium: b.version(), playwright: require('playwright/package.json').version, gl: 'SwiftShader (ANGLE), software',
+    const out = { tag: TAG, when: new Date().toISOString(), served: ARTIFACT ? OUT : null, cdn_assets: tarCheck, engine: ARTIFACT ? 'X_ITE 16.5.1 (shipped beside the page)' : 'X_ITE 16.5.1 (vendored, ?local=1)', chromium: b.version(), playwright: require('playwright/package.json').version, gl: 'SwiftShader (ANGLE), software',
       viewport: [W, H], boot_ms: bootMs, pass, fail, checks, measured, frames, lookgates: look, console_all: cons, page_errors: errs, bad_requests: bad, requests: [...new Set(reqs)].length };
-    fs.writeFileSync(path.join(SCENE2, 'gate.json'), JSON.stringify(out, null, 1));
-    try { const rec = JSON.parse(fs.readFileSync(REC, 'utf8'));
+    fs.writeFileSync(path.join(SCENE2, ARTIFACT ? 'gate-artifact.json' : 'gate.json'), JSON.stringify(out, null, 1));
+    if (!ARTIFACT) try { const rec = JSON.parse(fs.readFileSync(REC, 'utf8'));
       rec.xite_gate = { file: 'tapestry/gate.json', run: out.when, engine: out.engine, chromium: out.chromium, playwright: out.playwright, gl: out.gl, pass, fail,
         checks: checks.map(c => (c.ok ? 'PASS ' : 'FAIL ') + c.name), console_messages: cons.length, frames: frames.map(f => f.file) };
       rec.xite_gate.script_sha256 = H256(__filename); rec.xite_gate.cdn_assets = tarCheck;
       rec.lookgates = look; fs.writeFileSync(REC, JSON.stringify(rec, null, 1)); } catch (e) { console.log('receipt not updated', e); }
-    if (frames.length) fs.writeFileSync(path.join(FR, 'receipt.json'), JSON.stringify({ what: 'frames shot by tools/gate_loom.js at ' + (ALL_STOPS ? 'every tour stop of every family' : 'the tour stops'), tag: TAG, run: out.when, gate_script_sha256: H256(__filename),
+    if (frames.length) fs.writeFileSync(path.join(FR, ARTIFACT ? 'receipt-loom.json' : 'receipt.json'), JSON.stringify({ what: 'frames shot by tools/gate_loom.js at ' + (ALL_STOPS ? 'every tour stop of every family' : 'the tour stops'), tag: TAG, run: out.when, gate_script_sha256: H256(__filename),
       scene_inputs: Object.fromEntries(['rothschild.x3d', 'habsburg.x3d', 'darwin_wedgwood.x3d', 'rothschild.cards.json', 'habsburg.cards.json', 'darwin_wedgwood.cards.json', 'loom-manifest.json', 'index.html'].map(f => [f, H256(path.join(OUT, f))])),
       tools: { engine: out.engine, chromium: out.chromium, playwright: out.playwright, gl: out.gl, viewport: [W, H], lookgates: 'proto/gates/lookgates.py (venv-gate python)' },
       frames: Object.fromEntries(frames.map(f => [path.basename(f.file), H256(path.join(SCENE2, f.file))])), lookgates: look }, null, 1));

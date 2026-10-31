@@ -1,7 +1,12 @@
 #!/usr/bin/env python3
 """build_hypersphere.py: the dynasty hypersphere on the real data. Deterministic; standard library only.
 
-    python3 -I build_hypersphere.py [--view PATH] [--cards DIR] [--out DIR]
+    python3 -I build_hypersphere.py [--view PATH] [--cards DIR] [--out DIR] [--theme SLUG] [--portraits PATH] [--root-rel PREFIX]
+
+v2: --theme picks a look from hyper/themes.py (DEFAULT_THEME without it): dye tones, line widths, glow tints, backgrounds and the GLSL constants
+(themes.style_block, spliced into common.glsl at //#include style). --portraits names the release's portraits.json (tools/build_portraits.py):
+close tour stops whose subject has an entry get camera-facing portrait plates, faded and drifted by X3D interpolators; --root-rel is the path
+from this output's scenes back to the release root (the alternate theme's scenes sit two folders down, under theme/<slug>/).
 
 Inputs (read only):
   proto/merged/loom-view.json            the data (contract proto/contracts/loom-view.md); possibly-living people are already withheld
@@ -39,7 +44,17 @@ HERE = os.path.dirname(os.path.abspath(__file__))                        # proto
 PROTO = os.path.dirname(HERE)
 SRC, PAGE = os.path.join(HERE, 'src'), os.path.join(HERE, 'page', 'index.html')
 VENDOR = os.path.join(PROTO, 'x3d', 'vendor', 'x_ite')
-VERSION = 'build_hypersphere.py 1.2'
+VERSION = 'build_hypersphere.py 2.0'
+sys.path.insert(0, HERE)
+import themes as TH   # noqa: E402  (v2: the look table)
+
+
+def _arg(k, d):
+    a = sys.argv[1:]
+    return a[a.index(k) + 1] if k in a and a.index(k) + 1 < len(a) else d
+
+
+THEME = TH.theme(_arg('--theme', TH.DEFAULT_THEME))   # read before the constants below, which take the theme's values
 FAMILIES = ['rothschild', 'habsburg', 'darwin_wedgwood']
 XITE_SRI = 'sha384-/U1JwiaA22Ilp0Ju84O+ud9jJvfpVM3sasBhBHoAY4wQXGMc2d82QmdIZYhC1a4g'   # the npm 16.5.1 dist/x_ite.min.js (the page pins it)
 
@@ -53,9 +68,9 @@ LAT_MAX = 0.80                             # elevation band: asin(...) * 0.80, s
 ARC_STEP = 0.035                           # radians between samples along an arc
 RAD_STEP = 0.012                           # pocket units between samples along a fiber (pulses and the time cut need vertices)
 CLOSE_DR = 0.0045                          # a close marriage is doubled: two arcs this far apart in radius
-CORE_W = 0.0026                            # ribbon half-widths (pocket units): hot core, soft glow by tier
-GLOW_W_TIER = {'fast': 0.013, 'balanced': 0.018, 'ultra': 0.02}
-CORE_MIN_PX, GLOW_MIN_PX, CORE_MAX_PX, GLOW_MAX_PX = 0.65, 2.5, 4.0, 14.0
+CORE_W = THEME['core_w']                            # ribbon half-widths (pocket units): hot core, soft glow by tier
+GLOW_W_TIER = dict(THEME['glow_w'])   # v3: fast 0.013, balanced 0.018, ultra 0.02
+CORE_MIN_PX, GLOW_MIN_PX, CORE_MAX_PX, GLOW_MAX_PX = THEME['core_px'][0], THEME['glow_px'][0], THEME['core_px'][1], THEME['glow_px'][1]   # v3: 0.65, 2.5, 4.0, 14.0
 SEED_R, SEED_GLOW_R = 0.012, 0.24
 BEAD_R, BEAD_RING = 0.02, 0.7              # the subject bead's proxy (pocket units) and its marriage ring (share of the proxy radius)
 LINE_CAP = 32                              # people in a stop's lineage list (uLine[32] in fiber.vert)
@@ -66,8 +81,8 @@ DASH_ARC = 0.028                           # pocket units per dash period along 
 # 0.1 pocket units and the glow alone averages luma 0.455 (Confirmed: work/r1/probe, scene mean 0.77, 29 percent clipped). These keep it to a
 # tight bloom: modelled glow mean 0.056 (python model in the build-2 notes; frames decide).
 SEED_GLOW = dict(e2=0.00008 / SEED_GLOW_R ** 2, s2=0.00005 / SEED_GLOW_R ** 2, halo=0.000004 / SEED_GLOW_R ** 3, core=0.8 * SEED_GLOW_R, period=4,
-                 halo_tint=(1.0, 0.60, 0.28), core_tint=(1.0, 0.90, 0.74), exposure=1.1, knee=0.004, z=0.06)
-BEAD_GLOW = dict(e2=0.002, s2=0.005, halo=0.0011, core=20.0, period=2, halo_tint=(1.0, 0.72, 0.38), core_tint=(1.0, 0.94, 0.82), exposure=1.0, knee=0.002, z=-0.12)
+                 halo_tint=THEME['seed_glow']['halo_tint'], core_tint=THEME['seed_glow']['core_tint'], exposure=THEME['seed_glow']['exposure'], knee=0.004, z=0.06)
+BEAD_GLOW = dict(e2=0.002, s2=0.005, halo=0.0011, core=20.0, period=2, halo_tint=THEME['bead_glow']['halo_tint'], core_tint=THEME['bead_glow']['core_tint'], exposure=THEME['bead_glow']['exposure'], knee=0.002, z=-0.12)
 LIFT = 0.16                                # caption lift (share of the half-height); see lifted()
 HALO_CLEAR = 0.32                          # close shots keep the camera at least this far from the centre (outside the core glow)
 ASPECT = 1527 / 923                        # design viewport (X_ITE: fieldOfView spans the smaller side)
@@ -87,7 +102,7 @@ PRESENT_VARIANTS = [dict(name='descent', el=32.0, side=1.0, third=1.0, roll=-5.0
 EYE_VARIANTS = [dict(name='level', side=1.0, el=0.0, roll=0.0),                                            # eye to eye, the arc runs right
                 dict(name='over', side=-1.0, el=26.0, roll=-6.0)]                                          # from the other side, above the shell
 CAM_MAX_R = R_GLASS - 0.07                 # close shots keep the camera inside the glass (the inside look and its haze)
-PEWTER = (0.80, 0.82, 0.88)                # the armillary (build 3, critique rank 2): the dye owns gold, so the host frame is pewter in every family
+PEWTER = tuple(round(x, 3) for x in TH._rgb(THEME['ring']))                # the armillary (build 3, critique rank 2): the dye owns gold, so the host frame is pewter in every family
 
 
 # ---------------------------------------------------------------- vectors
@@ -187,6 +202,7 @@ def glsl(name):
     src = open(os.path.join(SRC, name), encoding='utf-8').read()
     for chunk in ('common', 'sky'):
         src = src.replace('//#include %s\n' % chunk, open(os.path.join(SRC, chunk + '.glsl'), encoding='utf-8').read())
+    src = src.replace('//#include style\n', TH.style_block(THEME))   # v2: the theme's look constants (hyper/themes.py)
     if ']]>' in src: raise SystemExit('GLSL may not contain ]]> (CDATA)')
     if '%' in src: raise SystemExit('GLSL in a data: URL may not contain %% (%s): X_ITE runs decodeURIComponent on it' % name)
     return src
@@ -396,8 +412,10 @@ def eval_frac(s):
 # descent, k = clamp(round(-log2(share)), 0, 4), and step k is the tapestry's colour at the equivalent share 1 - k/8: k 0 is the full dye,
 # k 4 (1/16 or less) is the tapestry's '1/2' colour, the floor. Ecru is kept for share 0 only (no descent from the founders in the data).
 # Same CIELAB maths and constants as proto/scene2/build_loom_scene.py (thread_color, dye_top_lab; DYE_L 54, ECRU), re-implemented here.
-ECRU = (0.89, 0.85, 0.76)
-DYE_L = 54.0
+ECRU = tuple(round(x, 4) for x in TH._rgb(THEME['ecru']))   # v3: (0.89, 0.85, 0.76)
+DYE_L = THEME['dye_l']
+STYLE_INK, STYLE_CHROMA, STYLE_INK_VALUE, STYLE_ECRU_WORD, STYLE_VALUE_NORM = THEME['ink'], THEME['chroma'], THEME['ink_value'], THEME['ecru_word'], THEME.get('value_norm', 1.0)
+STYLE_DYES = THEME['dyes']   # each family keeps its v3 hue family (red, gold, green, blue); only the tone is the theme's
 DYE_K_MAX = 4
 _WP = (0.95047, 1.0, 1.08883)
 def _lin(c): return c / 12.92 if c <= 0.04045 else ((c + 0.055) / 1.055) ** 2.4
@@ -450,7 +468,7 @@ def dye_rgb(shares, dyes):
 def drawn(rgb):
     """what fiber.frag draws from a dye at full value (the core before its white mix): chroma raised 1.4x about the luminance, then normalised"""
     l = 0.2126 * rgb[0] + 0.7152 * rgb[1] + 0.0722 * rgb[2]
-    c = [clamp(l + 1.4 * (x - l), 0.0, 1.0) for x in rgb]; m = max(max(c), 1e-3)
+    c = [clamp(l + STYLE_CHROMA * (x - l), 0.0, 1.0) for x in rgb]; m = (1.0 / STYLE_INK_VALUE) if STYLE_INK else (1.0 - STYLE_VALUE_NORM) + STYLE_VALUE_NORM * max(max(c), 1e-3)   # ink draws the dye as is
     return tuple(x / m for x in c)
 
 
@@ -463,9 +481,9 @@ def dye_legend(C):
             rgb, _ = dye_rgb({dk: 2.0 ** -k}, {dk: d}); row.append(dict(k=k, share='1' if k == 0 else ('1/%d' % 2 ** k if k < DYE_K_MAX else '1/%d or less' % 2 ** k), hex=hex_of(drawn(rgb))))
         steps.append(dict(dye=dk, hue=d.get('hue') or 'dye', ramp=row))
     hues = [s['hue'] for s in steps]
-    if len(steps) == 1: text = '%s = descended from the founders (deeper = closer); ecru = none' % hues[0]
-    else: text = '%s descent (deeper = closer); ecru = neither' % ', '.join('%s = %s' % (s['hue'], s['dye'].capitalize()) for s in steps)
-    return dict(text=text, steps=steps, ecru=hex_of(drawn(ECRU)), rule='step k = round(-log2(share of descent)), 0 to %d; a share of 0 is ecru' % DYE_K_MAX)
+    if len(steps) == 1: text = '%s = descended from the founders (deeper = closer); %s = none' % (hues[0], STYLE_ECRU_WORD)
+    else: text = ('%s descent (deeper = closer); ' + STYLE_ECRU_WORD + ' = neither') % ', '.join('%s = %s' % (s['hue'], s['dye'].capitalize()) for s in steps)
+    return dict(text=text, steps=steps, ecru=hex_of(drawn(ECRU)), rule='step k = round(-log2(share of descent)), 0 to %d; a share of 0 is ' % DYE_K_MAX + STYLE_ECRU_WORD)
 
 
 class Ribbons:
@@ -847,6 +865,129 @@ def stop_labels(L, t, shots):
     return out
 
 
+# ---------------------------------------------------------------- v2: the sphere's words in the stops (the cards keep the tapestry's)
+HYPER_WORDS = [   # ordered; whole words only; the file name loom-view.json is never touched
+    (r'\bThe weft doubles back\b', 'The arc doubles back'), (r'\bThe close weave\b', 'Close marriages'), (r'\bRuptures, then the fell\b', 'Ruptures, then the present'),
+    (r' \(an open diamond marks the end that moves\)', ''), (r' \(open diamond\)', ''), (r'\bMarked on the cloth from the narration\b', 'From the narration'),
+    (r'\bthe cloth\b', 'the sphere'), (r'\bPull any thread\b', 'Click any fiber'), (r'\bwedding picks\b', 'wedding arcs'), (r'\bwedding pick\b', 'wedding arc'),
+    (r'\bThreads\b', 'Fibers'), (r'\bthreads\b', 'fibers'), (r'\bthread\b', 'fiber'), (r'\bpicks\b', 'marriages'), (r'\bpick\b', 'marriage'),
+    (r'\bcolumns\b', 'sectors'), (r'\bcolumn\b', 'sector'),
+]
+LOOM_WORDS = re.compile(r'\b(cloth|threads?|weft|warp|picks?|woven|weave|upright|columns?)\b', re.I)
+
+
+def hyper_words(s):
+    for a, b in HYPER_WORDS: s = re.sub(a, b, s)
+    return s
+
+
+def stop_text(L, C, t, i0=False):
+    """the caption of a hypersphere stop: the card stop's title, narration and computed lines in the sphere's words; the opening stop describes
+    the sphere itself (the style board's text: v3 reused the tapestry's 'upright thread' line). Grades are kept."""
+    st = C['stops'][t['i']]
+    if i0:
+        hs = [L['sectors'][k]['name'] for k in L['keys']]; U = L['U']
+        out = dict(title=C['name'], narration=[dict(text='A sphere of time: the founders sit at the centre (%d), the present is the glass (%d). Each life is a fiber running '
+                                                     'outward from birth to death; each marriage is an arc on the shell of its year.' % (L['Y0'], L['TOP']), grade='∑')],
+                   computed=[dict(text='%d lives and %d marriages (%d between close kin), in %d houses placed west to east: %s.' % (
+                       len(L['P']), len(U), sum(1 for u in U.values() if u['close']), len(hs), ', '.join(hs)), grade='∑'),
+                             dict(text=dye_legend(C)['text'] + '; dashed = an estimated year.', grade='∑')])
+    else:
+        out = dict(title=hyper_words(st['title']), narration=[dict(x, text=hyper_words(x['text'])) for x in st['narration']],
+                   computed=[dict(x, text=hyper_words(x['text'])) for x in st['computed']])
+    left = [m.group(0) for x in [out['title']] + [y['text'] for y in out['narration'] + out['computed']] for m in LOOM_WORDS.finditer(x)]
+    if left: raise SystemExit('stop %s still uses tapestry words: %s' % (st['key'], sorted(set(left))))
+    return out
+
+
+# ---------------------------------------------------------------- v2: portrait plates (camera-facing, faded and drifted by X3D interpolators)
+PLATE_K = 0.10                 # a plate's height as a share of the shot camera's distance to the person (about a seventh of the frame)
+PLATE_ASPECT = 0.8             # the cut-outs are 4:5
+PLATE_FADE = (0.55, 1.0)       # share of the flight over which a stop's plates fade in (the page runs the clock over the flight)
+PLATE_T = 0.06                 # transparency once in (a little of the scene shows through)
+PLATE_OUT_S = 0.9              # seconds to fade out when the camera leaves
+PLATE_DRIFT = 0.30             # the drift on arrival, in plate heights, toward the plate's resting place
+PLATE_LINKED = 2               # at most two linked people (a spouse or a parent with an entry) beside the subject
+
+
+def make_plates(L, shots, tour, portraits, root_rel=''):
+    """per close stop (CU, MCU) whose subject has a portraits.json entry: the subject and at most two linked people with entries (the stop's
+    marriage partner first, then other spouses, then the parents), each a plate near their fiber at the stop's year. Pending or rejected entries
+    carry their monogram (portraits.json says which file); people with no entry get no plate."""
+    P, U = L['P'], L['U']; out = {}
+    for t in tour:
+        s = shots.get(t['shot']) or {}; subj = s.get('subject')
+        if s.get('size') not in ('CU', 'MCU') or subj not in P or subj not in portraits: continue
+        b = s.get('bead') or {}; y = b.get('year') or s.get('year') or (P[subj]['pieces'][0][3] + P[subj]['pieces'][-1][4]) / 2
+        cands = []
+        if b.get('union') in U: u = U[b['union']]; cands.append(u['b'] if u['a'] == subj else u['a'])
+        for uid in P[subj].get('unions') or []:
+            if uid in U: u = U[uid]; cands.append(u['b'] if u['a'] == subj else u['a'])
+        cands += [P[subj].get('father'), P[subj].get('mother')]
+        linked = []
+        for c in cands:
+            if c and c in P and c in portraits and c != subj and c not in linked and P[c]['born'] <= y: linked.append(c)
+        linked = linked[:PLATE_LINKED]
+        pos, tgt, up = s['pos'], s['tgt'], s['up']
+        f = norm(sub(tgt, pos)); rt = norm(cross(f, up)); uv = cross(rt, f)
+        sx0 = screen_xy(pos, tgt, up, s['fov'], label_point(L, subj, y))[0]
+        items = []
+        for k, pid in enumerate([subj] + linked):
+            q = label_point(L, pid, y); d = max(length(sub(q, pos)), 1e-3); h = PLATE_K * d; wd = PLATE_ASPECT * h
+            sx = screen_xy(pos, tgt, up, s['fov'], q)[0]
+            # the subject's plate goes to the side with less room (the page's portrait card takes the side with more); a linked person's away from the subject
+            side = (-1.0 if sx0 < 0 else 1.0) if k == 0 else (1.0 if sx >= sx0 else -1.0)
+            end = add(q, add(mul(uv, 0.62 * h), mul(rt, side * 0.78 * wd)))
+            start = add(end, add(mul(rt, side * PLATE_DRIFT * h), mul(uv, -0.5 * PLATE_DRIFT * h)))
+            e = portraits[pid]
+            items.append(dict(id=pid, role='subject' if k == 0 else 'linked', pos=r5(end), start=r5(start), h=round(h, 5), w=round(wd, 5), kind=e['kind'], status=e['status'],
+                              label=e['label'], tex=root_rel + e['cutout'], year=round(y, 2)))
+        key = re.sub(r'[^A-Za-z0-9_]', '_', t['shot'])
+        out[t['shot']] = dict(stop=t['i'], tour=tour.index(t), year=round(y, 2), group='Plates_' + key, clock_in='PlatesIn_' + key, clock_out='PlatesOut_' + key,
+                              mat='PlateMat_' + key, items=items)
+    return out
+
+
+def write_plates(w, plates):
+    """the plates as standard X3D: Transform > Billboard (screen-aligned) > Transform (size) > Shape (UnlitMaterial + ImageTexture of the cut-out,
+    whose alpha is the feathered edge). Per stop, one material fades every plate: PlatesIn (a TimeSensor the page starts with the flight, its
+    cycleInterval set to the flight's length) drives a ScalarInterpolator into the material's transparency and a PositionInterpolator per plate
+    (a short drift into place); PlatesOut (started when the camera leaves) fades them out. Returns the DEFs to EXPORT."""
+    if not plates: return []
+    w("    <!-- PORTRAIT PLATES (v2): on a close stop the subject and up to two linked people, near their fibers at the stop's year; the cut-outs come from\n"
+      "         portraits.json (an AI portrait with its label, or a monogram card). Transparency and a slight drift come from X3D interpolators. -->\n")
+    w("    <Group DEF='Plates'>\n"); defs, tex, quad = [], set(), False
+    for shot, g in plates.items():
+        w("      <Group DEF='%s'>\n" % g['group'])
+        for k, it in enumerate(g['items']):
+            mat = ("<UnlitMaterial DEF='%s' emissiveColor='1 1 1' transparency='1'/>" % g['mat']) if k == 0 else "<UnlitMaterial USE='%s'/>" % g['mat']
+            tdef = 'Tex_' + re.sub(r'[^A-Za-z0-9_]', '_', it['id'])
+            tx = ("<ImageTexture USE='%s'/>" % tdef) if tdef in tex else ("<ImageTexture DEF='%s' url='\"%s\"' repeatS='false' repeatT='false'/>" % (tdef, it['tex'])); tex.add(tdef)
+            geo = "<IndexedTriangleSet USE='PlateQuad'/>" if quad else ("<IndexedTriangleSet DEF='PlateQuad' solid='false' index='0 1 2 0 2 3'><Coordinate point='-0.5 -0.5 0 0.5 -0.5 0 0.5 0.5 0 -0.5 0.5 0'/>"
+                                                                       "<TextureCoordinate point='0 0 1 0 1 1 0 1'/></IndexedTriangleSet>"); quad = True
+            w("        <Transform DEF='Plate_%s_%d' translation='%s'>\n          <Billboard axisOfRotation='0 0 0'>\n            <Transform scale='%s %s 1'>\n"
+              "              <Shape>\n                <Appearance>%s%s</Appearance>\n                %s\n              </Shape>\n            </Transform>\n          </Billboard>\n        </Transform>\n" % (
+                  g['group'][7:], k, v3(it['start'], 5), fnum(it['w'], 5), fnum(it['h'], 5), mat, tx, geo))
+        w("      </Group>\n")
+    w("    </Group>\n")
+    for shot, g in plates.items():
+        k0, k1 = PLATE_FADE
+        w("    <TimeSensor DEF='%s' cycleInterval='4' loop='false'/>\n    <TimeSensor DEF='%s' cycleInterval='%s' loop='false'/>\n" % (g['clock_in'], g['clock_out'], fnum(PLATE_OUT_S)))
+        w("    <ScalarInterpolator DEF='PlateIn_%s' key='0 %s 1' keyValue='1 1 %s'/>\n" % (g['group'][7:], fnum(k0), fnum(PLATE_T)))
+        w("    <ScalarInterpolator DEF='PlateOut_%s' key='0 1' keyValue='%s 1'/>\n" % (g['group'][7:], fnum(PLATE_T)))
+        for k, it in enumerate(g['items']):
+            w("    <PositionInterpolator DEF='PlateDrift_%s_%d' key='0 %s 1' keyValue='%s, %s, %s'/>\n" % (g['group'][7:], k, fnum(k0), v3(it['start'], 5), v3(it['start'], 5), v3(it['pos'], 5)))
+        w("    <ROUTE fromNode='%s' fromField='fraction_changed' toNode='PlateIn_%s' toField='set_fraction'/>\n" % (g['clock_in'], g['group'][7:]))
+        w("    <ROUTE fromNode='PlateIn_%s' fromField='value_changed' toNode='%s' toField='set_transparency'/>\n" % (g['group'][7:], g['mat']))
+        w("    <ROUTE fromNode='%s' fromField='fraction_changed' toNode='PlateOut_%s' toField='set_fraction'/>\n" % (g['clock_out'], g['group'][7:]))
+        w("    <ROUTE fromNode='PlateOut_%s' fromField='value_changed' toNode='%s' toField='set_transparency'/>\n" % (g['group'][7:], g['mat']))
+        for k, it in enumerate(g['items']):
+            w("    <ROUTE fromNode='%s' fromField='fraction_changed' toNode='PlateDrift_%s_%d' toField='set_fraction'/>\n" % (g['clock_in'], g['group'][7:], k))
+            w("    <ROUTE fromNode='PlateDrift_%s_%d' fromField='value_changed' toNode='Plate_%s_%d' toField='set_translation'/>\n" % (g['group'][7:], k, g['group'][7:], k))
+        defs += [g['clock_in'], g['clock_out'], g['mat']]
+    return defs
+
+
 # ---------------------------------------------------------------- X3D writers
 HEAD = "<?xml version='1.0' encoding='UTF-8'?>\n<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>\n"
 
@@ -863,7 +1004,7 @@ def vp_xml(name, s, desc, ind='    ', extra='', children=''):
     return head + ("/>\n" if not children else ">\n%s  %s\n%s</Viewpoint>\n" % (ind, children, ind))
 
 
-def write_pocket(F, C, L, shots, tour, rib, path, mapping):
+def write_pocket(F, C, L, shots, tour, rib, path, mapping, plates=None):
     P = L['P']; o = []; w = o.append; tri = {}
     fam = C['family']
     common = [('uCycle', 'SFFloat', '0.25')]
@@ -873,11 +1014,11 @@ def write_pocket(F, C, L, shots, tour, rib, path, mapping):
                                                     ('uQ', 'SFInt32', '2'), ('uPass', 'SFInt32', str(pas)), ('uBlend', 'SFInt32', '0')]
     shell_f = common + [('uSeed', 'SFFloat', '0.618'), ('uExposure', 'SFFloat', '1.2'), ('uFell', 'SFFloat', fnum(L['TOP']))] + units + [
         ('uR', 'SFFloat', fnum(R_GLASS)), ('uRp', 'SFFloat', fnum(R_PROXY)), ('uHaze', 'SFFloat', '1'), ('uGain', 'SFFloat', '1'), ('uShell0', 'SFFloat', fnum(L['shell0'])),
-        ('uTop', 'SFFloat', fnum(L['TOP'])), ('uInside', 'SFFloat', '0.35'), ('uQ', 'SFInt32', '2'), ('uBlend', 'SFInt32', '0')]
+        ('uTop', 'SFFloat', fnum(L['TOP'])), ('uInside', 'SFFloat', '0.35'), ('uQ', 'SFInt32', '2'), ('uBlend', 'SFInt32', '0'), ('logDepth', 'SFFloat', '0')]
     def glow_f(g, rg, ring, gain): return common + [('uExposure', 'SFFloat', fnum(g['exposure'])), ('uRg', 'SFFloat', fnum(rg)), ('uGain', 'SFFloat', fnum(gain)),
                                                     ('uE2', 'SFFloat', fnum(g['e2'], 6)), ('uS2', 'SFFloat', fnum(g['s2'], 6)), ('uHalo', 'SFFloat', fnum(g['halo'], 6)),
                                                     ('uCore', 'SFFloat', fnum(g['core'], 5)), ('uPeriod', 'SFFloat', fnum(g['period'])), ('uRing', 'SFFloat', fnum(ring, 3)), ('uKnee', 'SFFloat', fnum(g['knee'], 5)), ('uZ', 'SFFloat', fnum(g['z'], 3)),
-                                                    ('uHaloTint', 'SFVec3f', v3(g['halo_tint'], 3)), ('uCoreTint', 'SFVec3f', v3(g['core_tint'], 3)), ('uBlend', 'SFInt32', '0')]
+                                                    ('uHaloTint', 'SFVec3f', v3(g['halo_tint'], 3)), ('uCoreTint', 'SFVec3f', v3(g['core_tint'], 3)), ('uBlend', 'SFInt32', '0'), ('logDepth', 'SFFloat', '0')]
     seed_f = glow_f(SEED_GLOW, SEED_GLOW_R, 0, 1)
     ev, en, ef = icosphere(3, SEED_R); gv, gn, gf = icosphere(2, SEED_GLOW_R); sv, sn, sf = icosphere(3, R_PROXY); bv, bn, bf = icosphere(2, BEAD_R)
     w(HEAD)
@@ -889,7 +1030,7 @@ def write_pocket(F, C, L, shots, tour, rib, path, mapping):
     w("    <WorldInfo title='Dynasty hypersphere: %s' info='%s'/>\n" % (esc(C['name']), ' '.join('&quot;%s&quot;' % esc(x) for x in mapping['lines'])))
     w("    <NavigationInfo DEF='Nav' type='\"EXAMINE\" \"ANY\"' headlight='false' speed='0.6' avatarSize='0.01 0.16 0.075' transitionType='\"ANIMATE\"' transitionTime='1.6'/>\n")
     w("    <NavigationInfo DEF='NavFly' type='\"FLY\" \"ANY\"' headlight='false' speed='0.15' avatarSize='0.004 0.16 0.075' transitionType='\"ANIMATE\"' transitionTime='2.4'/>\n")
-    w("    <Background DEF='PocketSky' skyColor='0.006 0.005 0.014'/>\n")
+    w("    <Background DEF='PocketSky' skyColor='%s'/>\n" % ' '.join('%.3f' % x for x in TH._rgb(THEME['ground_bot'])))
     w("    <!-- THE SHOTS (camera grammar). Wide first, so it is bound when this file is opened alone; inside a host the host's opening view is bound. -->\n")
     names = ['Wide', 'Crown', 'Colossus'] + [hshot(k) for k in L['keys']] + sorted(n for n in shots if n.startswith('S'))
     for n in names:
@@ -944,16 +1085,17 @@ def write_pocket(F, C, L, shots, tour, rib, path, mapping):
     w("    <Shape DEF='Shell'>\n      <Appearance DEF='ShellApp' alphaMode='BLEND'>\n        <ComposedShader DEF='ShellShader' language='GLSL'>%s\n          <ShaderPart USE='RayVS'/>\n          %s\n        </ComposedShader>\n      </Appearance>\n" % (
         fields(shell_f, '          '), part('ShellFS', 'FRAGMENT', 'shell.frag.glsl')))
     w("      <IndexedTriangleSet DEF='ShellProxy' solid='false' index='%s'>\n        <Coordinate point='%s'/>\n      </IndexedTriangleSet>\n    </Shape>\n" % (' '.join(str(i) for t in sf for i in t), flat(sv, 5)))
+    plate_defs = write_plates(w, plates or {})
     w("    <!-- CLOCKS: standard X3D drives the shaders, so the pocket animates by itself when Inlined in any host. Every period divides 600 s. -->\n")
     w("    <TimeSensor DEF='Clock' cycleInterval='600' loop='true'/>\n")
     for s_ in ('ShellShader', 'SeedGlow', 'SeedCore', 'BeadGlow', 'FiberCore', 'FiberGlow'):
         w("    <ROUTE fromNode='Clock' fromField='fraction_changed' toNode='%s' toField='uCycle'/>\n" % s_)
     exports = ['Probe', 'ProbeFrame', 'CamSense', 'ShellSense', 'Nav', 'NavFly', 'Inside', 'Flywheel', 'FlywheelRig', 'FlywheelClock'] + names + \
-              ['Frame_' + n for n in names if shots[n]['frame']] + ['FiberCore', 'FiberGlow', 'ShellShader', 'SeedGlow', 'SeedCore', 'BeadGlow', 'BeadXf', 'BeadSwitch', 'GlowApp', 'ShellApp', 'SeedGlowApp', 'BeadApp', 'GlowSwitch', 'Clock', 'SeedMat']
+              ['Frame_' + n for n in names if shots[n]['frame']] + ['FiberCore', 'FiberGlow', 'ShellShader', 'SeedGlow', 'SeedCore', 'BeadGlow', 'BeadXf', 'BeadSwitch', 'GlowApp', 'ShellApp', 'SeedGlowApp', 'BeadApp', 'GlowSwitch', 'Clock', 'SeedMat'] + plate_defs
     for e in exports: w("    <EXPORT localDEF='%s'/>\n" % e)
     w("  </Scene>\n</X3D>\n")
     open(path, 'w', encoding='utf-8', newline='\n').write(''.join(o))
-    tri = {'threads_per_pass': rib.triangles, 'threads_drawn (core + glow)': 2 * rib.triangles, 'glass_proxy': len(sf), 'seed': len(ef), 'seed_glow_proxy': len(gf), 'bead_proxy (close shots only)': len(bf)}
+    tri = {'portrait_plates': 2 * sum(len(p['items']) for p in (plates or {}).values()), 'threads_per_pass': rib.triangles, 'threads_drawn (core + glow)': 2 * rib.triangles, 'glass_proxy': len(sf), 'seed': len(ef), 'seed_glow_proxy': len(gf), 'bead_proxy (close shots only)': len(bf)}
     return exports, tri
 
 
@@ -963,16 +1105,16 @@ def write_host(C, L, shots, exports, pocket_file, path, mapping):
     w(HEAD)
     w("  <head>\n    <component name='Shaders' level='1'/>\n    <component name='Shape' level='2'/>\n    <component name='Rendering' level='5'/>\n")
     w("    <meta name='title' content='%s'/>\n" % os.path.basename(path))
-    w("    <meta name='description' content='%s'/>\n" % esc('Host space for the dynasty hypersphere (%s): nebula sky, pewter armillary, lights, the opening viewpoint, and the pocket %s Inlined at scale %g with IMPORTs. Generated by %s; do not edit.' % (C['name'], pocket_file, SCALE, VERSION)))
+    w("    <meta name='description' content='%s'/>\n" % esc('Host space for the dynasty hypersphere (%s): the %s backdrop, the armillary, lights, the opening viewpoint, and the pocket %s Inlined at scale %g with IMPORTs. Generated by %s; do not edit.' % (C['name'], THEME['name'], pocket_file, SCALE, VERSION)))
     w("    <meta name='generator' content='%s'/>\n  </head>\n  <Scene>\n" % VERSION)
     w("    <WorldInfo title='Dynasty hypersphere (host): %s'/>\n" % esc(C['name']))
     w("    <NavigationInfo DEF='HostNav' type='\"EXAMINE\" \"ANY\"' headlight='false' speed='4' avatarSize='0.05 1.6 0.75' transitionType='\"ANIMATE\"' transitionTime='1.6'/>\n")
-    w("    <Background DEF='HostSky' skyColor='0.006 0.005 0.014'/>\n")
+    w("    <Background DEF='HostSky' skyColor='%s'/>\n" % ' '.join('%.3f' % x for x in TH._rgb(THEME['ground_bot'])))
     w("    <Viewpoint DEF='Host' description='Opening: the pocket in its host' position='%s' orientation='%s' centerOfRotation='0 0 0' fieldOfView='%s'/>\n" % (v3(s['pos'], 4), v3(look_at(s['pos'], s['tgt']), 6), fnum(s['fov'], 3)))
     w("    <!-- LIGHTS: they light only the PhysicalMaterial fallbacks (seed, armillary); the shaders make their own light. global='true' (x3d-blender-io finding). -->\n")
     w("    <DirectionalLight DEF='Key' global='true' direction='-0.45 -0.62 -0.64' color='0.78 0.85 1' intensity='0.5' ambientIntensity='0.08'/>\n")
     w("    <DirectionalLight DEF='Rim' global='true' direction='0.55 0.15 0.82' color='1 0.5 0.78' intensity='0.35'/>\n")
-    w("    <!-- HOST SKY: nebula and stars computed per pixel, seeded; nothing fetched. -->\n")
+    w("    <!-- HOST BACKDROP (theme %s): computed per pixel from the view direction; nothing fetched. -->\n" % THEME['name'])
     w("    <Shape DEF='SkyDome'>\n      <Appearance DEF='SkyApp' alphaMode='OPAQUE'>\n        <ComposedShader DEF='SkyShader' language='GLSL'>%s\n          %s\n          %s\n        </ComposedShader>\n      </Appearance>\n" % (
         fields([('uCycle', 'SFFloat', '0.25'), ('uSeed', 'SFFloat', '0.618'), ('uExposure', 'SFFloat', '1'), ('uQ', 'SFInt32', '2')], '          '),
         part('RayVS', 'VERTEX', 'ray.vert.glsl'), part('SkyFS', 'FRAGMENT', 'sky.frag.glsl')))
@@ -997,7 +1139,7 @@ def write_host(C, L, shots, exports, pocket_file, path, mapping):
 
 
 # ---------------------------------------------------------------- per family
-def build_family(F, C, out):
+def build_family(F, C, out, portraits=None, root_rel=''):
     fam = C['family']; L = layout(F, C)
     polys = polylines(L); rib = ribbons(L, polys)
     shots, big = make_shots(L)
@@ -1019,7 +1161,10 @@ def build_family(F, C, out):
     mapping['short'] = 'Radius = time: %d at the core, %d at the glass, %s years per pocket unit, shells every 50 years. Azimuth: houses west to east, angle = 2 + people. Elevation: order of descent (layout only).' % (L['Y0'], L['TOP'], fnum(yrs_per_unit, 1))
     mapping['lines'] = [mapping['short'], 'Each life a fiber, each marriage an arc on the shell of its year.']
     pocket, host = 'pocket-%s.x3d' % fam, 'hyper-%s.x3d' % fam
-    exports, tri = write_pocket(F, C, L, shots, tour, rib, os.path.join(out, pocket), mapping)
+    plates = make_plates(L, shots, tour, portraits or {}, root_rel)
+    for t in tour:   # v2: the sphere's words (the cards keep the loom's, under card_title)
+        t['text'] = stop_text(L, C, t, i0=t['i'] == 0 and t['shot'] == 'Host'); t['card_title'] = t['title']; t['title'] = t['text']['title']
+    exports, tri = write_pocket(F, C, L, shots, tour, rib, os.path.join(out, pocket), mapping, plates)
     tri.update(write_host(C, L, shots, exports, pocket, os.path.join(out, host), mapping))
     tri['total_drawn'] = sum(v for k, v in tri.items() if k != 'threads_per_pass')
     # page data
@@ -1040,7 +1185,8 @@ def build_family(F, C, out):
     doc = dict(version='hyper-view/1', family=fam, name=C['name'], host=host, pocket=pocket, cards='%s.cards.json' % fam, pocket_scale=SCALE, timing=TIMING,
                units=dict(Y0=L['Y0'], top=L['TOP'], R0=R0, K=L['K'], R=R_GLASS, Rp=R_PROXY, Rtop=R_TOP, shell0=L['shell0'], years_per_unit=round(yrs_per_unit, 2)),
                mapping=mapping, sectors=sectors, order_west_to_east=L['keys'], founders=L['founders'], shots=shots, tour=tour, chain_checks=checks, stop_labels=labels,
-               people=people, glow=GLOW_W_TIER, picked=dict(colossus_house=big), dye_legend=dye_legend(C), bead_r=BEAD_R,
+               people=people, glow=GLOW_W_TIER, picked=dict(colossus_house=big), dye_legend=dye_legend(C), bead_r=BEAD_R, theme=THEME['slug'],
+               theme_dyes={dk: d['color'] for dk, d in C['dyes'].items()}, plates=plates, plate_timing=dict(fade=list(PLATE_FADE), out_s=PLATE_OUT_S, t=PLATE_T),
                dye_steps={str(k): sum(1 for pid in P if dye_rgb(P[pid].get('shares'), C['dyes'])[1] == k) for k in list(range(DYE_K_MAX + 1)) + [None]},
                counts=dict(people=len(P), unions=len(U), close=sum(1 for u in U.values() if u['close']), unions_year_estimated=sum(1 for u in U.values() if u['year_precision'] not in ('year', 'day', 'month')),
                            deaths_not_in_data=sum(1 for p in P.values() if p['died'] is None), moves=sum(1 for p in P.values() if p.get('move')),
@@ -1054,7 +1200,7 @@ def build_family(F, C, out):
                seed=dict(center=[0, 0, 0], r=SEED_R, glow_r=SEED_GLOW_R), glass=dict(r=R_GLASS), shells=[dict(year=y, r=round(L['r'](y), 5)) for y in range(L['shell0'], L['TOP'] + 1, 50)])
     gp = os.path.join(out, '%s.geometry.json' % fam)
     json.dump(geo, open(gp, 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'), sort_keys=True)
-    return dict(host=host, pocket=pocket, data=os.path.basename(jp), geometry=os.path.basename(gp), cards='%s.cards.json' % fam, name=C['name'], key=fam,
+    return dict(host=host, pocket=pocket, data=os.path.basename(jp), geometry=os.path.basename(gp), cards='%s.cards.json' % fam, name=C['name'], key=fam, plates=plates,
                 tri=tri, chain_ok=all(c['ok'] for c in checks), tour=[(t['key'], t['shot'], t['size'], t['move']) for t in tour], mapping=mapping, counts=doc['counts'])
 
 
@@ -1091,21 +1237,28 @@ def main():
     ap.add_argument('--view', default=os.path.join(PROTO, 'data', 'loom-view.json'))
     ap.add_argument('--cards', default=os.path.join(PROTO, 'tapestry', 'out'))
     ap.add_argument('--out', default=os.path.join(HERE, 'out'))
+    ap.add_argument('--theme', default=TH.DEFAULT_THEME, choices=sorted(TH.BY_SLUG))
+    ap.add_argument('--portraits', default=None, help='the release portraits.json (tools/build_portraits.py); none: no plates')
+    ap.add_argument('--root-rel', default='', help='path from these scenes to the release root, for the plate textures')
     a = ap.parse_args()
     out = a.out; os.makedirs(out, exist_ok=True)
     view, fams = load(a.view, a.cards)
+    for _k, (_F, _C) in fams.items():   # v2: the theme's tone of each dye (its hue family kept); the cards on disk stay the loom's, byte for byte
+        for _d in _C['dyes'].values(): _d['color'] = STYLE_DYES.get(_d.get('hue'), _d['color'])
+    portraits = json.load(open(a.portraits, encoding='utf-8'))['people'] if a.portraits else {}
     sri = 'sha384-' + base64.b64encode(hashlib.sha384(open(os.path.join(VENDOR, 'x_ite.min.js'), 'rb').read()).digest()).decode()
     if sri != XITE_SRI: raise SystemExit('vendored X_ITE is not the npm 16.5.1 file the page pins')
-    summary = {}; man = dict(version='hyper-manifest/1', built_by=VERSION, asof=view['asof'], xite='16.5.1', families=[])
+    summary = {}; man = dict(version='hyper-manifest/1', built_by=VERSION, asof=view['asof'], xite='16.5.1', theme=THEME['slug'], families=[])
     for key in FAMILIES:
         F, C = fams[key]
-        s = build_family(F, C, out); summary[key] = s
+        s = build_family(F, C, out, portraits, a.root_rel); summary[key] = s
         shutil.copyfile(os.path.join(a.cards, key + '.cards.json'), os.path.join(out, key + '.cards.json'))
         man['families'].append(dict(key=key, name=s['name'], host=s['host'], pocket=s['pocket'], data=s['data'], cards=s['cards'], geometry=s['geometry']))
     json.dump(man, open(os.path.join(out, 'hyper-manifest.json'), 'w', encoding='utf-8'), indent=1, ensure_ascii=False)
     page = open(PAGE, encoding='utf-8').read()
     if XITE_SRI not in page or 'name="loom:xite"' not in page: raise SystemExit('page/index.html must pin X_ITE 16.5.1 and name the shipped copy in <meta name="loom:xite">')
     if re.search(r'\beval\s*\(|new\s+Function\b', page): raise SystemExit('page/index.html uses eval or new Function')
+    page = TH.fill_page(page, [THEME['slug']], phone=None)   # the standalone page: this theme only (the merged page carries two)
     open(os.path.join(out, 'index.html'), 'w', encoding='utf-8', newline='\n').write(page)
     files = list(XITE_FILES) + ['assets/components/' + n for n in sorted(os.listdir(os.path.join(VENDOR, 'assets', 'components'))) if n.endswith('.min.js')]
     files += ['assets/images/' + n for n in sorted(os.listdir(os.path.join(VENDOR, 'assets', 'images')))]
@@ -1123,11 +1276,12 @@ def main():
     published = own + ['x_ite/' + r for r in files]
     pub = {p: {'from': os.path.join(out, p), 'contentType': TYPES.get(os.path.splitext(p)[1], 'application/octet-stream')} for p in published}
     json.dump(pub, open(os.path.join(out, 'publish.json'), 'w', encoding='utf-8'), indent=1, sort_keys=True)
-    inputs = {os.path.relpath(p, PROTO): sha_file(p) for p in [os.path.abspath(__file__), a.view, PAGE] + [os.path.join(a.cards, k + '.cards.json') for k in FAMILIES] +
+    inputs = {os.path.relpath(p, PROTO): sha_file(p) for p in [os.path.abspath(__file__), os.path.join(HERE, 'themes.py'), a.view, PAGE] + [os.path.join(a.cards, k + '.cards.json') for k in FAMILIES] +
               sorted(os.path.join(SRC, n) for n in os.listdir(SRC)) + [os.path.join(VENDOR, 'x_ite.min.js')]}
     outputs = {p: sha_file(os.path.join(out, p)) for p in own + ['publish.json']}
     outputs['x_ite/* (%d files, copied)' % len(files)] = hashlib.sha256(''.join(sha_file(os.path.join(out, 'x_ite', r)) for r in files).encode()).hexdigest()
-    rec = dict(built_by=VERSION, python=sys.version.split()[0], deterministic=True, xite_sri=sri, changes=CHANGES, data='loom-view.json (asof %d), rothschild, habsburg, darwin_wedgwood' % view['asof'],
+    rec = dict(built_by=VERSION, theme=THEME['slug'], portraits=dict(file=a.portraits and os.path.basename(a.portraits), sha256=a.portraits and sha_file(a.portraits)),
+               plates={k: sum(len(p['items']) for p in s['plates'].values()) for k, s in summary.items()}, python=sys.version.split()[0], deterministic=True, xite_sri=sri, changes=CHANGES, data='loom-view.json (asof %d), rothschild, habsburg, darwin_wedgwood' % view['asof'],
                units=dict(R0=R0, R_TOP=R_TOP, R_GLASS=R_GLASS, R_PROXY=R_PROXY, pocket_scale=SCALE, grammar_to_pocket=G),
                families={k: dict(mapping={m: v for m, v in s['mapping'].items() if m not in ('lines',)}, counts=s['counts'], chain_ok=s['chain_ok'], tour=s['tour'],
                                  files=dict(host=s['host'], pocket=s['pocket'], data=s['data'], geometry=s['geometry'], cards=s['cards'])) for k, s in summary.items()},

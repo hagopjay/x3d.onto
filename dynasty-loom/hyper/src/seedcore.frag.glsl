@@ -12,7 +12,7 @@ void main() {
   float T = uCycle * 600.;
   float mu = clamp(abs(dot(normalize(vN), normalize(-vP))), 0., 1.);        // 1 at the centre of the disc, 0 at the limb
   float br = .8 + .2 * sin(T * 1.5707963);
-  vec3 centre = vec3(1., .92, .8) * 3., limb = vec3(1., .55, .25) * .6;
+  vec3 centre = S_SEED_CENTRE * 3., limb = S_SEED_LIMB * .6;
   vec3 col = mix(limb, centre, pow(mu, .7)) * (.85 + .15 * br);
-  x3d_FragColor = vec4(encode(col, uExposure) + dither(gl_FragCoord.xy, T), 1.);
+  x3d_FragColor = vec4(S_INK > .5 ? S_SEED_INK : encode(col, uExposure) + dither(gl_FragCoord.xy, T), 1.);
 }
