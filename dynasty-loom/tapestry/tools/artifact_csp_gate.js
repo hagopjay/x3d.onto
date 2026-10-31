@@ -5,6 +5,7 @@
 // 'self', inline and the five CDNs; fetch only from 'self'; fonts only from fonts.gstatic.com; images only from 'self', data: and blob:; and no
 // 'unsafe-eval'. The real host's policy is not visible from here, so a pass here is Likely there, never Confirmed.
 // Per run (desktop 1527 x 923 light, phone 400 x 860 dark) it records CSP violations, console messages and failed requests, and checks:
+//   (v2: a light system setting opens on the default look, a dark one on the dark alternate; the run records which.)
 //   the hypersphere: the default view; every family loads through the #hash; every ComposedShader compiled (isValid); the Host shot bound; its
 //   HTML labels drawn; the loading still shown, then gone; a frame.
 //   the loom: #loom switches view and keeps the family; a bare family hash keeps the view, #loom/<family> names both; every family loads; X_ITE drew
@@ -61,7 +62,8 @@ function serve() {
     await p.goto(base + run.q, { waitUntil: 'load' });
     const until = (fn, arg, ms = 180000) => p.waitForFunction(fn, arg, { timeout: ms, polling: 100 }).then(() => true).catch(() => false);
     const hyperState = () => p.evaluate(() => ({ view: dynastyApi.view, loaded: document.body.dataset.loaded, fam: hyperApi.family, hash: location.hash, xite: hyperApi.xite, shaders: hyperApi.shaders(),
-      bound: hyperApi.pose().bound, labels: hyperApi.labelBoxes().length, failed: hyperApi.failed || null, poster: (e => e.hidden || e.classList.contains('gone'))(document.getElementById('poster')) }));
+      bound: hyperApi.pose().bound, labels: hyperApi.labelBoxes().length, failed: hyperApi.failed || null, poster: (e => e.hidden || e.classList.contains('gone'))(document.getElementById('poster')),
+      look: document.documentElement.dataset.look || null, ink: !!(window.dynastyApi && dynastyApi.looks && (dynastyApi.looks.themes[document.documentElement.dataset.look] || {}).ink) }));
     const loomState = () => p.evaluate(async () => {   // label text drawn: give X_ITE's font fetch a moment, then read every Label of the bound stop
       const A = window.loomApi; let lab = null;
       for (let t = 0; t < 60; t++) {
@@ -127,11 +129,12 @@ function serve() {
     r.checks.hyper_host_bound = H.every(f => /^Opening/.test(f.bound || ''));
     r.checks.hyper_labels_drawn = H.every(f => f.labels > 0);
     r.checks.hyper_hash_routing = Object.entries(r.hyper).every(([k, f]) => f.hash === '#' + k.replace(/_/g, '-') && f.fam === k && f.view === 'hyper');
-    r.checks.loading_still_shown_then_gone = r.ok200.some(u => /^poster-(wide|tall)-plate\.webp$/.test(u)) && H[0] && H[0].poster === true;
+    // v2: an ink look (light ground) loads on its own ground and never fetches the dark loading still; a dark look shows it, then lets it go
+    r.checks.loading_still_shown_then_gone = !!H[0] && H[0].poster === true && (H[0].ink ? !r.ok200.some(u => /^poster-/.test(u)) : r.ok200.some(u => /^poster-(wide|tall)-plate\.webp$/.test(u)));
     r.checks.loom_all_loaded = L.length === 3 && L.every(f => f.loaded === '1' && !f.failed && f.view === 'loom');
     r.checks.loom_labels_drawn = L.every(f => f.labels && f.labels.drawn === f.labels.labels && f.labels.labels > 0);
     r.checks.loom_hash_routing = S.by_hash && S.by_hash.fam === last && S.by_hash.hash === '#loom/' + last.replace(/_/g, '-') && Object.entries(r.loom).every(([k, f]) => f.fam === k && f.hash === '#loom/' + k.replace(/_/g, '-'));
-    r.checks.loom_chrome_inside_safe_area = L.every(f => f.header[3] <= f.safe.y0 && Math.min(f.cap[1], f.layout === 'phone' ? f.rail[1] : 1e9) >= f.safe.y1);
+    r.checks.loom_chrome_inside_safe_area = L.every(f => f.header[3] <= f.safe.y0 && Math.min(f.cap[1], f.layout === 'phone' && f.rail[3] > 0 ? f.rail[1] : 1e9) >= f.safe.y1);   // v2 phone UI: no rail (the caption has previous and next)
     r.checks.view_button_carries_family_and_pick = S.by_button && S.by_button.view === 'hyper' && S.by_button.fam === loomFam && S.by_button.hash === '#' + loomFam.replace(/_/g, '-') && S.by_button.loaded === '1' &&
       S.by_button.picked === who && !S.by_button.cardHidden && S.by_button.card.length > 0 && S.by_button.card === S.pick.cardLoom && !S.by_button.loomPicked;
     r.checks.view_key = S.by_key && S.by_key.view === 'loom' && S.by_key.fam === loomFam && S.by_key.loaded === '1' && S.by_key.hash === '#loom/' + loomFam.replace(/_/g, '-') && S.by_key.canvases.length === 2 && S.by_key.canvases.includes('x3d-hyper:hidden') && S.by_key.canvases.includes('x3d-loom:shown');

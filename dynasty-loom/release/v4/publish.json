@@ -1,0 +1,526 @@
+{
+ "darwin_wedgwood.cards.json": {
+  "contentType": "application/json",
+  "from": "darwin_wedgwood.cards.json"
+ },
+ "darwin_wedgwood.hyper.json": {
+  "contentType": "application/json",
+  "from": "darwin_wedgwood.hyper.json"
+ },
+ "darwin_wedgwood.x3d": {
+  "contentType": "application/xml",
+  "from": "darwin_wedgwood.x3d"
+ },
+ "fonts/UBUNTU-FONT-LICENCE.txt": {
+  "contentType": "text/plain",
+  "from": "fonts/UBUNTU-FONT-LICENCE.txt"
+ },
+ "fonts/UbuntuMono-R.ttf": {
+  "contentType": "font/ttf",
+  "from": "fonts/UbuntuMono-R.ttf"
+ },
+ "habsburg.cards.json": {
+  "contentType": "application/json",
+  "from": "habsburg.cards.json"
+ },
+ "habsburg.hyper.json": {
+  "contentType": "application/json",
+  "from": "habsburg.hyper.json"
+ },
+ "habsburg.x3d": {
+  "contentType": "application/xml",
+  "from": "habsburg.x3d"
+ },
+ "hyper-darwin_wedgwood.x3d": {
+  "contentType": "application/xml",
+  "from": "hyper-darwin_wedgwood.x3d"
+ },
+ "hyper-habsburg.x3d": {
+  "contentType": "application/xml",
+  "from": "hyper-habsburg.x3d"
+ },
+ "hyper-manifest.json": {
+  "contentType": "application/json",
+  "from": "hyper-manifest.json"
+ },
+ "hyper-rothschild.x3d": {
+  "contentType": "application/xml",
+  "from": "hyper-rothschild.x3d"
+ },
+ "loom-manifest.json": {
+  "contentType": "application/json",
+  "from": "loom-manifest.json"
+ },
+ "pocket-darwin_wedgwood.x3d": {
+  "contentType": "application/xml",
+  "from": "pocket-darwin_wedgwood.x3d"
+ },
+ "pocket-habsburg.x3d": {
+  "contentType": "application/xml",
+  "from": "pocket-habsburg.x3d"
+ },
+ "pocket-rothschild.x3d": {
+  "contentType": "application/xml",
+  "from": "pocket-rothschild.x3d"
+ },
+ "portraits.json": {
+  "contentType": "application/json",
+  "from": "portraits.json"
+ },
+ "portraits/Q1035/placeholder/cutout-768.webp": {
+  "contentType": "image/webp",
+  "from": "portraits/Q1035/placeholder/cutout-768.webp"
+ },
+ "portraits/Q1035/placeholder/thumb-256.webp": {
+  "contentType": "image/webp",
+  "from": "portraits/Q1035/placeholder/thumb-256.webp"
+ },
+ "portraits/Q150494/placeholder/cutout-768.webp": {
+  "contentType": "image/webp",
+  "from": "portraits/Q150494/placeholder/cutout-768.webp"
+ },
+ "portraits/Q150494/placeholder/thumb-256.webp": {
+  "contentType": "image/webp",
+  "from": "portraits/Q150494/placeholder/thumb-256.webp"
+ },
+ "portraits/Q153956/placeholder/cutout-768.webp": {
+  "contentType": "image/webp",
+  "from": "portraits/Q153956/placeholder/cutout-768.webp"
+ },
+ "portraits/Q153956/placeholder/thumb-256.webp": {
+  "contentType": "image/webp",
+  "from": "portraits/Q153956/placeholder/thumb-256.webp"
+ },
+ "portraits/Q1557224/v1/cutout-768.webp": {
+  "contentType": "image/webp",
+  "from": "portraits/Q1557224/v1/cutout-768.webp"
+ },
+ "portraits/Q1557224/v1/thumb-256.webp": {
+  "contentType": "image/webp",
+  "from": "portraits/Q1557224/v1/thumb-256.webp"
+ },
+ "portraits/Q158659/placeholder/cutout-768.webp": {
+  "contentType": "image/webp",
+  "from": "portraits/Q158659/placeholder/cutout-768.webp"
+ },
+ "portraits/Q158659/placeholder/thumb-256.webp": {
+  "contentType": "image/webp",
+  "from": "portraits/Q158659/placeholder/thumb-256.webp"
+ },
+ "portraits/Q204473/placeholder/cutout-768.webp": {
+  "contentType": "image/webp",
+  "from": "portraits/Q204473/placeholder/cutout-768.webp"
+ },
+ "portraits/Q204473/placeholder/thumb-256.webp": {
+  "contentType": "image/webp",
+  "from": "portraits/Q204473/placeholder/thumb-256.webp"
+ },
+ "portraits/Q234050/placeholder/cutout-768.webp": {
+  "contentType": "image/webp",
+  "from": "portraits/Q234050/placeholder/cutout-768.webp"
+ },
+ "portraits/Q234050/placeholder/thumb-256.webp": {
+  "contentType": "image/webp",
+  "from": "portraits/Q234050/placeholder/thumb-256.webp"
+ },
+ "portraits/Q242147/placeholder/cutout-768.webp": {
+  "contentType": "image/webp",
+  "from": "portraits/Q242147/placeholder/cutout-768.webp"
+ },
+ "portraits/Q242147/placeholder/thumb-256.webp": {
+  "contentType": "image/webp",
+  "from": "portraits/Q242147/placeholder/thumb-256.webp"
+ },
+ "portraits/Q311469/placeholder/cutout-768.webp": {
+  "contentType": "image/webp",
+  "from": "portraits/Q311469/placeholder/cutout-768.webp"
+ },
+ "portraits/Q311469/placeholder/thumb-256.webp": {
+  "contentType": "image/webp",
+  "from": "portraits/Q311469/placeholder/thumb-256.webp"
+ },
+ "portraits/Q3133240/placeholder/cutout-768.webp": {
+  "contentType": "image/webp",
+  "from": "portraits/Q3133240/placeholder/cutout-768.webp"
+ },
+ "portraits/Q3133240/placeholder/thumb-256.webp": {
+  "contentType": "image/webp",
+  "from": "portraits/Q3133240/placeholder/thumb-256.webp"
+ },
+ "portraits/Q316669/placeholder/cutout-768.webp": {
+  "contentType": "image/webp",
+  "from": "portraits/Q316669/placeholder/cutout-768.webp"
+ },
+ "portraits/Q316669/placeholder/thumb-256.webp": {
+  "contentType": "image/webp",
+  "from": "portraits/Q316669/placeholder/thumb-256.webp"
+ },
+ "portraits/Q319331/placeholder/cutout-768.webp": {
+  "contentType": "image/webp",
+  "from": "portraits/Q319331/placeholder/cutout-768.webp"
+ },
+ "portraits/Q319331/placeholder/thumb-256.webp": {
+  "contentType": "image/webp",
+  "from": "portraits/Q319331/placeholder/thumb-256.webp"
+ },
+ "portraits/Q333605/placeholder/cutout-768.webp": {
+  "contentType": "image/webp",
+  "from": "portraits/Q333605/placeholder/cutout-768.webp"
+ },
+ "portraits/Q333605/placeholder/thumb-256.webp": {
+  "contentType": "image/webp",
+  "from": "portraits/Q333605/placeholder/thumb-256.webp"
+ },
+ "portraits/Q334120/placeholder/cutout-768.webp": {
+  "contentType": "image/webp",
+  "from": "portraits/Q334120/placeholder/cutout-768.webp"
+ },
+ "portraits/Q334120/placeholder/thumb-256.webp": {
+  "contentType": "image/webp",
+  "from": "portraits/Q334120/placeholder/thumb-256.webp"
+ },
+ "portraits/Q370060/v1/cutout-768.webp": {
+  "contentType": "image/webp",
+  "from": "portraits/Q370060/v1/cutout-768.webp"
+ },
+ "portraits/Q370060/v1/thumb-256.webp": {
+  "contentType": "image/webp",
+  "from": "portraits/Q370060/v1/thumb-256.webp"
+ },
+ "portraits/Q467167/placeholder/cutout-768.webp": {
+  "contentType": "image/webp",
+  "from": "portraits/Q467167/placeholder/cutout-768.webp"
+ },
+ "portraits/Q467167/placeholder/thumb-256.webp": {
+  "contentType": "image/webp",
+  "from": "portraits/Q467167/placeholder/thumb-256.webp"
+ },
+ "portraits/Q47905425/placeholder/cutout-768.webp": {
+  "contentType": "image/webp",
+  "from": "portraits/Q47905425/placeholder/cutout-768.webp"
+ },
+ "portraits/Q47905425/placeholder/thumb-256.webp": {
+  "contentType": "image/webp",
+  "from": "portraits/Q47905425/placeholder/thumb-256.webp"
+ },
+ "portraits/Q547291/v1/cutout-768.webp": {
+  "contentType": "image/webp",
+  "from": "portraits/Q547291/v1/cutout-768.webp"
+ },
+ "portraits/Q547291/v1/thumb-256.webp": {
+  "contentType": "image/webp",
+  "from": "portraits/Q547291/v1/thumb-256.webp"
+ },
+ "portraits/Q63656/v1/cutout-768.webp": {
+  "contentType": "image/webp",
+  "from": "portraits/Q63656/v1/cutout-768.webp"
+ },
+ "portraits/Q63656/v1/thumb-256.webp": {
+  "contentType": "image/webp",
+  "from": "portraits/Q63656/v1/thumb-256.webp"
+ },
+ "portraits/Q63990/v1/cutout-768.webp": {
+  "contentType": "image/webp",
+  "from": "portraits/Q63990/v1/cutout-768.webp"
+ },
+ "portraits/Q63990/v1/thumb-256.webp": {
+  "contentType": "image/webp",
+  "from": "portraits/Q63990/v1/thumb-256.webp"
+ },
+ "portraits/Q691402/placeholder/cutout-768.webp": {
+  "contentType": "image/webp",
+  "from": "portraits/Q691402/placeholder/cutout-768.webp"
+ },
+ "portraits/Q691402/placeholder/thumb-256.webp": {
+  "contentType": "image/webp",
+  "from": "portraits/Q691402/placeholder/thumb-256.webp"
+ },
+ "portraits/Q7044697/placeholder/cutout-768.webp": {
+  "contentType": "image/webp",
+  "from": "portraits/Q7044697/placeholder/cutout-768.webp"
+ },
+ "portraits/Q7044697/placeholder/thumb-256.webp": {
+  "contentType": "image/webp",
+  "from": "portraits/Q7044697/placeholder/thumb-256.webp"
+ },
+ "portraits/Q7648718/placeholder/cutout-768.webp": {
+  "contentType": "image/webp",
+  "from": "portraits/Q7648718/placeholder/cutout-768.webp"
+ },
+ "portraits/Q7648718/placeholder/thumb-256.webp": {
+  "contentType": "image/webp",
+  "from": "portraits/Q7648718/placeholder/thumb-256.webp"
+ },
+ "portraits/Q76956/placeholder/cutout-768.webp": {
+  "contentType": "image/webp",
+  "from": "portraits/Q76956/placeholder/cutout-768.webp"
+ },
+ "portraits/Q76956/placeholder/thumb-256.webp": {
+  "contentType": "image/webp",
+  "from": "portraits/Q76956/placeholder/thumb-256.webp"
+ },
+ "portraits/Q76988/v1/cutout-768.webp": {
+  "contentType": "image/webp",
+  "from": "portraits/Q76988/v1/cutout-768.webp"
+ },
+ "portraits/Q76988/v1/thumb-256.webp": {
+  "contentType": "image/webp",
+  "from": "portraits/Q76988/v1/thumb-256.webp"
+ },
+ "portraits/Q922667/placeholder/cutout-768.webp": {
+  "contentType": "image/webp",
+  "from": "portraits/Q922667/placeholder/cutout-768.webp"
+ },
+ "portraits/Q922667/placeholder/thumb-256.webp": {
+  "contentType": "image/webp",
+  "from": "portraits/Q922667/placeholder/thumb-256.webp"
+ },
+ "poster-tall-plate.webp": {
+  "contentType": "image/webp",
+  "from": "poster-tall-plate.webp"
+ },
+ "poster-wide-plate.webp": {
+  "contentType": "image/webp",
+  "from": "poster-wide-plate.webp"
+ },
+ "rothschild.cards.json": {
+  "contentType": "application/json",
+  "from": "rothschild.cards.json"
+ },
+ "rothschild.hyper.json": {
+  "contentType": "application/json",
+  "from": "rothschild.hyper.json"
+ },
+ "rothschild.x3d": {
+  "contentType": "application/xml",
+  "from": "rothschild.x3d"
+ },
+ "theme/documentary-night/darwin_wedgwood.hyper.json": {
+  "contentType": "application/json",
+  "from": "theme/documentary-night/darwin_wedgwood.hyper.json"
+ },
+ "theme/documentary-night/habsburg.hyper.json": {
+  "contentType": "application/json",
+  "from": "theme/documentary-night/habsburg.hyper.json"
+ },
+ "theme/documentary-night/hyper-darwin_wedgwood.x3d": {
+  "contentType": "application/xml",
+  "from": "theme/documentary-night/hyper-darwin_wedgwood.x3d"
+ },
+ "theme/documentary-night/hyper-habsburg.x3d": {
+  "contentType": "application/xml",
+  "from": "theme/documentary-night/hyper-habsburg.x3d"
+ },
+ "theme/documentary-night/hyper-rothschild.x3d": {
+  "contentType": "application/xml",
+  "from": "theme/documentary-night/hyper-rothschild.x3d"
+ },
+ "theme/documentary-night/pocket-darwin_wedgwood.x3d": {
+  "contentType": "application/xml",
+  "from": "theme/documentary-night/pocket-darwin_wedgwood.x3d"
+ },
+ "theme/documentary-night/pocket-habsburg.x3d": {
+  "contentType": "application/xml",
+  "from": "theme/documentary-night/pocket-habsburg.x3d"
+ },
+ "theme/documentary-night/pocket-rothschild.x3d": {
+  "contentType": "application/xml",
+  "from": "theme/documentary-night/pocket-rothschild.x3d"
+ },
+ "theme/documentary-night/rothschild.hyper.json": {
+  "contentType": "application/json",
+  "from": "theme/documentary-night/rothschild.hyper.json"
+ },
+ "x_ite/LICENSE.md": {
+  "contentType": "text/markdown",
+  "from": "x_ite/LICENSE.md"
+ },
+ "x_ite/assets/components/EventUtilitiesComponent.min.js": {
+  "contentType": "text/javascript",
+  "from": "x_ite/assets/components/EventUtilitiesComponent.min.js"
+ },
+ "x_ite/assets/components/Geometry2DComponent.min.js": {
+  "contentType": "text/javascript",
+  "from": "x_ite/assets/components/Geometry2DComponent.min.js"
+ },
+ "x_ite/assets/components/Geometry3DComponent.min.js": {
+  "contentType": "text/javascript",
+  "from": "x_ite/assets/components/Geometry3DComponent.min.js"
+ },
+ "x_ite/assets/components/KeyDeviceSensorComponent.min.js": {
+  "contentType": "text/javascript",
+  "from": "x_ite/assets/components/KeyDeviceSensorComponent.min.js"
+ },
+ "x_ite/assets/components/ScriptingComponent.min.js": {
+  "contentType": "text/javascript",
+  "from": "x_ite/assets/components/ScriptingComponent.min.js"
+ },
+ "x_ite/assets/components/TextComponent.min.js": {
+  "contentType": "text/javascript",
+  "from": "x_ite/assets/components/TextComponent.min.js"
+ },
+ "x_ite/assets/components/X_ITEComponent.min.js": {
+  "contentType": "text/javascript",
+  "from": "x_ite/assets/components/X_ITEComponent.min.js"
+ },
+ "x_ite/assets/fonts/PT_Sans/OFL.txt": {
+  "contentType": "text/plain",
+  "from": "x_ite/assets/fonts/PT_Sans/OFL.txt"
+ },
+ "x_ite/assets/fonts/PT_Sans/PTSans-Bold.woff2": {
+  "contentType": "font/woff2",
+  "from": "x_ite/assets/fonts/PT_Sans/PTSans-Bold.woff2"
+ },
+ "x_ite/assets/fonts/PT_Sans/PTSans-BoldItalic.woff2": {
+  "contentType": "font/woff2",
+  "from": "x_ite/assets/fonts/PT_Sans/PTSans-BoldItalic.woff2"
+ },
+ "x_ite/assets/fonts/PT_Sans/PTSans-Italic.woff2": {
+  "contentType": "font/woff2",
+  "from": "x_ite/assets/fonts/PT_Sans/PTSans-Italic.woff2"
+ },
+ "x_ite/assets/fonts/PT_Sans/PTSans-Regular.woff2": {
+  "contentType": "font/woff2",
+  "from": "x_ite/assets/fonts/PT_Sans/PTSans-Regular.woff2"
+ },
+ "x_ite/assets/images/animation.svg": {
+  "contentType": "image/svg+xml",
+  "from": "x_ite/assets/images/animation.svg"
+ },
+ "x_ite/assets/images/background-dark.svg": {
+  "contentType": "image/svg+xml",
+  "from": "x_ite/assets/images/background-dark.svg"
+ },
+ "x_ite/assets/images/background-light.svg": {
+  "contentType": "image/svg+xml",
+  "from": "x_ite/assets/images/background-light.svg"
+ },
+ "x_ite/assets/images/block.svg": {
+  "contentType": "image/svg+xml",
+  "from": "x_ite/assets/images/block.svg"
+ },
+ "x_ite/assets/images/border_all.svg": {
+  "contentType": "image/svg+xml",
+  "from": "x_ite/assets/images/border_all.svg"
+ },
+ "x_ite/assets/images/check_circle.svg": {
+  "contentType": "image/svg+xml",
+  "from": "x_ite/assets/images/check_circle.svg"
+ },
+ "x_ite/assets/images/directions_run.svg": {
+  "contentType": "image/svg+xml",
+  "from": "x_ite/assets/images/directions_run.svg"
+ },
+ "x_ite/assets/images/done_all.svg": {
+  "contentType": "image/svg+xml",
+  "from": "x_ite/assets/images/done_all.svg"
+ },
+ "x_ite/assets/images/eye_tracking.svg": {
+  "contentType": "image/svg+xml",
+  "from": "x_ite/assets/images/eye_tracking.svg"
+ },
+ "x_ite/assets/images/fullscreen.svg": {
+  "contentType": "image/svg+xml",
+  "from": "x_ite/assets/images/fullscreen.svg"
+ },
+ "x_ite/assets/images/fullscreen_exit.svg": {
+  "contentType": "image/svg+xml",
+  "from": "x_ite/assets/images/fullscreen_exit.svg"
+ },
+ "x_ite/assets/images/globe.svg": {
+  "contentType": "image/svg+xml",
+  "from": "x_ite/assets/images/globe.svg"
+ },
+ "x_ite/assets/images/head_mounted_device.svg": {
+  "contentType": "image/svg+xml",
+  "from": "x_ite/assets/images/head_mounted_device.svg"
+ },
+ "x_ite/assets/images/hexagon.svg": {
+  "contentType": "image/svg+xml",
+  "from": "x_ite/assets/images/hexagon.svg"
+ },
+ "x_ite/assets/images/info.svg": {
+  "contentType": "image/svg+xml",
+  "from": "x_ite/assets/images/info.svg"
+ },
+ "x_ite/assets/images/language.svg": {
+  "contentType": "image/svg+xml",
+  "from": "x_ite/assets/images/language.svg"
+ },
+ "x_ite/assets/images/logo.svg": {
+  "contentType": "image/svg+xml",
+  "from": "x_ite/assets/images/logo.svg"
+ },
+ "x_ite/assets/images/no_sound.svg": {
+  "contentType": "image/svg+xml",
+  "from": "x_ite/assets/images/no_sound.svg"
+ },
+ "x_ite/assets/images/play_circle.svg": {
+  "contentType": "image/svg+xml",
+  "from": "x_ite/assets/images/play_circle.svg"
+ },
+ "x_ite/assets/images/point_scan.svg": {
+  "contentType": "image/svg+xml",
+  "from": "x_ite/assets/images/point_scan.svg"
+ },
+ "x_ite/assets/images/radio_button_checked.svg": {
+  "contentType": "image/svg+xml",
+  "from": "x_ite/assets/images/radio_button_checked.svg"
+ },
+ "x_ite/assets/images/radio_button_unchecked.svg": {
+  "contentType": "image/svg+xml",
+  "from": "x_ite/assets/images/radio_button_unchecked.svg"
+ },
+ "x_ite/assets/images/schedule.svg": {
+  "contentType": "image/svg+xml",
+  "from": "x_ite/assets/images/schedule.svg"
+ },
+ "x_ite/assets/images/stadia_controller.svg": {
+  "contentType": "image/svg+xml",
+  "from": "x_ite/assets/images/stadia_controller.svg"
+ },
+ "x_ite/assets/images/stop_circle.svg": {
+  "contentType": "image/svg+xml",
+  "from": "x_ite/assets/images/stop_circle.svg"
+ },
+ "x_ite/assets/images/stroke_partial.svg": {
+  "contentType": "image/svg+xml",
+  "from": "x_ite/assets/images/stroke_partial.svg"
+ },
+ "x_ite/assets/images/texture.svg": {
+  "contentType": "image/svg+xml",
+  "from": "x_ite/assets/images/texture.svg"
+ },
+ "x_ite/assets/images/travel.svg": {
+  "contentType": "image/svg+xml",
+  "from": "x_ite/assets/images/travel.svg"
+ },
+ "x_ite/assets/images/visibility.svg": {
+  "contentType": "image/svg+xml",
+  "from": "x_ite/assets/images/visibility.svg"
+ },
+ "x_ite/assets/lib/lut_charlie.png": {
+  "contentType": "image/png",
+  "from": "x_ite/assets/lib/lut_charlie.png"
+ },
+ "x_ite/assets/lib/lut_ggx.png": {
+  "contentType": "image/png",
+  "from": "x_ite/assets/lib/lut_ggx.png"
+ },
+ "x_ite/assets/lib/mikktspace_bg.wasm": {
+  "contentType": "application/wasm",
+  "from": "x_ite/assets/lib/mikktspace_bg.wasm"
+ },
+ "x_ite/assets/linetype/linetypes.png": {
+  "contentType": "image/png",
+  "from": "x_ite/assets/linetype/linetypes.png"
+ },
+ "x_ite/x_ite.css": {
+  "contentType": "text/css",
+  "from": "x_ite/x_ite.css"
+ },
+ "x_ite/x_ite.min.js": {
+  "contentType": "text/javascript",
+  "from": "x_ite/x_ite.min.js"
+ }
+}

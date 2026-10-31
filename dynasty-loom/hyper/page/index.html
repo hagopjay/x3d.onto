@@ -1,4 +1,5 @@
 <title>Dynasty Hypersphere</title>
+<!--@FONTS@-->
 <meta name="loom:xite" content="x_ite/x_ite.min.js">
 <meta name="description" content="Three families as a glass time-sphere: radius is time from the founders' seed to the glass, houses are sectors west to east, each life a glowing fiber, each marriage an arc on the shell of its year. Standard X3D 4.0 with GLSL shaders, drawn by X_ITE 16.5.1.">
 <!-- Page for the dynasty hypersphere (proto/hyper). A fragment: the Artifact host (and tools/gate_hyper.js, tools/hyper_csp_gate.js) wrap it in a
@@ -7,110 +8,38 @@
      Params: ?family=habsburg ?stop=3 ?tier=fast|balanced|ultra ?auto=0 ?extras=0 ?ui=none ?idle=0 ?fell=1850; the family also lives in #rothschild,
      #habsburg, #darwin-wedgwood. Our code never evaluates strings as code and fetches only same-origin files. -->
 <style>
-  :root {
-    --scene: #05040b; --panel: rgba(232, 224, 209, .9); --ink: #2b2420; --dim: #5e5447; --gold: #765a17; --red: #9e1b1b; --line: rgba(118, 90, 23, .38);
-    --chip: rgba(43, 36, 32, .08); --shadow: 0 6px 22px rgba(0, 0, 0, .35); --status: #b9b0d6; --alert: #ff9a7a;
-    --lab: rgba(8, 7, 16, .62); --labink: #ece6f6; --labgold: #ffcf7a; --labsub: #fff3d6; --labyear: #b8b0dc;
-    --serif: Georgia, "Iowan Old Style", "Times New Roman", serif; --mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) { --panel: rgba(16, 13, 22, .86); --ink: #efe6d6; --dim: #a99d88; --gold: #d6b25c; --red: #d0564a; --line: rgba(214, 178, 92, .35); --chip: rgba(239, 230, 214, .08); color-scheme: dark; }
-  }
-  :root[data-theme="dark"] { --panel: rgba(16, 13, 22, .86); --ink: #efe6d6; --dim: #a99d88; --gold: #d6b25c; --red: #d0564a; --line: rgba(214, 178, 92, .35); --chip: rgba(239, 230, 214, .08); color-scheme: dark; }
-  * { box-sizing: border-box; }
-  html, body { margin: 0; height: 100%; overflow: hidden; }
-  body { background: var(--scene); color: var(--ink); font: 14px/1.45 var(--serif); }
-  x3d-canvas { position: fixed; inset: 0; width: 100vw; height: 100vh; height: 100dvh; display: block; background: var(--scene); }
-  #vignette { position: fixed; inset: 0; pointer-events: none; background: radial-gradient(ellipse 78% 72% at 50% 46%, transparent 58%, rgba(0, 0, 0, .45) 100%); }
-  .panel { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; box-shadow: var(--shadow); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
-  header { position: fixed; top: calc(10px + env(safe-area-inset-top, 0px)); left: 16px; right: 16px; display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; padding: 7px 12px; }
-  header .brand { font: 600 12px/1.2 var(--mono); letter-spacing: .22em; color: var(--gold); }
-  header .sub { font: 12px/1.3 var(--mono); color: var(--dim); }
-  #fams { display: flex; gap: 6px; margin-left: auto; flex-wrap: wrap; }
-  button, select { font: 12px/1 var(--mono); color: var(--ink); background: var(--chip); border: 1px solid var(--line); border-radius: 14px; padding: 6px 10px; cursor: pointer; min-height: 28px; }
-  select { border-radius: 8px; padding: 4px 6px; }
-  button:hover, button.on { border-color: var(--gold); color: var(--gold); }
-  button:focus-visible, select:focus-visible, input:focus-visible, a:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
-  #rail { position: fixed; right: 16px; top: calc(70px + env(safe-area-inset-top, 0px)); display: flex; flex-direction: column; gap: 6px; align-items: flex-end; max-height: calc(100vh - 330px); overflow-y: auto; }
-  #rail button { display: flex; gap: 6px; align-items: center; padding: 4px 8px; background: var(--panel); }
-  #rail button .t { display: none; }
-  #rail button.on .t, #rail button:hover .t { display: inline; }
-  #cap { position: fixed; left: 16px; right: 16px; bottom: calc(12px + env(safe-area-inset-bottom, 0px)); padding: 9px 14px 9px; max-height: 236px; overflow-y: auto; }
-  #cap .head { display: flex; flex-wrap: wrap; gap: 4px 10px; align-items: baseline; font: 12px/1.3 var(--mono); color: var(--dim); }
-  #cap .head b { color: var(--gold); font-weight: 600; letter-spacing: .04em; }
-  #shotchip { font: 600 11px/1 var(--mono); padding: 3px 7px; border-radius: 8px; border: 1px solid var(--line); color: var(--gold); }
-  #where { margin-left: auto; font-variant-numeric: tabular-nums; }
-  #cap p { margin: 4px 0 0; }
-  #narr { font-size: 16px; }
-  #comp { font: 12px/1.45 var(--mono); color: var(--dim); }
-  #scale { font: 11.5px/1.4 var(--mono); color: var(--dim); margin-top: 5px !important; }
-  #scale b { color: var(--ink); font-weight: 600; }
-  .g { display: inline-block; font: 600 10px/1 var(--mono); padding: 2px 5px; margin-left: 4px; border-radius: 6px; border: 1px solid var(--line); color: var(--gold); vertical-align: 1px; }
-  .ctl { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; margin-top: 7px; }
-  .ctl label { font: 12px/1 var(--mono); color: var(--dim); display: flex; gap: 6px; align-items: center; }
-  .ctl input[type=range] { width: 150px; accent-color: #c9a24e; }
-  output { font: 12px/1 var(--mono); font-variant-numeric: tabular-nums; }
-  #tiers { display: inline-flex; gap: 4px; align-items: center; }
-  #fps { font: 11px/1 var(--mono); color: var(--dim); font-variant-numeric: tabular-nums; min-width: 9em; }
-  .keys { font: 11px/1.3 var(--mono); color: var(--dim); margin-left: auto; }
-  #card { position: fixed; z-index: 4; top: calc(70px + env(safe-area-inset-top, 0px)); right: 92px; width: min(380px, calc(100vw - 32px)); max-height: calc(100vh - 330px); overflow-y: auto; padding: 12px 14px; }
-  #card h2 { margin: 0; font: 600 17px/1.25 var(--serif); padding-right: 28px; }
-  #card .yrs { font: 12px/1.4 var(--mono); color: var(--dim); margin-top: 2px; }
-  #card h3 { margin: 10px 0 2px; font: 600 10px/1.2 var(--mono); letter-spacing: .14em; color: var(--gold); }
-  #card p, #card li { margin: 2px 0; font-size: 13px; }
-  #card ul { margin: 2px 0; padding-left: 18px; }
-  #card a { color: var(--gold); word-break: break-all; }
-  #card .x { position: absolute; top: 8px; right: 8px; padding: 3px 8px; }
-  header .sub .sw { display: inline-block; width: 9px; height: 9px; vertical-align: -1px; border: 0; }
-  header .sub .ramp { display: inline-flex; gap: 1px; margin: 0 3px 0 0; border-radius: 2px; overflow: hidden; vertical-align: -1px; }
-  header .sub > .sw { border-radius: 2px; margin: 0 2px; }
-  #card .sw { display: inline-block; width: 10px; height: 10px; border-radius: 2px; vertical-align: -1px; margin-right: 4px; border: 1px solid var(--line); }
-  #tag { position: fixed; z-index: 5; pointer-events: none; padding: 4px 8px; font: 12px/1.2 var(--mono); transform: translate(12px, -130%); white-space: nowrap; }
-  #toast { position: fixed; left: 50%; top: calc(64px + env(safe-area-inset-top, 0px)); transform: translateX(-50%); padding: 6px 12px; font: 12px/1.3 var(--mono); opacity: 0; transition: opacity .25s; pointer-events: none; z-index: 6; }
-  #toast.on { opacity: 1; }
-  #status { position: fixed; left: 50%; top: 42%; transform: translate(-50%, -50%); font: 13px/1.4 var(--mono); color: var(--status); text-align: center; padding: 0 16px; }
-  #labels { position: fixed; inset: 0; pointer-events: none; overflow: hidden; }
-  .lab { position: absolute; left: 0; top: 0; white-space: nowrap; font: 12px/1.25 var(--mono); padding: 2px 6px; border-radius: 6px; background: var(--lab); color: var(--labink); border-left: 2px solid rgba(236, 230, 246, .55); will-change: transform; }
-  .lab.house { color: var(--labgold); letter-spacing: .12em; border-left-color: rgba(255, 207, 122, .6); }
-  .lab.year { color: var(--labyear); border-left-color: rgba(184, 176, 220, .5); }
-  .lab.subject { color: var(--labsub); font-weight: 600; border-left-color: #ffcf7a; }
-  .lab[hidden] { display: none; }
-  [hidden] { display: none !important; }
-  body[data-ui="none"] header, body[data-ui="none"] #rail, body[data-ui="none"] #cap, body[data-ui="none"] #card, body[data-ui="none"] #tag, body[data-ui="none"] #labels { display: none !important; }
-  @media (max-width: 720px) {
-    header { top: calc(8px + env(safe-area-inset-top, 0px)); padding: 6px 10px; }
-    header .sub { display: none; }
-    #rail { top: auto; bottom: calc(250px + env(safe-area-inset-bottom, 0px)); right: 16px; left: 16px; flex-direction: row; overflow-x: auto; max-height: none; align-items: center; }
-    #rail button { flex: 0 0 auto; }
-    #cap { max-height: 228px; padding: 8px 12px; }
-    #narr { font-size: 14px; }
-    .keys, #fps { display: none; }
-    .ctl input[type=range] { width: 104px; }
-    #card { top: auto; right: 16px; left: 16px; width: auto; bottom: calc(12px + env(safe-area-inset-bottom, 0px)); max-height: 58vh; z-index: 7; }
-  }
+/*@THEME_CSS@*/
 </style>
 <x3d-canvas id="x3d" splashScreen="false" notifications="false" contextMenu="false" timings="false" multisampling="4"></x3d-canvas>
 <div id="vignette" aria-hidden="true"></div>
 <div id="labels" aria-hidden="true"></div>
+<svg id="grain" aria-hidden="true"><filter id="grainf"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter><rect width="100%" height="100%" filter="url(#grainf)"/></svg>
+<div id="lead" aria-hidden="true"></div>
+<figure id="portrait"><div class="frame"><div class="ph"><img id="pimg" alt="" decoding="async" hidden><span class="mono" id="pmono" hidden></span></div></div><figcaption><b id="pname"></b><span id="pyears"></span><span class="plab" id="plab"></span></figcaption></figure>
 <header class="panel">
-  <span class="brand">DYNASTY HYPERSPHERE</span>
+  <span class="brand" id="brand">Dynasty Loom<small id="brandsub"></small></span>
   <span class="sub" id="sub">radius = time · fiber = a life · arc = a marriage · dye = share of descent from the founders</span>
   <nav id="fams" aria-label="Family"></nav>
+  <button id="look-t" aria-pressed="false">Night</button>
 </header>
 <nav id="rail" aria-label="Tour stops"></nav>
 <section id="cap" class="panel" aria-live="polite">
-  <div class="head"><span id="capn"></span><b id="capt">Loading</b><span id="capy"></span><span id="shotchip"></span><span id="where"></span></div>
+  <div class="head"><span id="capn"></span><b id="capt">Loading</b><span id="capy"></span><span id="shotchip"></span><button id="more-t" aria-expanded="false" aria-controls="more">Details</button></div>
   <p id="narr"></p>
-  <p id="comp"></p>
-  <p id="scale"></p>
   <div class="ctl">
     <button id="prev" aria-label="Previous stop">‹</button><button id="tour" aria-label="Play the tour">Tour ▸</button><button id="next" aria-label="Next stop">›</button>
-    <label for="fell">Fell <input type="range" id="fell" min="1700" max="2026" step="1" value="2026"><output id="fellv">2026</output></label>
-    <label for="shots">Shot <select id="shots" aria-label="Fly to a shot"></select></label>
-    <span id="tiers" role="group" aria-label="Quality"><button data-tier="0">Fast</button><button data-tier="1">Balanced</button><button data-tier="2">Ultra</button>
-      <label class="tick" title="lower the quality when the frame rate falls"><input type="checkbox" id="auto" checked> auto</label></span>
-    <span id="fps"></span>
-    <span class="keys">T tour · ←/→ stops · P plunge · W wide · [ ] { } fell · Q quality · Esc clear</span>
+    <label for="fell">Year <input type="range" id="fell" min="1700" max="2026" step="1" value="2026"><output id="fellv">2026</output></label>
+  </div>
+  <div id="more">
+    <p id="comp"></p>
+    <p id="scale"></p>
+    <div class="ctl">
+      <label for="shots">Shot <select id="shots" aria-label="Fly to a shot"></select></label>
+      <span id="tiers" role="group" aria-label="Quality"><button data-tier="0">Fast</button><button data-tier="1">Balanced</button><button data-tier="2">Ultra</button>
+        <label class="tick" title="lower the quality when the frame rate falls"><input type="checkbox" id="auto" checked> auto</label></span>
+      <span id="fps"></span><span id="where"></span>
+      <span class="keys">T tour · ←/→ stops · P plunge · W wide · [ ] { } year · Q quality · Esc clear</span>
+    </div>
   </div>
 </section>
 <aside id="card" class="panel" hidden aria-live="polite"></aside>
@@ -121,13 +50,18 @@
 <script>
 (function () {
   'use strict';
+  // v2 looks (hyper/themes.py, filled in by the build): the themes this page ships, the phone layer and each theme's portrait card
+  var LOOKS = /*@LOOK@*/null;
+  if (!document.documentElement.dataset.look) document.documentElement.dataset.look = LOOKS.default;   /* the two-view shell sets it first */
+  function lookSlug() { var S = window.dynastyApi, s = (S && S.look) || document.documentElement.dataset.look; return LOOKS.themes[s] ? s : LOOKS.default; }
+  function LOOK() { return LOOKS.themes[lookSlug()]; }
   var XITE_CDN = 'https://cdn.jsdelivr.net/npm/x_ite@16.5.1/dist/x_ite.min.js';
   var XITE_META = document.querySelector('meta[name="loom:xite"]');
   var XITE_SRI = 'sha384-/U1JwiaA22Ilp0Ju84O+ud9jJvfpVM3sasBhBHoAY4wQXGMc2d82QmdIZYhC1a4g';
   var q = new URLSearchParams(location.search), $ = function (id) { return document.getElementById(id); };
   document.body.dataset.ui = q.get('ui') === 'none' ? 'none' : 'full';
   var IDLE = q.get('idle') !== '0';
-  var A = window.hyperApi = { ready: false, log: [], family: null, stop: -1, picked: null, fell: null, csp: [], has: {}, tier: null, tierIndex: -1, auto: q.get('auto') !== '0',
+  var A = window.hyperApi = { look: null, portraits: null, plates: null, logDepth: false, holdAt: null, ready: false, log: [], family: null, stop: -1, picked: null, fell: null, csp: [], has: {}, tier: null, tierIndex: -1, auto: q.get('auto') !== '0',
     autoLowered: [], extras: null, frozen: false, touches: [], tourState: null };
   document.addEventListener('securitypolicyviolation', function (e) { A.csp.push(e.violatedDirective + ' ' + e.blockedURI); });
   function log(s) { A.log.push((performance.now() / 1000).toFixed(2) + ' s ' + s); }
@@ -236,6 +170,7 @@
   // ---------------------------------------------------------------- boot, families, hash routing
   function boot() {
     browser = A.browser = el.browser; setTimeout(cssFallback, 4000);
+    fetch('portraits.json').then(function (r) { return r.ok ? r.json() : null; }).then(function (p) { PORTRAITS = A.portraits = p && p.people || {}; if (D) showStopPortraitsReady(); }).catch(function () { PORTRAITS = A.portraits = {}; });
     fetch('hyper-manifest.json').then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status + ' for hyper-manifest.json'); return r.json(); }).then(function (m) {
       manifest = A.manifest = m; var navEl = $('fams');
       m.families.forEach(function (f) { var b = document.createElement('button'); b.textContent = f.name; b.dataset.key = f.key; b.setAttribute('role', 'tab'); b.onclick = function () { loadFamily(f.key, 0); }; navEl.appendChild(b); });
@@ -254,9 +189,10 @@
     var f = manifest.families.find(function (x) { return x.key === key; });
     document.querySelectorAll('#fams button').forEach(function (b) { b.classList.toggle('on', b.dataset.key === key); b.setAttribute('aria-selected', b.dataset.key === key); });
     var j = function (u) { return fetch(u).then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status + ' for ' + u); return r.json(); }); };
-    Promise.all([browser.loadURL(new X3D.MFString(f.host)), j(f.data), j(f.cards)]).then(function (res) {
+    var dir = LOOK().dir; A.look = lookSlug();   /* v2: the theme's scenes and data (the alternate's sit under theme/<slug>/); the cards are shared */
+    Promise.all([browser.loadURL(new X3D.MFString(dir + f.host)), j(dir + f.data), j(f.cards)]).then(function (res) {
       if (tok !== loadToken) return;
-      SC = browser.currentScene; N = {}; D = A.data = res[1]; C = A.cards = res[2]; cam.p = null; cam.q = null; cam.shot = 'Host'; cam.C = [0, 0, 0];
+      SC = browser.currentScene; N = {}; D = A.data = res[1]; C = A.cards = res[2]; plates.cur = null; por.id = null; por.a = 0; cam.p = null; cam.q = null; cam.shot = 'Host'; cam.C = [0, 0, 0];
       cam.frameQ = [0, 0, 0, 1];   // the new pocket's ProbeFrame starts unrotated (a stale frame from the last family put the first flight off its path)
       var tries = 0;
       (function waitInline() {
@@ -268,7 +204,7 @@
           A.family = key; A.loading = null;
           var tq = ['fast', 'balanced', 'ultra'].indexOf(q.get('tier'));
           setTier(A.tierIndex >= 0 ? A.tierIndex : tq >= 0 ? tq : (matchMedia('(max-width: 720px), (pointer: coarse)').matches ? 1 : 2), false);
-          setExtras(q.get('extras') !== '0');
+          setExtras(q.get('extras') !== '0'); setLogDepth(null);
           buildUI(); setFell(D.units.top);
           var w = 0;
           (function waitPose() {
@@ -305,11 +241,22 @@
   // is left at NONE: in this scene it turned the PhysicalMaterial parts (gold rings, seed bead) near black (Confirmed by frames, work/cmp1.png).
   var EXTRAS = { glowGainAdd: 0.5, shellGainAdd: 0.7 };
   function setExtras(on) {
-    A.extras = !!on; var addv = on && A.has.blendMode;
+    A.extras = !!on; var addv = on && A.has.blendMode && !LOOK().ink;   // v2: ink themes (pigment on a light ground) never add light
     if (A.has.blendMode) ['GlowApp', 'ShellApp', 'SeedGlowApp', 'BeadApp'].forEach(function (n) { try { node(n).blendMode = addv ? A.additive : null; } catch (e) { log('blendMode ' + n + ': ' + e); } });
     ['FiberGlow', 'ShellShader', 'SeedGlow', 'BeadGlow'].forEach(function (n) { setF(node(n), 'uBlend', addv ? 1 : 0); });
     setF(node('FiberGlow'), 'uGain', addv ? EXTRAS.glowGainAdd : 1); setF(node('ShellShader'), 'uGain', addv ? EXTRAS.shellGainAdd : 1);
   }
+
+  // v2 logDepth hook: the shaders that write gl_FragDepth (ShellShader, SeedGlow, BeadGlow) carry a logDepth field; it is 1 while X_ITE's
+  // LogarithmicDepthBuffer option is on, and they then write X_ITE's logarithmic depth (x3d.onto world_layer.py's formula). on: null reads the option.
+  function setLogDepth(on) {
+    if (on != null) { try { browser.setBrowserOption('LogarithmicDepthBuffer', !!on); } catch (e) { log('LogarithmicDepthBuffer: ' + e); } }
+    var v = false; try { v = !!browser.getBrowserOption('LogarithmicDepthBuffer'); } catch (e) { v = false; }
+    A.logDepth = v; ['ShellShader', 'SeedGlow', 'BeadGlow'].forEach(function (n) { setF(node(n), 'logDepth', v ? 1 : 0); });
+    return v;
+  }
+  A.setLogDepth = setLogDepth;
+  A.setLook = function () { if (manifest && (A.family || A.loading) && A.look !== lookSlug()) { var st = Math.max(0, A.stop); loadFamily(A.family || A.loading, st); } };
 
   // ---------------------------------------------------------------- quality tiers and the fps monitor that lowers them
   var TIERS = [{ name: 'fast', q: 0, cs: 1, ms: 0 }, { name: 'balanced', q: 1, cs: 1.5, ms: 2 }, { name: 'ultra', q: 2, cs: 2, ms: 4 }];
@@ -433,13 +380,15 @@
     var bound = null; try { bound = browser.activeViewpoint; } catch (e) {}
     if (!bound || bound.getValue() !== node('Probe').getValue()) node('Probe').set_bind = true;
     if (opts.fell != null) animFell(opts.fell, Dms * 0.85);
+    platesOut(); if (D.plates && D.plates[b.name]) platesIn(b.name, Dms);   // v2: the stop's portrait plates arrive with the camera
+    $('tag').hidden = true;   // v2: a hover tag names what was under a still pointer; a move (keys, rail, tour) leaves it stale
     mark('fly ' + b.name + ' ' + (Dms / 1000).toFixed(2) + ' s, S ' + W.S.toFixed(3) + ', turn ' + (turn * 180 / Math.PI).toFixed(1) + ' deg');
     return new Promise(function (res) { flight = { a: a, b: b, W: W, D: Dms, t0: performance.now(), res: res, upPrev: a.up, savedType: savedType, savedTime: savedTime, name: b.name,
       qa: cam.q.slice(), qb: lookQ(b.pos, b.F, b.up), level: levelA && b.up[1] > 0.98 }; });
   };
   function applyFlight(now) {
     var f = flight; if (!f) return;
-    var tau = clamp((now - f.t0) / f.D, 0, 1), k = smoother(tau), r = f.W.at(k), F = lerp(f.a.F, f.b.F, r.f), e = smoother(clamp(k * 1.15 - 0.075, 0, 1));
+    var tau = Math.min(clamp((now - f.t0) / f.D, 0, 1), A.holdAt == null ? 1 : A.holdAt), k = smoother(tau), r = f.W.at(k), F = lerp(f.a.F, f.b.F, r.f), e = smoother(clamp(k * 1.15 - 0.075, 0, 1));
     var dir = f.level ? azElDir(f.a.dir, f.b.dir, e) : slerpDir(f.a.dir, f.b.dir, e), fov = f.a.fov + (f.b.fov - f.a.fov) * e, pos = add(F, mul(dir, r.w));
     // up: from the slerp of the start and end orientations, made square to the view. A lerp of the two up vectors let the view pass the up vector
     // on long turns and spun the roll (gate run 3: angular spikes on Host to Wide and into Crown).
@@ -473,7 +422,7 @@
     }
   }
   A.bindNative = function (name, time) {
-    stopMoves(); setTransition('ANIMATE', time == null ? null : time);
+    stopMoves(); platesOut(); $('tag').hidden = true; setTransition('ANIMATE', time == null ? null : time);
     var v = node(name); if (!v) return false; v.set_bind = true; var s = shotPose(name); cam.C = s.F; cam.fov = s.fov; cam.shot = name;
     mark('bind ' + name + (time != null ? ' ' + time + ' s' : '')); return true;
   };
@@ -484,7 +433,7 @@
     return new Promise(function (res) { var left = ms, last = performance.now();
       (function step() { var t = performance.now(); if (!tourHeld) left -= t - last; last = t; if (!tourOn || left <= 0) return res(); setTimeout(step, 50); })(); });
   }
-  function cardStop(i) { return C.stops[D.tour[i].i]; }
+  function cardStop(i) { var t = D.tour[i], st = C.stops[t.i]; return t.text ? { key: st.key, years: st.years, title: t.text.title, narration: t.text.narration, computed: t.text.computed } : st; }   // v2: the sphere's words
   function shotLabel(name) {   // 'MS · House: London'; the chip names the shot the camera is on, whether a tour stop or a free shot put it there
     var s = D.shots[name] || {}, n = name.replace(/^S\d\d_/, '');
     if (/^House_/.test(name)) { var hk = Object.keys(D.sectors).find(function (k) { return D.sectors[k].shot === name; }); n = 'House: ' + (hk ? D.sectors[hk].name : name.slice(6)); }
@@ -493,7 +442,7 @@
   function setChip(name, extra) { $('shotchip').textContent = shotLabel(name) + (extra || ''); $('shotchip').title = (D.shots[name] || {}).beat || ''; }
   function caption(i) {
     var t = D.tour[i], st = cardStop(i), s = D.shots[t.shot];
-    $('capn').textContent = 'stop ' + (i + 1) + ' / ' + D.tour.length;
+    $('capn').textContent = (i + 1) + ' / ' + D.tour.length;
     $('capt').textContent = st.title; $('capy').textContent = st.years[0] + '–' + st.years[1];
     setChip(t.shot, t.move === 'plunge' ? ' (plunge)' : '');
     var extra = '';
@@ -590,7 +539,7 @@
   function buildUI() {
     var rail = $('rail'); rail.innerHTML = '';
     D.tour.forEach(function (t, i) {
-      var st = C.stops[t.i], b = document.createElement('button'); b.dataset.i = i; b.title = st.title + ' (' + D.shots[t.shot].size + ')';
+      var st = cardStop(i), b = document.createElement('button'); b.dataset.i = i; b.title = st.title + ' (' + D.shots[t.shot].size + ')';
       b.innerHTML = '<span>' + (st.key === 'wide' ? 'W' : i + 1) + '</span><span class="t">' + esc(st.title) + '</span>';
       b.onclick = function () { lastInput = performance.now(); A.tourStop(); clearPick(); goStop(i); }; rail.appendChild(b);
     });
@@ -604,11 +553,11 @@
     var lg = D.dye_legend, sw = function (hex, t) { return '<span class="sw" style="background:' + esc(hex) + '" title="' + esc(t) + '"></span>'; };
     var ramp = lg ? lg.steps.map(function (st) { return '<span class="ramp">' + st.ramp.map(function (r) { return sw(r.hex, st.dye + ' share ' + r.share); }).join('') + '</span>'; }).join(' ') : '';
     $('sub').innerHTML = esc(C.name + ' · ' + Object.keys(C.people).length + ' lives · ' + Object.keys(C.unions).length + ' marriages · ') + ramp + ' ' +
-      (lg ? esc(lg.text).replace('ecru =', sw(lg.ecru, 'share 0') + ' ecru =') : esc('dye = share of descent from the founders'));
+      (lg ? esc(lg.text).replace(LOOK().ecru + ' =', sw(lg.ecru, 'share 0') + ' ' + LOOK().ecru + ' =') : esc('dye = share of descent from the founders'));
     $('sub').title = lg ? lg.rule : '';
     $('scale').innerHTML = '<b>Radius = time</b>, to scale: ' + u.Y0 + ' at the seed, ' + u.top + ' at the glass, ' + u.years_per_unit + ' years per pocket unit (' +
       (100 / u.years_per_unit * D.pocket_scale).toFixed(2) + ' host units per century); shells every 50 years from ' + u.shell0 + '. <b>Azimuth</b>: houses west to east by longitude, angle = 2 + people. ' +
-      '<b>Elevation</b>: order of descent, layout only. Dashed = estimated year; doubled bright arc = close marriage (φ > 0). <b>Dye</b>: deeper = closer descent (one step per generation, 1/16 or less is the palest); ecru = none in the data.';
+      '<b>Elevation</b>: order of descent, layout only. Dashed = estimated year; doubled bright arc = close marriage (φ > 0). <b>Dye</b>: deeper = closer descent (one step per generation, 1/16 or less is the palest); ' + LOOK().ecru + ' = none in the data.';
     labelCache = {}; $('labels').innerHTML = '';
   }
 
@@ -656,6 +605,7 @@
     // the subject bead and its ring are an obstacle (build 3: the subject's label sat on the ring at S05)
     var bd = A.sel && A.sel.bead, bp = bd && project(bd.pos);
     // (a soft obstacle: a subject label that finds no place beside it may still sit on it, so a phone never loses the subject's name)
+    if (por.a > 0.05 && por.x != null) { var pe = $('portrait'); placed.push({ x: por.x, y: por.y, w: pe.offsetWidth, h: pe.offsetHeight }); }   // the portrait is an obstacle
     if (bp) { var be = project(add(bd.pos, mul(qrot(cam.q, [1, 0, 0]), D.bead_r || 0.02))), rr = be ? Math.max(10, Math.abs(be.x - bp.x)) : 24; placed.push({ x: bp.x - rr, y: bp.y - rr, w: 2 * rr, h: 2 * rr, soft: true }); }
     want.sort(function (a, b) { return a.pri - b.pri; });
     want.forEach(function (l) {
@@ -711,12 +661,16 @@
   el.addEventListener('pointerup', function (e) {
     if (!down) return; var d = Math.hypot(e.clientX - down.x, e.clientY - down.y), dt = performance.now() - down.t; down = null;
     if (d > 6 || dt > 600) return;
+    var pl = plateAt(e.clientX, e.clientY, e.pointerType === 'touch' ? 10 : 2);   // v2: a portrait plate opens its person's card
+    if (pl) { A.touches.push({ x: e.clientX, y: e.clientY, id: pl.id, plate: true, t: performance.now() }); pick(pl.id, false); return; }
     var id = nearestPerson(e.clientX, e.clientY, e.pointerType === 'touch' ? 22 : 12);
     A.touches.push({ x: e.clientX, y: e.clientY, id: id, t: performance.now() });
     if (id) pick(id, true); else if (A.picked) clearPick();
   }, true);
   el.addEventListener('pointermove', function (e) {
     var now = performance.now(), tag = $('tag'); if (e.buttons || now - hoverT < 70) { if (e.buttons) tag.hidden = true; return; } hoverT = now;
+    var pl = plateAt(e.clientX, e.clientY, 2);
+    if (pl) { tag.textContent = (C.people[pl.id] || {}).name + ' · ' + pl.label; tag.style.left = e.clientX + 'px'; tag.style.top = e.clientY + 'px'; tag.hidden = false; el.style.cursor = 'pointer'; return; }
     var id = nearestPerson(e.clientX, e.clientY, 10);
     if (id) { var p = C.people[id]; tag.textContent = p.label + ' · ' + p.born + '–' + (p.died == null ? '?' : p.died) + ' · ' + p.house_name; tag.style.left = e.clientX + 'px'; tag.style.top = e.clientY + 'px'; tag.hidden = false; el.style.cursor = 'pointer'; }
     else { tag.hidden = true; el.style.cursor = ''; }
@@ -724,7 +678,7 @@
   el.addEventListener('pointerleave', function () { $('tag').hidden = true; });
   el.addEventListener('wheel', function () { lastInput = performance.now(); }, { passive: true, capture: true });
   function pick(id, fly) {
-    var p = C.people[id]; if (!p || !D.people[id]) return false; A.picked = id;
+    var p = C.people[id]; if (!p || !D.people[id]) return false; A.picked = id; if (fly) platesOut();
     var pp = D.people[id]; writeSel(pp.i, pp.lineage || [pp.i], pp.present.bead || null); setFocus(0); focusTo(1, 500);
     showCard(id); layoutLabels(true); mark('pick ' + id);
     if (fly) { A.tourStop(); var s = D.people[id].present; s.name = 'Present: ' + p.label; return A.flyTo(s); }
@@ -742,8 +696,9 @@
   function showCard(id) {   // the tapestry's card (scene2/page/index.html), with the hypersphere's own line on where the fiber runs
     var p = C.people[id], card = $('card'), h = [], u = D.units;
     h.push('<button class="x" aria-label="Close the card">×</button>');
+    var pt = portraitOf(id); if (pt) h.push('<div class="chead"><figure class="cthumb"><div class="frame"><div class="ph">' + pt.html + '</div></div><figcaption>' + esc(pt.label) + '</figcaption></figure><div>');
     h.push('<h2>' + esc(p.name) + chip(p.grade || 'Suspected') + '</h2>');
-    h.push('<div class="yrs">' + esc(years(p)) + ' · ' + esc(p.house_name) + (p.move ? ' (from ' + esc((C.houses.find(function (x) { return x.key === p.childhood_house; }) || {}).name || p.childhood_house) + ', ' + (p.move.estimated ? 'year not in the data' : p.move.year) + ')' : '') + ' · ' + (p.core ? 'born in the family' : 'in-law') + '</div>');
+    h.push('<div class="yrs">' + esc(years(p)) + ' · ' + esc(p.house_name) + (p.move ? ' (from ' + esc((C.houses.find(function (x) { return x.key === p.childhood_house; }) || {}).name || p.childhood_house) + ', ' + (p.move.estimated ? 'year not in the data' : p.move.year) + ')' : '') + ' · ' + (p.core ? 'born in the family' : 'in-law') + '</div>' + (pt ? '</div></div>' : ''));
     h.push('<h3>RECORD</h3>');
     if (p.note) h.push('<p>' + esc(p.note) + '</p>');
     var par = [p.father, p.mother].filter(Boolean);
@@ -753,7 +708,7 @@
     if (p.children.length) h.push('<p>Children in the data: ' + p.children.map(link).join(', ') + '</p>');
     if (p.sources.length || p.wikipedia) { h.push('<ul>'); (p.wikipedia && p.sources.indexOf(p.wikipedia) < 0 ? [p.wikipedia] : []).concat(p.sources).forEach(function (s) { h.push('<li><a href="' + esc(s) + '" target="_blank" rel="noopener noreferrer">' + esc(s.replace(/^https?:\/\//, '')) + '</a></li>'); }); h.push('</ul>'); }
     h.push('<h3>COMPUTED</h3>');
-    var dyes = Object.keys(p.shares || {}).map(function (k) { return '<span class="sw" style="background:' + esc((C.dyes[k] || {}).color || '#888') + '"></span>' + esc(k) + ' ' + esc(p.shares[k]); }).join(' · ');
+    var dyes = Object.keys(p.shares || {}).map(function (k) { return '<span class="sw" style="background:' + esc((D.theme_dyes || {})[k] || (C.dyes[k] || {}).color || '#888') + '"></span>' + esc(k) + ' ' + esc(p.shares[k]); }).join(' · ');
     h.push('<p>Dye (share of descent from the founders): ' + (dyes || 'none') + chip('∑') + '</p>');
     if (p.generation) h.push('<p>Steps from the founders: ' + (p.generation[0] === p.generation[1] ? p.generation[0] : p.generation[0] + ' to ' + p.generation[1] + ', by different paths') + chip('∑') + '</p>');
     p.unions.forEach(function (uid) { var un = C.unions[uid]; if (un && un.close) h.push('<p>Kinship with ' + esc(nameOf(un.a === id ? un.b : un.a)) + ': φ = ' + (+un.phi).toFixed(4) + ' (drawn doubled)' + chip('∑') + '</p>'); });
@@ -765,6 +720,101 @@
     card.querySelector('.x').onclick = function () { clearPick(); };
     card.querySelectorAll('a[data-p]').forEach(function (a) { a.onclick = function (e) { e.preventDefault(); pick(a.dataset.p, true); }; });
   }
+
+  // ---------------------------------------------------------------- v2: portraits (portraits.json, built from the portraits thread's manifest)
+  // An entry is an AI portrait (status ok) or a monogram card (pending or rejected): never a face for those. Every image shown carries its label.
+  // A close-stop subject with no entry gets a lettered monogram, labelled as such.
+  var PORTRAITS = null;
+  function initials(n) { return String(n || '').replace(/\(.*?\)/g, '').split(/\s+/).filter(function (w) { return /^[A-Z]/.test(w) && !/^(I|II|III|IV|V|VI|of|von|de|the)$/.test(w); }).slice(0, 2).map(function (w) { return w[0]; }).join(''); }
+  function portraitOf(id, big) {
+    var e = PORTRAITS && PORTRAITS[id], p = C && C.people[id];
+    if (e) { var src = big ? e.cutout : e.thumb; return { id: id, kind: e.kind, status: e.status, label: e.label, src: src, html: '<img src="' + esc(src) + '" alt="' + esc((p ? p.name : id) + ': ' + e.label) + '" title="' + esc(e.label) + '">' }; }
+    return null;
+  }
+  function showStopPortraitsReady() { por.id = null; }
+  // the overlay: a camera-anchored card for the close stop's subject (CU, MCU). Flying in, its opacity, scale and blur are interpolated from the
+  // flight's own progress through the theme's in0..in1 (eased): it arrives with the camera, not on a timer. Leaving, it dissolves over out_ms. Every
+  // frame it follows the subject's projected point, on the side with more room, inside the safe area; its feathered edge is the theme's CSS mask.
+  var por = { id: null, a: 0, x: null, y: null, t: 0, landed: 0, tau: null };
+  function PT() { return matchMedia('(max-width: 720px)').matches && LOOKS.phone_portrait ? LOOKS.phone_portrait : LOOK().portrait; }
+  function sstep(a, b, x) { var u = clamp((x - a) / (b - a), 0, 1); return u * u * (3 - 2 * u); }
+  function portraitWant() {
+    if (!D || !C || A.picked || A.stop < 0 || document.body.dataset.ui === 'none') return null;
+    var t = D.tour[A.stop], s = D.shots[t.shot], pt = PT();
+    if (!s || !(s.size === 'CU' || s.size === 'MCU') || !s.subject || !C.people[s.subject]) return null;
+    var op, tau = null;
+    if (flight) { if (flight.name !== s.name) return null; tau = Math.min(clamp((frameNow - flight.t0) / flight.D, 0, 1), A.holdAt == null ? 1 : A.holdAt); op = sstep(pt.in0, pt.in1, tau); }
+    else op = cam.shot === t.shot ? 1 : 0;
+    return { id: s.subject, op: op, tau: tau, pos: (s.bead && s.bead.pos) || D.people[s.subject].anchor };
+  }
+  function setPortrait(id) {
+    var p = C.people[id], e = portraitOf(id, true), img = $('pimg'), mono = $('pmono'), fig = $('portrait');
+    por.id = id; por.x = null; $('pname').textContent = p.name; $('pyears').textContent = years(p) + ' · ' + p.house_name;
+    if (e) { img.src = e.src; img.alt = p.name + ': ' + e.label; img.title = e.label; img.hidden = false; mono.hidden = true; $('plab').textContent = e.label; por.kind = e.kind; por.label = e.label; }
+    else { img.hidden = true; img.removeAttribute('src'); mono.textContent = initials(p.name); mono.title = 'Monogram: not in the portrait set'; mono.hidden = false; $('plab').textContent = 'Monogram: not in the portrait set'; por.kind = 'monogram-css'; por.label = 'Monogram: not in the portrait set'; }
+    fig.title = p.name + ' · ' + por.label;
+  }
+  function stepPortrait(now) {
+    var e = $('portrait'), ld = $('lead'), w = portraitWant(), dt = Math.min(now - (por.t || now), 250), pt = PT(); por.t = now;
+    if (w && w.id !== por.id && por.a < 0.02 && PORTRAITS) setPortrait(w.id);
+    var want = w && w.id === por.id ? w.op : 0;
+    por.a = want >= por.a ? want : Math.max(want, por.a - dt / pt.out_ms); por.tau = w ? w.tau : null;
+    if (flight || por.a < 1) por.landed = 0; else if (!por.landed) por.landed = now;
+    var pp = w && w.id === por.id ? project(w.pos) : null;
+    if (pp) {
+      var R = safeRect(), cw = e.offsetWidth, ch = e.offsetHeight, right = pp.x < (R.x0 + R.x1) / 2, gap = pt.leader ? 70 : 44;
+      var tx = clamp(right ? pp.x + gap : pp.x - gap - cw, R.x0, R.x1 - cw), ty = clamp(pp.y - ch * 0.55, R.y0, R.y1 - ch);
+      // the phone UI (a leader line): the card waits in the far corner of the safe area, so the names around the bead keep their room
+      if (pt.leader) { tx = right ? R.x1 - cw : R.x0; ty = pp.y < (R.y0 + R.y1) / 2 ? R.y1 - ch : R.y0; }
+      if (por.x == null) { por.x = tx; por.y = ty; } else { var k = 1 - Math.exp(-dt / 140); por.x += (tx - por.x) * k; por.y += (ty - por.y) * k; }
+      por.px = pp.x; por.py = pp.y;
+    }
+    var a = smoother(por.a), sc = pt.scale0 + (1 - pt.scale0) * a, bl = pt.blur ? (1 - a) * pt.blur : 0;
+    A.portrait = { id: por.id, a: +por.a.toFixed(4), shown: +a.toFixed(4), tau: por.tau, scale: +sc.toFixed(4), blur: +bl.toFixed(3), x: por.x, y: por.y, kind: por.kind, label: por.label, labelShown: $('plab').textContent, inFlight: !!flight };
+    if (por.a < 0.01 || por.x == null) { e.style.opacity = '0'; e.style.visibility = 'hidden'; ld.style.opacity = '0'; return; }
+    e.style.visibility = 'visible'; e.style.opacity = a.toFixed(3);
+    e.style.transform = 'translate(' + por.x.toFixed(1) + 'px,' + por.y.toFixed(1) + 'px) scale(' + sc.toFixed(4) + ')';
+    e.style.filter = bl > 0.01 ? 'blur(' + bl.toFixed(2) + 'px)' : '';
+    if (pt.kenburns) { var im = $('pimg'); im.style.transform = 'scale(' + (1 + (por.landed ? Math.min((now - por.landed) / 9000, 1) * 0.04 : 0)).toFixed(4) + ')'; }
+    if (pt.leader && por.px != null) {
+      var fr = e.querySelector('.frame').getBoundingClientRect(), qx = clamp(por.px, fr.left, fr.right), qy = clamp(por.py, fr.top, fr.bottom), L = Math.hypot(qx - por.px, qy - por.py);
+      ld.style.width = Math.max(0, L - 2).toFixed(1) + 'px'; ld.style.transform = 'translate(' + por.px.toFixed(1) + 'px,' + por.py.toFixed(1) + 'px) rotate(' + Math.atan2(qy - por.py, qx - por.px).toFixed(4) + 'rad)';
+      ld.style.opacity = a.toFixed(3);
+    } else ld.style.opacity = '0';
+  }
+  A.portraitState = function () { return A.portrait || null; };
+  $('portrait').addEventListener('click', function () { if (por.id && por.a > 0.2) pick(por.id, false); });
+  // the plates: X3D draws them and X3D interpolators fade and drift them (the pocket's PlatesIn_/PlatesOut_ clocks); the page only starts the
+  // clocks: PlatesIn with the flight, its cycleInterval set to the flight's length (so the fade follows the flight's progress), PlatesOut on leaving
+  var plates = { cur: null, t0: 0, D: 0 };
+  function xnow() { return Date.now() / 1000; }   // X3D time (SFTime, seconds since 1970), the base X_ITE's TimeSensors run on; X_ITE 16.5.1's public browser has no currentTime
+  function platesIn(name, ms) {
+    var g = D.plates[name], ci = node(g.clock_in), co = node(g.clock_out), now = xnow(); if (!ci) return;
+    setF(co, 'stopTime', now); setF(ci, 'cycleInterval', Math.max(ms / 1000, 0.3)); setF(ci, 'startTime', now);
+    plates.cur = name; plates.t0 = performance.now(); plates.D = ms; mark('plates in ' + name + ' over ' + (ms / 1000).toFixed(2) + ' s');
+  }
+  function platesOut() {
+    var g = plates.cur && D && D.plates && D.plates[plates.cur]; if (!g) { plates.cur = null; return; }
+    var now = xnow(); setF(node(g.clock_in), 'stopTime', now); setF(node(g.clock_out), 'startTime', now); mark('plates out ' + plates.cur); plates.cur = null;
+  }
+  function plateAt(x, y, pad) {
+    var g = plates.cur && D.plates[plates.cur]; if (!g || !cam.q) return null;
+    var m = node(g.mat), tr = 1; try { tr = m.transparency; } catch (e) {} if (tr > 0.6) return null;
+    var rt = qrot(cam.q, [1, 0, 0]), upv = qrot(cam.q, [0, 1, 0]), hit = null;
+    g.items.forEach(function (it) {
+      var c = project(it.pos), r = project(add(it.pos, mul(rt, it.w / 2))), u = project(add(it.pos, mul(upv, it.h / 2))); if (!c || !r || !u) return;
+      var hw = Math.abs(r.x - c.x) + pad, hh = Math.abs(u.y - c.y) + pad;
+      if (Math.abs(x - c.x) <= hw && Math.abs(y - c.y) <= hh && (!hit || c.depth < hit.depth)) hit = { id: it.id, label: it.label, depth: c.depth };
+    });
+    return hit;
+  }
+  A.plateAt = plateAt;
+  A.plateState = function () {
+    var g = plates.cur && D.plates[plates.cur]; if (!g) return { cur: null };
+    var tr = null; try { tr = node(g.mat).transparency; } catch (e) {}
+    return { cur: plates.cur, transparency: tr, items: g.items.map(function (it) { var c = project(it.pos); return { id: it.id, label: it.label, kind: it.kind, x: c && c.x, y: c && c.y }; }) };
+  };
+  A.plateTransparency = function (name) { var g = D.plates && D.plates[name]; if (!g) return null; try { return node(g.mat).transparency; } catch (e) { return null; } };
 
   // ---------------------------------------------------------------- keys
   document.addEventListener('keydown', function (e) {
@@ -788,10 +838,14 @@
   });
   document.querySelectorAll('#tiers button').forEach(function (b) { b.onclick = function () { A.setTier(+b.dataset.tier); }; });
   $('auto').onchange = function () { A.auto = this.checked; };
+  if (!window.dynastyApi) {   /* the standalone page (the two-view shell does this for the merged page) */
+    $('more-t').onclick = function () { var c = $('cap'), o = !c.classList.contains('open'); c.classList.toggle('open', o); this.setAttribute('aria-expanded', String(o)); this.textContent = o ? 'Less' : 'Details'; };
+    $('look-t').hidden = true; $('brandsub').textContent = '';
+  }
 
   // ---------------------------------------------------------------- the frame loop: flights, the fell, labels, the HUD, idle
   function frame(now) {
-    frameNow = now; applyFlight(now); stepFocus(now); stepGuard(now);
+    frameNow = now; applyFlight(now); stepFocus(now); stepGuard(now); stepPortrait(now);
     if (fellAnim) { var u = clamp((now - fellAnim.t0) / fellAnim.ms, 0, 1); setFell(fellAnim.a + (fellAnim.b - fellAnim.a) * smoother(u)); if (u >= 1) fellAnim = null; }
     layoutLabels(false);
     if (D && cam.p && now - (frame.hud || 0) > 250) {

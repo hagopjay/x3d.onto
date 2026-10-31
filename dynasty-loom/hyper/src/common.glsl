@@ -1,3 +1,8 @@
+//#include style
+// over(): composite one layer under the ones already in acc (front to back would be under; here callers go back to front), premultiplied
+void over(inout vec4 acc, vec3 c, float a) { a = clamp(a, 0., 1.); acc.rgb = c * a + acc.rgb * (1. - a); acc.a = a + acc.a * (1. - a); }
+float grainAt(vec2 fc, float t) { return (fract(sin(dot(fc + floor(t * 24.) * 7.31, vec2(12.9898, 78.233))) * 43758.5453) - .5) * 2. * S_GRAIN; }
+
 // common.glsl: hashes, value noise, fbm, tone map and the glow output, shared by every fragment shader (the generator pastes it in).
 float h13(vec3 p) { p = fract(p * .1031); p += dot(p, p.zyx + 31.32); return fract((p.x + p.y) * p.z); }
 float vnoise(vec3 x) {
@@ -24,6 +29,7 @@ float dither(vec2 fc, float t) { return (h13(vec3(fc, floor(t * 60.))) - .5) / 2
 vec4 glowOut(vec3 e, int blend) {
   float a = max(max(e.r, e.g), e.b);
   if (a < .002) discard;
+  if (S_INK > .5) return vec4(mix(S_ENGRAVE, e / a * S_INK_VALUE, S_INK_HUE), clamp(a * S_INK_DENSITY, 0., 1.));   // STYLE (ink): light becomes pigment
   if (blend == 1) return vec4(e, 1.);
   return vec4(e / a, a);
 }

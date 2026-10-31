@@ -15,13 +15,13 @@
 precision highp float; precision highp int;
 uniform float uCycle, uFell, uY0, uR0, uK, uExposure, uGhost, uGain, uFocus;
 uniform int uQ, uPass, uBlend;
-in vec3 vDye; in float vS, vYear, vSeed, vKind, vEst, vFade, vPa, vPb, vSel, vAlong;
+in vec3 vDye; in float vS, vYear, vSeed, vKind, vEst, vFade, vPa, vPb, vSel, vAlong, vSheen;
 out vec4 x3d_FragColor;
 //#include common
 void main() {
   float T = uCycle * 600.;
-  vec3 neon = clamp(mix(vec3(dot(vDye, vec3(.2126, .7152, .0722))), vDye, 1.4), 0., 1.);   // chroma kept: 1.4x away from the luminance,
-  neon /= max(max(neon.r, neon.g), max(neon.b, 1e-3));                                     // then the dye at full value: same hue, neon bright
+  vec3 neon = clamp(mix(vec3(dot(vDye, vec3(.2126, .7152, .0722))), vDye, S_CHROMA), 0., 1.);   // chroma kept: 1.4x away from the luminance,
+  neon /= mix(1., max(max(neon.r, neon.g), max(neon.b, 1e-3)), S_VALUE_NORM);                                     // then the dye at full value: same hue, neon bright
   float mx = max(max(vDye.r, vDye.g), vDye.b), dyed = step(.3, (mx - min(min(vDye.r, vDye.g), vDye.b)) / max(mx, 1e-3));   // ecru (share 0) is ~0.15
   float woven = smoothstep(uFell + 1.5, uFell - 1.5, vYear);
   float tip = vKind < .5 ? exp(-max(uFell - vYear, 0.) / 2.5) * woven : 0.;  // the newest woven years of a life burn white
@@ -32,19 +32,42 @@ void main() {
   float yWave = uY0 + (rWave - uR0) / uK;
   float front = exp(-pow((vYear - yWave) * uK / .03, 2.));
   float kg = vKind > 2.5 ? 1.55 : (vKind > 1.5 ? 1.2 : (vKind > .5 ? .75 : 1.));   // a close marriage (phi > 0) is brighter, and drawn doubled
-  float I = (1. + 1.6 * pulse + 1.1 * front + 2. * tip) * kg * uGain;
+  float I = (1. + S_PULSE * pulse + S_FRONT * front + S_TIP * tip) * kg * uGain;
   float lum = pow(aces1(I * uExposure * .9), .4545);
   float est = vEst > .5 ? .55 : 1.;                                         // an estimated stretch is also translucent
   // the selection, after the tone map: -1 none, 2 subject, 1 lineage, 0 the rest
   bool rest = vSel > -.5 && vSel < .5;
   float kc = vSel > .5 && vSel < 1.5 ? .8 : 1.;
-  float kgl = vSel < -.5 ? 1. : (vSel > 1.5 ? 1.15 : (vSel > .5 ? .7 : .22));
+  float kgl = vSel < -.5 ? 1. : (vSel > 1.5 ? 1.15 : (vSel > .5 ? .7 : S_REST_GLOW));
   float hot = vSel > 1.5 ? .12 : 0.;
   kc = mix(1., kc, uFocus); kgl = mix(1., kgl, uFocus); hot *= uFocus;
-  float white = clamp(mix(.3, .12, dyed) + .4 * tip + .3 * pulse + hot, 0., 1.);
+  float white = clamp(mix(S_WHITE_ECRU, S_WHITE, dyed) + .2 * S_TIP * tip + .19 * S_PULSE * pulse + hot, 0., 1.);
   float c = 1. - vS * vS;
   vec3 core = mix(neon, vec3(1.), white * c) * lum * mix(1., est, .5);       // the core's colour before the pixel-floor fade
-  if (rest) neon = mix(neon, vec3(.55, .62, .80), .7 * uFocus);             // the rest: a cool slate, not a grey (build 3)
+  if (rest) neon = mix(neon, S_REST_L, .7 * uFocus);             // the rest: a cool slate, not a grey (build 3)
+  if (S_INK > .5) {   // STYLE (ink): pigment on a light ground; straight alpha, no tone map, no pulses, no front, no white tips
+    float q2 = vS * vS, l0 = dot(vDye, vec3(.2126, .7152, .0722));
+    vec3 ink = clamp(mix(vec3(l0), vDye, S_CHROMA), 0., 1.) * S_INK_VALUE;
+    vec3 silk = ink * (1. - S_ROUND * q2) + S_SHEEN * pow(vSheen, 24.) * (1. - q2);   // a rounded thread; silk catches the key along its length
+    if (uPass == 0) {
+      if (woven < .5 || dash < .5) discard;
+      if (rest && uFocus > .01) discard;                                        // no core for the rest under a selection (as v3)
+      vec3 c = vSel > .5 && vSel < 1.5 ? mix(silk, S_GROUND_TOP, .22 * uFocus) : silk;   // the lineage a shade lighter than the subject
+      x3d_FragColor = vec4(mix(c, S_GROUND_TOP, (1. - est) * .55), 1.);         // an estimated stretch is paler as well as dashed
+    } else {
+      float vis = mix(uGhost, 1., woven) * mix(.45, 1., dash) * est;
+      float a = S_BLEED_A * exp(-q2 * S_BLEED_K) * vis * vFade;
+      vec3 c = ink;
+      if (rest && uFocus > .01) {
+        c = mix(ink, S_REST, uFocus);
+        a = mix(a, S_REST_A * exp(-q2 * 3.) * vis * vFade, uFocus);
+        if (woven > .5 && dash > .5) a = max(a, exp(-q2 * 60.) * (1. - uFocus));   // the core, fading out
+      }
+      if (a < .004) discard;
+      x3d_FragColor = vec4(c, a);
+    }
+    return;
+  }
   if (uPass == 0) {
     if (woven < .5 || dash < .5) discard;
     if (rest && uFocus > .01) discard;                                       // no core, no depth: the rest cannot occlude (build 3)
@@ -53,7 +76,7 @@ void main() {
     float s2 = vS * vS;
     float g = .7 * exp(-s2 * 3.2) + .3 * exp(-s2 * 14.);
     float vis = mix(uGhost, 1., woven) * mix(.45, 1., dash) * est;
-    vec3 e = neon * g * lum * vis * vFade * .8 * kgl;
+    vec3 e = neon * g * lum * vis * vFade * S_GLOW * kgl;
     if (rest && uFocus > .01 && woven > .5 && dash > .5) e += core * (.7 + .3 * vFade) * exp(-s2 * 60.) * (1. - uFocus);   // the core, fading out
     x3d_FragColor = glowOut(e + dither(gl_FragCoord.xy, T), uBlend);
   }
