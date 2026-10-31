@@ -1,0 +1,20 @@
+{
+  "id": "rothschild",
+  "name": "Analyst decisions on the Rothschild data (model recall, not verified: wikidata.org unreachable from this session)",
+  "members": [
+    {
+      "id": "edouard",
+      "name": "Édouard Alphonse James de Rothschild",
+      "born": 1868,
+      "died": 1949,
+      "parents": ["alphonse"],
+      "branch": "Paris",
+      "why": "Gate G09 failed on the uploaded data: family.ts makes Guy (born 1909) a son of Alphonse (died 1905); both HTML pages make him a son of Edmond (aged 64 at the birth). From recall, unverified here: Guy's father was Alphonse's son Édouard (1868-1949). Added as a Suspected, model_recall person so the impossible link becomes a kept alternative instead of the accepted value."
+    },
+    {
+      "id": "guy",
+      "parents": ["edouard"],
+      "why": "Accept Édouard as Guy's father (see edouard). alphonse (family.ts) and edmond (both HTML pages) stay as contested alternatives."
+    }
+  ]
+}

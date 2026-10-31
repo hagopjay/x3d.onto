@@ -1,0 +1,166 @@
+{
+ "what": "data issues found while drawing (for the data stage; none of them is patched in the scene)",
+ "source": "merged/loom-view.json",
+ "source_sha256": "2aef8ce474a1be1127f20473f2d0866cb15a145db69562ca4996f09ba01ea953",
+ "contract_requests": [
+  "loom-view: an optional person field moved = {year, grade, source} (the dated move into the adult house); build_loom_scene.py reads it before its own seed.",
+  "loom-view: define house opened/closed. proto/ingest/loomview.py writes the first birth and last death of the house's core members; a reader takes \"closed\" for a closing date."
+ ],
+ "families": {
+  "rothschild": {
+   "family": "rothschild",
+   "computed": [
+    {
+     "id": "house:naples",
+     "grade": "∑",
+     "issue": "house \"closed\" 1907 is the last death among its core members; the narration (report 07, C) closes the house in 1863"
+    },
+    {
+     "id": "house:frankfurt",
+     "grade": "∑",
+     "issue": "house \"closed\" 1924 is the last death among its core members; the narration (report 07, C) closes the house in 1901"
+    },
+    {
+     "id": "Q6128825 / james_edouard",
+     "grade": "∑",
+     "issue": "same first name and the same years (1878-1957): James Armand de Rothschild and James Édouard de Rothschild, fathers Q467167 and Q2494198; possibly one person twice"
+    },
+    {
+     "id": "unions",
+     "grade": "∑",
+     "issue": "3 of 43 union years are null in the file (drawn at an estimate, marked ?)",
+     "ids": [
+      "U-Q370060-Q75527116",
+      "U-x:rudolph-maximilian-von-goldschmidt-rothschild-1881-x:betty-lambert-1894",
+      "U-Q108811626-x:edgar-spiegl-von-thurnsee-1876"
+     ]
+    }
+   ],
+   "from_review": [
+    {
+     "id": "james_edouard",
+     "grade": "S",
+     "source": "fix round 09, from memory (unchecked)",
+     "issue": "\"James Edouard de Rothschild\" 1878-1957, father Alphonse, house Paris, has the years of James Armand de Rothschild (Q6128825, 1878-1957, son of Edmond, also in the file): probably one man recorded twice, once with a wrong parent. Check before merging."
+    }
+   ],
+   "moves_seeded": [
+    {
+     "id": "Q370060",
+     "year": 1820,
+     "grade": "S",
+     "source": "review 08; not in report 07's text, unchecked",
+     "origin": "seed (build_loom_scene.py MOVED_SEED)"
+    },
+    {
+     "id": "Q547291",
+     "year": 1798,
+     "grade": "C",
+     "source": "report 07, stop 4: \"Nathan goes to Manchester in 1798, then London\"",
+     "origin": "seed (build_loom_scene.py MOVED_SEED)"
+    },
+    {
+     "id": "Q63656",
+     "year": 1821,
+     "grade": "C",
+     "source": "report 07, stop 4 (\"Carl to Naples after the Austrian occupation of 1821\") and the data note",
+     "origin": "seed (build_loom_scene.py MOVED_SEED)"
+    },
+    {
+     "id": "Q922667",
+     "year": 1811,
+     "grade": "S",
+     "source": "report 07, stop 4: \"James to Paris (S: 1811)\"",
+     "origin": "seed (build_loom_scene.py MOVED_SEED)"
+    }
+   ]
+  },
+  "habsburg": {
+   "family": "habsburg",
+   "computed": [
+    {
+     "id": "unions",
+     "grade": "∑",
+     "issue": "29 of 39 union years are null in the file (drawn at an estimate, marked ?)",
+     "ids": [
+      "U-Q150726-Q157073",
+      "U-Q150726-x:bianca-maria-sforza-1472",
+      "U-Q157098-Q171136",
+      "U-Q32500-Q331575",
+      "U-Q150611-Q233335",
+      "U-Q34417-Q156657",
+      "U-Q159660-Q150862",
+      "U-Q156400-maria_anna_bavaria",
+      "U-Q34464-Q157089",
+      "U-Q691402-Q311469",
+      "U-Q158662-Q150575",
+      "U-Q150494-Q158659",
+      "U-Q131706-Q151075",
+      "U-Q130834-Q164504",
+      "U-Q51056-Q150782",
+      "U-Q153956-Q241653",
+      "U-Q124950-x:isabella-of-aragon-1300",
+      "U-Q158434-x:joanna-of-pfirt-1300",
+      "U-x:henry-of-austria-1299-x:elisabeth-of-virneburg-1303",
+      "U-Q156404-x:catherine-of-bohemia-1342",
+      "U-Q275651-Q271827",
+      "U-x:albert-iv-duke-of-austria-1377-x:joanna-sophia-of-bavaria-1373",
+      "U-Q157112-Q167401",
+      "U-Q453031-x:catherine-of-burgundy-1378",
+      "U-Q276526-x:margaret-of-pomerania-1366",
+      "U-Q276526-Q112077",
+      "U-Q550692-x:elisabeth-of-the-palatinate-1381",
+      "U-Q550692-x:anna-of-brunswick-1390",
+      "U-Q150966-Q161149"
+     ]
+    }
+   ],
+   "from_review": [],
+   "moves_seeded": []
+  },
+  "darwin_wedgwood": {
+   "family": "darwin_wedgwood",
+   "computed": [
+    {
+     "id": "unions",
+     "grade": "∑",
+     "issue": "11 of 12 union years are null in the file (drawn at an estimate, marked ?)",
+     "ids": [
+      "U-Q234050-mary_howard",
+      "U-Q204473-Q7648718",
+      "U-Q3186048-Q75576235",
+      "U-Q75820645-Q7412761",
+      "U-Q55363478-Q16063415",
+      "U-Q1035-Q242147",
+      "U-Q5717254-Q76210076",
+      "U-Q3133240-fanny_mackintosh",
+      "U-Q6125346-x:sara-sedgwick-1839",
+      "U-Q1374840-Q15997320",
+      "U-Q76053073-x:henry-parker-1788"
+     ]
+    }
+   ],
+   "from_review": [
+    {
+     "id": "Charles Darwin x Emma Darwin (nee Wedgwood)",
+     "grade": "S",
+     "source": "review 08",
+     "issue": "They married in 1839 (the file leaves the year null; drawn 1838?) and moved to Down House in 1842 (no move year in the file)."
+    },
+    {
+     "id": "Robert Darwin x Susannah Darwin (nee Wedgwood)",
+     "grade": "S",
+     "source": "review 08",
+     "issue": "Robert was at The Mount, Shrewsbury, from 1786; Susannah joined him at the 1796 marriage. The file has neither year."
+    },
+    {
+     "id": "Josiah Wedgwood III",
+     "grade": "S",
+     "source": "review 08",
+     "issue": "He moved to Leith Hill Place in 1847 (not in the file; drawn on the estimated wedding pick)."
+    }
+   ],
+   "moves_seeded": []
+  }
+ }
+}

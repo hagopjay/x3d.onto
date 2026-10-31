@@ -1,0 +1,295 @@
+{
+ "about": "The merge build (report 08): the fact-check overlay and the nine harvest partitions on top of the app sources. Precedence is the order below: analyst decisions, then the fact-check files, then the harvest partitions (the founders' partition first), then the app files (Suspected). On a contested single-valued fact the first value is accepted and every other value is kept as an alternative; identity across files is decided by identity.py (QID, then enwiki title, then folded name + birth year; never name alone). Paths with base 'loom' are relative to the proto folder, 'proto' to proto/ingest, the rest to --src (the unpacked upload).",
+ "as_of": "2026-10-29",
+ "datasets": {
+  "rothschild": {
+   "name": "Rothschild"
+  },
+  "habsburg": {
+   "name": "Habsburg"
+  },
+  "darwin_wedgwood": {
+   "name": "Darwin–Wedgwood"
+  }
+ },
+ "policy": {
+  "living_years": 110,
+  "min_parent_age": 12,
+  "warn_parent_age_below": 18,
+  "warn_parent_age_above": 60,
+  "max_lifespan": 110,
+  "identity_conflict_years": 10
+ },
+ "grade_reason": "Unattributed compilation inside the uploaded app: no citations, notes read as a model's paraphrase of Wikipedia (x3d.onto GLOSSARY: a model's paraphrase of a page is S). The record is transcribed exactly (sha256, locator, verbatim quote); the fact it states is Suspected until a tool checks it.",
+ "sources": [
+  {
+   "path": "curated/decisions.json",
+   "base": "proto",
+   "parser": "json-tree",
+   "dataset": "rothschild",
+   "family": "analyst-decisions",
+   "prov": "model_recall",
+   "role": "graded analyst decisions that resolve error gates; first in precedence; every overridden value stays as an alternative",
+   "default_grade": "Suspected",
+   "grade_reason": "Model recall by the analyst, not checked against a source (wikidata.org was refused by the egress proxy). Suspected until a tool confirms it.",
+   "overlay": true,
+   "id_scope": "shared"
+  },
+  {
+   "path": "facts/rothschild.json",
+   "base": "loom",
+   "parser": "json-tree",
+   "dataset": "rothschild",
+   "family": "fact-check",
+   "prov": "doc",
+   "id_scope": "file",
+   "role": "fact-check overlay: corrected and expanded records (report 03)",
+   "default_grade": "Likely",
+   "grade_reason": "Corrected records written by the fact-check analyst (report 03) from pages fetched with WebFetch in an earlier session; the pages were not saved or hashed here, so one record is at most Likely: its own confidence can lower that, never raise it. Confirmed needs a second, independent source family agreeing (build.Builder.grade)."
+  },
+  {
+   "path": "facts/habsburg.json",
+   "base": "loom",
+   "parser": "json-tree",
+   "dataset": "habsburg",
+   "family": "fact-check",
+   "prov": "doc",
+   "id_scope": "file",
+   "role": "fact-check overlay: corrected and expanded records (report 03)",
+   "default_grade": "Likely",
+   "grade_reason": "Corrected records written by the fact-check analyst (report 03) from pages fetched with WebFetch in an earlier session; the pages were not saved or hashed here, so one record is at most Likely: its own confidence can lower that, never raise it. Confirmed needs a second, independent source family agreeing (build.Builder.grade)."
+  },
+  {
+   "path": "facts/darwin_wedgwood.json",
+   "base": "loom",
+   "parser": "json-tree",
+   "dataset": "darwin_wedgwood",
+   "family": "fact-check",
+   "prov": "doc",
+   "id_scope": "file",
+   "role": "fact-check overlay: corrected and expanded records (report 03)",
+   "default_grade": "Likely",
+   "grade_reason": "Corrected records written by the fact-check analyst (report 03) from pages fetched with WebFetch in an earlier session; the pages were not saved or hashed here, so one record is at most Likely: its own confidence can lower that, never raise it. Confirmed needs a second, independent source family agreeing (build.Builder.grade)."
+  },
+  {
+   "path": "harvest/roth-frankfurt.json",
+   "base": "loom",
+   "parser": "harvest",
+   "dataset": "rothschild",
+   "family": "harvest",
+   "prov": "doc",
+   "id_scope": "harvest",
+   "role": "harvest partition roth-frankfurt",
+   "default_grade": "Likely",
+   "grade_reason": "Records transcribed by harvest agents from Wikipedia, the Rothschild Archive and Wikidata search results in an earlier session (most pages seen once, many only as search-result titles; QIDs matched from search titles); nothing was saved or hashed here, so one record is at most Likely and its own confidence can lower that. Confirmed needs a second, independent source family agreeing."
+  },
+  {
+   "path": "harvest/roth-vienna.json",
+   "base": "loom",
+   "parser": "harvest",
+   "dataset": "rothschild",
+   "family": "harvest",
+   "prov": "doc",
+   "id_scope": "harvest",
+   "role": "harvest partition roth-vienna",
+   "default_grade": "Likely",
+   "grade_reason": "Records transcribed by harvest agents from Wikipedia, the Rothschild Archive and Wikidata search results in an earlier session (most pages seen once, many only as search-result titles; QIDs matched from search titles); nothing was saved or hashed here, so one record is at most Likely and its own confidence can lower that. Confirmed needs a second, independent source family agreeing."
+  },
+  {
+   "path": "harvest/roth-london-19c.json",
+   "base": "loom",
+   "parser": "harvest",
+   "dataset": "rothschild",
+   "family": "harvest",
+   "prov": "doc",
+   "id_scope": "harvest",
+   "role": "harvest partition roth-london-19c",
+   "default_grade": "Likely",
+   "grade_reason": "Records transcribed by harvest agents from Wikipedia, the Rothschild Archive and Wikidata search results in an earlier session (most pages seen once, many only as search-result titles; QIDs matched from search titles); nothing was saved or hashed here, so one record is at most Likely and its own confidence can lower that. Confirmed needs a second, independent source family agreeing."
+  },
+  {
+   "path": "harvest/roth-london-20c.json",
+   "base": "loom",
+   "parser": "harvest",
+   "dataset": "rothschild",
+   "family": "harvest",
+   "prov": "doc",
+   "id_scope": "harvest",
+   "role": "harvest partition roth-london-20c",
+   "default_grade": "Likely",
+   "grade_reason": "Records transcribed by harvest agents from Wikipedia, the Rothschild Archive and Wikidata search results in an earlier session (most pages seen once, many only as search-result titles; QIDs matched from search titles); nothing was saved or hashed here, so one record is at most Likely and its own confidence can lower that. Confirmed needs a second, independent source family agreeing."
+  },
+  {
+   "path": "harvest/roth-paris-19c.json",
+   "base": "loom",
+   "parser": "harvest",
+   "dataset": "rothschild",
+   "family": "harvest",
+   "prov": "doc",
+   "id_scope": "harvest",
+   "role": "harvest partition roth-paris-19c",
+   "default_grade": "Likely",
+   "grade_reason": "Records transcribed by harvest agents from Wikipedia, the Rothschild Archive and Wikidata search results in an earlier session (most pages seen once, many only as search-result titles; QIDs matched from search titles); nothing was saved or hashed here, so one record is at most Likely and its own confidence can lower that. Confirmed needs a second, independent source family agreeing."
+  },
+  {
+   "path": "harvest/roth-paris-20c.json",
+   "base": "loom",
+   "parser": "harvest",
+   "dataset": "rothschild",
+   "family": "harvest",
+   "prov": "doc",
+   "id_scope": "harvest",
+   "role": "harvest partition roth-paris-20c",
+   "default_grade": "Likely",
+   "grade_reason": "Records transcribed by harvest agents from Wikipedia, the Rothschild Archive and Wikidata search results in an earlier session (most pages seen once, many only as search-result titles; QIDs matched from search titles); nothing was saved or hashed here, so one record is at most Likely and its own confidence can lower that. Confirmed needs a second, independent source family agreeing."
+  },
+  {
+   "path": "harvest/habs-medieval.json",
+   "base": "loom",
+   "parser": "harvest",
+   "dataset": "habsburg",
+   "family": "harvest",
+   "prov": "doc",
+   "id_scope": "harvest",
+   "role": "harvest partition habs-medieval",
+   "default_grade": "Likely",
+   "grade_reason": "Records transcribed by harvest agents from Wikipedia, the Rothschild Archive and Wikidata search results in an earlier session (most pages seen once, many only as search-result titles; QIDs matched from search titles); nothing was saved or hashed here, so one record is at most Likely and its own confidence can lower that. Confirmed needs a second, independent source family agreeing."
+  },
+  {
+   "path": "harvest/habs-spanish.json",
+   "base": "loom",
+   "parser": "harvest",
+   "dataset": "habsburg",
+   "family": "harvest",
+   "prov": "doc",
+   "id_scope": "harvest",
+   "role": "harvest partition habs-spanish",
+   "default_grade": "Likely",
+   "grade_reason": "Records transcribed by harvest agents from Wikipedia, the Rothschild Archive and Wikidata search results in an earlier session (most pages seen once, many only as search-result titles; QIDs matched from search titles); nothing was saved or hashed here, so one record is at most Likely and its own confidence can lower that. Confirmed needs a second, independent source family agreeing."
+  },
+  {
+   "path": "harvest/dw-darwin.json",
+   "base": "loom",
+   "parser": "harvest",
+   "dataset": "darwin_wedgwood",
+   "family": "harvest",
+   "prov": "doc",
+   "id_scope": "harvest",
+   "role": "harvest partition dw-darwin",
+   "default_grade": "Likely",
+   "grade_reason": "Records transcribed by harvest agents from Wikipedia, the Rothschild Archive and Wikidata search results in an earlier session (most pages seen once, many only as search-result titles; QIDs matched from search titles); nothing was saved or hashed here, so one record is at most Likely and its own confidence can lower that. Confirmed needs a second, independent source family agreeing."
+  },
+  {
+   "path": "harvest/dw-wedgwood.json",
+   "base": "loom",
+   "parser": "harvest",
+   "dataset": "darwin_wedgwood",
+   "family": "harvest",
+   "prov": "doc",
+   "id_scope": "harvest",
+   "role": "harvest partition dw-wedgwood",
+   "default_grade": "Likely",
+   "grade_reason": "Records transcribed by harvest agents from Wikipedia, the Rothschild Archive and Wikidata search results in an earlier session (most pages seen once, many only as search-result titles; QIDs matched from search titles); nothing was saved or hashed here, so one record is at most Likely and its own confidence can lower that. Confirmed needs a second, independent source family agreeing."
+  },
+  {
+   "path": "roths3/data/family.ts",
+   "parser": "ts-literal",
+   "var": "familyData",
+   "dataset": "rothschild",
+   "family": "cosmos-rothschild",
+   "role": "declared source of truth; loaded by roths3",
+   "consumer_rule": "react-lt-dataset",
+   "default_grade": "Suspected",
+   "copies": [
+    "roths/data/family.ts",
+    "roths2/data/family.ts",
+    "roths - Copy/data/family.ts"
+   ],
+   "id_scope": "shared",
+   "diff_version": "B"
+  },
+  {
+   "path": "roths/data/trees/rothschild.json",
+   "parser": "json-tree",
+   "dataset": "rothschild",
+   "family": "cosmos-rothschild",
+   "role": "loaded by roths (datasets.ts); a 9-person cut of family.ts",
+   "consumer_rule": "react-lt-dataset",
+   "default_grade": "Suspected",
+   "copies": [
+    "roths - Copy/data/trees/rothschild.json"
+   ],
+   "id_scope": "shared",
+   "diff_version": "A"
+  },
+  {
+   "path": "rothsch2.html",
+   "parser": "html-literal",
+   "var": "familyData",
+   "dataset": "rothschild",
+   "family": "cosmos-rothschild",
+   "role": "standalone page v2, 26 persons",
+   "consumer_rule": "html-lt",
+   "default_grade": "Suspected",
+   "copies": [
+    "roths/collateral/rothsch2.html"
+   ],
+   "id_scope": "shared",
+   "diff_version": "D"
+  },
+  {
+   "path": "rothschilds.html",
+   "parser": "html-literal",
+   "var": "familyData",
+   "dataset": "rothschild",
+   "family": "cosmos-rothschild",
+   "role": "standalone page v1, 26 persons",
+   "consumer_rule": "html-all",
+   "default_grade": "Suspected",
+   "id_scope": "shared",
+   "diff_version": "C"
+  },
+  {
+   "path": "roths/data/trees/habsburg_stub.json",
+   "parser": "json-tree",
+   "dataset": "habsburg",
+   "family": "cosmos-stubs",
+   "role": "stub dataset",
+   "consumer_rule": "react-lt-dataset",
+   "default_grade": "Suspected",
+   "copies": [
+    "roths - Copy/data/trees/habsburg_stub.json"
+   ],
+   "id_scope": "shared",
+   "diff_version": "S1",
+   "expect_id": "habsburg_stub"
+  },
+  {
+   "path": "roths/data/trees/darwin_wedgwood_stub.json",
+   "parser": "json-tree",
+   "dataset": "darwin_wedgwood",
+   "family": "cosmos-stubs",
+   "role": "stub dataset",
+   "consumer_rule": "react-lt-dataset",
+   "default_grade": "Suspected",
+   "copies": [
+    "roths - Copy/data/trees/darwin_wedgwood_stub.json"
+   ],
+   "id_scope": "shared",
+   "diff_version": "S2",
+   "expect_id": "darwin_wedgwood_stub"
+  }
+ ],
+ "curated": [
+  "curated/places.json"
+ ],
+ "merge": {
+  "houses": "curated/houses.json",
+  "datagates": "gates/datagates.py",
+  "crosschecks": {
+   "consanguinity": "facts/consanguinity.json",
+   "source_diff": "facts/source_diff.json"
+  },
+  "view": "loom-view.json"
+ }
+}
