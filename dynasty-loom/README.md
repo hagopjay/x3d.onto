@@ -1,4 +1,4 @@
-# Dynasty Loom (v3)
+# Dynasty Loom (v2, prepared as Artifact version 4)
 
 Three families' public genealogy drawn as X3D 4.0 scenes in X_ITE 16.5.1: the Rothschilds (120 lives, 43 marriages), the Habsburgs (106, 39) and the Darwin–Wedgwoods (76, 12). One page, two views:
 
@@ -9,9 +9,44 @@ Both views read the same person cards, so the narration, sources and grades matc
 
 **Live:** [Dynasty Loom on claude.ai](https://claude.ai/artifact/BRwe3b1L48fAkxDzDsvcm1). It is a private Artifact. Version 3 was published on 30 October 2026, and `release/v3/` holds exactly the bytes that version serves.
 
+**v2** (branch `dynasty-loom/v2`) adds a theme system, portraits that arrive with the camera, and fixes v3's rough edges; it is prepared as version 4 of the same Artifact. See [v2](#v2-artifact-version-4) below. The sections after it describe v3, which v2 builds on.
+
 | Hypersphere | Loom |
 |---|---|
 | ![Rothschild hypersphere, wide](frames/03-rothschild-hyper-wide.webp) | ![Rothschild loom, wide](frames/10-rothschild-loom-wide.webp) |
+
+## v2 (Artifact version 4)
+
+v2 keeps v3's data, mapping and gates, and changes how the page looks and what it shows of people.
+
+- **Looks** (`hyper/themes.py`). The page opens in Museum Atlas, a light, printed-atlas look: warm paper, madder and ink, small caps. Documentary Night is the one alternate, behind a quiet "Night" switch in the header; a dark system setting opens on it. On phones (720 px and narrower) the interface takes Editorial Clarity's layout and type, not its colours. A fourth look, Heritage Glass, builds but is not shipped. The dye colours are baked into the hypersphere's vertex colours, so the alternate look ships its own scenes under `theme/documentary-night/`.
+- **Portraits.** At close stops the subject's portrait fades in beside the fiber, with its label under it and in its title; neighbours show as small plates in the scene (X3D transparency 0.06). Every image is one of:
+  - an AI portrait (status `ok` in the portraits manifest), labelled as AI-made with the public-domain painting it follows ("AI portrait after Moritz Daniel Oppenheim, 1836"), or as imagined where no likeness survives;
+  - the shared silhouette placeholder with the person's initials, labelled "Portrait in progress". It is one plain figure for everyone, never a likeness;
+  - a lettered monogram, when a release is built without `--placeholders`.
+
+  No one possibly living has a portrait: `tools/build_portraits.py` stops on anyone the cards do not hold, and the cards hold no one possibly living.
+- **Fixes from v3's list.** The opening caption, the caption panel's height, the header and stop-rail overlap at 1280×800 and 1366×768 (the gates now check four header sizes), and the plates' clocks (`Date.now()/1000`, because X_ITE 16.5.1 has no public `currentTime`).
+
+The portraits and their manifest live with the portraits workspace, not in this repo, so `release/v4/` holds receipts only. Build:
+
+```sh
+python3 -I dynasty-loom/tools/vendor_xite.py --release dynasty-loom/release/v3   # once
+python3 -I dynasty-loom/tools/build_v2.py --manifest PATH/portraits/manifest.json \
+    --placeholders PATH/placeholders/out --artifact OUT --release dynasty-loom/release/v4
+```
+
+`--release` compares the build with `release/v4/SHA256SUMS`. A fuller manifest needs no code change: run it again, and the comparison then lists the portraits that changed.
+
+| Claim (31 October 2026, on the published set) | Grade | Tool |
+|---|---|---|
+| All 15 scenes validate against the X3D 4.0 schema; the fork validator finds 0 errors and 0 warnings; the Loom gate finds 0 errors, 0 warnings and 89 notes | Confirmed | xmllint, `tools/validate_x3d.py`, `loom_gate.py --fork` |
+| The hypersphere gate passes 246 of 246 checks, including each close stop's portrait, label, mask and plates, the look switch, the header at four sizes and the phone layout per family | Confirmed | `hyper/tools/gate_hyper.js --artifact` |
+| The loom gate passes 66 of 66 | Confirmed | `tapestry/tools/gate_loom.js --artifact` |
+| The page loads under a strict copy of the Artifact CSP on desktop (light) and phone (dark) | Confirmed here; Likely on the real host | `tapestry/tools/artifact_csp_gate.js` |
+| Median frame interval is 0.47× v3's (about twice as fast at the fast tier and four to six times at ultra), over 24 frames × 2 rounds per family and shot | Likely (SwiftShader, relative only) | `hyper/tools/perf_compare.js` |
+
+Known rough edges (v2): on the light default look the loading still is not shown; the "Portrait in progress" line under a large plate can sit under a fiber; the orbit camera and hyperbolic lens are not in v2 yet and come with the next version.
 
 ## What the views show
 
@@ -50,11 +85,12 @@ Both views have:
 | `data/` | the build's only input, its contract, its ingest receipt, the data issues | `proto/merged/`, `proto/contracts/` |
 | `ingest/` | the pipeline that wrote the data, with its config, curated decisions, schema, tests and the GEDCOM 7 prototype (`gedcom7.py`, with a fictional fixture in `fixtures/`). Every person in `fixtures/synthetic-family.ged` is invented. Two of them, `@I10@` Kit /Example/ (born 1962) and `@I12@` Lee /Example/ (born 1995), have no death on purpose: they are the living-filter cases that `tests/test_proto.py` (`test_fixture_privacy`) checks are withheld | `proto/ingest/` |
 | `tapestry/` | the loom generator, the loom page, the page merge, the publish stage and the live gates | `proto/scene2/` |
-| `hyper/` | the hypersphere generator, its GLSL (`src/`), its page, its tools and gates, its docs (look bible, camera grammar), the Cycles hero-still scripts and the two plates the page shows while loading (`hero/plates/`) | `proto/hyper/` |
+| `hyper/` | the hypersphere generator, the theme table (`themes.py`, v2), its GLSL (`src/`), its page, its tools and gates, its docs (look bible, camera grammar), the Cycles hero-still scripts and the two plates the page shows while loading (`hero/plates/`) | `proto/hyper/` |
 | `x3d/` | `build_genealogy_x3d.py` (the first, drum generator; the loom imports its helpers), the Ubuntu Mono TTF label font and its licence; `vendor/x_ite/` is fetched, not committed | `proto/x3d/` |
 | `gates/` | `lookgates.py` (frame gates), `datagates.py` (used by ingest), the source gates | `proto/gates/` |
+| `release/v4/` | v2's receipts only: `SHA256SUMS` (all published files), `receipt.json`, `publish.json`, `build-v2.json`; the bytes come from `tools/build_v2.py` | new |
 | `release/v3/` | the published file set without `x_ite/`; `SHA256SUMS` for all 87 published files, `x_ite/` included; `publish.json` (the Artifact files map, with relative paths); `receipt.json` (the publish stage's receipt, as published) | the published file set |
-| `tools/` | `vendor_xite.py`, `rebuild.py`, `serve_local.py` (view a release locally), `validate_x3d.py` (the x3d_mcp fork validator wrapper) | new; `validate_x3d.py` from the workspace |
+| `tools/` | `vendor_xite.py`, `rebuild.py` (v3), `build_v2.py` (v2), `build_portraits.py` (v2), `serve_local.py` (view a release locally), `validate_x3d.py` (the x3d_mcp fork validator wrapper) | new; `validate_x3d.py` from the workspace |
 | `frames/` | 12 curated stills (WebP) with `receipt.json` (source and sha256 of each) | gate frames, Cycles posters |
 | `reports/` | the project reports 01 to 10 | the workspace reports |
 | `provenance.json` | every file copied from the workspace: its source path, its sha256 at copy time, and whether it was edited for repo paths | new |
@@ -168,6 +204,8 @@ The page is `release/v3/index.html`. The files map is `release/v3/publish.json`:
 | The family facts are graded per person in the cards: Confirmed, Likely or Suspected. | as graded | ingest gates (reports 03 and 08) |
 
 ## Known rough edges (v3)
+
+v2 fixes the first three (see [v2](#v2-artifact-version-4)). On v2's light default look the loading still is not shown; the dark alternate still shows it.
 
 - The opening caption still describes the tapestry's "upright threads".
 - The caption panel is too tall.

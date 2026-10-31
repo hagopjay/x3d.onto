@@ -12,5 +12,5 @@ void main() {
   float T = uCycle * 600.;
   float pxa = length(fwidth(d));
   vec3 c = skyCol(d, uQ, T, pxa, uSeed);
-  x3d_FragColor = vec4(encode(c, uExposure) + dither(gl_FragCoord.xy, T), 1.);
+  x3d_FragColor = vec4(c + grainAt(gl_FragCoord.xy, T) + dither(gl_FragCoord.xy, T), 1.);   // STYLE: the backdrop is display sRGB
 }

@@ -17,7 +17,11 @@ uniform int uBlend;
 in vec3 vRo; in vec3 vRd;
 out vec4 x3d_FragColor;
 //#include common
-float depthOf(vec3 p) { vec4 c = x3d_ProjectionMatrix * (x3d_ModelViewMatrix * vec4(p, 1.)); return clamp(c.z / c.w * .5 + .5, 0., 1.); }
+// logDepth (v2): 1 when X_ITE's LogarithmicDepthBuffer is on (the page sets the field); the depth is then X_ITE's own logarithmic one,
+// log2(1 + w) * x3d_LogarithmicFarFactor1_2 (the formula of x3d.onto gobbler-demiurge/tools/world_layer.py), so other geometry still composites.
+uniform float logDepth, x3d_LogarithmicFarFactor1_2;
+float depthOf(vec3 p) { vec4 c = x3d_ProjectionMatrix * (x3d_ModelViewMatrix * vec4(p, 1.)); return logDepth > .5 ? log2(1. + c.w) * x3d_LogarithmicFarFactor1_2 : clamp(c.z / c.w * .5 + .5, 0., 1.); }
+float fragDepth() { return logDepth > .5 ? log2(1. + 1. / gl_FragCoord.w) * x3d_LogarithmicFarFactor1_2 : gl_FragCoord.z; }   // the proxy's own depth
 float erf1(float x) { float a = abs(x), t = 1. / (1. + .47047 * a); return sign(x) * (1. - t * (.3480242 + t * (-.0958798 + t * .7478556)) * exp(-a * a)); }
 float gaussInt(float d2, float s2, float ta, float tb) { float s = sqrt(s2); return .8862269 * s * exp(-d2 / s2) * (erf1(tb / s) - erf1(ta / s)); }
 float invSq(float t, float k2) { float k = sqrt(k2); return t / (2. * k2 * (t * t + k2)) + atan(t / k) / (2. * k2 * k); }
