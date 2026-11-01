@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<X3D profile='Full' version='4.0'>
+<head><meta name='description' content='Points and lines are unlit: a red PointSet (left) and a blue IndexedLineSet (right), each with Color under a Material whose emissiveColor is 1 1 1, keep their colours.'/></head>
+<Scene>
+<Background skyColor='0.3 0.3 0.3'/>
+<Viewpoint position='0 0 9'/>
+<Shape><Appearance><Material emissiveColor='1 1 1'/><PointProperties pointSizeScaleFactor='40' pointSizeMinValue='40' pointSizeMaxValue='40'/></Appearance>
+<PointSet><Coordinate point='-2 0 0'/><Color color='0.8 0.1 0.1'/></PointSet></Shape>
+<Shape><Appearance><Material emissiveColor='1 1 1'/><LineProperties linewidthScaleFactor='30'/></Appearance>
+<IndexedLineSet coordIndex='0 1 -1' colorPerVertex='false'><Coordinate point='1 -1 0 1 1 0'/><Color color='0.1 0.2 0.7'/></IndexedLineSet></Shape>
+</Scene>
+</X3D>
