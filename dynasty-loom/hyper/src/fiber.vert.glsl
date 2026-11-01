@@ -16,7 +16,7 @@ in vec4 x3d_Color;
 in vec3 aTan;      // unit tangent along the thread
 in vec4 aInfo;     // side (-1/+1), year, seed (0..1), kind (0 life, 1 spawn / move / root arc, 2 marriage arc, 3 close marriage arc)
 in vec4 aAux;      // along (kind 0: 0..1 from birth to death; kind 1-3: pocket units from the arc's start, for dashes), estimated (1 = dashed), person A, person B
-out vec3 vDye; out float vS, vYear, vSeed, vKind, vEst, vFade, vPa, vPb, vSel, vAlong;
+out vec3 vDye; out float vS, vYear, vSeed, vKind, vEst, vFade, vPa, vPb, vSel, vAlong, vSheen;
 float inLine(float x) {
   for (int i = 0; i < 32; i++) { float v = uLine[i]; if (v < -.5) break; if (abs(v - x) < .5) return 1.; }
   return 0.;
@@ -43,5 +43,6 @@ void main() {
     bool own = abs(pa - uPick) < .5 || abs(pb - uPick) < .5;
     sel = own ? 2. : (kind > 1.5 ? inLine(pa) * inLine(pb) : inLine(pa));
   }
+  { vec3 tn = normalize(te + vec3(1e-6)), hv = normalize(normalize(vec3(.45, .62, .64)) + normalize(-pe.xyz)); float th = dot(tn, hv); vSheen = sqrt(max(1. - th * th, 0.)); }   // STYLE: silk sheen
   vDye = x3d_Color.rgb; vS = aInfo.x; vYear = aInfo.y; vSeed = aInfo.z; vKind = kind; vEst = aAux.y; vPa = pa; vPb = pb; vSel = sel; vAlong = aAux.x;
 }

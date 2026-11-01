@@ -1,0 +1,67 @@
+{
+ "id": "Q234050",
+ "name": "Erasmus Darwin",
+ "version": "v1",
+ "model": "gemini-3-pro-image",
+ "prompt": "Repaint the person in the attached reference image, Erasmus Darwin (1731-1802), as a new portrait. The face must follow the reference faithfully: same face shape, features, hair, age and expression. Keep the clothing of the reference, simplified to what a head-and-shoulders crop shows.\n\nHead-and-shoulders portrait, vertical 4:5 framing, the face about a third of the frame height, centred, shoulders cut by the lower edge. Finish: a quiet, realistic painted study in oils, muted natural colour, soft light from the upper left, gentle shadow. Background: plain warm mid-grey that darkens softly toward the edges, with nothing else in it. No text, no frame, no border, no signature, no watermark, no crown, jewellery or insignia unless the reference shows it.\n\nThis is a respectful historical likeness. Keep the face's proportions exactly as in the reference: do not exaggerate, idealise, glamorise, modernise or caricature any feature. Natural eyes, closed or natural mouth, no visible hands.",
+ "prompt_sha256": "2cfc186055826530a9ce71db414638a884cba6facd89acd04e6a459832e46f23",
+ "reference": {
+  "id": "Q234050",
+  "name": "Erasmus Darwin",
+  "file": "File:Portrait of Erasmus Darwin by Joseph Wright of Derby (1792).jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Portrait_of_Erasmus_Darwin_by_Joseph_Wright_of_Derby_(1792).jpg",
+  "original": "https://upload.wikimedia.org/wikipedia/commons/b/be/Portrait_of_Erasmus_Darwin_by_Joseph_Wright_of_Derby_%281792%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "downloaded": "https://upload.wikimedia.org/wikipedia/commons/b/be/Portrait_of_Erasmus_Darwin_by_Joseph_Wright_of_Derby_%281792%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+  "original_sha256": null,
+  "author": "Joseph Wright of Derby",
+  "date": "1792date QS:P571,+1792-00-00T00:00:00Z/9",
+  "credit": "Unknown sourceUnknown source",
+  "licence": "Public domain",
+  "licence_url": null,
+  "attribution_required": "false",
+  "description": "",
+  "licence_ok": true,
+  "local": "reference.jpg",
+  "sha256": "8f06c52e57ace408bbc87e94d4e8aaa28c16d03d06dd4bd4866541866ec9ea51",
+  "checked": "2026-10-30T23:21:11Z"
+ },
+ "created": "2026-10-31T01:16:41Z",
+ "sha256": "c5c013659d7055e3408df1504debc0de288d2a266a3191e7368cdf02c4ca5101",
+ "label": "AI portrait after Joseph Wright of Derby, 1792 (public domain)",
+ "imagined": false,
+ "review": {
+  "verdict": "pass",
+  "notes": "Faithful to Wright of Derby 1792: heavy features as painted, own grey hair, olive coat; quill and hand cropped out.",
+  "reviewed": "2026-10-31T01:19:35Z",
+  "checks": [
+   "likeness",
+   "dignity",
+   "hands-eyes-teeth",
+   "era dress",
+   "clean background"
+  ]
+ },
+ "usage": {
+  "promptTokenCount": 485,
+  "candidatesTokenCount": 1306,
+  "totalTokenCount": 1993,
+  "promptTokensDetails": [
+   {
+    "modality": "TEXT",
+    "tokenCount": 227
+   },
+   {
+    "modality": "IMAGE",
+    "tokenCount": 258
+   }
+  ],
+  "candidatesTokensDetails": [
+   {
+    "modality": "IMAGE",
+    "tokenCount": 1120
+   }
+  ],
+  "thoughtsTokenCount": 202,
+  "serviceTier": "standard"
+ }
+}

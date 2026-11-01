@@ -1,0 +1,25 @@
+{
+ "id": "Q76988",
+ "reference": null,
+ "reason": "No authenticated likeness of Mayer Amschel survives. Wikidata's P18 (File:Mayer Amschel Rothschild.jpg) is a fanciful drawing from Elbert Hubbard's 1916 'Little Journeys' series, so it is not used as a likeness.",
+ "rejected_candidate": {
+  "id": "Q76988",
+  "name": "Mayer Amschel Rothschild",
+  "file": "File:Mayer Amschel Rothschild.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Mayer_Amschel_Rothschild.jpg",
+  "original": "https://upload.wikimedia.org/wikipedia/commons/5/5f/Mayer_Amschel_Rothschild.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "downloaded": "https://upload.wikimedia.org/wikipedia/commons/5/5f/Mayer_Amschel_Rothschild.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+  "author": "Elbert Hubbard - no picture credit",
+  "date": "2012-03-31",
+  "credit": "The Project Gutenberg eBook, Little Journeys to the Homes of the Great - http://www.gutenberg.org/files/23595/23595-h/23595-h.htm",
+  "licence": "Public domain",
+  "licence_url": null,
+  "attribution_required": "false",
+  "description": "Mayer Amschel Rothschild",
+  "licence_ok": true,
+  "local": "reference.jpg",
+  "sha256": "f54b0d183fc06872bab180ac59b7e197e109ef816eff8fe1fdef820fd0a611b3",
+  "checked": "2026-10-30T17:30:05Z"
+ },
+ "checked": "2026-10-30T19:07:52Z"
+}

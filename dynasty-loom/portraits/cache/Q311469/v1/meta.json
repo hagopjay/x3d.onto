@@ -1,0 +1,67 @@
+{
+ "id": "Q311469",
+ "name": "Mariana of Austria",
+ "version": "v1",
+ "model": "gemini-3-pro-image",
+ "prompt": "Repaint the person in the attached reference image, Mariana of Austria (1634-1696), as a new portrait. The face must follow the reference faithfully: same face shape, features, hair, age and expression. Keep the clothing of the reference, simplified to what a head-and-shoulders crop shows.\n\nHead-and-shoulders portrait, vertical 4:5 framing, the face about a third of the frame height, centred, shoulders cut by the lower edge. Finish: a quiet, realistic painted study in oils, muted natural colour, soft light from the upper left, gentle shadow. Background: plain warm mid-grey that darkens softly toward the edges, with nothing else in it. No text, no frame, no border, no signature, no watermark, no crown, jewellery or insignia unless the reference shows it.\n\nThis is a respectful historical likeness. Keep the face's proportions exactly as in the reference: do not exaggerate, idealise, glamorise, modernise or caricature any feature. Natural eyes, closed or natural mouth, no visible hands.",
+ "prompt_sha256": "7afd31144580cc7a2951930fdb46eca94ae0ccda59341febeafdbd7a4cb1809e",
+ "reference": {
+  "id": "Q311469",
+  "name": "Mariana of Austria",
+  "file": "File:Mariana of Austria by Velázquez (c. 1652, Museo del Prado).jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Mariana_of_Austria_by_Vel%C3%A1zquez_(c._1652,_Museo_del_Prado).jpg",
+  "original": "https://upload.wikimedia.org/wikipedia/commons/8/86/Mariana_of_Austria_by_Vel%C3%A1zquez_%28c._1652%2C_Museo_del_Prado%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "downloaded": "https://upload.wikimedia.org/wikipedia/commons/8/86/Mariana_of_Austria_by_Vel%C3%A1zquez_%28c._1652%2C_Museo_del_Prado%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+  "original_sha256": null,
+  "author": "Diego Velázquez",
+  "date": "between 1652 and 1653date QS:P,+1652-00-00T00:00:00Z/8,P1319,+1652-00-00T00:00:00Z/9,P1326,+1653-00-00T00:00:00Z/9",
+  "credit": "Museo del Prado",
+  "licence": "Public domain",
+  "licence_url": null,
+  "attribution_required": "false",
+  "description": "",
+  "licence_ok": true,
+  "local": "reference.jpg",
+  "sha256": "c08afa17920ddb051b79a10d90c60f149f5564739e9141cbb901831a7c064b5a",
+  "checked": "2026-10-30T23:19:24Z"
+ },
+ "created": "2026-10-31T01:16:08Z",
+ "sha256": "3a374787a138ad9f7ed8d2d009977482519483e5f257638a64e1e85fb6253c8e",
+ "label": "AI portrait after Diego Velázquez, 1652 (public domain)",
+ "imagined": false,
+ "review": {
+  "verdict": "fail",
+  "notes": "Not Mariana: the face is invented, the hair red, and the ruff is c.1600. Follow Velázquez c.1652: a pale young woman of about 18 with rouged cheeks, a wide wig of dark-blond hair dressed out to the sides with red ribbons and a plumed headdress, a black-and-silver bodice with the wide guardainfante lines of the 1650s; no ruff.",
+  "reviewed": "2026-10-31T01:19:36Z",
+  "checks": [
+   "likeness",
+   "dignity",
+   "hands-eyes-teeth",
+   "era dress",
+   "clean background"
+  ]
+ },
+ "usage": {
+  "promptTokenCount": 486,
+  "candidatesTokenCount": 1313,
+  "totalTokenCount": 2009,
+  "promptTokensDetails": [
+   {
+    "modality": "TEXT",
+    "tokenCount": 228
+   },
+   {
+    "modality": "IMAGE",
+    "tokenCount": 258
+   }
+  ],
+  "candidatesTokensDetails": [
+   {
+    "modality": "IMAGE",
+    "tokenCount": 1120
+   }
+  ],
+  "thoughtsTokenCount": 210,
+  "serviceTier": "standard"
+ }
+}

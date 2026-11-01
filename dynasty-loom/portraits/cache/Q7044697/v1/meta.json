@@ -1,0 +1,67 @@
+{
+ "id": "Q7044697",
+ "name": "Betty von Rothschild",
+ "version": "v1",
+ "model": "gemini-3-pro-image",
+ "prompt": "Repaint the person in the attached reference image, Betty von Rothschild (1805-1886), as a new portrait. The face must follow the reference faithfully: same face shape, features, hair, age and expression. Keep the clothing of the reference, simplified to what a head-and-shoulders crop shows.\n\nHead-and-shoulders portrait, vertical 4:5 framing, the face about a third of the frame height, centred, shoulders cut by the lower edge. Finish: a quiet, realistic painted study in oils, muted natural colour, soft light from the upper left, gentle shadow. Background: plain warm mid-grey that darkens softly toward the edges, with nothing else in it. No text, no frame, no border, no signature, no watermark, no crown, jewellery or insignia unless the reference shows it.\n\nThis is a respectful historical likeness. Keep the face's proportions exactly as in the reference: do not exaggerate, idealise, glamorise, modernise or caricature any feature. Natural eyes, closed or natural mouth, no visible hands.",
+ "prompt_sha256": "b67b33677070ca1bc8e7e1138dc1a3ddf2e5625169cb596d4cde443ad8e3cdef",
+ "reference": {
+  "id": "Q7044697",
+  "name": "Betty von Rothschild",
+  "file": "File:Jean auguste dominique ingres baronne james de rothschild.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Jean_auguste_dominique_ingres_baronne_james_de_rothschild.jpg",
+  "original": "https://upload.wikimedia.org/wikipedia/commons/5/5b/Jean_auguste_dominique_ingres_baronne_james_de_rothschild.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "downloaded": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5b/Jean_auguste_dominique_ingres_baronne_james_de_rothschild.jpg/1280px-Jean_auguste_dominique_ingres_baronne_james_de_rothschild.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "original_sha256": null,
+  "author": "Jean-Auguste-Dominique Ingres",
+  "date": "1848",
+  "credit": "Art Renewal Center Museum, image 9431.",
+  "licence": "Public domain",
+  "licence_url": null,
+  "attribution_required": "false",
+  "description": "",
+  "licence_ok": true,
+  "local": "reference.jpg",
+  "sha256": "e50191d038c55834053182ca40a41242db16e9da60ec8a6f96910fa63dcc936c",
+  "checked": "2026-10-30T23:18:24Z"
+ },
+ "created": "2026-10-31T01:14:51Z",
+ "sha256": "2c59ebc6b4c06dccc36416e28c8ef3f0644b0415ee27b26649d8b5d471ae89e1",
+ "label": "AI portrait after Jean-Auguste-Dominique Ingres, 1848 (public domain)",
+ "imagined": false,
+ "review": {
+  "verdict": "pass",
+  "notes": "Faithful to Ingres 1848: black hat with white plumes, pink satin off-shoulder gown; a pearl necklace was added (Ingres shows bracelets), minor; dignified.",
+  "reviewed": "2026-10-31T01:19:34Z",
+  "checks": [
+   "likeness",
+   "dignity",
+   "hands-eyes-teeth",
+   "era dress",
+   "clean background"
+  ]
+ },
+ "usage": {
+  "promptTokenCount": 486,
+  "candidatesTokenCount": 1313,
+  "totalTokenCount": 2065,
+  "promptTokensDetails": [
+   {
+    "modality": "TEXT",
+    "tokenCount": 228
+   },
+   {
+    "modality": "IMAGE",
+    "tokenCount": 258
+   }
+  ],
+  "candidatesTokensDetails": [
+   {
+    "modality": "IMAGE",
+    "tokenCount": 1120
+   }
+  ],
+  "thoughtsTokenCount": 266,
+  "serviceTier": "standard"
+ }
+}

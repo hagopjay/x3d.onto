@@ -1,0 +1,67 @@
+{
+ "id": "Q467167",
+ "name": "Edmond James de Rothschild",
+ "version": "v1",
+ "model": "gemini-3-pro-image",
+ "prompt": "Repaint the person in the attached reference image, Edmond James de Rothschild (1845-1934), as a new portrait. The face must follow the reference faithfully: same face shape, features, hair, age and expression. Keep the clothing of the reference, simplified to what a head-and-shoulders crop shows.\n\nHead-and-shoulders portrait, vertical 4:5 framing, the face about a third of the frame height, centred, shoulders cut by the lower edge. Finish: a quiet, realistic painted study in oils, muted natural colour, soft light from the upper left, gentle shadow. Background: plain warm mid-grey that darkens softly toward the edges, with nothing else in it. No text, no frame, no border, no signature, no watermark, no crown, jewellery or insignia unless the reference shows it.\n\nThis is a respectful historical likeness. Keep the face's proportions exactly as in the reference: do not exaggerate, idealise, glamorise, modernise or caricature any feature. Natural eyes, closed or natural mouth, no visible hands.",
+ "prompt_sha256": "1c17269e4fafcac624195f7b5659b0541ad60770aad89e6e020240cd37e8dc11",
+ "reference": {
+  "id": "Q467167",
+  "name": "Edmond James de Rothschild",
+  "file": "File:Edmond James de Rothschild (1845-1934).jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Edmond_James_de_Rothschild_(1845-1934).jpg",
+  "original": "https://upload.wikimedia.org/wikipedia/commons/1/17/Edmond_James_de_Rothschild_%281845-1934%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "downloaded": "https://upload.wikimedia.org/wikipedia/commons/1/17/Edmond_James_de_Rothschild_%281845-1934%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+  "original_sha256": null,
+  "author": "Edmond James de Rothschild (1845-1934)",
+  "date": "19th centurydate QS:P,+1850-00-00T00:00:00Z/7",
+  "credit": "Les Rothschild, une dynastie de mécènes en France",
+  "licence": "Public domain",
+  "licence_url": null,
+  "attribution_required": "false",
+  "description": "Edmond James de Rothschild (1845-1934)",
+  "licence_ok": true,
+  "local": "reference.jpg",
+  "sha256": "b0d3358e182675e29505239db758a0380e591e7a9ea043185e6cd3b1dc4e6d72",
+  "checked": "2026-10-30T23:18:19Z"
+ },
+ "created": "2026-10-31T01:14:36Z",
+ "sha256": "36bc9dd557aec80a7999a8d09280f51f1863165dd6dc4f8c8ce2b81269a74e47",
+ "label": "AI portrait after Edmond James de Rothschild (1845-1934), 1850 (public domain)",
+ "imagined": false,
+ "review": {
+  "verdict": "pass",
+  "notes": "Close to the c.1870s photograph: curly dark hair, full beard, fur-collared coat; hair a little fuller than the photo; dignified, no exaggeration.",
+  "reviewed": "2026-10-31T01:19:34Z",
+  "checks": [
+   "likeness",
+   "dignity",
+   "hands-eyes-teeth",
+   "era dress",
+   "clean background"
+  ]
+ },
+ "usage": {
+  "promptTokenCount": 487,
+  "candidatesTokenCount": 1322,
+  "totalTokenCount": 2025,
+  "promptTokensDetails": [
+   {
+    "modality": "TEXT",
+    "tokenCount": 229
+   },
+   {
+    "modality": "IMAGE",
+    "tokenCount": 258
+   }
+  ],
+  "candidatesTokensDetails": [
+   {
+    "modality": "IMAGE",
+    "tokenCount": 1120
+   }
+  ],
+  "thoughtsTokenCount": 216,
+  "serviceTier": "standard"
+ }
+}

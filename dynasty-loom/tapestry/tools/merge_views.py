@@ -13,10 +13,13 @@ How the two pages become one, and why:
     canvas, keys, resize, frame loop and fps monitor run only while its view is active.
   * Each view has its own x3d-canvas (its own X_ITE browser), made when the view is first opened. The hidden one is display:none, and X_ITE then
     stops rendering it by itself (its IntersectionObserver ends the update loop). Switching back is instant and the tapestry is exactly as it was.
-  * CSS: the loom's rules unchanged; the hypersphere's rules scoped under body[data-view="hyper"], so each view looks as its own page did.
+  * CSS (v2): the loom's rules, then one themed style sheet for both views from hyper/themes.py (page_css: DEFAULT_THEME, ALT_THEME and the
+    PHONE_UI layer), so the loom's chrome takes the theme's type and palette too; the loom's scene colours stay v3's. The hypersphere page's own
+    <style> holds only the theme mark. The look is :root[data-look="<slug>"], switched by the header's quiet toggle (#look-t) and remembered in
+    this browser only (localStorage, wrapped: the page works without it). The header's measured height is --header-h (the rail and card sit below).
   * The #hash: #hypersphere and #loom name a view, a family name (#rothschild, #habsburg, #darwin-wedgwood) a family, and #loom/habsburg both;
     the page writes #<family> in the hypersphere (the default view) and #loom/<family> in the loom. Switching view keeps the family, the story
-    beat (both tours index the same card stops) and a picked person.
+    beat (both tours index the same card stops) and a picked person; a hash naming a view and a family switches to both (v2: v3 kept the old family).
 Writes page/index.html and page/merge-receipt.json (sha256 of the inputs, this script and the output; the edits applied)."""
 import hashlib, json, os, re, sys
 
@@ -26,6 +29,8 @@ LOOM = os.path.join(HERE, 'page', 'loom.html')
 HYPER = os.path.join(PROTO, 'hyper', 'page', 'index.html')
 OUT = os.path.join(HERE, 'page', 'index.html')
 EDITS = []
+sys.path.insert(0, os.path.join(PROTO, 'hyper'))
+import themes as TH   # noqa: E402  (v2: the look table)
 
 
 def sha(b):
@@ -200,7 +205,7 @@ def hyper_engine(js):
     lastInput = performance.now();
     if (!manifest || !D) return;                                   /* still booting: boot() reads the shell's family */
     var k = o.family && manifest.families.some(function (f) { return f.key === o.family; }) ? o.family : A.family;
-    if (k !== A.family) { loadFamily(k, 0, o); return; }
+    if (k !== A.family || (A.look && A.look !== lookSlug())) { loadFamily(k, o.cardStop != null ? Math.max(0, tourIndexOf(o.cardStop)) : Math.max(0, A.stop), o); return; }   /* v2: or the look changed */
     buildUI(); setFell(A.fell == null ? D.units.top : A.fell); setTier(A.tierIndex < 0 ? 2 : A.tierIndex, false);
     document.querySelectorAll('#fams button').forEach(function (b) { b.classList.toggle('on', b.dataset.key === k); b.setAttribute('aria-selected', b.dataset.key === k); });
     var j = o.pick ? -1 : tourIndexOf(o.cardStop);
@@ -213,7 +218,8 @@ def hyper_engine(js):
     var o = { family: A.family, cardStop: D && A.stop >= 0 && D.tour[A.stop] ? D.tour[A.stop].i : null, pick: A.picked };
     A.tourStop(); fellAnim = null; if (A.picked) clearPick(); $('tag').hidden = true; return o;
   }
-  S.engines[VIEW] = { boot: boot, activate: activate, deactivate: deactivate, hashFamily: hashFamily, loadFamily: function (k) { loadFamily(k, 0); }, fail: fail, api: A };
+  S.engines[VIEW] = { boot: boot, activate: activate, deactivate: deactivate, hashFamily: hashFamily, loadFamily: function (k) { loadFamily(k, 0); }, fail: fail, api: A,
+    look: function () { if (active()) A.setLook(); } };   /* v2: the look switch reloads the sphere in the new theme's scenes (in the loom: on the way back) */
 """, 'hyper: engine registration')
     if 'document.body.dataset.loaded' in js or "$('x3d')" in js or 'location.hash' in js: raise SystemExit('merge: hyper engine still touches the loaded flag, the canvas id or the hash')
     return js
@@ -225,7 +231,7 @@ SHELL_CSS = """
   #views button { padding: 5px 9px; }
   #views button.on { border-color: var(--gold); color: var(--gold); }
   body:not([data-view="loom"]) .only-loom, body:not([data-view="hyper"]) .only-hyper, body:not([data-view="hyper"]) #labels, body:not([data-view="hyper"]) #vignette,
-  body:not([data-view="hyper"]) #poster { display: none !important; }
+  body:not([data-view="hyper"]) #poster, body:not([data-view="hyper"]) #portrait, body:not([data-view="hyper"]) #lead, body:not([data-view="hyper"]) #grain { display: none !important; }
   #poster { position: fixed; inset: 0; background: #05040b center / cover no-repeat; pointer-events: none; transition: opacity .9s ease; }
   #poster.gone { opacity: 0; }
   #poster .pcap { position: absolute; left: 50%; top: calc(45% + 26px); transform: translateX(-50%); width: min(560px, calc(100vw - 32px)); text-align: center; font: 11px/1.4 var(--mono); color: #b9b0d6; text-shadow: 0 1px 3px #000; }
@@ -243,7 +249,29 @@ SHELL_JS = r"""(function () {
   document.body.dataset.ui = q.get('ui') === 'none' ? 'none' : 'full';
   var VIEWS = ['hyper', 'loom'], st = {}, handlers = {}, statusEl = $('status');
   VIEWS.forEach(function (v) { st[v] = { status: 'starting X_ITE', err: false, loaded: '0', ever: false }; });
-  var S = window.dynastyApi = { view: null, family: null, families: null, engines: {}, xite: null, log: [], pending: null };
+  var S = window.dynastyApi = { view: null, family: null, families: null, engines: {}, xite: null, log: [], pending: null, look: null };
+
+  // ---- v2 looks (hyper/themes.py): the default theme and one alternate behind a quiet switch in the header; remembered in this browser only
+  var LOOKS = /*@LOOK@*/null, LOOK_KEY = 'dynasty-loom:look'; S.looks = LOOKS;
+  function storedLook() { try { var v = localStorage.getItem(LOOK_KEY); return v && LOOKS.themes[v] ? v : null; } catch (e) { return null; } }
+  S.setLook = function (slug, quiet) {
+    if (!LOOKS.themes[slug]) return false;
+    var T = LOOKS.themes[slug], alt = LOOKS.order[1], b = $('look-t'); S.look = slug; document.documentElement.dataset.look = slug;
+    if (!alt) b.hidden = true;
+    else { b.textContent = LOOKS.themes[alt].short; b.setAttribute('aria-pressed', String(slug === alt)); b.title = slug === alt ? 'Back to the ' + LOOKS.themes[LOOKS.default].name + ' look' : 'The ' + LOOKS.themes[alt].name + ' look'; }
+    $('brand').firstChild.textContent = T.brand; $('brandsub').textContent = T.brand_sub;
+    if (!quiet) { try { localStorage.setItem(LOOK_KEY, slug); } catch (e) { /* private window: the switch still works for this visit */ } }
+    Object.keys(S.engines).forEach(function (v) { var E = S.engines[v]; if (E.started && E.look) E.look(slug); });
+    log('look ' + slug); measureHeader(); return true;
+  };
+  // ---- the header's measured height (--header-h): the rail, the card and the toast sit below it, whatever it wraps to (v3: the rail overlapped
+  //      a two-row header at 1280x800 and 1366x768)
+  function measureHeader() { var h = document.querySelector('header'); if (!h) return; var b = Math.ceil(h.getBoundingClientRect().bottom); document.documentElement.style.setProperty('--header-h', b + 'px'); S.headerH = b; }
+  addEventListener('resize', measureHeader);
+  try { new ResizeObserver(measureHeader).observe(document.querySelector('header')); } catch (e) { /* resize and the font load still measure */ }
+  try { document.fonts.ready.then(measureHeader); } catch (e) {}
+  $('look-t').onclick = function () { S.setLook(S.look === LOOKS.order[1] ? LOOKS.default : LOOKS.order[1]); };
+  $('more-t').onclick = function () { var c = $('cap'), o = !c.classList.contains('open'); c.classList.toggle('open', o); this.setAttribute('aria-expanded', String(o)); this.textContent = o ? 'Less' : 'Details'; };
   function log(s) { S.log.push((performance.now() / 1000).toFixed(2) + ' s ' + s); }
   function renderStatus() { var x = st[S.view]; statusEl.textContent = x.status; statusEl.hidden = !x.status; statusEl.style.color = x.err ? 'var(--alert)' : ''; }
   S.status = function (v, s, err) { st[v].status = s || ''; st[v].err = !!err; if (v === S.view) renderStatus(); };
@@ -278,7 +306,7 @@ SHELL_JS = r"""(function () {
   S.noteFamily = function (v, key) { if (v !== S.view) return; S.family = key; S.writeHash(); };
   addEventListener('hashchange', function () {
     var h = parseHash(); log('hash ' + location.hash);
-    if (h.view && h.view !== S.view) { if (h.family) S.family = h.family; S.setView(h.view); return; }
+    if (h.view && h.view !== S.view) { S.setView(h.view, h.family ? { family: h.family } : null); return; }   /* v2: the hash's family wins over the old view's */
     var E = S.engines[S.view];
     if (h.family) { if (E && E.api.manifest) E.hashFamily(h.family); else S.family = h.family; } else S.writeHash();
   });
@@ -319,6 +347,7 @@ SHELL_JS = r"""(function () {
     if (!S.engines[v] || v === S.view) return false;
     var o = { family: S.family, stop: init && init.stop != null ? init.stop : null, cardStop: null, pick: null }, from = S.view && S.engines[S.view];
     if (from && from.started && from.api.manifest) { var c = from.deactivate() || {}; if (c.family) o.family = S.family = c.family; o.cardStop = c.cardStop; o.pick = c.pick; }
+    if (init && init.family) { if (init.family !== o.family) { o.cardStop = null; o.pick = null; } o.family = S.family = init.family; }
     S.view = v; document.body.dataset.view = v; log('view ' + v);
     document.querySelectorAll('#views button').forEach(function (b) { var on = b.dataset.view === v; b.classList.toggle('on', on); b.setAttribute('aria-pressed', String(on)); });
     VIEWS.forEach(function (k) { var cv = $('x3d-' + k); if (cv) cv.hidden = k !== v; });
@@ -336,36 +365,50 @@ SHELL_JS = r"""(function () {
     if (e.key === 'v' || e.key === 'V') S.setView(S.view === 'loom' ? 'hyper' : 'loom');
   });
   S.start = function () {
+    var darkAlt = LOOKS.order[1] && !LOOKS.themes[LOOKS.order[1]].ink && matchMedia('(prefers-color-scheme: dark)').matches ? LOOKS.order[1] : null;   /* a dark system setting starts on the dark alternate */
+    S.setLook(LOOKS.themes[q.get('look')] ? q.get('look') : storedLook() || darkAlt || LOOKS.default, true); measureHeader();
     var h = parseHash(); S.family = q.get('family') || h.family || null;
     loadXite(0); S.setView(h.view || (q.get('view') === 'loom' ? 'loom' : 'hyper'), { stop: q.get('stop') != null ? +q.get('stop') : null });
   };
 })();
 """
 
+NAV_HEAD = '<style media="all">\n  /* nav: the page owns the camera (lib/orbit.js); the Lens toggle and its plain-words chip (hypersphere only, v5: the loom header keeps its one row) */\n  x3d-canvas { touch-action: none; cursor: grab; } x3d-canvas:active { cursor: grabbing; }\n  #lens-t { font-variant: small-caps; letter-spacing: .04em; font-size: 16px; }\n  #lens-t[aria-pressed="true"] { border-bottom-color: var(--accent); color: var(--accent); }\n  #lenschip { flex-basis: 100%; font: italic 13.5px/1.3 var(--ui); color: var(--dim); }\n  @media (max-width: 720px) { #lens-t { font-size: 13px; padding: 4px 2px; } #lenschip { font-size: 12px; } header .brand, #views { order: -2; } #lens-t { order: -1; } }\n  body:not([data-view="loom"]) header .sub { flex: 1 1 480px; min-width: 0; }\n</style><!-- nav -->\n<script src="lib/lens.js"></script><script src="lib/orbit.js"></script><!-- nav: the lens mirror and the orbit camera (lib/) -->\n'   # nav (README, "v5 (Artifact version 5)"): the hypersphere's lens style and its two libraries (lib/). v5 review: on a phone the Lens
+                   # button joins the first row (brand, views); on a desktop the sub line may wrap inside its row, so Lens never takes a row of its own
 MARKUP = """<div id="poster" aria-hidden="true" hidden><span class="pcap">Still: a Blender Cycles render of the Rothschild sphere from the Wide shot, shown while the live X3D scene loads</span></div>
 <div id="vignette" aria-hidden="true"></div>
 <div id="labels" aria-hidden="true"></div>
+<svg id="grain" aria-hidden="true"><filter id="grainf"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter><rect width="100%" height="100%" filter="url(#grainf)"/></svg>
+<div id="lead" aria-hidden="true"></div>
+<figure id="portrait"><div class="frame"><div class="ph"><img id="pimg" alt="" decoding="async" hidden><span class="mono" id="pmono" hidden></span></div></div><figcaption><b id="pname"></b><span id="pyears"></span><span class="plab" id="plab"></span></figcaption></figure>
 <header class="panel">
-  <span class="brand">DYNASTY</span>
+  <span class="brand" id="brand">Dynasty Loom<small id="brandsub"></small></span>
   <span id="views" role="group" aria-label="View"><button data-view="hyper" aria-pressed="false" title="Radius is time: each family as a glass time-sphere (V)">Hypersphere</button><button data-view="loom" aria-pressed="false" title="Time runs up: each family as cloth on a loom (V)">Loom</button></span>
   <span class="sub" id="sub">radius = time · fiber = a life · arc = a marriage · dye = share of descent from the founders</span>
   <nav id="fams" aria-label="Family"></nav>
+  <button id="look-t" aria-pressed="false">Night</button>
+  <button id="lens-t" class="only-hyper" aria-pressed="false" title="A hyperbolic lens: magnify one place and let the rest recede (L)">Lens</button>
+  <span id="lenschip" class="only-hyper" hidden>Lens: the focus is magnified, the rest recedes; distances are not to scale.</span>
 </header>
 <nav id="rail" aria-label="Tour stops"></nav>
 <section id="cap" class="panel" aria-live="polite">
-  <div class="head"><span id="capn"></span><b id="capt">Loading</b><span id="capy"></span><span id="shotchip" class="only-hyper"></span><span id="where" class="only-hyper"></span><span id="gauge" class="only-loom" aria-label="Dye gauge: thread colour by share of descent"></span></div>
+  <div class="head"><span id="capn"></span><b id="capt">Loading</b><span id="capy"></span><span id="shotchip" class="only-hyper"></span><span id="gauge" class="only-loom" aria-label="Dye gauge: thread colour by share of descent"></span><button id="more-t" aria-expanded="false" aria-controls="more">Details</button></div>
   <p id="narr"></p>
-  <p id="comp"></p>
-  <p id="scale" class="only-hyper"></p>
   <div class="ctl">
     <button id="prev" aria-label="Previous stop">‹</button><button id="tour" aria-label="Play the tour">Tour ▸</button><button id="next" aria-label="Next stop">›</button>
-    <label for="fell">Fell <input type="range" id="fell" min="1700" max="2026" step="1" value="2026"><output id="fellv">2026</output></label>
-    <label for="shots" class="only-hyper">Shot <select id="shots" aria-label="Fly to a shot"></select></label>
-    <span id="tiers" class="only-hyper" role="group" aria-label="Quality"><button data-tier="0">Fast</button><button data-tier="1">Balanced</button><button data-tier="2">Ultra</button>
-      <label class="tick" title="lower the quality when the frame rate falls"><input type="checkbox" id="auto" checked> auto</label></span>
-    <span id="fps" class="only-hyper"></span>
-    <span class="keys only-loom">1–8 ladder · T tour · ←/→ stops · [ ] { } fell · V view · Esc clear</span>
-    <span class="keys only-hyper">T tour · ←/→ stops · P plunge · W wide · [ ] { } fell · Q quality · V view · Esc clear</span>
+    <label for="fell">Year <input type="range" id="fell" min="1700" max="2026" step="1" value="2026"><output id="fellv">2026</output></label>
+  </div>
+  <div id="more">
+    <p id="comp"></p>
+    <p id="scale" class="only-hyper"></p>
+    <div class="ctl">
+      <label for="shots" class="only-hyper">Shot <select id="shots" aria-label="Fly to a shot"></select></label>
+      <span id="tiers" class="only-hyper" role="group" aria-label="Quality"><button data-tier="0">Fast</button><button data-tier="1">Balanced</button><button data-tier="2">Ultra</button>
+        <label class="tick" title="lower the quality when the frame rate falls"><input type="checkbox" id="auto" checked> auto</label></span>
+      <span id="fps" class="only-hyper"></span><span id="where" class="only-hyper"></span>
+      <span class="keys only-loom">1–8 ladder · T tour · ←/→ stops · [ ] { } year · V view · Esc clear</span>
+      <span class="keys only-hyper">drag orbit · Shift-drag free · right-drag pan · wheel zoom · double-click centre · arrows orbit · + − zoom · 0 reset · L lens · T tour · PgUp/PgDn stops · P plunge · W wide · [ ] { } year · Q quality · V view · Esc clear</span>
+    </div>
   </div>
 </section>
 <aside id="card" class="panel" hidden aria-live="polite"></aside>
@@ -400,6 +443,7 @@ def build():
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="icon" href="data:,">
 <title>Dynasty Loom</title>
+<!--@FONTS@-->
 <meta name="description" content="Three families, two views. The hypersphere: a glass time-sphere, radius = time from the founders' seed to the glass, houses as sectors west to east, each life a glowing fiber, each marriage an arc on the shell of its year. The loom: time runs up, houses stand west to east, each life a warp thread, each marriage a weft pick. Dye = share of descent from the founders. Standard X3D 4.0 (GLSL shaders in the hypersphere) drawn by X_ITE 16.5.1.">
 <!-- GENERATED by scene2/tools/merge_views.py from scene2/page/loom.html (the tapestry page) and proto/hyper/page/index.html (the hypersphere page):
      never edit by hand; edit those two and run the merge. Two views on one chrome: #hypersphere (the default) and #loom; a family name in the hash
@@ -410,12 +454,14 @@ def build():
      ?tier=fast|balanced|ultra, ?auto=0, ?extras=0, ?idle=0). Our code never evaluates strings as code and fetches only same-origin files. -->
 <style>
 """
-    page = (head + lcss + SHELL_CSS + '  /* ---- the hypersphere view: proto/hyper/page/index.html\'s rules, scoped under body[data-view="hyper"] */\n' + scope_css(hcss) + '\n</style>\n</head>\n<body>\n'
+    if hcss.strip() != TH.CSS_MARK: raise SystemExit('merge: the hypersphere page\'s <style> must hold only the theme mark (v2)')
+    page = (head + lcss + SHELL_CSS + TH.CSS_MARK + '\n</style>\n' + NAV_HEAD + '</head>\n<body>\n'
             + MARKUP + '<script>\n' + shell + loom_engine(ljs) + hyper_engine(hjs) + 'window.dynastyApi.start();\n</script>\n</body>\n</html>\n')
+    page = TH.fill_page(page)   # v2: DEFAULT_THEME + ALT_THEME + PHONE_UI: fonts link, style sheet, the look constants (shell and sphere)
     if re.search(r'\beval\s*\(|new\s+Function\b', page): raise SystemExit('merge: eval or new Function in the page')
     if re.search(r"fetch\(\s*['\"]data:", page): raise SystemExit('merge: a data: URL fetch in the page')
     out = page.encode('utf-8')
-    rec = dict(stage='merge_views.py', inputs={'scene2/page/loom.html': sha(lraw), 'hyper/page/index.html': sha(hraw)},
+    rec = dict(stage='merge_views.py', looks=TH.page_slugs(), phone_ui=TH.PHONE_UI, inputs={'scene2/page/loom.html': sha(lraw), 'hyper/page/index.html': sha(hraw), 'hyper/themes.py': sha(open(os.path.join(PROTO, 'hyper', 'themes.py'), 'rb').read())},
                script=sha(open(os.path.abspath(__file__), 'rb').read()), output={'scene2/page/index.html': sha(out)}, bytes=len(out), edits=list(EDITS),
                checks=dict(ids_covered=sorted((ids(lbody) | ids(hbody)) - {'x3d'}), no_eval=True, no_data_url_fetch=True, same_xite_sri=True))
     return out, rec

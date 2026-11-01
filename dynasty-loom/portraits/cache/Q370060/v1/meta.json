@@ -1,0 +1,66 @@
+{
+ "id": "Q370060",
+ "name": "Salomon Mayer von Rothschild",
+ "version": "v1",
+ "model": "gemini-3-pro-image",
+ "prompt": "Repaint the person in the attached reference image, Salomon Mayer von Rothschild (1774-1855), as a new portrait. The face must follow the reference faithfully: same face shape, features, hair, age and expression. Keep the clothing of the reference, simplified to what a head-and-shoulders crop shows.\n\nHead-and-shoulders portrait, vertical 4:5 framing, the face about a third of the frame height, centred, shoulders cut by the lower edge. Finish: a quiet, realistic painted study in oils, muted natural colour, soft light from the upper left, gentle shadow. Background: plain warm mid-grey that darkens softly toward the edges, with nothing else in it. No text, no frame, no border, no signature, no watermark, no crown, jewellery or insignia unless the reference shows it.\n\nThis is a respectful historical likeness. Keep the face's proportions exactly as in the reference: do not exaggerate, idealise, glamorise, modernise or caricature any feature. Natural eyes, closed or natural mouth, no visible hands.",
+ "prompt_sha256": "92cf6882ca94c86c1b46b3ebb0a7b4bc15f294c113939e36afa2a02e22bc37e0",
+ "reference": {
+  "id": "Q370060",
+  "name": "Salomon Mayer von Rothschild",
+  "file": "File:Salomon Rothschild.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Salomon_Rothschild.jpg",
+  "original": "https://upload.wikimedia.org/wikipedia/commons/b/ba/Salomon_Rothschild.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "downloaded": "https://upload.wikimedia.org/wikipedia/commons/b/ba/Salomon_Rothschild.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+  "author": "Moritz Daniel Oppenheim",
+  "date": null,
+  "credit": "Moritz Daniel Oppenheim",
+  "licence": "Public domain",
+  "licence_url": null,
+  "attribution_required": "false",
+  "description": "Salomon Mayer von Rothschild (1774-1855)",
+  "licence_ok": true,
+  "local": "reference.jpg",
+  "sha256": "78627624f30d233f7f96362320ec6024642ad7671de252c443d2c2ed2a871e3b",
+  "checked": "2026-10-30T17:39:07Z"
+ },
+ "created": "2026-10-30T19:08:54Z",
+ "sha256": "354154ef8461c2dc341b93ab0fb966cd3b937963f83e2488fbe890ec39d17c4d",
+ "label": "AI portrait after Moritz Daniel Oppenheim (public domain)",
+ "imagined": false,
+ "review": {
+  "verdict": "pass",
+  "notes": "Faithful to Oppenheim: grey hair, heavy-lidded eyes, black stock, velvet collar. Dignified; the small lapel ribbon dropped.",
+  "reviewed": "2026-10-30T19:10:00Z",
+  "checks": [
+   "likeness",
+   "dignity",
+   "hands-eyes-teeth",
+   "era dress",
+   "clean background"
+  ]
+ },
+ "usage": {
+  "promptTokenCount": 487,
+  "candidatesTokenCount": 1357,
+  "totalTokenCount": 2085,
+  "promptTokensDetails": [
+   {
+    "modality": "TEXT",
+    "tokenCount": 229
+   },
+   {
+    "modality": "IMAGE",
+    "tokenCount": 258
+   }
+  ],
+  "candidatesTokensDetails": [
+   {
+    "modality": "IMAGE",
+    "tokenCount": 1120
+   }
+  ],
+  "thoughtsTokenCount": 241,
+  "serviceTier": "standard"
+ }
+}
