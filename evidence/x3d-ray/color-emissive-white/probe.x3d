@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<X3D profile='Interchange' version='4.0'>
+<head><meta name='description' content='Per-face Color under four appearances, left to right: Material emissiveColor 1 1 1; emissiveColor 0.85; a default Material (lit, no emissive); no Material. Faces: red (bottom), blue (top).'/></head>
+<Scene>
+<Background skyColor='0.3 0.3 0.3'/>
+<Viewpoint position='0 0 9' description='front'/>
+<Transform translation='-3 0 0'><Shape><Appearance><Material emissiveColor='1 1 1'/></Appearance><IndexedFaceSet solid='false' colorPerVertex='false' coordIndex='0 1 2 3 -1 4 5 6 7 -1'><Coordinate point='-0.9 -1.8 0 0.9 -1.8 0 0.9 0 0 -0.9 0 0 -0.9 0 0 0.9 0 0 0.9 1.8 0 -0.9 1.8 0'/><Color color='0.8 0.1 0.1 0.1 0.2 0.7'/></IndexedFaceSet></Shape></Transform>
+<Transform translation='-1 0 0'><Shape><Appearance><Material emissiveColor='0.85 0.85 0.85'/></Appearance><IndexedFaceSet solid='false' colorPerVertex='false' coordIndex='0 1 2 3 -1 4 5 6 7 -1'><Coordinate point='-0.9 -1.8 0 0.9 -1.8 0 0.9 0 0 -0.9 0 0 -0.9 0 0 0.9 0 0 0.9 1.8 0 -0.9 1.8 0'/><Color color='0.8 0.1 0.1 0.1 0.2 0.7'/></IndexedFaceSet></Shape></Transform>
+<Transform translation='1 0 0'><Shape><Appearance><Material/></Appearance><IndexedFaceSet solid='false' colorPerVertex='false' coordIndex='0 1 2 3 -1 4 5 6 7 -1'><Coordinate point='-0.9 -1.8 0 0.9 -1.8 0 0.9 0 0 -0.9 0 0 -0.9 0 0 0.9 0 0 0.9 1.8 0 -0.9 1.8 0'/><Color color='0.8 0.1 0.1 0.1 0.2 0.7'/></IndexedFaceSet></Shape></Transform>
+<Transform translation='3 0 0'><Shape><Appearance></Appearance><IndexedFaceSet solid='false' colorPerVertex='false' coordIndex='0 1 2 3 -1 4 5 6 7 -1'><Coordinate point='-0.9 -1.8 0 0.9 -1.8 0 0.9 0 0 -0.9 0 0 -0.9 0 0 0.9 0 0 0.9 1.8 0 -0.9 1.8 0'/><Color color='0.8 0.1 0.1 0.1 0.2 0.7'/></IndexedFaceSet></Shape></Transform>
+</Scene>
+</X3D>

@@ -95,6 +95,23 @@ class Gate(unittest.TestCase):
         for body in ('shaders/glow.fs', '"glow.fs" "https://example.org/glow.fs"', 'https://example.org/glow.fs'):    # a body that is a url stays a url
             part = "<ComposedShader language='GLSL'><ShaderPart type='FRAGMENT'><![CDATA[%s]]></ShaderPart></ComposedShader>" % body
             self.assertEqual(only(X("<Shape><Appearance>%s</Appearance><Box/></Shape>" % part), 'shader-raw-source'), [], body)
+    def test_color_emissive_white(self):
+        ifs = "<IndexedFaceSet DEF='Ring' coordIndex='0 1 2 -1' colorPerVertex='false'><Coordinate point='0 0 0 1 0 0 0 1 0'/>%s</IndexedFaceSet>"
+        def shape(mat, col="<Color color='0.8 0.1 0.1'/>"): return X("<Shape><Appearance>%s</Appearance>%s</Shape>" % (mat, ifs % col))
+        f = only(shape("<Material emissiveColor='1 1 1'/>"), 'color-emissive-white')                              # the x3d.xray ring: plain white in X_ITE 16.7.0
+        self.assertEqual(len(f), 1); self.assertEqual((f[0]['severity'], f[0]['field'], f[0]['value'], f[0]['line']), ('warning', 'emissiveColor', [1.0, 1.0, 1.0], 5))
+        self.assertEqual(len(only(shape("<Material emissiveColor='0.85 0.9 0.8'/>"), 'color-emissive-white')), 1)
+        self.assertEqual(len(only(shape("<Material emissiveColor='1 1 1'/>", "<ColorRGBA color='0 0 1 0.5'/>"), 'color-emissive-white')), 1)
+        used = X("<Shape><Appearance><Material DEF='Glow' emissiveColor='1 1 1'/></Appearance><Box/></Shape>"
+                 "<Shape><Appearance><Material USE='Glow'/></Appearance>%s</Shape>" % (ifs % "<Color color='0 0 1'/>"))
+        self.assertEqual(len(only(used, 'color-emissive-white')), 1)                                                  # a USEd material is resolved; the Box has no Color
+        for quiet in ("<Material emissiveColor='0.79 1 1'/>", "<Material diffuseColor='1 1 1'/>", '', "<UnlitMaterial emissiveColor='1 1 1'/>",
+                      "<TwoSidedMaterial backEmissiveColor='1 1 1'/>"):                                              # one channel under 0.8, no emissive, no material, unlit, back colour unused
+            self.assertEqual(only(shape(quiet), 'color-emissive-white'), [], quiet)
+        self.assertEqual(len(only(shape("<TwoSidedMaterial backEmissiveColor='1 1 1' separateBackColor='true'/>"), 'color-emissive-white')), 1)
+        self.assertEqual(only(X("<Shape><Appearance><Material emissiveColor='1 1 1'/></Appearance>%s</Shape>" % (ifs % '')), 'color-emissive-white'), [])   # no Color node: a white glow is meant
+        stars = X("<Shape><Appearance><Material emissiveColor='1 1 1'/></Appearance><PointSet><Color color='0.7 0.7 0.9'/><Coordinate point='0 0 0'/></PointSet></Shape>")
+        self.assertEqual(only(stars, 'color-emissive-white'), [])                                                       # points (and lines) are unlit: their Color wins, as in demo/scenes/ontology-dyson.x3d
     def test_the_page_shaders_are_clean(self):
         import re
         src = get(os.path.join(ROOT, 'tools', 'layers.py')) + get(os.path.join(ROOT, 'tools', 'world_layer.py'))

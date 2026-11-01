@@ -15,6 +15,10 @@ Rules:
   glsl-logdepth     warning  a shader writes gl_FragDepth or uses X_ITE's log depth uniform, and its ComposedShader has no logDepth field
   shader-raw-source error    a ShaderPart or ShaderProgram whose CDATA is GLSL with no data:x-shader/... prefix: X_ITE 16.5.1 reads the body as its url, resolves
                              '#version 300 es ...' against the world URL, the shader is invalid and the shape draws unlit (white); XSD and the fork pass it
+  color-emissive-white warning  a Shape whose geometry holds a Color or ColorRGBA node under a Material (or TwoSidedMaterial, PhysicalMaterial) whose emissiveColor
+                             is near white (every channel >= 0.8): the emissive term is added to the lit per-vertex colours and saturates them, so the faces
+                             draw white (X_ITE 16.5.1 and 16.7.0; the X3D lighting equation); drop the Material, zero the emissive or use UnlitMaterial.
+                             Points and lines are unlit and keep their Color, so PointSet and the line sets are left alone
   fork-*            error    --fork: XSD invalid, semantic errors or profile not OK; fork-skipped (info) when X3D_MCP has no checkout
 """
 import os, re, sys, json, subprocess, urllib.parse, base64
@@ -300,6 +304,35 @@ def check_shader_body(root):
     return out
 
 
+EMISSIVE_WHITE = 0.8
+UNLIT_GEOMETRY = ('PointSet', 'IndexedLineSet', 'LineSet', 'Polypoint2D', 'Polyline2D')   # points and lines are not lit: their Color wins over the emissive
+LIT_MATERIALS = {'Material': ('emissiveColor',), 'TwoSidedMaterial': ('emissiveColor', 'backEmissiveColor'), 'PhysicalMaterial': ('emissiveColor',)}
+
+def check_color_emissive(root):
+    """A lit material adds its emissiveColor to the per-vertex colours; near white it saturates them all to white (UnlitMaterial is left alone: there Color replaces the emissive)."""
+    defs = {}
+    for n in root.iter():
+        if n.a.get('DEF') and n.a['DEF'] not in defs: defs[n.a['DEF']] = n
+    real = lambda n: defs.get(n.a['USE'], n) if n.a.get('USE') else n
+    out = []
+    for s in root.iter():
+        if s.tag != 'Shape' or s.a.get('USE'): continue
+        geo = [real(k) for k in s.kids if k.tag not in ('Appearance', 'MetadataBoolean', 'MetadataDouble', 'MetadataFloat', 'MetadataInteger', 'MetadataSet', 'MetadataString')]
+        col = next((k for g in geo for k in g.kids if k.tag in ('Color', 'ColorRGBA')), None)
+        app = next((real(k) for k in s.kids if k.tag == 'Appearance'), None)
+        if col is None or app is None or any(g.tag in UNLIT_GEOMETRY for g in geo): continue
+        for m in (real(k) for k in app.kids if k.tag in LIT_MATERIALS):
+            for f in LIT_MATERIALS[m.tag]:
+                if f == 'backEmissiveColor' and m.a.get('separateBackColor', 'false') != 'true': continue
+                try: e = _floats(m.a.get(f, '0 0 0'))
+                except ValueError: continue
+                if len(e) == 3 and min(e) >= EMISSIVE_WHITE:
+                    out.append(F('color-emissive-white', 'warning', m, "%s %s = (%s) is near white over the %s in %s: the emissive term saturates the per-vertex colours and the faces draw white; "
+                                 "drop the %s, set %s to 0 0 0 or use UnlitMaterial" % (m.tag, f, ', '.join('%g' % c for c in e), col.tag, geo[0].where() if geo else 'the geometry', m.tag, f),
+                                 field=f, value=e, color_line=col.line))
+    return out
+
+
 # ---- the fork --------------------------------------------------------------------------------------
 def run_fork(path):
     mcp = os.environ.get('X3D_MCP', '/home/user/x3d_mcp')
@@ -331,7 +364,7 @@ def gate(text, asset=None):
     try: root = parse(text)
     except xml.parsers.expat.ExpatError as e:
         return [{'rule': 'parse-error', 'severity': 'error', 'line': e.lineno, 'node': '', 'message': str(e)}]
-    out = check_routes(root) + check_colours(root) + check_xite(root) + check_glsl(root) + check_shader_body(root)
+    out = check_routes(root) + check_colours(root) + check_xite(root) + check_glsl(root) + check_shader_body(root) + check_color_emissive(root)
     strip = asset if asset is not None else is_asset_export(root)
     if strip: out += check_asset_nodes(root)
     out += [d for d in check_precision(root) if not (strip and d['node'].split()[0] in ASSET_ONLY_NOT)]   # no byte count for a node that is to be stripped anyway

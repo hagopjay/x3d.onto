@@ -1,0 +1,64 @@
+{
+ "probe": {
+  "emissiveColor 1 1 1": {
+   "red face": [
+    255,
+    255,
+    255
+   ],
+   "blue face": [
+    255,
+    255,
+    255
+   ]
+  },
+  "emissiveColor 0.85": {
+   "red face": [
+    255,
+    242,
+    242
+   ],
+   "blue face": [
+    242,
+    255,
+    255
+   ]
+  },
+  "default Material": {
+   "red face": [
+    204,
+    26,
+    26
+   ],
+   "blue face": [
+    26,
+    51,
+    179
+   ]
+  },
+  "no Material": {
+   "red face": [
+    204,
+    26,
+    26
+   ],
+   "blue face": [
+    26,
+    51,
+    179
+   ]
+  }
+ },
+ "probe-unlit": {
+  "point (red Color)": [
+   204,
+   26,
+   26
+  ],
+  "line (blue Color)": [
+   26,
+   51,
+   179
+  ]
+ }
+}
