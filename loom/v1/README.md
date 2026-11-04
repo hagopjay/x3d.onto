@@ -8,6 +8,7 @@ The X3D Loom, consolidated: one definition, its sources, what the other model's 
 | [SOURCES.md](SOURCES.md) | Every input, what it gave, how it was read, and the 14 places sources disagree, each with its resolution |
 | [LEARNINGS-from-patches.md](LEARNINGS-from-patches.md) | The seven patches and the Loomsong v1 → v4 history, turned into 25 reusable rules |
 | [GLOSSARY.md](GLOSSARY.md) | The words |
+| [REVIEW-loom2.md](REVIEW-loom2.md) | Review of the 4 Nov delivery: Cabinet of Worlds, Linked Observatory, Living Archive, Constellation 3 |
 | [kit/](kit/) | `loomkit` (Python standard library), profiles, templates, examples, tests |
 | [runs/](runs/) | This repo's own evidence: Data City through the kit, the fold-back survey, the traps corpus run |
 
@@ -62,3 +63,7 @@ The first runs 29 negative controls and 11 two-sided trap rules under normal Pyt
 
 - Kit: tested (C). Data City: accepted under the static profile; its browser witnesses are visibly not run. Fold-backs: 4 of 5 pass; the IFC one fails its own positive control on this Mac (platform-dependent triangulation). Both loose patches reproduce their newer versions (projects agent).
 - Not done here: browser witnesses, real-GPU anything, running the rules on x3d.onto's corpus, promoting any fold-back into its target repo. These wait on your word or on the projects agent. See LOOM-v1.md §10.
+
+## On GitHub (4 Nov)
+
+A leak-swept copy is proposed into hagopjay/x3d.onto as `loom/v1/` ([#10](https://github.com/hagopjay/x3d.onto/pull/10)), from the fork hagsmac/x3d.onto. The five project fold-backs are separate PRs, each adding one `tools/<name>/` unchanged: Gear [#11](https://github.com/hagopjay/x3d.onto/pull/11), Break-the-Loom [#12](https://github.com/hagopjay/x3d.onto/pull/12), Data City [#13](https://github.com/hagopjay/x3d.onto/pull/13), Loomsong IV fidelity [#14](https://github.com/hagopjay/x3d.onto/pull/14), IFC bridge [#15](https://github.com/hagopjay/x3d.onto/pull/15) (flagged: fails its own positive control on arm64). The 4 Nov fold-backs followed: Gobbler Cabinet [#16](https://github.com/hagopjay/x3d.onto/pull/16) and Linked Observatory [#17](https://github.com/hagopjay/x3d.onto/pull/17). None is merged; merging is yours (this machine's account has no write access).
