@@ -1,0 +1,57 @@
+{
+  "coverage": {
+    "modes": [
+      false,
+      true
+    ]
+  },
+  "development": false,
+  "environment": {
+    "optimized": true,
+    "python": "3.13.2"
+  },
+  "evidence": [],
+  "finished_at": "2026-11-04T01:28:33+00:00",
+  "grade": "C",
+  "instrument": {
+    "git_apply": "empty temporary repository",
+    "python": "/opt/homebrew/opt/python@3.13/bin/python3.13",
+    "tool": "loomkit.foldback"
+  },
+  "limitations": [
+    "Applied to an empty repository only; compatibility with an existing checkout is not tested."
+  ],
+  "measurements": {
+    "additions_only": true,
+    "apply_check": true,
+    "files": 9,
+    "patch": "~/Projects/x3d/loom/v1/.work/data-city/integration/data-city-gates.patch",
+    "patch_sha256": "c73e2cfceced21b86bc290f4d91cc42bb64eb152ffa5b5c8275d34dad45f9265",
+    "reason": "",
+    "smoke": [
+      {
+        "exit_code": 0,
+        "optimized": false,
+        "smoke": "tools/loom_data_city/smoke.py",
+        "stderr_tail": "",
+        "stdout_tail": "PASS: valid source/scene accepted; missing-to-zero rejected"
+      },
+      {
+        "exit_code": 0,
+        "optimized": true,
+        "smoke": "tools/loom_data_city/smoke.py",
+        "stderr_tail": "",
+        "stdout_tail": "PASS: valid source/scene accepted; missing-to-zero rejected"
+      }
+    ],
+    "status": "pass",
+    "tool_dirs": [
+      "tools/loom_data_city"
+    ]
+  },
+  "reason": "",
+  "schema": "loom.witness/1",
+  "status": "pass",
+  "subject_sha256": "7476fb939f9a39301e0a641add912f2067dfb394152165a124bcfaff5e8f1ca2",
+  "witness": "foldback"
+}

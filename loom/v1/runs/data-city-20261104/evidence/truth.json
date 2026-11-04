@@ -1,0 +1,38 @@
+{
+  "coverage": {},
+  "development": false,
+  "environment": {
+    "optimized": false,
+    "python": "3.13.2"
+  },
+  "evidence": [
+    {
+      "path": "truth.log",
+      "sha256": "488660fcc7649763336beeb1af948ad8fd01dacab983712c606c80f44f90874a"
+    }
+  ],
+  "finished_at": "2026-11-04T01:28:30+00:00",
+  "grade": "C",
+  "instrument": {
+    "command": [
+      "python3",
+      "-m",
+      "citycore.cli",
+      "runs/baseline/source.csv",
+      "runs/baseline/manifest.json",
+      "--scene",
+      "runs/baseline/world.x3d"
+    ],
+    "tool": "project gate (adapter)"
+  },
+  "limitations": [],
+  "measurements": {
+    "exit_code": 0,
+    "stdout_tail": "ults\": {\n    \"truth\": {\n      \"status\": \"pass\",\n      \"grade\": \"C\",\n      \"checks\": [\n        \"source_and_policy\",\n        \"row_bytes_and_content\",\n        \"row_glyph_bijection\",\n        \"unknown_is_not_zero\",\n        \"linear_height_and_sign\",\n        \"aggregate_truth\",\n        \"partial_total_is_unknown\",\n        \"aggregate_lineage\"\n      ],\n      \"rows\": 64\n    },\n    \"geometry\": {\n      \"status\": \"pass\",\n      \"grade\": \"C\",\n      \"checks\": [\n        \"scene_metadata_lineage\",\n        \"scene_geometry_matches_manifest\",\n        \"unknown_has_no_box\",\n        \"no_script_nodes\"\n      ]\n    }\n  }\n}"
+  },
+  "reason": "",
+  "schema": "loom.witness/1",
+  "status": "pass",
+  "subject_sha256": "7476fb939f9a39301e0a641add912f2067dfb394152165a124bcfaff5e8f1ca2",
+  "witness": "truth"
+}

@@ -1,0 +1,487 @@
+{
+  "coverage": {
+    "rules": 11
+  },
+  "development": false,
+  "environment": {
+    "optimized": true,
+    "python": "3.13.2"
+  },
+  "evidence": [],
+  "finished_at": "2026-11-04T01:28:34+00:00",
+  "grade": "C",
+  "instrument": {
+    "rules": [
+      "color-emissive-white",
+      "color-range",
+      "glsl-reserved-active",
+      "metadata-containerfield",
+      "movie-not-still",
+      "no-script-under-host",
+      "route-before-def",
+      "route-undefined",
+      "shader-raw-source",
+      "splat-bbox",
+      "version-fits-nodes"
+    ],
+    "rules_sha256": "7079495c69d211928167639261199a015de127d66901404b5758b673c546d492",
+    "tool": "loomkit.traps"
+  },
+  "limitations": [
+    "Portable subset of x3d.onto loom_gate.py rules; the family gate itself is not on this machine.",
+    "Runtime-labelled rules describe the runtime they were observed on."
+  ],
+  "measurements": {
+    "errors": 73,
+    "files": 2,
+    "hits": {
+      "runs/baseline/world.x3d": [
+        {
+          "detail": "diffuseColor outside [0,1]",
+          "rule": "color-range",
+          "severity": "error",
+          "where": "Material#17"
+        },
+        {
+          "detail": "diffuseColor outside [0,1]",
+          "rule": "color-range",
+          "severity": "error",
+          "where": "Material#21"
+        },
+        {
+          "detail": "diffuseColor outside [0,1]",
+          "rule": "color-range",
+          "severity": "error",
+          "where": "Material#26"
+        },
+        {
+          "detail": "diffuseColor outside [0,1]",
+          "rule": "color-range",
+          "severity": "error",
+          "where": "Material#31"
+        },
+        {
+          "detail": "diffuseColor outside [0,1]",
+          "rule": "color-range",
+          "severity": "error",
+          "where": "Material#36"
+        },
+        {
+          "detail": "diffuseColor outside [0,1]",
+          "rule": "color-range",
+          "severity": "error",
+          "where": "Material#41"
+        },
+        {
+          "detail": "diffuseColor outside [0,1]",
+          "rule": "color-range",
+          "severity": "error",
+          "where": "Material#46"
+        },
+        {
+          "detail": "diffuseColor outside [0,1]",
+          "rule": "color-range",
+          "severity": "error",
+          "where": "Material#51"
+        },
+        {
+          "detail": "diffuseColor outside [0,1]",
+          "rule": "color-range",
+          "severity": "error",
+          "where": "Material#56"
+        },
+        {
+          "detail": "diffuseColor outside [0,1]",
+          "rule": "color-range",
+          "severity": "error",
+          "where": "Material#61"
+        },
+        {
+          "detail": "diffuseColor outside [0,1]",
+          "rule": "color-range",
+          "severity": "error",
+          "where": "Material#66"
+        },
+        {
+          "detail": "diffuseColor outside [0,1]",
+          "rule": "color-range",
+          "severity": "error",
+          "where": "Material#71"
+        },
+        {
+          "detail": "diffuseColor outside [0,1]",
+          "rule": "color-range",
+          "severity": "error",
+          "where": "Material#76"
+        },
+        {
+          "detail": "diffuseColor outside [0,1]",
+          "rule": "color-range",
+          "severity": "error",
+          "where": "Material#81"
+        },
+        {
+          "detail": "diffuseColor outside [0,1]",
+          "rule": "color-range",
+          "severity": "error",
+          "where": "Material#86"
+        },
+        {
+          "detail": "diffuseColor outside [0,1]",
+          "rule": "color-range",
+          "severity": "error",
+          "where": "Material#91"
+        },
+        {
+          "detail": "diffuseColor outside [0,1]",
+          "rule": "color-range",
+          "severity": "error",
+          "where": "Material#96"
+        },
+        {
+          "detail": "diffuseColor outside [0,1]",
+          "rule": "color-range",
+          "severity": "error",
+          "where": "Material#101"
+        },
+        {
+          "detail": "diffuseColor outside [0,1]",
+          "rule": "color-range",
+          "severity": "error",
+          "where": "Material#106"
+        },
+        {
+          "detail": "diffuseColor outside [0,1]",
+          "rule": "color-range",
+          "severity": "error",
+          "where": "Material#111"
+        },
+        {
+          "detail": "diffuseColor outside [0,1]",
+          "rule": "color-range",
+          "severity": "error",
+          "where": "Material#116"
+        },
+        {
+          "detail": "diffuseColor outside [0,1]",
+          "rule": "color-range",
+          "severity": "error",
+          "where": "Material#121"
+        },
+        {
+          "detail": "diffuseColor outside [0,1]",
+          "rule": "color-range",
+          "severity": "error",
+          "where": "Material#126"
+        },
+        {
+          "detail": "diffuseColor outside [0,1]",
+          "rule": "color-range",
+          "severity": "error",
+          "where": "Material#131"
+        },
+        {
+          "detail": "diffuseColor outside [0,1]",
+          "rule": "color-range",
+          "severity": "error",
+          "where": "Material#136"
+        },
+        {
+          "detail": "diffuseColor outside [0,1]",
+          "rule": "color-range",
+          "severity": "error",
+          "where": "Material#141"
+        },
+        {
+          "detail": "diffuseColor outside [0,1]",
+          "rule": "color-range",
+          "severity": "error",
+          "where": "Material#146"
+        },
+        {
+          "detail": "diffuseColor outside [0,1]",
+          "rule": "color-range",
+          "severity": "error",
+          "where": "Material#151"
+        },
+        {
+          "detail": "diffuseColor outside [0,1]",
+          "rule": "color-range",
+          "severity": "error",
+          "where": "Material#156"
+        },
+        {
+          "detail": "diffuseColor outside [0,1]",
+          "rule": "color-range",
+          "severity": "error",
+          "where": "Material#161"
+        },
+        {
+          "detail": "diffuseColor outside [0,1]",
+          "rule": "color-range",
+          "severity": "error",
+          "where": "Material#166"
+        },
+        {
+          "detail": "diffuseColor outside [0,1]",
+          "rule": "color-range",
+          "severity": "error",
+          "where": "Material#171"
+        },
+        {
+          "detail": "diffuseColor outside [0,1]",
+          "rule": "color-range",
+          "severity": "error",
+          "where": "Material#176"
+        },
+        {
+          "detail": "diffuseColor outside [0,1]",
+          "rule": "color-range",
+          "severity": "error",
+          "where": "Material#181"
+        },
+        {
+          "detail": "diffuseColor outside [0,1]",
+          "rule": "color-range",
+          "severity": "error",
+          "where": "Material#186"
+        },
+        {
+          "detail": "diffuseColor outside [0,1]",
+          "rule": "color-range",
+          "severity": "error",
+          "where": "Material#191"
+        },
+        {
+          "detail": "diffuseColor outside [0,1]",
+          "rule": "color-range",
+          "severity": "error",
+          "where": "Material#196"
+        },
+        {
+          "detail": "diffuseColor outside [0,1]",
+          "rule": "color-range",
+          "severity": "error",
+          "where": "Material#201"
+        },
+        {
+          "detail": "diffuseColor outside [0,1]",
+          "rule": "color-range",
+          "severity": "error",
+          "where": "Material#206"
+        },
+        {
+          "detail": "diffuseColor outside [0,1]",
+          "rule": "color-range",
+          "severity": "error",
+          "where": "Material#211"
+        },
+        {
+          "detail": "diffuseColor outside [0,1]",
+          "rule": "color-range",
+          "severity": "error",
+          "where": "Material#216"
+        },
+        {
+          "detail": "diffuseColor outside [0,1]",
+          "rule": "color-range",
+          "severity": "error",
+          "where": "Material#221"
+        },
+        {
+          "detail": "diffuseColor outside [0,1]",
+          "rule": "color-range",
+          "severity": "error",
+          "where": "Material#226"
+        },
+        {
+          "detail": "diffuseColor outside [0,1]",
+          "rule": "color-range",
+          "severity": "error",
+          "where": "Material#231"
+        },
+        {
+          "detail": "diffuseColor outside [0,1]",
+          "rule": "color-range",
+          "severity": "error",
+          "where": "Material#236"
+        },
+        {
+          "detail": "diffuseColor outside [0,1]",
+          "rule": "color-range",
+          "severity": "error",
+          "where": "Material#241"
+        },
+        {
+          "detail": "diffuseColor outside [0,1]",
+          "rule": "color-range",
+          "severity": "error",
+          "where": "Material#246"
+        },
+        {
+          "detail": "diffuseColor outside [0,1]",
+          "rule": "color-range",
+          "severity": "error",
+          "where": "Material#251"
+        },
+        {
+          "detail": "diffuseColor outside [0,1]",
+          "rule": "color-range",
+          "severity": "error",
+          "where": "Material#256"
+        },
+        {
+          "detail": "diffuseColor outside [0,1]",
+          "rule": "color-range",
+          "severity": "error",
+          "where": "Material#261"
+        },
+        {
+          "detail": "diffuseColor outside [0,1]",
+          "rule": "color-range",
+          "severity": "error",
+          "where": "Material#266"
+        },
+        {
+          "detail": "diffuseColor outside [0,1]",
+          "rule": "color-range",
+          "severity": "error",
+          "where": "Material#271"
+        },
+        {
+          "detail": "diffuseColor outside [0,1]",
+          "rule": "color-range",
+          "severity": "error",
+          "where": "Material#276"
+        },
+        {
+          "detail": "diffuseColor outside [0,1]",
+          "rule": "color-range",
+          "severity": "error",
+          "where": "Material#283"
+        },
+        {
+          "detail": "diffuseColor outside [0,1]",
+          "rule": "color-range",
+          "severity": "error",
+          "where": "Material#290"
+        },
+        {
+          "detail": "diffuseColor outside [0,1]",
+          "rule": "color-range",
+          "severity": "error",
+          "where": "Material#297"
+        },
+        {
+          "detail": "diffuseColor outside [0,1]",
+          "rule": "color-range",
+          "severity": "error",
+          "where": "Material#304"
+        },
+        {
+          "detail": "diffuseColor outside [0,1]",
+          "rule": "color-range",
+          "severity": "error",
+          "where": "Material#311"
+        },
+        {
+          "detail": "diffuseColor outside [0,1]",
+          "rule": "color-range",
+          "severity": "error",
+          "where": "Material#318"
+        },
+        {
+          "detail": "diffuseColor outside [0,1]",
+          "rule": "color-range",
+          "severity": "error",
+          "where": "Material#325"
+        },
+        {
+          "detail": "diffuseColor outside [0,1]",
+          "rule": "color-range",
+          "severity": "error",
+          "where": "Material#332"
+        },
+        {
+          "detail": "diffuseColor outside [0,1]",
+          "rule": "color-range",
+          "severity": "error",
+          "where": "Material#339"
+        },
+        {
+          "detail": "diffuseColor outside [0,1]",
+          "rule": "color-range",
+          "severity": "error",
+          "where": "Material#346"
+        },
+        {
+          "detail": "diffuseColor outside [0,1]",
+          "rule": "color-range",
+          "severity": "error",
+          "where": "Material#353"
+        },
+        {
+          "detail": "diffuseColor outside [0,1]",
+          "rule": "color-range",
+          "severity": "error",
+          "where": "Material#360"
+        },
+        {
+          "detail": "diffuseColor outside [0,1]",
+          "rule": "color-range",
+          "severity": "error",
+          "where": "Material#367"
+        },
+        {
+          "detail": "diffuseColor outside [0,1]",
+          "rule": "color-range",
+          "severity": "error",
+          "where": "Material#374"
+        },
+        {
+          "detail": "diffuseColor outside [0,1]",
+          "rule": "color-range",
+          "severity": "error",
+          "where": "Material#381"
+        },
+        {
+          "detail": "diffuseColor outside [0,1]",
+          "rule": "color-range",
+          "severity": "error",
+          "where": "Material#388"
+        },
+        {
+          "detail": "diffuseColor outside [0,1]",
+          "rule": "color-range",
+          "severity": "error",
+          "where": "Material#625"
+        },
+        {
+          "detail": "diffuseColor outside [0,1]",
+          "rule": "color-range",
+          "severity": "error",
+          "where": "Material#630"
+        },
+        {
+          "detail": "diffuseColor outside [0,1]",
+          "rule": "color-range",
+          "severity": "error",
+          "where": "Material#1323"
+        },
+        {
+          "detail": "diffuseColor outside [0,1]",
+          "rule": "color-range",
+          "severity": "error",
+          "where": "Material#1328"
+        }
+      ],
+      "runs/revised/world.x3d": []
+    },
+    "warnings": 0
+  },
+  "reason": "",
+  "schema": "loom.witness/1",
+  "status": "fail",
+  "subject_sha256": "491a5dae5667b8d7fdb2c0c9c408d8daf7f33398dfabfc7072c80858685ef48c",
+  "witness": "traps"
+}

@@ -1,0 +1,476 @@
+{
+  "by_project": {
+    "Break-The-Loom": {
+      "metadata-containerfield": 23,
+      "route-before-def": 2,
+      "shader-raw-source": 1
+    },
+    "Data-City-Gate-Kit": {},
+    "Data-City-Loom": {},
+    "Dynasty Loom (2)": {},
+    "Gear-Loom": {},
+    "Loomsong Preview": {},
+    "Loomsong-Cinematic-v2": {},
+    "Loomsong-Cinematic-v3 (1)": {},
+    "Loomsong-Cinematic-v4": {},
+    "Loomsong-Study-01-v1 (2)": {},
+    "x3d_mcp Fork Masterclass (1)": {}
+  },
+  "files": [
+    {
+      "bytes": 2271,
+      "examples": [],
+      "file": "Break-The-Loom/Break-The-Loom/corpus/01-route/control/scene.x3d",
+      "hits": {},
+      "sha256": "75c8a3f017a20e2795afd7b20c15e984d0aff8bacd342120303fa75a048c945c"
+    },
+    {
+      "bytes": 2271,
+      "examples": [
+        {
+          "detail": "fromNode=Motion defined later",
+          "rule": "route-before-def",
+          "severity": "error",
+          "where": "ROUTE#13"
+        },
+        {
+          "detail": "toNode=Subject defined later",
+          "rule": "route-before-def",
+          "severity": "error",
+          "where": "ROUTE#13"
+        }
+      ],
+      "file": "Break-The-Loom/Break-The-Loom/corpus/01-route/mutant/scene.x3d",
+      "hits": {
+        "route-before-def": 2
+      },
+      "sha256": "3098aaa27c49ce37a26e75c70bb3059c439ae187f5fd370a66da8eeb194ceb3f"
+    },
+    {
+      "bytes": 1914,
+      "examples": [],
+      "file": "Break-The-Loom/Break-The-Loom/corpus/02-raw-shader/control/scene.x3d",
+      "hits": {},
+      "sha256": "d4eb115e68ea3464af0d08f421f773d184f7383ee4a4d008bdcde4966f7fcab4"
+    },
+    {
+      "bytes": 1798,
+      "examples": [
+        {
+          "detail": "GLSL source without a data: prefix",
+          "rule": "shader-raw-source",
+          "severity": "error",
+          "where": "ShaderPart#Fragment"
+        }
+      ],
+      "file": "Break-The-Loom/Break-The-Loom/corpus/02-raw-shader/mutant/scene.x3d",
+      "hits": {
+        "shader-raw-source": 1
+      },
+      "sha256": "a67b72babd003a62461691d42ffe748d08bb75254343a66c52afe7e347388934"
+    },
+    {
+      "bytes": 1912,
+      "examples": [],
+      "file": "Break-The-Loom/Break-The-Loom/corpus/03-reserved/control/scene.x3d",
+      "hits": {},
+      "sha256": "19a50d993acd4c808435cfe9dba2b37caf914e34bac1f156a38ed23085cea797"
+    },
+    {
+      "bytes": 1896,
+      "examples": [],
+      "file": "Break-The-Loom/Break-The-Loom/corpus/03-reserved/mutant/scene.x3d",
+      "hits": {},
+      "sha256": "f3618d776188bc418b92fec04ea585097e1d6e389ffab3172c6305017576bf20"
+    },
+    {
+      "bytes": 1743,
+      "examples": [],
+      "file": "Break-The-Loom/Break-The-Loom/corpus/04-emissive/control/scene.x3d",
+      "hits": {},
+      "sha256": "0bc4beaac2a2b6dce5a79ee0f10992e5a779ecf712d0e9cb64263653123efda8"
+    },
+    {
+      "bytes": 1743,
+      "examples": [],
+      "file": "Break-The-Loom/Break-The-Loom/corpus/04-emissive/mutant/scene.x3d",
+      "hits": {},
+      "sha256": "550fbbac73c80b4413e6e0dade2ea1af0f42d9d1d25fcd27f8d91a5d6d2dfb6d"
+    },
+    {
+      "bytes": 2107,
+      "examples": [],
+      "file": "Break-The-Loom/Break-The-Loom/corpus/05-camera/control/scene.x3d",
+      "hits": {},
+      "sha256": "cfd460c3f1180f0046ec7e7f8ea111e694f44d5b7391619dfdc14731f775e40d"
+    },
+    {
+      "bytes": 2123,
+      "examples": [],
+      "file": "Break-The-Loom/Break-The-Loom/corpus/05-camera/mutant/scene.x3d",
+      "hits": {},
+      "sha256": "9b2ebe719b41d174c558280137c6abd0dd0b48ce46dcfc4a93e54171bae12519"
+    },
+    {
+      "bytes": 946,
+      "examples": [],
+      "file": "Break-The-Loom/Break-The-Loom/corpus/06-host/control/scene.x3d",
+      "hits": {},
+      "sha256": "17080192623e48f24a82d6658c0ef4a850b5db28c18f8aef1c6de1b31ed007ba"
+    },
+    {
+      "bytes": 1153,
+      "examples": [],
+      "file": "Break-The-Loom/Break-The-Loom/corpus/06-host/mutant/scene.x3d",
+      "hits": {},
+      "sha256": "f34c67dc33f691aa8b4231a11146533cf0e68ad450fd07e9059328fbf36cc2eb"
+    },
+    {
+      "bytes": 2108,
+      "examples": [],
+      "file": "Break-The-Loom/Break-The-Loom/corpus/07-receipt/control/scene.x3d",
+      "hits": {},
+      "sha256": "d1bd6f177a51510125d8283d96135f319638d90aa482c348cdedf06d578748a7"
+    },
+    {
+      "bytes": 2106,
+      "examples": [],
+      "file": "Break-The-Loom/Break-The-Loom/corpus/08-clock/control/scene.x3d",
+      "hits": {},
+      "sha256": "e9f2b12ef900f36dfa3dd8c497414e09b9c3eb70741276e29104504b4bf675c1"
+    },
+    {
+      "bytes": 2454,
+      "examples": [
+        {
+          "detail": "Metadata node without explicit containerField",
+          "rule": "metadata-containerfield",
+          "severity": "warning",
+          "where": "MetadataSet#16"
+        },
+        {
+          "detail": "Metadata node without explicit containerField",
+          "rule": "metadata-containerfield",
+          "severity": "warning",
+          "where": "MetadataSet#25"
+        },
+        {
+          "detail": "Metadata node without explicit containerField",
+          "rule": "metadata-containerfield",
+          "severity": "warning",
+          "where": "MetadataSet#34"
+        }
+      ],
+      "file": "Break-The-Loom/Break-The-Loom/corpus/09-unknown/control/scene.x3d",
+      "hits": {
+        "metadata-containerfield": 4
+      },
+      "sha256": "baa836cd7f48a7345985528da1371b1c0dad594d8ada0b6e0c255aea3f2af735"
+    },
+    {
+      "bytes": 2447,
+      "examples": [
+        {
+          "detail": "Metadata node without explicit containerField",
+          "rule": "metadata-containerfield",
+          "severity": "warning",
+          "where": "MetadataSet#16"
+        },
+        {
+          "detail": "Metadata node without explicit containerField",
+          "rule": "metadata-containerfield",
+          "severity": "warning",
+          "where": "MetadataSet#25"
+        },
+        {
+          "detail": "Metadata node without explicit containerField",
+          "rule": "metadata-containerfield",
+          "severity": "warning",
+          "where": "MetadataSet#34"
+        }
+      ],
+      "file": "Break-The-Loom/Break-The-Loom/corpus/09-unknown/mutant/scene.x3d",
+      "hits": {
+        "metadata-containerfield": 4
+      },
+      "sha256": "00f22fe3d9cba6df4298c4542e98f8875bdbbdf4f00e0e9527abe87d0910b3bb"
+    },
+    {
+      "bytes": 2107,
+      "examples": [],
+      "file": "Break-The-Loom/Break-The-Loom/corpus/10-budget/control/scene.x3d",
+      "hits": {},
+      "sha256": "bda003e51853d8d273449293fb765087c5bd53bcc430d692031f42e0b2ec1929"
+    },
+    {
+      "bytes": 2734,
+      "examples": [],
+      "file": "Break-The-Loom/Break-The-Loom/corpus/11-ear/control/scene.x3d",
+      "hits": {},
+      "sha256": "861f16f9f46603072fc353177ea0d7354d867d884e21ea0dca7de05391735343"
+    },
+    {
+      "bytes": 3708,
+      "examples": [
+        {
+          "detail": "Metadata node without explicit containerField",
+          "rule": "metadata-containerfield",
+          "severity": "warning",
+          "where": "MetadataSet#16"
+        },
+        {
+          "detail": "Metadata node without explicit containerField",
+          "rule": "metadata-containerfield",
+          "severity": "warning",
+          "where": "MetadataSet#24"
+        },
+        {
+          "detail": "Metadata node without explicit containerField",
+          "rule": "metadata-containerfield",
+          "severity": "warning",
+          "where": "MetadataSet#32"
+        }
+      ],
+      "file": "Break-The-Loom/Break-The-Loom/corpus/12-score/control/scene.x3d",
+      "hits": {
+        "metadata-containerfield": 8
+      },
+      "sha256": "ee50ab3d2eca0e551052120445412cbc051acc48b5cc7df350414faf644f8655"
+    },
+    {
+      "bytes": 3332,
+      "examples": [
+        {
+          "detail": "Metadata node without explicit containerField",
+          "rule": "metadata-containerfield",
+          "severity": "warning",
+          "where": "MetadataSet#16"
+        },
+        {
+          "detail": "Metadata node without explicit containerField",
+          "rule": "metadata-containerfield",
+          "severity": "warning",
+          "where": "MetadataSet#24"
+        },
+        {
+          "detail": "Metadata node without explicit containerField",
+          "rule": "metadata-containerfield",
+          "severity": "warning",
+          "where": "MetadataSet#32"
+        }
+      ],
+      "file": "Break-The-Loom/Break-The-Loom/corpus/12-score/mutant/scene.x3d",
+      "hits": {
+        "metadata-containerfield": 7
+      },
+      "sha256": "668d9b62e4aaaab8aa23b74fdf53e9e73586bb3fdc710eed480bad0e51e491a9"
+    },
+    {
+      "bytes": 21438,
+      "examples": [],
+      "file": "Data-City-Gate-Kit/Data-City-Gate-Kit/world.x3d",
+      "hits": {},
+      "sha256": "28d25cb9c81dd515e525987a83df6fa1881e69401b4912d742541fb862f4ba50"
+    },
+    {
+      "bytes": 113433,
+      "examples": [],
+      "file": "Data-City-Loom/Data-City-Loom/runs/baseline/world.x3d",
+      "hits": {},
+      "sha256": "7853261f82cbac6e92c8c8f56e4187a854bd5cbe420336127904d6ecc94af16a"
+    },
+    {
+      "bytes": 113779,
+      "examples": [],
+      "file": "Data-City-Loom/Data-City-Loom/runs/revised/world.x3d",
+      "hits": {},
+      "sha256": "266fb483bcdfafa41bcbd1eb08f8c07f519a286620e69a140a447f2de797b919"
+    },
+    {
+      "bytes": 161449,
+      "examples": [],
+      "file": "Dynasty Loom (2)/darwin_wedgwood.x3d",
+      "hits": {},
+      "sha256": "fdb195f616fc457911f78765f2b416d1c356c6e2feeb681db6c827ee872f0d68"
+    },
+    {
+      "bytes": 160377,
+      "examples": [],
+      "file": "Dynasty Loom (2)/habsburg.x3d",
+      "hits": {},
+      "sha256": "f4b0e7c08fa57284f052e1af91c6b41e5c945dbee081ab2b625072afb4e0780b"
+    },
+    {
+      "bytes": 312027,
+      "examples": [],
+      "file": "Dynasty Loom (2)/hyper-darwin_wedgwood.x3d",
+      "hits": {},
+      "sha256": "e87c75431e6dafb6d5dd6620c1040360056df5fe64da5c74afa2518ffbc5e79e"
+    },
+    {
+      "bytes": 311590,
+      "examples": [],
+      "file": "Dynasty Loom (2)/hyper-habsburg.x3d",
+      "hits": {},
+      "sha256": "be421c055a57605f31467751b004750df09dc5f4e04afe84ed4eea920af5a62e"
+    },
+    {
+      "bytes": 313756,
+      "examples": [],
+      "file": "Dynasty Loom (2)/hyper-rothschild.x3d",
+      "hits": {},
+      "sha256": "dd1e6eab72f43a6b532b66e96de8122e854bad2b29f0b88787c92aa22ece27e0"
+    },
+    {
+      "bytes": 1240068,
+      "examples": [],
+      "file": "Dynasty Loom (2)/pocket-darwin_wedgwood.x3d",
+      "hits": {},
+      "sha256": "e593be27429c6f79678d2928b1a7d25fae8e65d0b8831d7b543010a8fc4c7e80"
+    },
+    {
+      "bytes": 1522483,
+      "examples": [],
+      "file": "Dynasty Loom (2)/pocket-habsburg.x3d",
+      "hits": {},
+      "sha256": "b0f3783a4c81fa56057a728fc0d1777cd9ebf5851b1171eb84c74c500cf037b9"
+    },
+    {
+      "bytes": 2272432,
+      "examples": [],
+      "file": "Dynasty Loom (2)/pocket-rothschild.x3d",
+      "hits": {},
+      "sha256": "8d8b2f8fcc221a36565cb007a6268f826977e83a40b8bd29fc459c99cb42329b"
+    },
+    {
+      "bytes": 209880,
+      "examples": [],
+      "file": "Dynasty Loom (2)/rothschild.x3d",
+      "hits": {},
+      "sha256": "089d283154f278a85633497ec596fa13de95c161f8b04615a92c444813a7e138"
+    },
+    {
+      "bytes": 312061,
+      "examples": [],
+      "file": "Dynasty Loom (2)/theme/documentary-night/hyper-darwin_wedgwood.x3d",
+      "hits": {},
+      "sha256": "d2a94e7d2fde38e628217408c14f66f583518bd6490d3e87be6f363d84f83bcf"
+    },
+    {
+      "bytes": 311624,
+      "examples": [],
+      "file": "Dynasty Loom (2)/theme/documentary-night/hyper-habsburg.x3d",
+      "hits": {},
+      "sha256": "1e72bb389e68f6096f1a15eecebb4c4169a25398ab68ea8ef34f57dfa3347f04"
+    },
+    {
+      "bytes": 313790,
+      "examples": [],
+      "file": "Dynasty Loom (2)/theme/documentary-night/hyper-rothschild.x3d",
+      "hits": {},
+      "sha256": "cba5c8e5f36d0503f09b8dd9c94245d66479eb51911243e2cfdcf32f5e271637"
+    },
+    {
+      "bytes": 1240267,
+      "examples": [],
+      "file": "Dynasty Loom (2)/theme/documentary-night/pocket-darwin_wedgwood.x3d",
+      "hits": {},
+      "sha256": "c90559d46c3609cda9b547a93d19f65014cfbc60f9c1a18ab341106e5c484a12"
+    },
+    {
+      "bytes": 1506794,
+      "examples": [],
+      "file": "Dynasty Loom (2)/theme/documentary-night/pocket-habsburg.x3d",
+      "hits": {},
+      "sha256": "5224ed070c17df1d63fd466931f6306ecc6e641f98c1cacdfc36bd0d7715a189"
+    },
+    {
+      "bytes": 2268251,
+      "examples": [],
+      "file": "Dynasty Loom (2)/theme/documentary-night/pocket-rothschild.x3d",
+      "hits": {},
+      "sha256": "89ff1821d021ca351c755ef9d9cb6b1ab7afa256bf56b5d7d532746cbb76f3c1"
+    },
+    {
+      "bytes": 2425315,
+      "examples": [],
+      "file": "Gear-Loom/Gear-Loom/assets/four/world.x3d",
+      "hits": {},
+      "sha256": "3051e964fceaef38e59576aebd9c92f5cab7a614bf947e032a7af890ddd0486d"
+    },
+    {
+      "bytes": 2366828,
+      "examples": [],
+      "file": "Gear-Loom/Gear-Loom/assets/six/world.x3d",
+      "hits": {},
+      "sha256": "7c172047d374fd8465c2fb67c1c527f1c75ca801125a40f0fd16e517050fd5da"
+    },
+    {
+      "bytes": 2215172,
+      "examples": [],
+      "file": "Gear-Loom/Gear-Loom/assets/three/world.x3d",
+      "hits": {},
+      "sha256": "2a7f08551cfae01d485cd826d1d59ed67ddf7e62d68c589e9a2f6e932e75a535"
+    },
+    {
+      "bytes": 3103914,
+      "examples": [],
+      "file": "Loomsong Preview/worlds/ode.x3d",
+      "hits": {},
+      "sha256": "78f2fd46c55ad566a78743998b9801009c06e2544164c72b3aba575cb5585176"
+    },
+    {
+      "bytes": 3669860,
+      "examples": [],
+      "file": "Loomsong Preview/worlds/turca.x3d",
+      "hits": {},
+      "sha256": "52503831df8aadb4f5c18a180387325094b11a1c4efab92c810173294befda31"
+    },
+    {
+      "bytes": 13746294,
+      "examples": [],
+      "file": "Loomsong-Cinematic-v2/Loomsong-Cinematic-v2/assets/world.x3d",
+      "hits": {},
+      "sha256": "4acf612ae1117272878850812c2b5382db9bdc9d811a2ed771dcd43653dd82fe"
+    },
+    {
+      "bytes": 9275444,
+      "examples": [],
+      "file": "Loomsong-Cinematic-v3 (1)/Loomsong-Cinematic-v3/assets/world.x3d",
+      "hits": {},
+      "sha256": "d6ee4b58e9c80621e75bc2f32d4e6b0915b71efec444cef3a956119add465d44"
+    },
+    {
+      "bytes": 9316361,
+      "examples": [],
+      "file": "Loomsong-Cinematic-v4/Loomsong-Cinematic-v4/assets/world.x3d",
+      "hits": {},
+      "sha256": "f0caf71d2500657ceeeb4eced0552bf99b58d4220cca846b02f4d3563e282658"
+    },
+    {
+      "bytes": 10343900,
+      "examples": [],
+      "file": "Loomsong-Study-01-v1 (2)/Loomsong-Study-01/assets/world.x3d",
+      "hits": {},
+      "sha256": "68d53584d1dba01e81866e8b481f96e43f87e68db56369fff156a2fe08a803ec"
+    },
+    {
+      "bytes": 69766,
+      "examples": [],
+      "file": "x3d_mcp Fork Masterclass (1)/map.x3d",
+      "hits": {},
+      "sha256": "e5ad494b5ff72dd3b9d7efadd0cdb313384cae803f2dc291f14f6a96398bfcab"
+    }
+  ],
+  "files_found": 52,
+  "files_with_hits": 6,
+  "hits_by_rule": {
+    "metadata-containerfield": 23,
+    "route-before-def": 2,
+    "shader-raw-source": 1
+  },
+  "parse_errors": [],
+  "parsed": 48,
+  "schema": "loomkit.traps-corpus/1",
+  "unique_files": 48
+}

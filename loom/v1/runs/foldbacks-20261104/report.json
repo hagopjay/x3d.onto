@@ -1,0 +1,176 @@
+{
+  "interpreters": {
+    "Confluence": "~/Projects/x3d/loom/projects/ifc-x3d-studio/.venv/bin/python3"
+  },
+  "patches": [
+    {
+      "additions_only": true,
+      "apply_check": true,
+      "copies": [
+        "Break-The-Loom/Break-The-Loom/integration/break-loom-additions.patch",
+        "Break-The-Loom-Gate-Kit/Break-The-Loom-Gate-Kit/break-loom-additions.patch"
+      ],
+      "files": 7,
+      "interpreter": "/opt/homebrew/opt/python@3.13/bin/python3.13",
+      "patch": "Break-The-Loom/Break-The-Loom/integration/break-loom-additions.patch",
+      "reason": "",
+      "sha256": "e0f083d5c3c01756c23ae7113a21ce1be0dbb80fd64d2186c6cc247a5a4a5456",
+      "smoke": [
+        {
+          "exit_code": 0,
+          "optimized": false,
+          "smoke": "tools/break_loom/smoke.py",
+          "stderr_tail": "",
+          "stdout_tail": "PASS: 24 paired local specimens; XSD and rendering require the full bundle"
+        },
+        {
+          "exit_code": 0,
+          "optimized": true,
+          "smoke": "tools/break_loom/smoke.py",
+          "stderr_tail": "",
+          "stdout_tail": "PASS: 24 paired local specimens; XSD and rendering require the full bundle"
+        }
+      ],
+      "status": "pass",
+      "tool_dirs": [
+        "tools/break_loom"
+      ]
+    },
+    {
+      "additions_only": true,
+      "apply_check": true,
+      "copies": [
+        "Confluence-IFC-X3D-Studio/Confluence-IFC-X3D-Studio/studio/integration/loom-ifc-bridge.patch",
+        "Confluence-Loom-Foldback-Kit/loom-ifc-bridge.patch"
+      ],
+      "files": 15,
+      "interpreter": "~/Projects/x3d/loom/projects/ifc-x3d-studio/.venv/bin/python3",
+      "patch": "Confluence-IFC-X3D-Studio/Confluence-IFC-X3D-Studio/studio/integration/loom-ifc-bridge.patch",
+      "reason": "smoke failed in at least one mode",
+      "sha256": "fdbe8c07c9194549b86b3a410dfe4e4dbd47e723605625e2ab7de067ccd2ce75",
+      "smoke": [
+        {
+          "exit_code": 1,
+          "optimized": false,
+          "smoke": "tools/loom_ifc_bridge_v1/smoke.py",
+          "stderr_tail": "bridge.contracts.Rejected: WORLD_TRIANGLE_MISMATCH",
+          "stdout_tail": ""
+        },
+        {
+          "exit_code": 1,
+          "optimized": true,
+          "smoke": "tools/loom_ifc_bridge_v1/smoke.py",
+          "stderr_tail": "bridge.contracts.Rejected: WORLD_TRIANGLE_MISMATCH",
+          "stdout_tail": ""
+        }
+      ],
+      "status": "fail",
+      "tool_dirs": [
+        "tools/loom_ifc_bridge_v1"
+      ]
+    },
+    {
+      "additions_only": true,
+      "apply_check": true,
+      "copies": [
+        "Data-City-Gate-Kit/Data-City-Gate-Kit/data-city-gates.patch",
+        "Data-City-Loom/Data-City-Loom/integration/data-city-gates.patch"
+      ],
+      "files": 9,
+      "interpreter": "/opt/homebrew/opt/python@3.13/bin/python3.13",
+      "patch": "Data-City-Gate-Kit/Data-City-Gate-Kit/data-city-gates.patch",
+      "reason": "",
+      "sha256": "c73e2cfceced21b86bc290f4d91cc42bb64eb152ffa5b5c8275d34dad45f9265",
+      "smoke": [
+        {
+          "exit_code": 0,
+          "optimized": false,
+          "smoke": "tools/loom_data_city/smoke.py",
+          "stderr_tail": "",
+          "stdout_tail": "PASS: valid source/scene accepted; missing-to-zero rejected"
+        },
+        {
+          "exit_code": 0,
+          "optimized": true,
+          "smoke": "tools/loom_data_city/smoke.py",
+          "stderr_tail": "",
+          "stdout_tail": "PASS: valid source/scene accepted; missing-to-zero rejected"
+        }
+      ],
+      "status": "pass",
+      "tool_dirs": [
+        "tools/loom_data_city"
+      ]
+    },
+    {
+      "additions_only": true,
+      "apply_check": true,
+      "copies": [
+        "Gear-Loom/Gear-Loom/integration/gear-loom-additions.patch",
+        "Gear-Loom-Gate-Kit/Gear-Loom-Gate-Kit/gear-loom-additions.patch"
+      ],
+      "files": 8,
+      "interpreter": "/opt/homebrew/opt/python@3.13/bin/python3.13",
+      "patch": "Gear-Loom/Gear-Loom/integration/gear-loom-additions.patch",
+      "reason": "",
+      "sha256": "c40049849bbdcef03d970833d609928cd6ce85dfa20a64bcd97ca79ec1ce3759",
+      "smoke": [
+        {
+          "exit_code": 0,
+          "optimized": false,
+          "smoke": "tools/gear_loom/smoke.py",
+          "stderr_tail": "",
+          "stdout_tail": "PASS: 3 positive contracts and 8 negative controls; optimized: False"
+        },
+        {
+          "exit_code": 0,
+          "optimized": true,
+          "smoke": "tools/gear_loom/smoke.py",
+          "stderr_tail": "",
+          "stdout_tail": "PASS: 3 positive contracts and 8 negative controls; optimized: True"
+        }
+      ],
+      "status": "pass",
+      "tool_dirs": [
+        "tools/gear_loom"
+      ]
+    },
+    {
+      "additions_only": true,
+      "apply_check": true,
+      "copies": [
+        "Loomsong-Cinematic-v4/Loomsong-Cinematic-v4/integration/loom-fidelity-v4.patch",
+        "Loomsong-v4-Foldback-Kit/Loomsong-v4-Foldback-Kit/loom-fidelity-v4.patch"
+      ],
+      "files": 6,
+      "interpreter": "/opt/homebrew/opt/python@3.13/bin/python3.13",
+      "patch": "Loomsong-Cinematic-v4/Loomsong-Cinematic-v4/integration/loom-fidelity-v4.patch",
+      "reason": "",
+      "sha256": "ef34002adbc1ec5f07e3b1a7ead0b2e1684e0965a5659b3b824d9ecdd1d1b18c",
+      "smoke": [
+        {
+          "exit_code": 0,
+          "optimized": false,
+          "smoke": "tools/loom_fidelity_v4/smoke.py",
+          "stderr_tail": "",
+          "stdout_tail": "{\"status\": \"pass\", \"negative_controls\": [{\"case\": \"stale bake\", \"diagnostic\": \"STALE_BAKE:scene_sha256\"}, {\"case\": \"white BRDF\", \"diagnostic\": \"BRDF_REFERENCE_MISMATCH\"}, {\"case\": \"black BRDF\", \"diagnostic\": \"BRDF_REFERENCE_MISMATCH\"}, {\"case\": \"missing RGBM multiplier\", \"diagnostic\": \"RGBM_ZERO_MUL"
+        },
+        {
+          "exit_code": 0,
+          "optimized": true,
+          "smoke": "tools/loom_fidelity_v4/smoke.py",
+          "stderr_tail": "",
+          "stdout_tail": "{\"status\": \"pass\", \"negative_controls\": [{\"case\": \"stale bake\", \"diagnostic\": \"STALE_BAKE:scene_sha256\"}, {\"case\": \"white BRDF\", \"diagnostic\": \"BRDF_REFERENCE_MISMATCH\"}, {\"case\": \"black BRDF\", \"diagnostic\": \"BRDF_REFERENCE_MISMATCH\"}, {\"case\": \"missing RGBM multiplier\", \"diagnostic\": \"RGBM_ZERO_MUL"
+        }
+      ],
+      "status": "pass",
+      "tool_dirs": [
+        "tools/loom_fidelity_v4"
+      ]
+    }
+  ],
+  "python": "3.13.2",
+  "ran_at": "2026-11-04T01:26:41+00:00",
+  "schema": "loomkit.foldback-survey/1",
+  "scope": "Each patch applied to an empty repo; its smoke.py run normally and with -O. Compatibility with the target repositories (x3d.onto, the fork, x3d.ML) is not tested: none is checked out here."
+}

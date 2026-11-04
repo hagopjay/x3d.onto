@@ -1,0 +1,474 @@
+{
+  "modes": [
+    {
+      "detail": {
+        "acceptance": [
+          {
+            "case": "complete candidate",
+            "result": "accepted"
+          },
+          {
+            "case": "missing witness",
+            "caught": "MISSING_WITNESS",
+            "expected": "MISSING_WITNESS"
+          },
+          {
+            "case": "red witness",
+            "caught": "WITNESS_NOT_PASS",
+            "expected": "WITNESS_NOT_PASS"
+          },
+          {
+            "case": "instrument error",
+            "caught": "WITNESS_NOT_PASS",
+            "expected": "WITNESS_NOT_PASS"
+          },
+          {
+            "case": "not run",
+            "caught": "WITNESS_NOT_PASS",
+            "expected": "WITNESS_NOT_PASS"
+          },
+          {
+            "case": "deferred without reason",
+            "caught": "STATUS_NEEDS_REASON",
+            "expected": "STATUS_NEEDS_REASON"
+          },
+          {
+            "case": "deferral not allowed",
+            "caught": "WITNESS_NOT_PASS",
+            "expected": "WITNESS_NOT_PASS"
+          },
+          {
+            "case": "stale: generator edited after witnesses",
+            "caught": "STALE_WITNESS",
+            "expected": "STALE_WITNESS"
+          },
+          {
+            "case": "stale: new file added",
+            "caught": "STALE_WITNESS",
+            "expected": "STALE_WITNESS"
+          },
+          {
+            "case": "development record",
+            "caught": "DEVELOPMENT_WITNESS",
+            "expected": "DEVELOPMENT_WITNESS"
+          },
+          {
+            "case": "pass graded S",
+            "caught": "UNMEASURED_REQUIRED_WITNESS",
+            "expected": "UNMEASURED_REQUIRED_WITNESS"
+          },
+          {
+            "case": "coverage absent",
+            "caught": "COVERAGE_REQUIRED",
+            "expected": "COVERAGE_REQUIRED"
+          },
+          {
+            "case": "evidence edited",
+            "caught": "EVIDENCE_DRIFT",
+            "expected": "EVIDENCE_DRIFT"
+          },
+          {
+            "case": "wrong witness name",
+            "caught": "WRONG_WITNESS_NAME",
+            "expected": "WRONG_WITNESS_NAME"
+          },
+          {
+            "case": "malformed record",
+            "caught": "MALFORMED_WITNESS",
+            "expected": "MALFORMED_WITNESS"
+          },
+          {
+            "case": "empty profile",
+            "caught": "EMPTY_PROFILE",
+            "expected": "EMPTY_PROFILE"
+          },
+          {
+            "case": "candidate changed during witness",
+            "caught": "CANDIDATE_CHANGED_DURING_WITNESS",
+            "expected": "CANDIDATE_CHANGED_DURING_WITNESS"
+          }
+        ],
+        "optimized": false,
+        "picture": [
+          {
+            "case": "located suspected flag",
+            "result": "accepted"
+          },
+          {
+            "case": "score field",
+            "caught": "PICTURE_FIELDS",
+            "expected": "PICTURE_FIELDS"
+          },
+          {
+            "case": "score in prose",
+            "caught": "PICTURE_GRADING",
+            "expected": "PICTURE_GRADING"
+          },
+          {
+            "case": "confirmed state",
+            "caught": "MODEL_TRUTH_PROMOTION",
+            "expected": "MODEL_TRUTH_PROMOTION"
+          },
+          {
+            "case": "flag promoted",
+            "caught": "MODEL_TRUTH_PROMOTION",
+            "expected": "MODEL_TRUTH_PROMOTION"
+          },
+          {
+            "case": "stale review",
+            "caught": "STALE_PICTURE_REVIEW",
+            "expected": "STALE_PICTURE_REVIEW"
+          },
+          {
+            "case": "missing view",
+            "caught": "PICTURE_COVERAGE",
+            "expected": "PICTURE_COVERAGE"
+          },
+          {
+            "case": "wrong image",
+            "caught": "PICTURE_IMAGE_BINDING",
+            "expected": "PICTURE_IMAGE_BINDING"
+          },
+          {
+            "case": "bad region",
+            "caught": "PICTURE_REGION",
+            "expected": "PICTURE_REGION"
+          },
+          {
+            "case": "vague concern",
+            "caught": "PICTURE_CONCERN",
+            "expected": "PICTURE_CONCERN"
+          },
+          {
+            "case": "duplicate flag",
+            "caught": "PICTURE_DUPLICATE",
+            "expected": "PICTURE_DUPLICATE"
+          }
+        ],
+        "receipt": [
+          {
+            "case": "write and verify",
+            "result": "intact"
+          },
+          {
+            "case": "overwrite refused",
+            "caught": "RECEIPT_EXISTS",
+            "expected": "RECEIPT_EXISTS"
+          },
+          {
+            "case": "edited receipt",
+            "caught": "RECEIPT_DRIFT",
+            "expected": "RECEIPT_DRIFT"
+          }
+        ],
+        "sweep": [
+          {
+            "case": "vendor, cost and host removed; shell positional argument kept",
+            "result": "clean"
+          },
+          {
+            "case": "uncovered leak reported as residue",
+            "caught": "LEAK_RESIDUE",
+            "expected": "LEAK_RESIDUE"
+          }
+        ],
+        "traps": [
+          {
+            "failing_fixture": "caught",
+            "passing_fixture": "clean",
+            "rule": "shader-raw-source"
+          },
+          {
+            "failing_fixture": "caught",
+            "passing_fixture": "clean",
+            "rule": "route-before-def"
+          },
+          {
+            "failing_fixture": "caught",
+            "passing_fixture": "clean",
+            "rule": "route-undefined"
+          },
+          {
+            "failing_fixture": "caught",
+            "passing_fixture": "clean",
+            "rule": "color-range"
+          },
+          {
+            "failing_fixture": "caught",
+            "passing_fixture": "clean",
+            "rule": "color-emissive-white"
+          },
+          {
+            "failing_fixture": "caught",
+            "passing_fixture": "clean",
+            "rule": "splat-bbox"
+          },
+          {
+            "failing_fixture": "caught",
+            "passing_fixture": "clean",
+            "rule": "movie-not-still"
+          },
+          {
+            "failing_fixture": "caught",
+            "passing_fixture": "clean",
+            "rule": "version-fits-nodes"
+          },
+          {
+            "failing_fixture": "caught",
+            "passing_fixture": "clean",
+            "rule": "no-script-under-host"
+          },
+          {
+            "failing_fixture": "caught",
+            "passing_fixture": "clean",
+            "rule": "metadata-containerfield"
+          },
+          {
+            "failing_fixture": "caught",
+            "passing_fixture": "clean",
+            "rule": "glsl-reserved-active"
+          }
+        ]
+      },
+      "negative_controls_caught": 29,
+      "optimized": false,
+      "trap_rules_two_sided": 11
+    },
+    {
+      "detail": {
+        "acceptance": [
+          {
+            "case": "complete candidate",
+            "result": "accepted"
+          },
+          {
+            "case": "missing witness",
+            "caught": "MISSING_WITNESS",
+            "expected": "MISSING_WITNESS"
+          },
+          {
+            "case": "red witness",
+            "caught": "WITNESS_NOT_PASS",
+            "expected": "WITNESS_NOT_PASS"
+          },
+          {
+            "case": "instrument error",
+            "caught": "WITNESS_NOT_PASS",
+            "expected": "WITNESS_NOT_PASS"
+          },
+          {
+            "case": "not run",
+            "caught": "WITNESS_NOT_PASS",
+            "expected": "WITNESS_NOT_PASS"
+          },
+          {
+            "case": "deferred without reason",
+            "caught": "STATUS_NEEDS_REASON",
+            "expected": "STATUS_NEEDS_REASON"
+          },
+          {
+            "case": "deferral not allowed",
+            "caught": "WITNESS_NOT_PASS",
+            "expected": "WITNESS_NOT_PASS"
+          },
+          {
+            "case": "stale: generator edited after witnesses",
+            "caught": "STALE_WITNESS",
+            "expected": "STALE_WITNESS"
+          },
+          {
+            "case": "stale: new file added",
+            "caught": "STALE_WITNESS",
+            "expected": "STALE_WITNESS"
+          },
+          {
+            "case": "development record",
+            "caught": "DEVELOPMENT_WITNESS",
+            "expected": "DEVELOPMENT_WITNESS"
+          },
+          {
+            "case": "pass graded S",
+            "caught": "UNMEASURED_REQUIRED_WITNESS",
+            "expected": "UNMEASURED_REQUIRED_WITNESS"
+          },
+          {
+            "case": "coverage absent",
+            "caught": "COVERAGE_REQUIRED",
+            "expected": "COVERAGE_REQUIRED"
+          },
+          {
+            "case": "evidence edited",
+            "caught": "EVIDENCE_DRIFT",
+            "expected": "EVIDENCE_DRIFT"
+          },
+          {
+            "case": "wrong witness name",
+            "caught": "WRONG_WITNESS_NAME",
+            "expected": "WRONG_WITNESS_NAME"
+          },
+          {
+            "case": "malformed record",
+            "caught": "MALFORMED_WITNESS",
+            "expected": "MALFORMED_WITNESS"
+          },
+          {
+            "case": "empty profile",
+            "caught": "EMPTY_PROFILE",
+            "expected": "EMPTY_PROFILE"
+          },
+          {
+            "case": "candidate changed during witness",
+            "caught": "CANDIDATE_CHANGED_DURING_WITNESS",
+            "expected": "CANDIDATE_CHANGED_DURING_WITNESS"
+          }
+        ],
+        "optimized": true,
+        "picture": [
+          {
+            "case": "located suspected flag",
+            "result": "accepted"
+          },
+          {
+            "case": "score field",
+            "caught": "PICTURE_FIELDS",
+            "expected": "PICTURE_FIELDS"
+          },
+          {
+            "case": "score in prose",
+            "caught": "PICTURE_GRADING",
+            "expected": "PICTURE_GRADING"
+          },
+          {
+            "case": "confirmed state",
+            "caught": "MODEL_TRUTH_PROMOTION",
+            "expected": "MODEL_TRUTH_PROMOTION"
+          },
+          {
+            "case": "flag promoted",
+            "caught": "MODEL_TRUTH_PROMOTION",
+            "expected": "MODEL_TRUTH_PROMOTION"
+          },
+          {
+            "case": "stale review",
+            "caught": "STALE_PICTURE_REVIEW",
+            "expected": "STALE_PICTURE_REVIEW"
+          },
+          {
+            "case": "missing view",
+            "caught": "PICTURE_COVERAGE",
+            "expected": "PICTURE_COVERAGE"
+          },
+          {
+            "case": "wrong image",
+            "caught": "PICTURE_IMAGE_BINDING",
+            "expected": "PICTURE_IMAGE_BINDING"
+          },
+          {
+            "case": "bad region",
+            "caught": "PICTURE_REGION",
+            "expected": "PICTURE_REGION"
+          },
+          {
+            "case": "vague concern",
+            "caught": "PICTURE_CONCERN",
+            "expected": "PICTURE_CONCERN"
+          },
+          {
+            "case": "duplicate flag",
+            "caught": "PICTURE_DUPLICATE",
+            "expected": "PICTURE_DUPLICATE"
+          }
+        ],
+        "receipt": [
+          {
+            "case": "write and verify",
+            "result": "intact"
+          },
+          {
+            "case": "overwrite refused",
+            "caught": "RECEIPT_EXISTS",
+            "expected": "RECEIPT_EXISTS"
+          },
+          {
+            "case": "edited receipt",
+            "caught": "RECEIPT_DRIFT",
+            "expected": "RECEIPT_DRIFT"
+          }
+        ],
+        "sweep": [
+          {
+            "case": "vendor, cost and host removed; shell positional argument kept",
+            "result": "clean"
+          },
+          {
+            "case": "uncovered leak reported as residue",
+            "caught": "LEAK_RESIDUE",
+            "expected": "LEAK_RESIDUE"
+          }
+        ],
+        "traps": [
+          {
+            "failing_fixture": "caught",
+            "passing_fixture": "clean",
+            "rule": "shader-raw-source"
+          },
+          {
+            "failing_fixture": "caught",
+            "passing_fixture": "clean",
+            "rule": "route-before-def"
+          },
+          {
+            "failing_fixture": "caught",
+            "passing_fixture": "clean",
+            "rule": "route-undefined"
+          },
+          {
+            "failing_fixture": "caught",
+            "passing_fixture": "clean",
+            "rule": "color-range"
+          },
+          {
+            "failing_fixture": "caught",
+            "passing_fixture": "clean",
+            "rule": "color-emissive-white"
+          },
+          {
+            "failing_fixture": "caught",
+            "passing_fixture": "clean",
+            "rule": "splat-bbox"
+          },
+          {
+            "failing_fixture": "caught",
+            "passing_fixture": "clean",
+            "rule": "movie-not-still"
+          },
+          {
+            "failing_fixture": "caught",
+            "passing_fixture": "clean",
+            "rule": "version-fits-nodes"
+          },
+          {
+            "failing_fixture": "caught",
+            "passing_fixture": "clean",
+            "rule": "no-script-under-host"
+          },
+          {
+            "failing_fixture": "caught",
+            "passing_fixture": "clean",
+            "rule": "metadata-containerfield"
+          },
+          {
+            "failing_fixture": "caught",
+            "passing_fixture": "clean",
+            "rule": "glsl-reserved-active"
+          }
+        ]
+      },
+      "negative_controls_caught": 29,
+      "optimized": true,
+      "trap_rules_two_sided": 11
+    }
+  ],
+  "schema": "loomkit.self-test/1",
+  "scope": "Synthetic fixtures exercising the real predicates; not a project run."
+}

@@ -1,0 +1,33 @@
+{
+  "status": "pass",
+  "source_sha256": "688917c2e786b82ba87d320cc97286544285194c655be7677b8387670cb5ace3",
+  "results": {
+    "truth": {
+      "status": "pass",
+      "grade": "C",
+      "checks": [
+        "source_and_policy",
+        "row_bytes_and_content",
+        "row_glyph_bijection",
+        "unknown_is_not_zero",
+        "linear_height_and_sign",
+        "aggregate_truth",
+        "partial_total_is_unknown",
+        "aggregate_lineage"
+      ],
+      "rows": 64
+    },
+    "geometry": {
+      "status": "pass",
+      "grade": "C",
+      "checks": [
+        "scene_metadata_lineage",
+        "scene_geometry_matches_manifest",
+        "unknown_has_no_box",
+        "no_script_nodes"
+      ]
+    }
+  }
+}
+
+--- stderr ---
