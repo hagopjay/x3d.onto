@@ -1,0 +1,5 @@
+id,district,period,metric,value,unit,note
+a,Harbour,2026-01,flow,12.5,kg,observed
+b,Harbour,2026-02,flow,0,kg,measured zero
+c,Archive,2026-01,flow,,kg,missing
+d,Archive,2026-02,flow,-3,kg,negative
