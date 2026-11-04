@@ -1,0 +1,101 @@
+{
+  "budget": {
+    "cloud_resources": 0,
+    "paid_calls": 0
+  },
+  "candidate_files": 166,
+  "candidate_sha256": "7476fb939f9a39301e0a641add912f2067dfb394152165a124bcfaff5e8f1ca2",
+  "grade": "C",
+  "inputs": {
+    "candidate_sha256": "7476fb939f9a39301e0a641add912f2067dfb394152165a124bcfaff5e8f1ca2"
+  },
+  "kind": "artifact",
+  "limitations": [
+    "Static profile: Behaviour (real browser), Eyes (frames + the user's eye) and Host (strict policy copy) did not run, so 'valid is not visible' still applies (law 2).",
+    "Grammar and Meaning ran on the local x3d_mcp fork checkout, not the family pin loom-pin-2026-11-01.",
+    "Traps are loomkit's portable subset of loom_gate.py; the family gate is not on this machine.",
+    "Unsigned receipt: it shows drift; it does not authenticate authorship."
+  ],
+  "model_calls": [],
+  "not_run": [
+    {
+      "reason": "Needs a real browser (X_ITE headless, frames, strict host copy); not run by the v1 agent. The projects agent runs the pages.",
+      "status": "not_run",
+      "witness": "behaviour"
+    },
+    {
+      "reason": "Needs a real browser (X_ITE headless, frames, strict host copy); not run by the v1 agent. The projects agent runs the pages.",
+      "status": "not_run",
+      "witness": "eyes"
+    },
+    {
+      "reason": "Needs a real browser (X_ITE headless, frames, strict host copy); not run by the v1 agent. The projects agent runs the pages.",
+      "status": "not_run",
+      "witness": "host"
+    }
+  ],
+  "outputs": {
+    "world.x3d": {
+      "bytes": 113779,
+      "sha256": "266fb483bcdfafa41bcbd1eb08f8c07f519a286620e69a140a447f2de797b919"
+    }
+  },
+  "prev": null,
+  "profile": "x3d-static/v1",
+  "schema": "loom.receipt/1",
+  "sha256": "e016772a8bbf84b70150f9f6dbe046c4ec4415865b33711c26889eed0656dcdc",
+  "signed": false,
+  "subject": "Data City Loom (delivered zip), static profile",
+  "tools": {
+    "foldback": {
+      "tool": "loomkit.foldback"
+    },
+    "grammar": {
+      "commit": "fa0b3899666fbd61962fffea0c21a29b445c1c8d",
+      "tool": "x3d_mcp fork (validate_xml + semantic_diagnostics)"
+    },
+    "meaning": {
+      "commit": "fa0b3899666fbd61962fffea0c21a29b445c1c8d",
+      "tool": "x3d_mcp fork (validate_xml + semantic_diagnostics)"
+    },
+    "traps": {
+      "tool": "loomkit.traps"
+    },
+    "truth": {
+      "tool": "project gate (adapter)"
+    }
+  },
+  "witnesses": [
+    {
+      "grade": "C",
+      "record_sha256": "4bd529bccbfcfe09b730246082c56975d216a10969b7f13ee908827f81aaf5cb",
+      "status": "pass",
+      "witness": "grammar"
+    },
+    {
+      "grade": "C",
+      "record_sha256": "4e069e68a1b7047c7cb801f606deaa62a1e22a7d44f09a7df9ad472167660785",
+      "status": "pass",
+      "witness": "meaning"
+    },
+    {
+      "grade": "C",
+      "record_sha256": "4f41dbbb9efa5f2a7ffa76fd14cbfb38d3b6e2dd67db40fd48696f3d34c50ba8",
+      "status": "pass",
+      "witness": "traps"
+    },
+    {
+      "grade": "C",
+      "record_sha256": "530b21d73951ac67a4e0ff5bb81ea6d6f300d44d2a924e5e2403f822c7f72f1d",
+      "status": "pass",
+      "witness": "truth"
+    },
+    {
+      "grade": "C",
+      "record_sha256": "d1050f3e78a95b9340194efbe5d289798f79527f197f6ac0a5eb3652b5b88e39",
+      "status": "pass",
+      "witness": "foldback"
+    }
+  ],
+  "written_at": "2026-11-04T01:28:33+00:00"
+}

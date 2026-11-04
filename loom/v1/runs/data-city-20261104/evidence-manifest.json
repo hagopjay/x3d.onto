@@ -1,0 +1,83 @@
+{
+  "candidate_sha256": "7476fb939f9a39301e0a641add912f2067dfb394152165a124bcfaff5e8f1ca2",
+  "files": [
+    {
+      "bytes": 614,
+      "path": "behaviour.json",
+      "role": "witness-record",
+      "sha256": "8b023fea389b700d9f68725a26b5a45096c0254cf0caad6058bdebdd1d10b78f"
+    },
+    {
+      "bytes": 609,
+      "path": "eyes.json",
+      "role": "witness-record",
+      "sha256": "a50eb69e69c370b5a1369c0e2c63408f2311998d300f43afc918c0d5765879e9"
+    },
+    {
+      "bytes": 1555,
+      "path": "foldback.json",
+      "role": "witness-record",
+      "sha256": "dba61ba28c09be88dec41a34947d33665a7d05b557b785120c51e3294b4d4509"
+    },
+    {
+      "bytes": 1064,
+      "path": "grammar.json",
+      "role": "witness-record",
+      "sha256": "f32fa908bf45c70404fd2e58ce6b10c0a4fa1b4740f4d3225f022ca2c38bef88"
+    },
+    {
+      "bytes": 609,
+      "path": "host.json",
+      "role": "witness-record",
+      "sha256": "8ca55aa2a4566779e399472d1c3aefde196ef1ae7081ef89b7c00b9186b17b24"
+    },
+    {
+      "bytes": 1110,
+      "path": "meaning.json",
+      "role": "witness-record",
+      "sha256": "904be72378c38cfc6ab3d2c605846dd958519ccbd78fb1e491760d04400bc2b9"
+    },
+    {
+      "bytes": 1214,
+      "path": "traps.json",
+      "role": "witness-record",
+      "sha256": "25fed83e697e27145664b4c5d2d81d6aa93a35edc94abf3785295403d1182dd4"
+    },
+    {
+      "bytes": 1518,
+      "path": "truth.json",
+      "role": "witness-record",
+      "sha256": "43c335b46d86a55fcdf6a7a7c49ba37bb72dbd620036d2d960877c278982846a"
+    },
+    {
+      "bytes": 732,
+      "path": "truth.log",
+      "role": "log",
+      "sha256": "488660fcc7649763336beeb1af948ad8fd01dacab983712c606c80f44f90874a"
+    }
+  ],
+  "not_run": [
+    {
+      "reason": "Needs a real browser (X_ITE headless, frames, strict host copy); not run by the v1 agent. The projects agent runs the pages.",
+      "status": "not_run",
+      "witness": "behaviour"
+    },
+    {
+      "reason": "Needs a real browser (X_ITE headless, frames, strict host copy); not run by the v1 agent. The projects agent runs the pages.",
+      "status": "not_run",
+      "witness": "eyes"
+    },
+    {
+      "reason": "Needs a real browser (X_ITE headless, frames, strict host copy); not run by the v1 agent. The projects agent runs the pages.",
+      "status": "not_run",
+      "witness": "host"
+    }
+  ],
+  "profile": "x3d-static/v1",
+  "receipt": {
+    "path": "receipt.json",
+    "sha256": "1b3ae54d6e0e1f2c882a0aab5c31e3283f9fd44d712a0811f55375c117ffc0b2"
+  },
+  "schema": "loom.evidence-manifest/1",
+  "subject": "Data City Loom (delivered zip), static profile"
+}

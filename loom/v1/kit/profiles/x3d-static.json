@@ -1,0 +1,19 @@
+{
+  "schema": "loom.profile/1",
+  "name": "x3d-static/v1",
+  "purpose": "File-reading witnesses plus the project's own truth gate and its fold-back patch. Accepting under this profile means 'the files and the fold-back hold'; it says nothing about how the scene draws.",
+  "required": [
+    {"witness": "grammar", "coverage": {"files": 2}},
+    {"witness": "meaning", "coverage": {"files": 2}},
+    {"witness": "traps", "coverage": {"rules": 11}},
+    {"witness": "truth"},
+    {"witness": "foldback"}
+  ],
+  "visible_not_run": ["behaviour", "eyes", "host"],
+  "limitations": [
+    "Static profile: Behaviour (real browser), Eyes (frames + the user's eye) and Host (strict policy copy) did not run, so 'valid is not visible' still applies (law 2).",
+    "Grammar and Meaning ran on the local x3d_mcp fork checkout, not the family pin loom-pin-2026-11-01.",
+    "Traps are loomkit's portable subset of loom_gate.py; the family gate is not on this machine.",
+    "Unsigned receipt: it shows drift; it does not authenticate authorship."
+  ]
+}

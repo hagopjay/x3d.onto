@@ -1,0 +1,4 @@
+#!/bin/sh
+# Run loomkit isolated (-I: no user site, no cwd on sys.path). Pass -O through LOOM_PYFLAGS to test optimized mode.
+KIT="$(cd "$(dirname "$0")" && pwd)"
+exec "${LOOM_PYTHON:-python3}" -I ${LOOM_PYFLAGS:-} -c "import sys; sys.path.insert(0, sys.argv.pop(1)); from loomkit.cli import main; sys.exit(main())" "$KIT" "$@"

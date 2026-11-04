@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "loom.evidence-manifest/1",
+  "title": "Loom evidence manifest",
+  "description": "Lists every evidence file of one accepted run with its hash, so a reader can check the release after extraction (Loomsong v4 check_release.py; LS1 section 8). Evidence is excluded from the candidate and hashed here instead, which avoids a self-referential digest.",
+  "type": "object",
+  "required": ["schema", "subject", "candidate_sha256", "profile", "receipt", "files", "not_run"],
+  "properties": {
+    "schema": {"const": "loom.evidence-manifest/1"},
+    "subject": {"type": "string"},
+    "candidate_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "profile": {"type": "string"},
+    "receipt": {"type": "object", "required": ["path", "sha256"],
+      "properties": {"path": {"type": "string"}, "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}}},
+    "files": {"type": "array", "items": {"type": "object", "required": ["path", "sha256", "bytes", "role"],
+      "properties": {
+        "path": {"type": "string"},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "bytes": {"type": "integer", "minimum": 0},
+        "role": {"enum": ["witness-record", "log", "frame", "trace", "audio", "report", "picture-review", "other"]},
+        "synthetic": {"type": "boolean", "description": "True for fixtures, seeded mutants and teaching data"}
+      }}},
+    "not_run": {"type": "array", "items": {"type": "object", "required": ["witness", "status", "reason"],
+      "properties": {"witness": {"type": "string"},
+        "status": {"enum": ["not_run", "deferred", "not_applicable", "error"]},
+        "reason": {"type": "string", "minLength": 1}}}}
+  }
+}

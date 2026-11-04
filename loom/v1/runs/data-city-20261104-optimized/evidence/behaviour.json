@@ -1,0 +1,22 @@
+{
+  "coverage": {},
+  "development": false,
+  "environment": {
+    "optimized": true,
+    "python": "3.13.2"
+  },
+  "evidence": [],
+  "finished_at": "2026-11-04T01:28:33+00:00",
+  "grade": "L",
+  "instrument": {
+    "by": "operator",
+    "tool": "declared"
+  },
+  "limitations": [],
+  "measurements": {},
+  "reason": "Needs a real browser (X_ITE headless, frames, strict host copy); not run by the v1 agent. The projects agent runs the pages.",
+  "schema": "loom.witness/1",
+  "status": "not_run",
+  "subject_sha256": "7476fb939f9a39301e0a641add912f2067dfb394152165a124bcfaff5e8f1ca2",
+  "witness": "behaviour"
+}

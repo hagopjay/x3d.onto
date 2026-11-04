@@ -1,0 +1,12 @@
+{
+  "files_changed": {
+    "GLOSSARY.md": 1,
+    "LOOM-v1.md": 30,
+    "SOURCES.md": 34
+  },
+  "replacements": 65,
+  "residue": [],
+  "rules_sha256": "6fa68da1157455dbe6c783833c9c5e63a3fd407f14054c985aaf0176c052c4a3",
+  "schema": "loom.sweep-report/1",
+  "status": "pass"
+}
