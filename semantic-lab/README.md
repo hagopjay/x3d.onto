@@ -11,7 +11,9 @@ This chapter collects the ontology lab work from 13 to 16 Nov 2026 and links to 
 | Eval set (45 items, gold answers, three conditions) and the layer test | `eval/` |
 | Semantic tools: `scene_to_rdf`, `sparql_scene`, `shacl_validate`, `rdf_infer` and more | hagopjay/x3d_mcp, PR #17, #18 and #20 |
 | The nine cases as a runnable example (scenes, domain graphs, shapes, oracle, MCP recordings) | hagopjay/x3d_mcp `examples/semantic_twins/` (PR #21) |
-| Pages | hagopjay/x3d.demo: `demos/ontology-lab/v1`, `demos/semantic-twins/v1`, `demos/ontology-field-notes/v1` |
+| Evidence Edition: an audit of the lab with 8 station corrections, a witness workbench and a companion; how it was re-checked and adopted | `evidence-edition/` (start with `RESPONSES.md`) |
+| Evidence tools: `source_witness_audit`, `patch_x3d_attribute`, `shacl_counterfactual` | hagopjay/x3d_mcp PR #24 |
+| Pages | hagopjay/x3d.demo: `demos/ontology-lab/v1` and `v2` (Evidence Edition), `demos/semantic-twins/v1`, `demos/ontology-field-notes/v1` |
 
 ## Ladder
 
