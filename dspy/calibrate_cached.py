@@ -1,10 +1,18 @@
-"""Free calibration: run the three metric terms over the 600 cached E1 flash answers (data/e1_flash_r1_pred.jsonl). No model calls."""
+"""Free calibration: run the three metric terms over cached writer answers (a JSONL file, one answer per line). No model calls."""
 import json, sys, collections, os
 sys.path.insert(0, os.path.dirname(__file__)); import scene_metric as S
 rows = [json.loads(l) for l in open(sys.argv[1])]; C = collections.Counter(); ex = {}
 for r in rows:
-    try: txt = "".join(p.get("text", "") for p in r["response"]["candidates"][0]["content"]["parts"])
-    except Exception: continue
+    txt = r.get("text") or r.get("response") if isinstance(r.get("text") or r.get("response"), str) else None
+    if txt is None:  # nested provider shapes: walk to the first list of parts carrying text
+        def _walk(o):
+            if isinstance(o, dict):
+                if isinstance(o.get("text"), str): yield o["text"]
+                for v in o.values(): yield from _walk(v)
+            elif isinstance(o, list):
+                for v in o: yield from _walk(v)
+        txt = "".join(_walk(r.get("response", r)))
+    if not txt: continue
     c = S.check(txt); k = (c["valid"], c["placed"], not c["mismatch"]); C[k] += 1
     if k != (True, True, True): ex.setdefault(k, (S.report(c)[:300]))
 print("n", sum(C.values()))

@@ -1,10 +1,9 @@
 """Metric terms for a scene-writing prompt: valid AND placed AND use-type-clean (looks-right is measured in render_eval.py).
 Validator pin: hagopjay/x3d_mcp main 2b696f5 (XSD + semantic checker); placement table = X3DUOM via x3d_utils.placement.where_can_place
-(6,509 rows, sha256 e749eda517ba...). use-type-mismatch is ported from fork branch claude/ontology-lentz-polys-3j5h8z (semantic.py
-_check_use_type_mismatch) as a standalone function so nothing is pushed to the public fork.
+(6,509 rows, sha256 e749eda517ba...). use-type-mismatch is implemented here as a standalone function.
 Set X3D_MCP_TREE to a checkout of the pinned commit."""
 import os, re, sys
-TREE = os.environ.get("X3D_MCP_TREE", "/tmp/fork_main")
+TREE = os.environ.get("X3D_MCP_TREE", "/tmp/validator_tree")
 sys.path[0:0] = [os.path.join(TREE, "src"), TREE]
 from lxml import etree                                # noqa: E402
 from validation.validate import validate_xml          # noqa: E402
@@ -50,7 +49,7 @@ def placed_errors(root):
     return errs
 
 def use_type_mismatch(root):
-    """Ported from fork branch claude/ontology-lentz-polys-3j5h8z: a USE must be the same node type as the DEF it names."""
+    """A USE must be the same node type as the DEF it names."""
     def scope_of(el):
         for a in el.iterancestors():
             if _tag(a) == "ProtoBody": return a
